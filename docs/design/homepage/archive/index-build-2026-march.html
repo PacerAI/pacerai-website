@@ -1,0 +1,1703 @@
+<style>
+/* Hide TT4 theme chrome — our design has its own nav/footer */
+.wp-site-blocks > header,
+.wp-site-blocks > footer,
+header.wp-block-template-part,
+footer.wp-block-template-part,
+.wp-block-template-part:first-child { display: none !important; }
+.wp-block-post-title, .wp-block-spacer { display: none !important; }
+
+/* Force body background to match our design */
+html, body, .wp-site-blocks {
+  background: #080E1C !important;
+  background-color: #080E1C !important;
+}
+
+/* Ensure homepage wrapper is full-width */
+#pacerai-homepage {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Remove TT4 content area padding/constraints */
+.wp-site-blocks,
+.wp-site-blocks > main,
+.wp-site-blocks > main > .wp-block-group,
+.wp-site-blocks .is-layout-constrained,
+.wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+.has-global-padding,
+.entry-content {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-top: 0 !important;
+}
+
+  :root {
+    --navy: #080E1C;
+    --navy-mid: #0F1929;
+    --navy-light: #162038;
+    --navy-border: #1E2D4A;
+    --brand: #1C3560;
+    --brand-blue: #2B7DC8;
+    --teal: #27899A;
+    --teal-light: #70C49C;
+    --teal-pale: #D6F0E8;
+    --cream: #F7F3EC;
+    --white: #FFFFFF;
+    --muted: #8A95A8;
+    --text-light: #CDD5E0;
+    --text-mid: #94A3B8;
+    --green: #2DB87A;
+    --red-subtle: #C94C4C;
+  }
+
+  #pacerai-homepage * { margin: 0; padding: 0; box-sizing: border-box; }
+  #pacerai-homepage { scroll-behavior: smooth; }
+
+  #pacerai-homepage {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text-light);
+    overflow-x: hidden;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ─── NAV ─── */
+  #pacerai-homepage nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    height: 68px;
+    background: rgba(8,14,28,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(28,53,96,0.6);
+  }
+
+  #pacerai-homepage .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  #pacerai-homepage .nav-logo .mark {
+    width: 34px; height: 34px;
+    background: var(--teal);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #pacerai-homepage .nav-logo .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600; letter-spacing: 0.04em;
+    color: var(--white);
+  }
+  #pacerai-homepage .nav-logo .wordmark span { color: var(--teal); }
+
+  #pacerai-homepage .nav-links {
+    display: flex; align-items: center; gap: 4px;
+    list-style: none;
+  }
+  #pacerai-homepage .nav-links > li { position: relative; }
+  #pacerai-homepage .nav-links > li > a {
+    display: flex; align-items: center; gap: 5px;
+    padding: 8px 14px;
+    font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em;
+    color: var(--text-mid);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  #pacerai-homepage .nav-links > li > a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  #pacerai-homepage .nav-links > li > a .chevron {
+    font-size: 10px; margin-top: 1px;
+    transition: transform 0.2s;
+  }
+  #pacerai-homepage .nav-links > li:hover > a .chevron { transform: rotate(180deg); }
+
+  /* Dropdown */
+  #pacerai-homepage .dropdown {
+    display: none;
+    position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 12px;
+    padding: 20px;
+    padding-top: 28px;
+    min-width: 520px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  }
+  /* Invisible bridge to prevent hover gap */
+  #pacerai-homepage .dropdown::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: 0; right: 0;
+    height: 12px;
+  }
+  #pacerai-homepage .nav-links > li:hover .dropdown { display: block; }
+
+  #pacerai-homepage .dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  #pacerai-homepage .dropdown-col-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal);
+    padding-bottom: 10px; margin-bottom: 6px;
+    border-bottom: 1px solid var(--navy-border);
+  }
+  #pacerai-homepage .dropdown a {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 10px; border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  #pacerai-homepage .dropdown a:hover { background: rgba(255,255,255,0.04); }
+  #pacerai-homepage .dropdown .d-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: var(--navy-light);
+    border: 1px solid var(--navy-border);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  #pacerai-homepage .dropdown .d-text .d-title {
+    font-size: 13px; font-weight: 500; color: var(--white);
+    display: block; line-height: 1.3;
+  }
+  #pacerai-homepage .dropdown .d-text .d-desc {
+    font-size: 12px; color: var(--muted); line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  #pacerai-homepage .single-dropdown { min-width: 220px; }
+  #pacerai-homepage .single-dropdown a {
+    padding: 9px 12px; border-radius: 8px;
+    text-decoration: none; display: block;
+    font-size: 13px; font-weight: 500; color: var(--text-light);
+    transition: background 0.15s, color 0.15s;
+  }
+  #pacerai-homepage .single-dropdown a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+
+  /* Hamburger — hidden on desktop */
+  #pacerai-homepage .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 101;
+  }
+  #pacerai-homepage .mobile-menu-btn span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--text-light);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  #pacerai-homepage .mobile-menu-btn.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #pacerai-homepage .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+  #pacerai-homepage .mobile-menu-btn.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  #pacerai-homepage .nav-right {
+    display: flex; align-items: center; gap: 12px;
+  }
+  #pacerai-homepage .btn-ghost {
+    padding: 8px 18px; font-size: 13.5px; font-weight: 500;
+    color: var(--text-light); background: transparent;
+    border: 1px solid var(--navy-border); border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  #pacerai-homepage .btn-ghost:hover { color: var(--white); border-color: rgba(39,137,154,0.45); }
+  #pacerai-homepage .btn-teal {
+    padding: 9px 20px; font-size: 13.5px; font-weight: 600;
+    color: #fff; background: var(--teal);
+    border: none; border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s; letter-spacing: 0.02em;
+  }
+  #pacerai-homepage .btn-teal:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(39,137,154,0.35); }
+
+  /* ─── HERO ─── */
+  #pacerai-homepage .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #pacerai-homepage .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 900px 600px at 50% 30%, rgba(39,137,154,0.09) 0%, transparent 70%),
+      radial-gradient(ellipse 600px 400px at 80% 60%, rgba(45,184,122,0.04) 0%, transparent 60%),
+      linear-gradient(180deg, var(--navy) 0%, #0B1324 100%);
+  }
+
+  /* Subtle grid */
+  #pacerai-homepage .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(39,137,154,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(39,137,154,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent);
+  }
+
+  /* Floating data lines */
+  #pacerai-homepage .hero-lines {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    overflow: hidden;
+  }
+  #pacerai-homepage .hero-lines svg {
+    position: absolute; top: 10%; left: -5%; width: 110%; opacity: 0.15;
+  }
+
+  #pacerai-homepage .hero-eyebrow {
+    position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px 6px 8px;
+    background: rgba(39,137,154,0.10);
+    border: 1px solid rgba(39,137,154,0.22);
+    border-radius: 100px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+  #pacerai-homepage .hero-eyebrow .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    #pacerai-homepage 0%, #pacerai-homepage 100% { opacity: 1; transform: scale(1); }
+    #pacerai-homepage 50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  #pacerai-homepage h1 {
+    position: relative; z-index: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 300; line-height: 1.06;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    max-width: 900px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  #pacerai-homepage h1 em { font-style: italic; color: var(--teal); }
+
+  #pacerai-homepage .hero-sub {
+    position: relative; z-index: 1;
+    font-size: 17px; font-weight: 300; color: var(--text-mid);
+    max-width: 540px; line-height: 1.7;
+    margin: 24px auto 40px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  #pacerai-homepage .hero-ctas {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 14px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  #pacerai-homepage .btn-lg {
+    padding: 14px 30px; font-size: 15px; font-weight: 600;
+    color: #fff; background: var(--teal);
+    border: none; border-radius: 8px; cursor: pointer;
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: all 0.25s;
+    box-shadow: 0 4px 24px rgba(39,137,154,0.30);
+  }
+  #pacerai-homepage .btn-lg:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(112,196,156,0.40); }
+  #pacerai-homepage .btn-outline-lg {
+    padding: 13px 28px; font-size: 15px; font-weight: 500;
+    color: var(--white); background: transparent;
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  #pacerai-homepage .btn-outline-lg:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.04); }
+
+  /* Hero stats ticker */
+  #pacerai-homepage .hero-stats {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 48px;
+    margin-top: 72px;
+    padding-top: 40px;
+    border-top: 1px solid var(--navy-border);
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  #pacerai-homepage .hero-stat .val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 500; color: var(--white);
+    line-height: 1; letter-spacing: -0.02em;
+  }
+  #pacerai-homepage .hero-stat .val span { color: var(--teal); }
+  #pacerai-homepage .hero-stat .label { font-size: 12px; color: var(--muted); margin-top: 5px; letter-spacing: 0.04em; }
+  #pacerai-homepage .stat-divider { width: 1px; height: 48px; background: var(--navy-border); }
+
+  /* ─── DASHBOARD PREVIEW ─── */
+  #pacerai-homepage .preview-section {
+    padding: 0 48px 100px;
+    display: flex; justify-content: center;
+  }
+  #pacerai-homepage .dashboard-frame {
+    width: 100%; max-width: 1080px;
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(39,137,154,0.12),
+      0 40px 120px rgba(0,0,0,0.6),
+      0 0 80px rgba(39,137,154,0.08);
+  }
+  #pacerai-homepage .frame-bar {
+    background: var(--navy-light);
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--navy-border);
+  }
+  #pacerai-homepage .frame-dot { width: 10px; height: 10px; border-radius: 50%; }
+  #pacerai-homepage .frame-title {
+    margin-left: 8px; font-size: 12px; color: var(--muted);
+    font-weight: 500; letter-spacing: 0.04em;
+  }
+  #pacerai-homepage .frame-badge {
+    margin-left: auto; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
+    background: rgba(45,184,122,0.12); color: var(--green);
+    border: 1px solid rgba(45,184,122,0.2);
+  }
+  #pacerai-homepage .frame-content { padding: 28px; }
+
+  /* Mini ARR Waterfall mockup */
+  #pacerai-homepage .arr-grid {
+    display: grid;
+    grid-template-columns: 140px repeat(5, 1fr);
+    gap: 0;
+    font-size: 12px;
+  }
+  #pacerai-homepage .arr-header {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 8px 12px; border-bottom: 1px solid var(--navy-border);
+  }
+  #pacerai-homepage .arr-header.highlight { color: var(--teal); }
+  #pacerai-homepage .arr-cell {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(30,45,74,0.5);
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+  }
+  #pacerai-homepage .arr-label { font-weight: 500; color: var(--text-light); }
+  #pacerai-homepage .arr-val { color: var(--text-mid); }
+  #pacerai-homepage .arr-pos { color: var(--green); }
+  #pacerai-homepage .arr-neg { color: var(--red-subtle); }
+  #pacerai-homepage .arr-bold { font-weight: 600; color: var(--white); }
+  #pacerai-homepage .arr-gold { color: var(--teal); font-weight: 600; }
+  #pacerai-homepage .row-highlight { background: rgba(39,137,154,0.05); }
+
+  /* Mini sparkline bars */
+  #pacerai-homepage .mini-bars {
+    display: flex; align-items: flex-end; gap: 3px; height: 36px;
+    padding: 0 12px;
+  }
+  #pacerai-homepage .mini-bar {
+    flex: 1; border-radius: 3px 3px 0 0;
+    background: linear-gradient(180deg, var(--teal) 0%, rgba(39,137,154,0.35) 100%);
+    transition: height 0.3s;
+  }
+
+  /* Metric cards row */
+  #pacerai-homepage .metric-cards {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    margin-bottom: 24px;
+  }
+  #pacerai-homepage .metric-card {
+    background: var(--navy-light);
+    border: 1px solid var(--navy-border);
+    border-radius: 10px; padding: 16px;
+  }
+  #pacerai-homepage .metric-card .mc-label {
+    font-size: 11px; color: var(--muted); font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  #pacerai-homepage .metric-card .mc-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 500; color: var(--white);
+    line-height: 1.1; margin-top: 6px;
+  }
+  #pacerai-homepage .metric-card .mc-delta {
+    font-size: 12px; font-weight: 500; margin-top: 4px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  #pacerai-homepage .up { color: var(--green); }
+  #pacerai-homepage .down { color: var(--red-subtle); }
+
+  /* ─── LOGO STRIP ─── */
+  #pacerai-homepage .logo-strip {
+    padding: 48px;
+    border-top: 1px solid var(--navy-border);
+    border-bottom: 1px solid var(--navy-border);
+    text-align: center;
+  }
+  #pacerai-homepage .logo-strip .ls-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 32px;
+  }
+  #pacerai-homepage .logo-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 48px; flex-wrap: wrap;
+  }
+  #pacerai-homepage .logo-item {
+    display: flex; align-items: center; justify-content: center;
+    height: 60px;
+    transition: opacity 0.3s;
+    opacity: 0.85;
+  }
+  #pacerai-homepage .logo-item:hover { opacity: 1; }
+  #pacerai-homepage .logo-item img {
+    height: 60px; width: auto;
+    object-fit: contain;
+  }
+
+  /* ─── SECTION HEADINGS ─── */
+  #pacerai-homepage .section { padding: 100px 48px; }
+  #pacerai-homepage .section-inner { max-width: 1080px; margin: 0 auto; }
+
+  #pacerai-homepage .section-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 16px;
+  }
+  #pacerai-homepage h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 4.5vw, 56px);
+    font-weight: 300; line-height: 1.1; color: var(--white);
+    letter-spacing: -0.01em;
+  }
+  #pacerai-homepage h2 em { font-style: italic; color: var(--teal); }
+
+  #pacerai-homepage .section-lead {
+    font-size: 16px; font-weight: 300; color: var(--text-mid);
+    max-width: 560px; line-height: 1.75; margin-top: 18px;
+  }
+
+  /* ─── USE CASE MENU STRIP ─── */
+  #pacerai-homepage .uc-menu-strip {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 32px; margin-bottom: 48px;
+  }
+  #pacerai-homepage .uc-menu-item {
+    padding: 10px 16px; font-size: 12px; font-weight: 500;
+    line-height: 1.4; text-align: center;
+    color: var(--muted); text-decoration: none;
+    border: 1px solid var(--navy-border);
+    border-radius: 8px; background: var(--navy-mid);
+    transition: all 0.2s; white-space: nowrap;
+  }
+  #pacerai-homepage .uc-menu-item:hover {
+    color: var(--white); border-color: rgba(39,137,154,0.35);
+    background: rgba(39,137,154,0.06);
+  }
+  #pacerai-homepage .uc-menu-item.active {
+    color: var(--teal); border-color: rgba(39,137,154,0.4);
+    background: rgba(39,137,154,0.08); font-weight: 600;
+  }
+
+  /* ─── USE CASES ─── */
+  #pacerai-homepage .use-cases-header { margin-bottom: 64px; }
+  #pacerai-homepage .uc-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+    border: 1px solid var(--navy-border); border-radius: 16px;
+    overflow: hidden;
+  }
+  #pacerai-homepage .uc-card {
+    background: var(--navy-mid); padding: 40px;
+    position: relative; overflow: hidden;
+    transition: background 0.25s;
+    cursor: pointer;
+  }
+  #pacerai-homepage .uc-card:hover { background: var(--navy-light); }
+  #pacerai-homepage .uc-card.primary { grid-column: 1 / -1; background: var(--navy-light); }
+  #pacerai-homepage .uc-card .uc-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px; font-weight: 300;
+    color: rgba(39,137,154,0.10);
+    position: absolute; top: 20px; right: 28px;
+    line-height: 1; letter-spacing: -0.04em;
+  }
+  #pacerai-homepage .uc-tag {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 4px;
+    background: rgba(39,137,154,0.12); color: var(--teal);
+    border: 1px solid rgba(39,137,154,0.22);
+    margin-bottom: 16px;
+  }
+  #pacerai-homepage .uc-card.secondary .uc-tag {
+    background: rgba(45,184,122,0.08); color: var(--green);
+    border-color: rgba(45,184,122,0.2);
+  }
+  #pacerai-homepage .uc-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 500; color: var(--white);
+    line-height: 1.2; margin-bottom: 12px;
+  }
+  #pacerai-homepage .uc-card.primary h3 { font-size: 32px; }
+  #pacerai-homepage .uc-card p {
+    font-size: 14px; color: var(--text-mid); line-height: 1.7;
+    max-width: 480px;
+  }
+  #pacerai-homepage .uc-card .uc-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 24px; font-size: 13px; font-weight: 500;
+    color: var(--teal); text-decoration: none;
+    transition: gap 0.2s;
+  }
+  #pacerai-homepage .uc-card:hover .uc-link { gap: 10px; }
+
+  /* Primary card mini visual */
+  #pacerai-homepage .arr-pill-row {
+    display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
+  }
+  #pacerai-homepage .arr-pill {
+    padding: 8px 16px; border-radius: 8px; font-size: 13px;
+    font-variant-numeric: tabular-nums; font-weight: 500;
+  }
+  #pacerai-homepage .arr-pill.pos { background: rgba(45,184,122,0.1); color: var(--green); border: 1px solid rgba(45,184,122,0.15); }
+  #pacerai-homepage .arr-pill.neg { background: rgba(201,76,76,0.1); color: var(--red-subtle); border: 1px solid rgba(201,76,76,0.15); }
+  #pacerai-homepage .arr-pill.neutral { background: rgba(138,149,168,0.1); color: var(--text-mid); border: 1px solid rgba(138,149,168,0.15); }
+  #pacerai-homepage .arr-pill.gold { background: rgba(39,137,154,0.12); color: var(--teal); border: 1px solid rgba(39,137,154,0.22); }
+
+  /* ─── HOW IT WORKS ─── */
+  #pacerai-homepage .how-section { background: var(--navy-mid); border-top: 1px solid var(--navy-border); border-bottom: 1px solid var(--navy-border); }
+  #pacerai-homepage .steps-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 64px;
+  }
+  #pacerai-homepage .step {
+    padding: 32px; border-right: 1px solid var(--navy-border);
+    position: relative;
+  }
+  #pacerai-homepage .step:last-child { border-right: none; }
+  #pacerai-homepage .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px; font-weight: 300; color: rgba(39,137,154,0.18);
+    line-height: 1; margin-bottom: 16px;
+  }
+  #pacerai-homepage .step-icon {
+    width: 40px; height: 40px;
+    background: rgba(39,137,154,0.10);
+    border: 1px solid rgba(39,137,154,0.18);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 16px;
+  }
+  #pacerai-homepage .step h4 {
+    font-size: 15px; font-weight: 600; color: var(--white);
+    margin-bottom: 10px;
+  }
+  #pacerai-homepage .step p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  #pacerai-homepage .step-connector {
+    position: absolute; top: 42px; right: -1px;
+    width: 18px; height: 18px;
+    background: var(--teal);
+    clip-path: polygon(0 50%, 60% 0, 100% 50%, 60% 100%);
+    z-index: 1;
+  }
+  #pacerai-homepage .step:last-child .step-connector { display: none; }
+
+  /* ─── PLATFORM PILLARS ─── */
+  #pacerai-homepage .pillars-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    margin-top: 64px; border: 1px solid var(--navy-border); border-radius: 16px; overflow: hidden;
+  }
+  #pacerai-homepage .pillar {
+    background: var(--navy-mid); padding: 36px;
+    transition: background 0.2s;
+  }
+  #pacerai-homepage .pillar:hover { background: var(--navy-light); }
+  #pacerai-homepage .pillar-icon {
+    font-size: 28px; margin-bottom: 20px;
+    display: block;
+  }
+  #pacerai-homepage .pillar h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500; color: var(--white);
+    margin-bottom: 10px; line-height: 1.2;
+  }
+  #pacerai-homepage .pillar p { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+  #pacerai-homepage .pillar ul {
+    list-style: none; margin-top: 18px;
+  }
+  #pacerai-homepage .pillar ul li {
+    font-size: 13px; color: var(--text-mid);
+    padding: 5px 0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #pacerai-homepage .pillar ul li::before {
+    content: ''; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--teal); flex-shrink: 0;
+  }
+
+  /* ─── QUOTE / TESTIMONIAL ─── */
+  #pacerai-homepage .quote-section { padding: 100px 48px; }
+  #pacerai-homepage .quote-inner {
+    max-width: 800px; margin: 0 auto; text-align: center;
+  }
+  #pacerai-homepage .quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px; color: rgba(39,137,154,0.12);
+    line-height: 0.5; margin-bottom: 24px;
+    display: block;
+  }
+  #pacerai-homepage blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 300; font-style: italic;
+    color: var(--white); line-height: 1.5;
+    margin-bottom: 32px;
+  }
+  #pacerai-homepage .quote-attr {
+    font-size: 13px; color: var(--muted); letter-spacing: 0.06em;
+  }
+  #pacerai-homepage .quote-attr strong { color: var(--text-light); font-weight: 600; }
+
+  /* ─── CTA ─── */
+  #pacerai-homepage .cta-section {
+    padding: 100px 48px;
+    background: var(--navy-mid);
+    border-top: 1px solid var(--navy-border);
+  }
+  #pacerai-homepage .cta-inner {
+    max-width: 640px; margin: 0 auto; text-align: center;
+  }
+  #pacerai-homepage .cta-inner h2 { font-size: clamp(32px, 4vw, 52px); }
+  #pacerai-homepage .cta-inner p { color: var(--text-mid); font-size: 16px; margin: 18px 0 40px; line-height: 1.7; }
+  #pacerai-homepage .cta-buttons {
+    display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+  }
+
+  /* ─── FOOTER ─── */
+  #pacerai-homepage footer {
+    background: var(--navy);
+    border-top: 1px solid var(--navy-border);
+    padding: 80px 48px 40px;
+  }
+  #pacerai-homepage .footer-top {
+    display: grid;
+    grid-template-columns: 240px 1fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 64px;
+    border-bottom: 1px solid var(--navy-border);
+    margin-bottom: 40px;
+  }
+  #pacerai-homepage .footer-brand p {
+    font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 16px;
+  }
+  #pacerai-homepage .footer-col-head {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-light);
+    margin-bottom: 20px;
+  }
+  #pacerai-homepage .footer-col ul { list-style: none; }
+  #pacerai-homepage .footer-col ul li { margin-bottom: 10px; }
+  #pacerai-homepage .footer-col ul li a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-homepage .footer-col ul li a:hover { color: var(--teal); }
+
+  #pacerai-homepage .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  #pacerai-homepage .footer-bottom .copy {
+    font-size: 12px; color: var(--muted); letter-spacing: 0.03em;
+  }
+  #pacerai-homepage .footer-bottom .legal {
+    display: flex; gap: 24px;
+  }
+  #pacerai-homepage .footer-bottom .legal a {
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-homepage .footer-bottom .legal a:hover { color: var(--text-mid); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    #pacerai-homepage from { opacity: 0; transform: translateY(20px); }
+    #pacerai-homepage to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Tag badge on nav */
+  #pacerai-homepage .nav-new {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 2px 6px; border-radius: 3px;
+    background: rgba(45,184,122,0.15); color: var(--green);
+    border: 1px solid rgba(45,184,122,0.2);
+    margin-left: 4px;
+  }
+
+  /* ─── HERO BADGE ROW ─── */
+  #pacerai-homepage .hero-badges {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 0;
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid var(--navy-border);
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  #pacerai-homepage .hero-badge {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 32px;
+  }
+  #pacerai-homepage .hero-badge:first-child { padding-left: 0; }
+  #pacerai-homepage .badge-icon { font-size: 18px; flex-shrink: 0; }
+  #pacerai-homepage .badge-label {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--text-light);
+    white-space: nowrap;
+  }
+  #pacerai-homepage .badge-sep { width: 1px; height: 32px; background: var(--navy-border); }
+
+  /* ─── EMPATHY / GUIDE SECTION ─── */
+  #pacerai-homepage .empathy-section {
+    padding: 100px 48px;
+    background: var(--navy-mid);
+    border-top: 1px solid var(--navy-border);
+    border-bottom: 1px solid var(--navy-border);
+  }
+  #pacerai-homepage .empathy-inner { max-width: 1080px; margin: 0 auto; }
+  #pacerai-homepage .empathy-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: start; margin-top: 64px;
+  }
+  #pacerai-homepage .mistake-list { list-style: none; }
+  #pacerai-homepage .mistake-list li {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--navy-border);
+  }
+  #pacerai-homepage .mistake-list li:first-child { padding-top: 0; }
+  #pacerai-homepage .mistake-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    background: rgba(201,76,76,0.08);
+    border: 1px solid rgba(201,76,76,0.15);
+    margin-top: 2px;
+  }
+  #pacerai-homepage .mistake-text strong {
+    display: block; font-size: 14px; font-weight: 600; color: var(--white);
+    margin-bottom: 4px; line-height: 1.3;
+  }
+  #pacerai-homepage .mistake-text p {
+    font-size: 13px; color: var(--muted); line-height: 1.6;
+  }
+
+  #pacerai-homepage .expert-card {
+    background: var(--navy-light);
+    border: 1px solid var(--navy-border);
+    border-radius: 16px; padding: 40px;
+    position: relative; overflow: hidden;
+  }
+  #pacerai-homepage .expert-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--brand), var(--brand-blue), var(--teal), var(--teal-light));
+  }
+  #pacerai-homepage .expert-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400; font-style: italic;
+    color: var(--white); line-height: 1.5; margin-bottom: 28px;
+  }
+  #pacerai-homepage .expert-quote em { color: var(--teal); font-style: normal; font-weight: 600; }
+  #pacerai-homepage .expert-credentials { list-style: none; margin-bottom: 32px; }
+  #pacerai-homepage .expert-credentials li {
+    font-size: 13.5px; color: var(--text-mid); padding: 7px 0;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid rgba(30,45,74,0.6);
+  }
+  #pacerai-homepage .expert-credentials li::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--teal); flex-shrink: 0;
+  }
+  #pacerai-homepage .expert-cta-text {
+    font-size: 14px; font-weight: 600; color: var(--white);
+    line-height: 1.5; margin-bottom: 24px;
+  }
+  #pacerai-homepage .expert-cta-text span { color: var(--teal); }
+
+  /* Divider */
+  #pacerai-homepage .divider { width: 40px; height: 2px; background: var(--teal); margin: 24px 0; }
+
+  /* ═══════════════════════════════════════════════════════════════
+     MOBILE RESPONSIVE — max-width: 768px
+     ═══════════════════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+
+    /* ─── NAV (mobile) ─── */
+    #pacerai-homepage nav {
+      padding: 0 16px;
+      height: 56px;
+    }
+    /* Remove backdrop-filter on mobile nav — it creates a containing block
+       that traps position:fixed children inside the 56px nav */
+    #pacerai-homepage nav {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: #080E1C;
+      overflow: visible;
+    }
+    #pacerai-homepage .nav-links {
+      display: none !important;
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      bottom: 0;
+      background: #080E1C;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px 20px;
+      overflow-y: auto;
+      z-index: 200;
+      border-top: 1px solid var(--navy-border);
+      list-style: none;
+    }
+    #pacerai-homepage .nav-links.mobile-open {
+      display: flex !important;
+    }
+    #pacerai-homepage .nav-links > li {
+      border-bottom: 1px solid var(--navy-border);
+    }
+    #pacerai-homepage .nav-links > li > a {
+      padding: 16px 0;
+      font-size: 16px;
+      border-bottom: none;
+      display: flex;
+      justify-content: space-between;
+      color: #CDD5E0;
+    }
+    #pacerai-homepage .nav-links > li > a:hover { background: none; }
+    /* Mobile dropdowns: show inline instead of absolute */
+    #pacerai-homepage .nav-links .dropdown {
+      position: static !important;
+      transform: none !important;
+      min-width: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 0 12px 16px !important;
+      border-radius: 0 !important;
+      padding-top: 0 !important;
+    }
+    #pacerai-homepage .nav-links .dropdown::before { display: none; }
+    #pacerai-homepage .nav-links > li:hover .dropdown { display: none !important; }
+    #pacerai-homepage .nav-links > li.mobile-expanded .dropdown { display: block !important; }
+    #pacerai-homepage .nav-links .dropdown a {
+      padding: 10px 0;
+      font-size: 14px;
+      color: #94A3B8;
+    }
+    #pacerai-homepage .nav-links .dropdown-grid {
+      grid-template-columns: 1fr;
+    }
+    /* Mobile: show Log In link at bottom of menu */
+    #pacerai-homepage .nav-right .btn-ghost { display: none; }
+    #pacerai-homepage .nav-right .btn-teal {
+      padding: 7px 14px;
+      font-size: 12px;
+    }
+    /* Hamburger button */
+    #pacerai-homepage .mobile-menu-btn {
+      display: flex !important;
+    }
+
+    /* ─── HERO (mobile) ─── */
+    #pacerai-homepage .hero {
+      min-height: auto;
+      padding: 80px 20px 60px;
+    }
+    #pacerai-homepage h1 {
+      font-size: 36px;
+      max-width: 100%;
+    }
+    #pacerai-homepage .hero-sub {
+      font-size: 15px;
+      margin: 18px auto 28px;
+    }
+    #pacerai-homepage .hero-ctas {
+      flex-direction: column;
+      width: 100%;
+    }
+    #pacerai-homepage .hero-ctas .btn-lg,
+    #pacerai-homepage .hero-ctas .btn-outline-lg {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+
+    /* Hero stats */
+    #pacerai-homepage .hero-stats {
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      margin-top: 40px;
+      padding-top: 24px;
+    }
+    #pacerai-homepage .stat-divider { display: none; }
+    #pacerai-homepage .hero-stat { text-align: center; }
+
+    /* Hero badges */
+    #pacerai-homepage .hero-badges {
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      margin-top: 32px;
+      padding-top: 24px;
+    }
+    #pacerai-homepage .badge-sep { display: none; }
+    #pacerai-homepage .hero-badge {
+      padding: 0;
+      justify-content: center;
+    }
+
+    /* ─── DASHBOARD PREVIEW (mobile) ─── */
+    #pacerai-homepage .preview-section {
+      padding: 0 16px 60px;
+    }
+    #pacerai-homepage .arr-grid {
+      grid-template-columns: 100px repeat(5, 1fr);
+      font-size: 10px;
+      overflow-x: auto;
+    }
+    #pacerai-homepage .arr-header { font-size: 8px; padding: 6px 6px; }
+    #pacerai-homepage .arr-cell { padding: 6px 6px; font-size: 10px; }
+    #pacerai-homepage .metric-cards {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    #pacerai-homepage .metric-card .mc-val { font-size: 22px; }
+    #pacerai-homepage .frame-content { padding: 14px; }
+
+    /* ─── LOGO STRIP (mobile) ─── */
+    #pacerai-homepage .logo-strip { padding: 32px 16px; }
+    #pacerai-homepage .logo-row { gap: 24px; }
+    #pacerai-homepage .logo-item { height: 44px; }
+    #pacerai-homepage .logo-item img { height: 44px; }
+
+    /* ─── SECTIONS (mobile padding) ─── */
+    #pacerai-homepage .section { padding: 60px 20px; }
+
+    /* ─── USE CASES (mobile) ─── */
+    #pacerai-homepage .uc-grid {
+      grid-template-columns: 1fr;
+    }
+    #pacerai-homepage .uc-card { padding: 28px 20px; }
+    #pacerai-homepage .uc-card.primary { grid-column: 1; }
+    #pacerai-homepage .uc-card.primary h3 { font-size: 24px; }
+    #pacerai-homepage .uc-card h3 { font-size: 22px; }
+    #pacerai-homepage .uc-menu-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    #pacerai-homepage .uc-menu-item {
+      white-space: normal;
+      font-size: 11px;
+      padding: 8px 8px;
+    }
+    #pacerai-homepage .arr-pill-row { flex-wrap: wrap; }
+
+    /* ─── HOW IT WORKS (mobile) ─── */
+    #pacerai-homepage .steps-row {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    #pacerai-homepage .step {
+      padding: 24px 20px;
+      border-right: none;
+      border-bottom: 1px solid var(--navy-border);
+    }
+    #pacerai-homepage .step:last-child { border-bottom: none; }
+    #pacerai-homepage .step-connector { display: none; }
+
+    /* ─── PLATFORM PILLARS (mobile) ─── */
+    #pacerai-homepage .pillars-grid {
+      grid-template-columns: 1fr;
+    }
+    #pacerai-homepage .pillar { padding: 28px 20px; }
+
+    /* ─── EMPATHY / GUIDE (mobile) ─── */
+    #pacerai-homepage .empathy-section { padding: 60px 20px; }
+    #pacerai-homepage .empathy-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    #pacerai-homepage .expert-card { padding: 28px 20px; }
+    #pacerai-homepage .expert-quote { font-size: 18px; }
+
+    /* ─── QUOTE (mobile) ─── */
+    #pacerai-homepage .quote-section { padding: 60px 20px; }
+    #pacerai-homepage .quote-mark { font-size: 80px; }
+    #pacerai-homepage blockquote { font-size: 20px; }
+
+    /* ─── CTA (mobile) ─── */
+    #pacerai-homepage .cta-section { padding: 60px 20px; }
+    #pacerai-homepage .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+    #pacerai-homepage .cta-buttons .btn-lg,
+    #pacerai-homepage .cta-buttons .btn-outline-lg {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+
+    /* ─── FOOTER (mobile) ─── */
+    #pacerai-homepage footer { padding: 48px 20px 32px; }
+    #pacerai-homepage .footer-top {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+    }
+    #pacerai-homepage .footer-brand {
+      grid-column: 1 / -1;
+    }
+    #pacerai-homepage .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    #pacerai-homepage .footer-bottom .legal {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     TABLET RESPONSIVE — max-width: 1024px
+     ═══════════════════════════════════════════════════════════════ */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    #pacerai-homepage nav { padding: 0 24px; }
+    #pacerai-homepage .nav-links > li > a {
+      padding: 8px 8px;
+      font-size: 12px;
+    }
+    #pacerai-homepage .section { padding: 80px 24px; }
+    #pacerai-homepage .preview-section { padding: 0 24px 80px; }
+    #pacerai-homepage .pillars-grid { grid-template-columns: 1fr 1fr; }
+    #pacerai-homepage .steps-row { grid-template-columns: repeat(2, 1fr); }
+    #pacerai-homepage .step:nth-child(2) { border-right: none; }
+    #pacerai-homepage .step:nth-child(2) .step-connector { display: none; }
+    #pacerai-homepage .empathy-grid { gap: 40px; }
+    #pacerai-homepage .footer-top {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+    }
+    #pacerai-homepage .footer-brand { grid-column: 1 / -1; }
+    #pacerai-homepage footer { padding: 60px 24px 32px; }
+  }
+
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://getpacerai.com/#organization",
+      "name": "Pacer AI",
+      "url": "https://getpacerai.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://getpacerai.com/wp-content/uploads/2025/04/PacerAI_Logo_Horizontal_Full-Color-scaled.webp"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/getpacerai",
+        "https://www.youtube.com/@PacerAI"
+      ],
+      "description": "Pacer AI is an ARR intelligence platform for PE-backed SaaS companies. It automates ARR snowball reporting, revenue waterfall analysis, and board-ready financial decks for companies at $50M–$1B ARR."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://getpacerai.com/#website",
+      "name": "Pacer AI",
+      "url": "https://getpacerai.com",
+      "publisher": {"@id": "https://getpacerai.com/#organization"}
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://getpacerai.com/#webpage",
+      "name": "Pacer AI — ARR Intelligence for PE-Backed SaaS",
+      "url": "https://getpacerai.com",
+      "isPartOf": {"@id": "https://getpacerai.com/#website"},
+      "about": {"@id": "https://getpacerai.com/#organization"},
+      "description": "Pacer AI automates ARR snowball reporting, revenue waterfall analysis, and board-ready financial decks for PE-backed SaaS companies at $50M–$1B ARR."
+    }
+  ]
+}
+</script>
+
+<div id="pacerai-homepage">
+<!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
+<nav>
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span style="font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+  </a>
+
+  <ul class="nav-links">
+    <li>
+      <a href="#">Platform <span class="chevron">▾</span></a>
+      <div class="dropdown single-dropdown" style="min-width:200px">
+        <a href="/platform/overview/">Overview</a>
+        <a href="#">Data Ingestion</a>
+        <a href="#">Fabric + Power BI</a>
+        <a href="#">AI Agents</a>
+        <a href="#">Excel + Copilot</a>
+        <a href="#">Security &amp; Compliance</a>
+      </div>
+    </li>
+    <li>
+      <a href="#">Solutions <span class="chevron">▾</span></a>
+      <div class="dropdown" style="min-width:560px">
+        <div class="dropdown-grid">
+          <div>
+            <div class="dropdown-col-label">Use Cases</div>
+            <a href="/solutions/arr-snowball-board-reporting/"><div class="d-icon">📊</div><div class="d-text"><span class="d-title">ARR Snowball Board Reporting</span><span class="d-desc">Board-ready waterfall models in minutes</span></div></a>
+            <a href="/solutions/customer-data-cube/"><div class="d-icon">🧊</div><div class="d-text"><span class="d-title">Customer Data Cube</span><span class="d-desc">Unified customer revenue analytics</span></div></a>
+            <a href="#"><div class="d-icon">📁</div><div class="d-text"><span class="d-title">Virtual Data Room</span><span class="d-desc">Investor-grade data room automation</span></div></a>
+            <a href="#"><div class="d-icon">🚀</div><div class="d-text"><span class="d-title">Exit Readiness</span><span class="d-desc">M&amp;A-grade revenue due diligence prep</span></div></a>
+          </div>
+          <div>
+            <div class="dropdown-col-label">Industry</div>
+            <a href="#"><div class="d-icon">☁️</div><div class="d-text"><span class="d-title">B2B SaaS</span><span class="d-desc">$50M–$1B ARR companies</span></div></a>
+            <a href="#"><div class="d-icon">💼</div><div class="d-text"><span class="d-title">PE-Backed SaaS</span><span class="d-desc">Portfolio company reporting</span></div></a>
+            <a href="#"><div class="d-icon">📈</div><div class="d-text"><span class="d-title">Pre-IPO SaaS</span><span class="d-desc">S-1 ready revenue metrics</span></div></a>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li>
+      <a href="#">Resources <span class="chevron">▾</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/blog/">Blog</a>
+        <a href="#">Agents of Insight Newsletter</a>
+        <a href="#">ARR Snowball Guide</a>
+        <a href="#">Templates &amp; Frameworks</a>
+        <a href="#">Documentation</a>
+        <a href="#">Webinars</a>
+      </div>
+    </li>
+    <li><a href="#">Partners</a></li>
+    <li><a href="#">Case Studies</a></li>
+    <li>
+      <a href="#">Company <span class="chevron">▾</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/company/about/">About</a>
+        <a href="#">Founders Story</a>
+        <a href="#">Careers</a>
+        <a href="/company/contact/">Contact</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
+    <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=document.querySelector('#pacerai-homepage nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines">
+    <svg viewBox="0 0 1200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 100 Q200 40 400 90 T800 70 T1200 95" stroke="#27899A" stroke-width="0.8" fill="none"/>
+      <path d="M0 130 Q300 80 500 120 T900 100 T1200 125" stroke="#27899A" stroke-width="0.4" fill="none"/>
+    </svg>
+  </div>
+
+  <div class="hero-eyebrow">
+    <span class="dot"></span>
+    ARR Snowball Board Reporting · Built for B2B SaaS
+  </div>
+
+  <!-- H1: Primary keyword front-loaded. Cormorant serif gives it editorial weight. -->
+  <h1>Your ARR Snowball Report.<br><em>Automated.</em> Board-Ready.</h1>
+
+  <!-- Supporting copy -->
+  <p class="hero-sub">
+    Pacer AI transforms your Revenue data — CRM, billing, and reported — into due diligence-grade ARR Snowball reports, automatically. From raw data to board quality in days, not months.
+  </p>
+
+  <div class="hero-ctas">
+    <a href="https://calendly.com/pacerai" class="btn-lg">See a Live ARR Demo →</a>
+    <a href="/platform/overview/" class="btn-outline-lg">How It Works</a>
+  </div>
+
+  <!-- Micro-copy: trust signals below CTA -->
+  <p style="position:relative;z-index:1;font-size:12px;color:var(--muted);margin-top:16px;letter-spacing:0.04em;">
+    A Data Team in a box that transforms raw data to AI-ready data in Excel to work with Claude, GPT, Copilot.
+  </p>
+
+  <!-- Credential badges replacing stats ticker -->
+  <div class="hero-badges">
+    <div class="hero-badge">
+      <span class="badge-icon">🏦</span>
+      <span class="badge-label">Investor Grade</span>
+    </div>
+    <div class="badge-sep"></div>
+    <div class="hero-badge">
+      <span class="badge-icon">🛡️</span>
+      <span class="badge-label">Defensible</span>
+    </div>
+    <div class="badge-sep"></div>
+    <div class="hero-badge">
+      <span class="badge-icon">⚙️</span>
+      <span class="badge-label">Operational</span>
+    </div>
+    <div class="badge-sep"></div>
+    <div class="hero-badge">
+      <span class="badge-icon">📐</span>
+      <div>
+        <span class="badge-label">Over $2B ARR Analyzed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ DASHBOARD PREVIEW ═══════════════════════════════════════ -->
+<section class="preview-section">
+  <div class="dashboard-frame">
+    <div class="frame-bar">
+      <div class="frame-dot" style="background:#C94C4C"></div>
+      <div class="frame-dot" style="background:#27899A"></div>
+      <div class="frame-dot" style="background:#70C49C"></div>
+      <span class="frame-title">Pacer AI — MRR Waterfall + AI Chat · Live Product</span>
+      <span class="frame-badge">● Beta</span>
+    </div>
+    <div style="padding:0;overflow:hidden;border-radius:0 0 15px 15px;line-height:0;">
+      <img
+        src="https://getpacerai.com/wp-content/uploads/2026/03/Pacer-AI-MRR-Waterfall-and-chart.png"
+        alt="Pacer AI dashboard showing MRR waterfall analysis alongside the AI chat agent"
+        style="width:100%;display:block;border-radius:0 0 15px 15px;"
+      >
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ LOGO STRIP ═══════════════════════════════════════ -->
+<div class="logo-strip">
+  <div class="ls-label">Trusted by Revenue teams at leading companies</div>
+  <div class="logo-row">
+    <span class="logo-item"><img src="https://getpacerai.com/wp-content/uploads/2026/03/Brandwatch.jpg" alt="Brandwatch"></span>
+    <span class="logo-item"><img src="https://getpacerai.com/wp-content/uploads/2026/03/Fortis-Life-Science-purple-logo.jpeg" alt="Fortis Life Science"></span>
+    <span class="logo-item"><img src="https://getpacerai.com/wp-content/uploads/2026/03/Platinum-Equity-logo.png" alt="Platinum Equity" style="height:180px"></span>
+    <span class="logo-item"><img src="https://getpacerai.com/wp-content/uploads/2026/03/Semrush-Logo.png" alt="Semrush"></span>
+    <span class="logo-item"><img src="https://getpacerai.com/wp-content/uploads/2026/03/SUMMIT-Partners-Logo.png" alt="Summit Partners" style="height:50px"></span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════ EMPATHY / THE PROBLEM ═══════════════════════════════════════ -->
+<section class="empathy-section">
+  <div class="empathy-inner">
+    <div class="section-eyebrow">Why ARR Snowballs Fail In-House</div>
+    <h2>Your data team is smart.<br>They've just never built an <em>investor-grade</em> ARR Snowball before.</h2>
+
+    <div class="empathy-grid">
+      <!-- Left: categorized problem list -->
+      <div>
+        <ul class="mistake-list">
+          <li>
+            <div class="mistake-icon">⏳</div>
+            <div class="mistake-text">
+              <strong>Time — 6+ months just to build the data cube</strong>
+              <p>Source decisions, level of granularity, period reporting, static vs. streaming — each decision compounds the timeline before a single waterfall row is written.</p>
+            </div>
+          </li>
+          <li>
+            <div class="mistake-icon">👥</div>
+            <div class="mistake-text">
+              <strong>Team Size — 6+ members, including rare ARR expertise</strong>
+              <p>You need a Financial Analyst, Data Engineer, Analytics Engineer, and at least one person with deep ARR modelling experience. That combination is hard to staff and expensive to retain.</p>
+            </div>
+          </li>
+          <li>
+            <div class="mistake-icon">📋</div>
+            <div class="mistake-text">
+              <strong>Output — a table is not a board report</strong>
+              <p>Displaying numbers is one thing. Addressing ARR drivers by cohort and translating them into business implications for a board or acquirer is an entirely different skill set.</p>
+            </div>
+          </li>
+          <li>
+            <div class="mistake-icon">🤝</div>
+            <div class="mistake-text">
+              <strong>Non-Operational — insights never impact sales</strong>
+              <p>Financial and data-mining insights sit in dashboards. They rarely reach the sales floor in a form reps can act on — territory planning, renewal risk, upsell prioritization.</p>
+            </div>
+          </li>
+          <li>
+            <div class="mistake-icon">🎯</div>
+            <div class="mistake-text">
+              <strong>Deep Expertise — hierarchy, architecture, presentation</strong>
+              <p>An expert is needed to guide decisions on data hierarchy, bridge definitions, presentation methods, operational requirements, and technical architecture. Most teams are making these calls without one.</p>
+            </div>
+          </li>
+          <li>
+            <div class="mistake-icon">🔭</div>
+            <div class="mistake-text">
+              <strong>New lens — a new way of seeing your business, with no guide</strong>
+              <p>ARR Snowball analysis changes how leadership understands the business. But without someone to lead that transformation, the insights never land — and the investment in the model goes unrealized.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right: expert card -->
+      <div>
+        <div class="expert-card">
+          <p class="expert-quote">
+            "ARR Snowballs are hard and directly impact valuation.<br>Don't make them an <em>'Also, can you'</em> task for your data team."
+          </p>
+          <ul class="expert-credentials">
+            <li>Over 40 customer data cubes built from raw CRM &amp; billing data</li>
+            <li>ARR defended in live M&amp;A due diligence processes</li>
+            <li>Big 4 Financial Due Diligence background (PwC TMT)</li>
+            <li>Purpose-built for $50M – $1B ARR SaaS companies</li>
+            <li>Microsoft Fabric · Power BI · Copilot in Excel stack</li>
+          </ul>
+          <p class="expert-cta-text">
+            Rely on an expert who has <span>built the model, defended the numbers,</span> and operationalized the insights for revenue teams — not just drawn the chart.
+          </p>
+          <a href="https://calendly.com/pacerai" class="btn-lg" style="display:inline-block;">Schedule an ARR Audit →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ USE CASES ═══════════════════════════════════════ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="use-cases-header">
+      <div class="section-eyebrow">Solutions</div>
+      <h2>Pacer AI Accelerate:<br><em>ARR Growth. Revenue Operations. ARR Reporting.</em></h2>
+      <p class="section-lead" style="margin-top:12px;">Nine use cases. One platform. Built on the same institutional frameworks used in Big 4 Financial Due Diligence.</p>
+
+      <!-- CFO testimonial pull quote -->
+      <div style="margin-top:36px;margin-bottom:8px;padding:28px 36px;background:var(--navy-light);border:1px solid var(--navy-border);border-left:3px solid var(--teal);border-radius:10px;max-width:680px;">
+        <p style="font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:400;font-style:italic;color:var(--white);line-height:1.5;margin-bottom:14px;">"I wish I had this level of insight years ago."</p>
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">B2B SaaS CFO &nbsp;·&nbsp; $100M ARR</span>
+      </div>
+
+      <!-- Full use case menu strip -->
+      <div class="uc-menu-strip">
+        <a href="/solutions/arr-snowball-board-reporting/" class="uc-menu-item active">ARR Snowball<br>Board Reporting</a>
+        <a href="/solutions/customer-data-cube/" class="uc-menu-item">Customer<br>Data Cube</a>
+        <a href="https://calendly.com/pacerai" class="uc-menu-item">Expansion<br>Enablement</a>
+        <a href="https://calendly.com/pacerai" class="uc-menu-item">Whitespace<br>Visibility</a>
+        <a href="https://calendly.com/pacerai" class="uc-menu-item">Bottoms-Up<br>Forecasting</a>
+        <a href="https://calendly.com/pacerai" class="uc-menu-item">Roll-Fwd Sales<br>Planning by Cohort</a>
+        <a href="https://calendly.com/pacerai" class="uc-menu-item">Virtual<br>Data Room</a>
+        <a href="https://calendly.com/pacerai" class="uc-menu-item">Exit Readiness<br>Package</a>
+        <a href="https://calendly.com/pacerai" class="uc-menu-item">Investor<br>Diligence</a>
+      </div>
+    </div>
+
+    <!-- 5-card featured grid -->
+    <div class="uc-grid">
+      <!-- 01: Primary full-width -->
+      <div class="uc-card primary">
+        <span class="uc-num">01</span>
+        <div class="uc-tag">⭐ Flagship</div>
+        <h3>ARR Snowball Board Reporting</h3>
+        <p>Automate your entire Monthly Business Review and board deck. Pacer AI ingests CRM and billing data, runs it through Microsoft Fabric, and delivers a complete ARR waterfall model — new business, upsell, cross-sell, churn, contraction — with board-quality Power BI visuals. No spreadsheets. No manual reconciliation.</p>
+        <div class="arr-pill-row">
+          <span class="arr-pill pos">+ New ARR</span>
+          <span class="arr-pill pos">+ Upsell</span>
+          <span class="arr-pill pos">+ Cross-sell</span>
+          <span class="arr-pill neg">− Churn</span>
+          <span class="arr-pill neg">− Contraction</span>
+          <span class="arr-pill neutral">NRR &amp; GRR</span>
+          <span class="arr-pill gold">Board Deck Ready</span>
+        </div>
+        <a href="/solutions/arr-snowball-board-reporting/" class="uc-link">Explore ARR Snowball →</a>
+      </div>
+
+      <!-- 02 + 03: Side by side -->
+      <div class="uc-card secondary">
+        <span class="uc-num">02</span>
+        <div class="uc-tag" style="background:rgba(39,137,154,0.1);color:var(--teal);border-color:rgba(39,137,154,0.2)">ARR Growth</div>
+        <h3>Customer Data Cube Development</h3>
+        <p>Build a unified customer analytics layer across CRM, billing, and product usage. The data foundation every other use case runs on — dimensionally modeled, ARR-reconciled, and AI-ready for Excel, Copilot, and Claude.</p>
+        <a href="/solutions/customer-data-cube/" class="uc-link">Learn More →</a>
+      </div>
+
+      <div class="uc-card secondary">
+        <span class="uc-num">03</span>
+        <div class="uc-tag" style="background:rgba(39,137,154,0.1);color:var(--teal);border-color:rgba(39,137,154,0.2)">Revenue Operations</div>
+        <h3>Whitespace Visibility</h3>
+        <p>Identify upsell and cross-sell opportunities hiding in your customer base. Segment by cohort, product attach rate, ARR tier, and industry to surface the highest-probability expansion targets your reps should be working today.</p>
+        <a href="https://calendly.com/pacerai" class="uc-link">Learn More →</a>
+      </div>
+
+      <!-- 04 + 05: Side by side -->
+      <div class="uc-card secondary">
+        <span class="uc-num">04</span>
+        <div class="uc-tag" style="background:rgba(39,137,154,0.1);color:var(--teal);border-color:rgba(39,137,154,0.2)">ARR Reporting</div>
+        <h3>Bottoms-Up Forecasting</h3>
+        <p>Build a revenue forecast from the account level up — not top-down assumptions. Combine renewal probability, expansion signals, and pipeline data into a single ARR-grounded model that finance and sales can align on.</p>
+        <a href="https://calendly.com/pacerai" class="uc-link">Learn More →</a>
+      </div>
+
+      <div class="uc-card secondary">
+        <span class="uc-num">05</span>
+        <div class="uc-tag" style="background:rgba(39,137,154,0.1);color:var(--teal);border-color:rgba(39,137,154,0.2)">Exit Readiness</div>
+        <h3>Exit Readiness Package</h3>
+        <p>Automate the full investor diligence package — VDR population, Quality of Earnings exhibits, and Quality of Revenue analysis — built on Big 4 Financial Due Diligence frameworks. Ready when the process starts, not weeks after.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(39,137,154,0.08);color:var(--teal);border:1px solid rgba(39,137,154,0.18);">VDR</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(39,137,154,0.08);color:var(--teal);border:1px solid rgba(39,137,154,0.18);">QoE</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(39,137,154,0.08);color:var(--teal);border:1px solid rgba(39,137,154,0.18);">QoR</span>
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(39,137,154,0.08);color:var(--teal);border:1px solid rgba(39,137,154,0.18);">M&amp;A Readiness</span>
+        </div>
+        <a href="https://calendly.com/pacerai" class="uc-link">Learn More →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ HOW IT WORKS ═══════════════════════════════════════ -->
+<section class="section how-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">How It Works</div>
+    <h2>From raw data to board deck<br>in <em>four steps</em></h2>
+    <p class="section-lead">Pacer AI runs on Microsoft's enterprise data stack — Fabric, Power BI, and Copilot — so your data never leaves your control.</p>
+
+    <div class="steps-row">
+      <div class="step">
+        <div class="step-connector"></div>
+        <div class="step-num">01</div>
+        <div class="step-icon">⚡</div>
+        <h4>Ingest</h4>
+        <p>Connect your CRM (Salesforce, HubSpot) and billing systems (Stripe, Zuora, Chargebee). Pacer AI normalizes your revenue data automatically.</p>
+      </div>
+      <div class="step">
+        <div class="step-connector"></div>
+        <div class="step-num">02</div>
+        <div class="step-icon">🔧</div>
+        <h4>Transform</h4>
+        <p>Microsoft Fabric pipelines clean, reconcile, and structure your ARR data into a dimensionally-modeled revenue warehouse.</p>
+      </div>
+      <div class="step">
+        <div class="step-connector"></div>
+        <div class="step-num">03</div>
+        <div class="step-icon">📊</div>
+        <h4>Analyze</h4>
+        <p>Power BI dashboards and Excel-embedded Copilot let your team slice ARR by segment, cohort, rep, and channel in real time.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon">📋</div>
+        <h4>Present</h4>
+        <p>One-click board report generation. Pacer AI assembles your ARR Snowball narrative with visuals, commentary, and variance analysis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ PLATFORM PILLARS ═══════════════════════════════════════ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Platform</div>
+    <h2>Built on the enterprise stack<br>your team <em>already trusts</em></h2>
+
+    <div class="pillars-grid">
+      <div class="pillar">
+        <span class="pillar-icon">🏗️</span>
+        <h4>Microsoft Fabric Data Platform</h4>
+        <p>End-to-end data engineering on Microsoft's unified analytics platform. From raw CRM events to curated revenue metrics.</p>
+        <ul>
+          <li>Lakehouse architecture</li>
+          <li>Automated ETL pipelines</li>
+          <li>Delta Lake storage</li>
+          <li>Real-time data refresh</li>
+        </ul>
+      </div>
+      <div class="pillar">
+        <span class="pillar-icon">📈</span>
+        <h4>Power BI Revenue Dashboards</h4>
+        <p>Board-ready ARR Snowball visuals, waterfall charts, and cohort analyses embedded directly in your reporting workflow.</p>
+        <ul>
+          <li>ARR waterfall templates</li>
+          <li>NRR & GRR scorecards</li>
+          <li>Cohort retention heatmaps</li>
+          <li>Embedded in Teams & SharePoint</li>
+        </ul>
+      </div>
+      <div class="pillar">
+        <span class="pillar-icon">🤖</span>
+        <h4>AI Agents & Copilot in Excel</h4>
+        <p>Conversational revenue intelligence. Ask your ARR data questions in plain English via Claude and Microsoft Copilot in Excel.</p>
+        <ul>
+          <li>Natural language queries</li>
+          <li>Variance explanation AI</li>
+          <li>Forecast scenario modeling</li>
+          <li>Auto-generated commentary</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ QUOTE ═══════════════════════════════════════ -->
+<section class="quote-section">
+  <div class="quote-inner">
+    <span class="quote-mark">"</span>
+    <blockquote>
+      "Our board used to get a 40-page slide deck assembled over three weekends. Now Pacer AI produces the ARR Snowball in an afternoon — and the commentary actually explains the variances."
+    </blockquote>
+    <div class="quote-attr">
+      <strong>CFO, Series C B2B SaaS Company</strong> · $85M ARR
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ CTA ═══════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="section-eyebrow" style="text-align:center">Get Started</div>
+    <h2>Your next board meeting<br>starts <em>here</em></h2>
+    <p>See how Pacer AI transforms your revenue data into a board-ready ARR Snowball report. Live demo with your actual metrics.</p>
+    <div class="cta-buttons">
+      <a href="https://calendly.com/pacerai" class="btn-lg">Request a Live Demo</a>
+      <a href="/company/contact/" class="btn-outline-lg">Talk to a RevOps Expert</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <svg width="28" height="24" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2 2 L11 14 L2 26" stroke="#4A7FA8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+      </a>
+      <p>Institutional-grade ARR intelligence for high-growth SaaS companies. Built on Microsoft Fabric, Power BI, and AI.</p>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Platform</div>
+      <ul>
+        <li><a href="/platform/overview/">Platform Overview</a></li>
+        <li><a href="#">Data Ingestion</a></li>
+        <li><a href="#">Microsoft Fabric</a></li>
+        <li><a href="#">Power BI Dashboards</a></li>
+        <li><a href="#">AI Agents</a></li>
+        <li><a href="#">Excel + Copilot</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">Integrations</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Use Cases</div>
+      <ul>
+        <li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Board Reporting</a></li>
+        <li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
+        <li><a href="#">Virtual Data Room</a></li>
+        <li><a href="#">Exit Readiness</a></li>
+        <li><a href="#">MBR Automation</a></li>
+        <li><a href="#">GTM Analytics</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Comparisons</div>
+      <ul>
+        <li><a href="#">vs. Manual Excel</a></li>
+        <li><a href="#">vs. Mosaic Tech</a></li>
+        <li><a href="#">vs. Vena Solutions</a></li>
+        <li><a href="#">vs. Pigment</a></li>
+        <li><a href="#">vs. Causal</a></li>
+        <li><a href="#">vs. Cube</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Company</div>
+      <ul>
+        <li><a href="/company/about/">About Pacer AI</a></li>
+        <li><a href="#">Agents of Insight Newsletter</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="#">Partners</a></li>
+        <li><a href="#">Case Studies</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="/company/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="copy">&copy; 2025 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+    <div class="legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Settings</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if(window.innerWidth>768) return;
+  document.querySelectorAll('#pacerai-homepage .nav-links > li > a').forEach(function(a){
+    var li=a.parentElement;
+    if(!li.querySelector('.dropdown')) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      li.classList.toggle('mobile-expanded');
+    });
+  });
+})();
+</script>
+
+</div>

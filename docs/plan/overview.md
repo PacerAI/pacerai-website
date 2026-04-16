@@ -104,7 +104,7 @@ See `docs/plan/site-tree-and-build-prompts.md` for the full site tree (~45 plann
 ## Design References
 
 - Current design (v2): `docs/design/pacerai-homepage-v2_2026-03-09.html`
-- Brand kit: `01_PacerAI_Foundation/pacer-ai-brand-kit.html`
+- Brand kit: `PacerAI/01_Foundation/pacer-ai-brand-kit.html`
 - Original design (v1): `docs/design/pacerai-homepage_by_Claude_030526_1522.html`
 
 ## Timeline

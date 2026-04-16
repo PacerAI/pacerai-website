@@ -536,7 +536,7 @@ html, body, .wp-site-blocks {
     grid-template-columns: 3fr 2fr;
     gap: 48px;
     align-items: start;
-    margin-top: 28px;
+    margin-top: 16px;
   }
   #pacerai-homepage .q-section-layout.reverse { grid-template-columns: 2fr 3fr; }
   #pacerai-homepage .q-section-layout.reverse .q-visual { order: -1; }

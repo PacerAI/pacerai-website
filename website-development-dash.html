@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pacer AI — Website Development Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #080E1C; --navy-mid: #0F1729; --navy-light: #162036; --navy-border: #1E2A45;
+    --teal: #27899A; --teal-light: #70C49C; --white: #FFFFFF; --muted: #8A95A8;
+    --text-light: #CDD5E0; --text-mid: #94A3B8; --green: #2DB87A; --red: #C94C4C;
+    --yellow: #D4A843;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text-light); padding: 32px; min-height: 100vh; }
+
+  .dash-header { margin-bottom: 40px; }
+  .dash-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 700; color: var(--white); }
+  .dash-header p { font-size: 14px; color: var(--text-mid); margin-top: 8px; }
+  .dash-header .stats { display: flex; gap: 24px; margin-top: 20px; }
+  .stat-box { background: var(--navy-mid); border: 1px solid var(--navy-border); border-radius: 10px; padding: 16px 24px; text-align: center; }
+  .stat-box .num { font-size: 28px; font-weight: 700; color: var(--teal-light); }
+  .stat-box .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+
+  .phase { margin-bottom: 40px; }
+  .phase-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .phase-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); background: rgba(39,137,154,0.1); border: 1px solid rgba(39,137,154,0.2); padding: 4px 12px; border-radius: 100px; }
+  .phase-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--white); }
+  .phase-progress { margin-left: auto; font-size: 13px; color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  th { text-align: left; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 8px 12px; border-bottom: 1px solid var(--navy-border); }
+  td { padding: 10px 12px; border-bottom: 1px solid rgba(30,42,69,0.5); font-size: 13px; }
+  tr:hover { background: rgba(39,137,154,0.04); }
+
+  .status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 100px; }
+  .status.live { background: rgba(45,184,122,0.15); color: var(--green); }
+  .status.building { background: rgba(39,137,154,0.15); color: var(--teal); }
+  .status.brief { background: rgba(212,168,67,0.15); color: var(--yellow); }
+  .status.todo { background: rgba(138,149,168,0.1); color: var(--muted); }
+
+  .check { width: 18px; height: 18px; border-radius: 4px; border: 2px solid var(--navy-border); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+  .check.done { background: var(--green); border-color: var(--green); }
+  .check.done::after { content: '✓'; color: white; font-size: 11px; font-weight: 700; }
+
+  .url { font-size: 12px; color: var(--teal); text-decoration: none; font-family: monospace; }
+  .url:hover { color: var(--teal-light); text-decoration: underline; }
+
+  .note { font-size: 12px; color: var(--text-mid); font-style: italic; }
+
+  .plan-link { display: inline-block; margin-top: 8px; font-size: 12px; color: var(--teal); text-decoration: none; }
+  .plan-link:hover { color: var(--teal-light); }
+
+  @media (max-width: 768px) {
+    body { padding: 16px; }
+    .dash-header .stats { flex-wrap: wrap; }
+    table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="dash-header">
+  <h1>Website Development Dashboard</h1>
+  <p>Pacer AI — Product-Enabled Services Site Build · Updated 2026-04-06</p>
+  <a class="plan-link" href="docs/plan/product-enabled-services.md">View full plan →</a>
+  <div class="stats" id="stats"></div>
+</div>
+
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-label">Phase 0</span>
+    <span class="phase-title">Engineering Setup</span>
+    <span class="phase-progress" data-phase="0"></span>
+  </div>
+  <table>
+    <tr><th style="width:30px"></th><th>Item</th><th>File</th><th>Status</th></tr>
+    <tr><td><div class="check done" data-phase="0"></div></td><td>Content brief template</td><td><span class="note">01_Foundation/products/_content_brief_template.md</span></td><td><span class="status live">Done</span></td></tr>
+    <tr><td><div class="check done" data-phase="0"></div></td><td>Voice calibration samples</td><td><span class="note">01_Foundation/brand/voice_samples.md</span></td><td><span class="status live">Done</span></td></tr>
+    <tr><td><div class="check done" data-phase="0"></div></td><td>4D Delivery framework</td><td><span class="note">01_Foundation/products/delivery_framework.md</span></td><td><span class="status live">Done</span></td></tr>
+    <tr><td><div class="check done" data-phase="0"></div></td><td>Solution page design spec</td><td><span class="note">docs/plan/solution_page_design.md</span></td><td><span class="status live">Done</span></td></tr>
+    <tr><td><div class="check done" data-phase="0"></div></td><td>Solution page HTML template</td><td><span class="note">src/solutions/_template.html</span></td><td><span class="status live">Done</span></td></tr>
+    <tr><td><div class="check" data-phase="0" onclick="toggleCheck(this)"></div></td><td>Build script (build-solution-page.py)</td><td><span class="note">scripts/build-solution-page.py</span></td><td><span class="status todo">Todo</span></td></tr>
+  </table>
+</div>
+
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-label">Phase 1</span>
+    <span class="phase-title">Content Briefs (Will writes)</span>
+    <span class="phase-progress" data-phase="1"></span>
+  </div>
+  <table>
+    <tr><th style="width:30px"></th><th>Solution</th><th>Category</th><th>Brief File</th><th>Status</th></tr>
+    <tr><td><div class="check" data-phase="1" onclick="toggleCheck(this)"></div></td><td>ARR Snowball Reporting</td><td>Transaction → Defend</td><td><span class="note">products/arr-snowball/content_brief.md</span></td><td><span class="status brief">Needs Brief</span></td></tr>
+    <tr><td><div class="check" data-phase="1" onclick="toggleCheck(this)"></div></td><td>Customer Data Cube</td><td>Transaction → Defend</td><td><span class="note">products/customer-data-cube/content_brief.md</span></td><td><span class="status brief">Needs Brief</span></td></tr>
+    <tr><td><div class="check" data-phase="1" onclick="toggleCheck(this)"></div></td><td>Transaction Readiness</td><td>Transaction → Defend</td><td><span class="note">products/transaction-readiness/content_brief.md</span></td><td><span class="status brief">Needs Brief</span></td></tr>
+    <tr><td><div class="check" data-phase="1" onclick="toggleCheck(this)"></div></td><td>RevOps Transformation</td><td>Transformation → Drive</td><td><span class="note">products/RevOps Transformation/content_brief.md</span></td><td><span class="status brief">Needs Brief</span></td></tr>
+    <tr><td><div class="check" data-phase="1" onclick="toggleCheck(this)"></div></td><td>GTM Transformation</td><td>Transformation → Drive</td><td><span class="note">products/GTM_Transformation/content_brief.md</span></td><td><span class="status brief">Needs Brief</span></td></tr>
+    <tr><td><div class="check" data-phase="1" onclick="toggleCheck(this)"></div></td><td>FP&A Transformation</td><td>Transformation → Drive</td><td><span class="note">products/fpa-transformation/content_brief.md</span></td><td><span class="status brief">Needs Brief</span></td></tr>
+  </table>
+</div>
+
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-label">Phase 2</span>
+    <span class="phase-title">Solution Pages (Claude builds from brief)</span>
+    <span class="phase-progress" data-phase="2"></span>
+  </div>
+  <table>
+    <tr><th style="width:30px"></th><th>Page</th><th>URL</th><th>WP ID</th><th>Design</th><th>Deploy</th><th>Verified</th></tr>
+    <tr>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td>ARR Snowball Reporting</td>
+      <td><a class="url" href="https://getpacerai.com/solutions/arr-snowball-board-reporting-pkg/">/solutions/arr-snowball-board-reporting-pkg/</a></td>
+      <td>TBD</td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+    </tr>
+    <tr>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td>Customer Data Cube</td>
+      <td><a class="url" href="https://getpacerai.com/solutions/customer-data-cube-development/">/solutions/customer-data-cube-development/</a></td>
+      <td>373</td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+    </tr>
+    <tr>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td>Transaction Readiness</td>
+      <td><a class="url" href="https://getpacerai.com/solutions/transaction-readiness-pkg/">/solutions/transaction-readiness-pkg/</a></td>
+      <td>TBD</td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+    </tr>
+    <tr>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td>RevOps Transformation</td>
+      <td><a class="url" href="https://getpacerai.com/solutions/revops-transformation-pkg/">/solutions/revops-transformation-pkg/</a></td>
+      <td>TBD</td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+    </tr>
+    <tr>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td>GTM Transformation</td>
+      <td><a class="url" href="https://getpacerai.com/solutions/gtm-transformation-pkg/">/solutions/gtm-transformation-pkg/</a></td>
+      <td>TBD</td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+    </tr>
+    <tr>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td>FP&A Transformation</td>
+      <td><a class="url" href="https://getpacerai.com/solutions/fpanda-transformation-pkg/">/solutions/fpanda-transformation-pkg/</a></td>
+      <td>TBD</td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+      <td><div class="check" data-phase="2" onclick="toggleCheck(this)"></div></td>
+    </tr>
+  </table>
+</div>
+
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-label">Phase 3</span>
+    <span class="phase-title">Resource Pages</span>
+    <span class="phase-progress" data-phase="3"></span>
+  </div>
+  <table>
+    <tr><th style="width:30px"></th><th>Page</th><th>URL</th><th>Type</th><th>Status</th></tr>
+    <tr><td><div class="check done" data-phase="3"></div></td><td>Blog</td><td><a class="url" href="https://getpacerai.com/blog/">/blog/</a></td><td>Index + 5 posts</td><td><span class="status live">Live</span></td></tr>
+    <tr><td><div class="check" data-phase="3" onclick="toggleCheck(this)"></div></td><td>ARR Snowball Guide</td><td><span class="note">/resources/arr-snowball-guide/</span></td><td>Gated PDF</td><td><span class="status todo">Todo</span></td></tr>
+    <tr><td><div class="check" data-phase="3" onclick="toggleCheck(this)"></div></td><td>Frameworks</td><td><span class="note">/resources/frameworks/</span></td><td>Gated downloads</td><td><span class="status todo">Todo</span></td></tr>
+    <tr><td><div class="check" data-phase="3" onclick="toggleCheck(this)"></div></td><td>Model Templates</td><td><span class="note">/resources/model-templates/</span></td><td>Gated downloads</td><td><span class="status todo">Todo</span></td></tr>
+    <tr><td><div class="check" data-phase="3" onclick="toggleCheck(this)"></div></td><td>For RevOps</td><td><span class="note">/resources/for-revops/</span></td><td>Content hub</td><td><span class="status todo">Todo</span></td></tr>
+    <tr><td><div class="check" data-phase="3" onclick="toggleCheck(this)"></div></td><td>Newsletter</td><td><span class="note">/resources/newsletter/</span></td><td>Substack redirect</td><td><span class="status todo">Todo</span></td></tr>
+    <tr><td><div class="check" data-phase="3" onclick="toggleCheck(this)"></div></td><td>YouTube</td><td><span class="note">/resources/youtube/</span></td><td>Channel redirect</td><td><span class="status todo">Todo</span></td></tr>
+  </table>
+</div>
+
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-label">Phase 4</span>
+    <span class="phase-title">Team Sub-Pages</span>
+    <span class="phase-progress" data-phase="4"></span>
+  </div>
+  <table>
+    <tr><th style="width:30px"></th><th>Page</th><th>URL</th><th>Status</th></tr>
+    <tr><td><div class="check done" data-phase="4"></div></td><td>Team (parent)</td><td><a class="url" href="https://getpacerai.com/team/">/team/</a></td><td><span class="status live">Live</span></td></tr>
+    <tr><td><div class="check" data-phase="4" onclick="toggleCheck(this)"></div></td><td>Mission</td><td><span class="note">/team/mission/</span></td><td><span class="status todo">Todo</span></td></tr>
+    <tr><td><div class="check" data-phase="4" onclick="toggleCheck(this)"></div></td><td>Partners</td><td><span class="note">/team/partners/</span></td><td><span class="status todo">Todo</span></td></tr>
+    <tr><td><div class="check" data-phase="4" onclick="toggleCheck(this)"></div></td><td>AI Agents</td><td><span class="note">/team/ai-agents/</span></td><td><span class="status todo">Todo</span></td></tr>
+  </table>
+</div>
+
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-label">Phase 5</span>
+    <span class="phase-title">Special Pages</span>
+    <span class="phase-progress" data-phase="5"></span>
+  </div>
+  <table>
+    <tr><th style="width:30px"></th><th>Page</th><th>URL</th><th>Source</th><th>Status</th></tr>
+    <tr><td><div class="check" data-phase="5" onclick="toggleCheck(this)"></div></td><td>Prompt Library</td><td><span class="note">/prompt-library/</span></td><td><span class="note">04_GTM/prompt-library/index.html</span></td><td><span class="status todo">Todo</span></td></tr>
+  </table>
+</div>
+
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-label">Workflow</span>
+    <span class="phase-title">Per Solution Page</span>
+  </div>
+  <table>
+    <tr><th>Step</th><th>Who</th><th>Action</th><th>Time</th></tr>
+    <tr><td>1</td><td><strong>Will</strong></td><td>Write content brief using _content_brief_template.md</td><td>~20 min</td></tr>
+    <tr><td>2</td><td>Claude</td><td>Read brief + framework + template + voice samples</td><td>~2 min</td></tr>
+    <tr><td>3</td><td>Claude</td><td>Build design file in docs/design/solutions/</td><td>~5 min</td></tr>
+    <tr><td>4</td><td><strong>Will</strong></td><td>Review locally at 127.0.0.1:5500</td><td>~10 min</td></tr>
+    <tr><td>5</td><td><strong>Will</strong></td><td>Batch feedback (all edits in one message)</td><td>~5 min</td></tr>
+    <tr><td>6</td><td>Claude</td><td>Iterate → production file in src/solutions/</td><td>~3 min</td></tr>
+    <tr><td>7</td><td>Claude</td><td>Deploy to WordPress + register in CLAUDE.md</td><td>~2 min</td></tr>
+    <tr><td>8</td><td><strong>Will</strong></td><td>Verify live URL</td><td>~2 min</td></tr>
+  </table>
+</div>
+
+
+<script>
+// Toggle checkbox
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  // Update status label in same row
+  const row = el.closest('tr');
+  if (row) {
+    const statusEl = row.querySelector('.status');
+    if (statusEl && el.classList.contains('done')) {
+      statusEl.className = 'status live';
+      statusEl.textContent = 'Done';
+    }
+  }
+  updateStats();
+  saveState();
+}
+
+// Calculate and display stats
+function updateStats() {
+  const all = document.querySelectorAll('.check');
+  const done = document.querySelectorAll('.check.done');
+  const total = all.length;
+  const completed = done.length;
+  const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+  document.getElementById('stats').innerHTML = `
+    <div class="stat-box"><div class="num">${completed}</div><div class="label">Completed</div></div>
+    <div class="stat-box"><div class="num">${total - completed}</div><div class="label">Remaining</div></div>
+    <div class="stat-box"><div class="num">${pct}%</div><div class="label">Progress</div></div>
+    <div class="stat-box"><div class="num">${total}</div><div class="label">Total Items</div></div>
+  `;
+
+  // Update phase progress
+  document.querySelectorAll('[data-phase]').forEach(el => {
+    if (el.tagName === 'SPAN' && el.classList.contains('phase-progress')) {
+      const phase = el.dataset.phase;
+      const phaseChecks = document.querySelectorAll(`.check[data-phase="${phase}"]`);
+      const phaseDone = document.querySelectorAll(`.check.done[data-phase="${phase}"]`);
+      el.textContent = `${phaseDone.length}/${phaseChecks.length}`;
+    }
+  });
+}
+
+// Persist state to localStorage
+function saveState() {
+  const state = [];
+  document.querySelectorAll('.check').forEach((el, i) => {
+    state.push(el.classList.contains('done'));
+  });
+  localStorage.setItem('pacer-dash-state', JSON.stringify(state));
+}
+
+function loadState() {
+  const raw = localStorage.getItem('pacer-dash-state');
+  if (!raw) return;
+  const state = JSON.parse(raw);
+  document.querySelectorAll('.check').forEach((el, i) => {
+    if (state[i]) el.classList.add('done');
+  });
+}
+
+loadState();
+updateStats();
+</script>
+
+</body>
+</html>

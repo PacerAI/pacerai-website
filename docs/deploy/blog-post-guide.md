@@ -92,7 +92,7 @@ Edit `src/blog/build-posts.py` and add your post to the `POSTS` list:
 ### Step 4: Build the Post
 
 ```bash
-cd /Users/willsullivan/Documents/GitHub/04_PacerAI_GTM/website-PacerAI
+cd /Users/willsullivan/Documents/GitHub/PacerAI/04_GTM/website-PacerAI
 python3 src/blog/build-posts.py
 ```
 

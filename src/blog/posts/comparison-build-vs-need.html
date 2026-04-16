@@ -1,0 +1,846 @@
+<!-- wp:html -->
+<style>
+/* Hide TT4 theme chrome */
+.wp-site-blocks > header,
+.wp-site-blocks > footer,
+header.wp-block-template-part,
+footer.wp-block-template-part,
+.wp-block-template-part:first-child { display: none !important; }
+
+/* Hide TT4 page title header */
+.entry-header,
+.wp-block-post-title,
+h1.wp-block-post-title,
+.wp-block-spacer,
+.page .entry-header,
+.page-header { display: none !important; }
+
+html, body, .wp-site-blocks {
+  background: #080E1C !important;
+  background-color: #080E1C !important;
+}
+
+#pacerai-post {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.wp-site-blocks,
+.wp-site-blocks > main,
+.wp-site-blocks > main > .wp-block-group,
+.wp-site-blocks .is-layout-constrained,
+.wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+.has-global-padding,
+.entry-content {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-top: 0 !important;
+}
+
+  :root {
+    --navy: #080E1C;
+    --navy-mid: #0F1929;
+    --navy-light: #162038;
+    --navy-border: #1E2D4A;
+    --brand: #1C3560;
+    --brand-blue: #2B7DC8;
+    --teal: #27899A;
+    --teal-light: #70C49C;
+    --teal-pale: #D6F0E8;
+    --cream: #F7F3EC;
+    --white: #FFFFFF;
+    --muted: #8A95A8;
+    --text-light: #CDD5E0;
+    --text-mid: #94A3B8;
+    --green: #2DB87A;
+    --red-subtle: #C94C4C;
+  }
+
+  #pacerai-post * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  #pacerai-post {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text-light);
+    overflow-x: hidden;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ─── NAV ─── */
+  #pacerai-post nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    height: 68px;
+    background: rgba(8,14,28,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(28,53,96,0.6);
+  }
+
+  #pacerai-post .nav-links {
+    display: flex; align-items: center; gap: 4px;
+    list-style: none;
+  }
+  #pacerai-post .nav-links > li { position: relative; }
+  #pacerai-post .nav-links > li > a {
+    display: flex; align-items: center; gap: 5px;
+    padding: 8px 14px;
+    font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em;
+    color: var(--text-mid);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  #pacerai-post .nav-links > li > a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  #pacerai-post .nav-links > li > a .chevron {
+    font-size: 10px; margin-top: 1px;
+    transition: transform 0.2s;
+  }
+  #pacerai-post .nav-links > li:hover > a .chevron { transform: rotate(180deg); }
+
+  /* Dropdown */
+  #pacerai-post .dropdown {
+    display: none;
+    position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 12px;
+    padding: 20px;
+    padding-top: 28px;
+    min-width: 520px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  }
+  #pacerai-post .dropdown::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: 0; right: 0;
+    height: 12px;
+  }
+  #pacerai-post .nav-links > li:hover .dropdown { display: block; }
+
+  #pacerai-post .dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  #pacerai-post .dropdown-col-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal);
+    padding-bottom: 10px; margin-bottom: 6px;
+    border-bottom: 1px solid var(--navy-border);
+  }
+  #pacerai-post .dropdown a {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 10px; border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  #pacerai-post .dropdown a:hover { background: rgba(255,255,255,0.04); }
+  #pacerai-post .dropdown .d-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: var(--navy-light);
+    border: 1px solid var(--navy-border);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  #pacerai-post .dropdown .d-text .d-title {
+    font-size: 13px; font-weight: 500; color: var(--white);
+    display: block; line-height: 1.3;
+  }
+  #pacerai-post .dropdown .d-text .d-desc {
+    font-size: 12px; color: var(--muted); line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  #pacerai-post .single-dropdown { min-width: 220px; }
+  #pacerai-post .single-dropdown a {
+    padding: 9px 12px; border-radius: 8px;
+    text-decoration: none; display: block;
+    font-size: 13px; font-weight: 500; color: var(--text-light);
+    transition: background 0.15s, color 0.15s;
+  }
+  #pacerai-post .single-dropdown a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+
+  /* Hamburger */
+  #pacerai-post .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 101;
+  }
+  #pacerai-post .mobile-menu-btn span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--text-light);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  #pacerai-post .nav-right {
+    display: flex; align-items: center; gap: 12px;
+  }
+  #pacerai-post .btn-ghost {
+    padding: 8px 18px; font-size: 13.5px; font-weight: 500;
+    color: var(--text-light); background: transparent;
+    border: 1px solid var(--navy-border); border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  #pacerai-post .btn-ghost:hover { color: var(--white); border-color: rgba(39,137,154,0.45); }
+  #pacerai-post .btn-teal {
+    padding: 9px 20px; font-size: 13.5px; font-weight: 600;
+    color: #fff; background: var(--teal);
+    border: none; border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s; letter-spacing: 0.02em;
+  }
+  #pacerai-post .btn-teal:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(39,137,154,0.35); }
+
+  /* ─── POST HERO ─── */
+  #pacerai-post .post-hero {
+    padding: 88px 48px 48px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  #pacerai-post .post-breadcrumb {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 24px;
+  }
+  #pacerai-post .post-breadcrumb a {
+    color: var(--teal); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .post-breadcrumb a:hover { color: var(--teal-light); }
+  #pacerai-post .post-breadcrumb .sep { color: var(--navy-border); }
+  #pacerai-post .post-category-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(39,137,154,0.10);
+    border: 1px solid rgba(39,137,154,0.22);
+    border-radius: 100px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 16px;
+  }
+  #pacerai-post .post-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4.5vw, 48px);
+    font-weight: 400; line-height: 1.15;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  #pacerai-post .post-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 14px; color: var(--muted);
+  }
+  #pacerai-post .post-meta .author { color: var(--text-light); font-weight: 500; }
+
+  /* ─── ARTICLE CONTENT ─── */
+  #pacerai-post .post-content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  #pacerai-post .post-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px; font-weight: 500;
+    color: var(--white);
+    margin-top: 48px; margin-bottom: 16px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  #pacerai-post .post-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500;
+    color: var(--white);
+    margin-top: 32px; margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  #pacerai-post .post-content p {
+    margin-bottom: 20px;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+  #pacerai-post .post-content a {
+    color: var(--teal);
+    text-decoration: underline;
+    text-decoration-color: rgba(39,137,154,0.3);
+    text-underline-offset: 3px;
+    transition: color 0.2s, text-decoration-color 0.2s;
+  }
+  #pacerai-post .post-content a:hover {
+    color: var(--teal-light);
+    text-decoration-color: var(--teal-light);
+  }
+  #pacerai-post .post-content strong { color: var(--white); font-weight: 600; }
+  #pacerai-post .post-content em { font-style: italic; }
+
+  #pacerai-post .post-content ul,
+  #pacerai-post .post-content ol {
+    margin-bottom: 20px;
+    padding-left: 24px;
+  }
+  #pacerai-post .post-content li {
+    margin-bottom: 8px;
+    line-height: 1.7;
+    color: var(--text-light);
+  }
+  #pacerai-post .post-content li::marker {
+    color: var(--teal);
+  }
+
+  #pacerai-post .post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0 32px;
+    font-size: 14px;
+    border: 1px solid var(--navy-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  #pacerai-post .post-content thead {
+    background: var(--navy-light);
+  }
+  #pacerai-post .post-content th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--white);
+    border-bottom: 2px solid var(--navy-border);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  #pacerai-post .post-content td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--navy-border);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  #pacerai-post .post-content tbody tr:hover {
+    background: rgba(255,255,255,0.02);
+  }
+  #pacerai-post .post-content tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  #pacerai-post .post-content hr,
+  #pacerai-post .post-content .wp-block-separator {
+    border: none;
+    border-top: 1px solid var(--navy-border);
+    margin: 40px 0;
+  }
+
+  #pacerai-post .post-content blockquote {
+    border-left: 3px solid var(--teal);
+    padding: 16px 24px;
+    margin: 24px 0;
+    background: rgba(39,137,154,0.05);
+    border-radius: 0 8px 8px 0;
+  }
+  #pacerai-post .post-content blockquote p {
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 0;
+  }
+
+  #pacerai-post .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 8px 0;
+  }
+  #pacerai-post .post-content figure {
+    margin: 32px 0;
+    text-align: center;
+  }
+  #pacerai-post .post-content figcaption {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  #pacerai-post .post-content .wp-block-table {
+    margin: 24px 0 32px;
+    overflow-x: auto;
+  }
+  #pacerai-post .post-content .wp-block-table table {
+    margin: 0;
+  }
+
+  /* ─── POST CTA ─── */
+  #pacerai-post .post-cta {
+    max-width: 760px;
+    margin: 0 auto 80px;
+    padding: 0 48px;
+  }
+  #pacerai-post .post-cta-inner {
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+  }
+  #pacerai-post .post-cta-inner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  #pacerai-post .post-cta-inner p {
+    font-size: 16px; color: var(--text-mid);
+    margin-bottom: 24px; max-width: 480px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ─── */
+  #pacerai-post footer {
+    border-top: 1px solid var(--navy-border);
+    padding: 60px 48px 32px;
+    background: var(--navy);
+  }
+  #pacerai-post .footer-top {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  #pacerai-post .footer-brand p {
+    font-size: 13.5px; color: var(--muted); line-height: 1.65;
+    margin-top: 14px; max-width: 300px;
+  }
+  #pacerai-post .footer-col-head {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--white); margin-bottom: 16px;
+  }
+  #pacerai-post .footer-col ul { list-style: none; }
+  #pacerai-post .footer-col li { margin-bottom: 10px; }
+  #pacerai-post .footer-col a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .footer-col a:hover { color: var(--teal-light); }
+  #pacerai-post .footer-bottom {
+    border-top: 1px solid var(--navy-border);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  #pacerai-post .footer-bottom .copy {
+    font-size: 12.5px; color: var(--muted);
+  }
+  #pacerai-post .footer-bottom .legal { display: flex; gap: 24px; }
+  #pacerai-post .footer-bottom .legal a {
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .footer-bottom .legal a:hover { color: var(--text-mid); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    #pacerai-post nav {
+      padding: 0 16px;
+      height: 56px;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: #080E1C;
+      overflow: visible;
+    }
+    #pacerai-post .nav-links {
+      display: none !important;
+      position: fixed;
+      top: 56px; left: 0; right: 0; bottom: 0;
+      background: #080E1C;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px 20px;
+      overflow-y: auto;
+      z-index: 200;
+      border-top: 1px solid var(--navy-border);
+      list-style: none;
+    }
+    #pacerai-post .nav-links.mobile-open { display: flex !important; }
+    #pacerai-post .nav-links > li { border-bottom: 1px solid var(--navy-border); }
+    #pacerai-post .nav-links > li > a {
+      padding: 16px 0; font-size: 16px; border-bottom: none;
+      display: flex; justify-content: space-between; color: #CDD5E0;
+    }
+    #pacerai-post .nav-links > li > a:hover { background: none; }
+    #pacerai-post .nav-links .dropdown {
+      position: static !important; transform: none !important;
+      min-width: 0 !important; background: transparent !important;
+      border: none !important; box-shadow: none !important;
+      padding: 0 0 12px 16px !important; border-radius: 0 !important;
+      padding-top: 0 !important;
+    }
+    #pacerai-post .nav-links .dropdown::before { display: none; }
+    #pacerai-post .nav-links > li:hover .dropdown { display: none !important; }
+    #pacerai-post .nav-links > li.mobile-expanded .dropdown { display: block !important; }
+    #pacerai-post .nav-links .dropdown a { padding: 10px 0; font-size: 14px; color: #94A3B8; }
+    #pacerai-post .nav-links .dropdown-grid { grid-template-columns: 1fr; }
+    #pacerai-post .nav-right .btn-ghost { display: none; }
+    #pacerai-post .nav-right .btn-teal { padding: 7px 14px; font-size: 12px; }
+    #pacerai-post .mobile-menu-btn { display: flex !important; }
+
+    #pacerai-post .post-hero {
+      padding: 72px 20px 24px;
+    }
+    #pacerai-post .post-hero h1 { font-size: 28px; }
+    #pacerai-post .post-content {
+      padding: 0 20px 60px;
+    }
+    #pacerai-post .post-content h2 { font-size: 24px; margin-top: 36px; }
+    #pacerai-post .post-content h3 { font-size: 19px; }
+    #pacerai-post .post-content table {
+      font-size: 12px;
+      display: block;
+      overflow-x: auto;
+    }
+    #pacerai-post .post-content th,
+    #pacerai-post .post-content td {
+      padding: 8px 10px;
+      min-width: 100px;
+    }
+    #pacerai-post .post-cta { padding: 0 20px; }
+    #pacerai-post .post-cta-inner { padding: 32px 20px; }
+    #pacerai-post .post-cta-inner h2 { font-size: 26px; }
+    #pacerai-post footer { padding: 48px 20px 32px; }
+    #pacerai-post .footer-top {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+    }
+    #pacerai-post .footer-brand { grid-column: 1 / -1; }
+    #pacerai-post .footer-bottom {
+      flex-direction: column; align-items: flex-start; gap: 12px;
+    }
+    #pacerai-post .footer-bottom .legal { flex-wrap: wrap; gap: 12px; }
+  }
+
+  @media (max-width: 1024px) and (min-width: 769px) {
+    #pacerai-post nav { padding: 0 24px; }
+    #pacerai-post .nav-links > li > a { padding: 8px 8px; font-size: 12px; }
+    #pacerai-post .post-hero { padding: 84px 32px 36px; }
+    #pacerai-post .post-content { padding: 0 32px 60px; }
+    #pacerai-post .post-cta { padding: 0 32px; }
+    #pacerai-post .footer-top {
+      grid-template-columns: 1fr 1fr 1fr; gap: 32px;
+    }
+    #pacerai-post .footer-brand { grid-column: 1 / -1; }
+    #pacerai-post footer { padding: 60px 24px 32px; }
+  }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "What Most Companies Build vs. What Boards Actually Need",
+      "datePublished": "2026-04-06",
+      "author": {
+        "@type": "Organization",
+        "name": "Pacer AI",
+        "url": "https://getpacerai.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Pacer AI",
+        "url": "https://getpacerai.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://getpacerai.com/wp-content/uploads/2025/04/PacerAI_Logo_Horizontal_Full-Color-scaled.webp"
+        }
+      },
+      "articleSection": "Board Reporting",
+      "mainEntityOfPage": {
+        "@type": "WebPage"
+      }
+    }
+    ,
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+            {
+                  "@type": "Question",
+                  "name": "What do most companies build vs. what boards actually need?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Most SaaS companies build static spreadsheet models reconciled quarterly with top-line ARR only — no decomposition, no cohort analysis, and no diligence defensibility. Boards and buyers need automated daily refresh from source systems, full ARR waterfalls with segment decomposition, vintage retention analysis, and numbers that are defensible in M&A diligence."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Why is there a gap between what finance teams build and what boards expect?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The gap is structural, not technical. Most finance teams have the tools to build ARR models, but lack the deep expertise in board-level reporting, M&A diligence standards, and the operating implications of every classification decision in the model. Closing the gap requires specialized knowledge from people who have built and defended these models in actual transactions."
+                  }
+            }
+      ]
+}
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div id="pacerai-post">
+<!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
+<nav>
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span style="font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+  </a>
+
+  <ul class="nav-links">
+    <li>
+      <a href="#" data-scroll-to="overview">Overview <span class="chevron">&#9662;</span></a>
+      <ul class="nav-dropdown">
+        <li><a href="#" data-scroll-to="investor-questions">Use Cases</a></li>
+        <li><a href="#" data-scroll-to="solutions">Solutions</a></li>
+        <li><a href="#" data-scroll-to="what-is-pacer-ai">About</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" data-scroll-to="investor-questions">Use Cases <span class="chevron">&#9662;</span></a>
+      <ul class="nav-dropdown">
+        <li><a href="#" data-scroll-to="arr-growth">Where is Revenue Accelerating?</a></li>
+        <li><a href="#" data-scroll-to="expansion-drivers">What is Driving Expansion ARR?</a></li>
+        <li><a href="#" data-scroll-to="cross-sell-upsell">Which Cohort is Our Primary Driver?</a></li>
+        <li><a href="#" data-scroll-to="gross-retention">Improve Gross Retention</a></li>
+        <li><a href="#" data-scroll-to="net-retention">Improve Net Retention</a></li>
+        <li><a href="#" data-scroll-to="whitespace">Whitespace Opportunity</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" data-scroll-to="solutions">Solutions <span class="chevron">&#9662;</span></a>
+      <ul class="nav-dropdown">
+        <li><a href="#" data-scroll-to="customerdatacube">Customer Data Cube</a></li>
+        <li><a href="#" data-scroll-to="arrsnowball">ARR Snowball Reporting</a></li>
+        <li><a href="#" data-scroll-to="transactionready">Transaction Readiness</a></li>
+        <li><a href="#" data-scroll-to="solutions">RevOps Transformation</a></li>
+        <li><a href="#" data-scroll-to="solutions">GTM Transformation</a></li>
+        <li><a href="#" data-scroll-to="solutions">FP&amp;A Transformation</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" data-scroll-to="what-is-pacer-ai">About <span class="chevron">&#9662;</span></a>
+      <ul class="nav-dropdown">
+        <li><a href="#" data-scroll-to="what-is-pacer-ai">The Firm</a></li>
+        <li><a href="#" data-scroll-to="faq">FAQ</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
+    <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=document.querySelector('#pacerai-homepage nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ POST HERO ═══════════════════════════════════════ -->
+<div class="post-hero">
+  <div class="post-breadcrumb">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <a href="/blog/">Blog</a>
+    <span class="sep">/</span>
+    <span>Build vs. Need</span>
+  </div>
+  <div class="post-category-badge">Board Reporting</div>
+  <h1>What Most Companies Build vs. What Boards Actually Need</h1>
+  <div class="post-meta">
+    <span class="author">Pacer AI</span>
+    <span>April 6, 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ CONTENT ═══════════════════════════════════════ -->
+<div class="post-content">
+<p class="aeo-snippet"><strong>What do most companies build vs. what boards actually need?</strong> Most SaaS companies build static spreadsheet models reconciled quarterly with top-line ARR only &mdash; no decomposition, no cohort analysis, and no diligence defensibility. Boards and buyers need automated daily refresh from source systems, full ARR waterfalls with segment decomposition, vintage retention analysis, and numbers that are defensible in M&amp;A diligence.</p>
+
+<h2>What Most Teams Build</h2>
+
+<p>Walk into any PE-backed SaaS company between $50M and $500M in ARR and you will find some version of the same reporting infrastructure. It was built by a capable analyst, it works well enough for internal conversations, and it breaks every time the board asks a question the model was not designed to answer. Here is what that typically looks like.</p>
+
+<h3>1. Static Spreadsheet Reconciled Quarterly</h3>
+
+<p>The most common ARR model in mid-market SaaS is a spreadsheet &mdash; usually Excel, sometimes Google Sheets &mdash; maintained by one or two people in finance. It gets reconciled quarterly, which means for three months out of every four, the numbers are stale. Between reconciliation cycles, the business is making decisions based on data that may no longer reflect reality. New bookings, mid-quarter churn, and expansion deals all accumulate in a backlog that only gets resolved when someone manually updates the model before the next board meeting.</p>
+
+<h3>2. Top-Line ARR Only, No Decomposition</h3>
+
+<p>Most internal models report a single ARR number &mdash; sometimes broken out by new vs. existing, but rarely decomposed further. There is no segmentation by product line, customer cohort, geography, or deal size. This means the business can answer "what is our ARR?" but cannot answer "where is our ARR growing fastest?" or "which segments are contracting?" Boards and buyers always ask the second and third questions. Without decomposition, every answer requires a manual deep dive.</p>
+
+<h3>3. Manual Data Pulls from 3+ Systems</h3>
+
+<p>To build the quarterly reconciliation, someone has to pull data from Salesforce (or HubSpot), the billing system (Stripe, Zuora, or Chargebee), the ERP (NetSuite or Sage), and sometimes the product database for usage data. Each system has its own customer identifiers, its own hierarchy, and its own definition of what constitutes an "account." Reconciling across these systems is manual, error-prone, and time-consuming. It is also the single biggest bottleneck in the entire reporting process.</p>
+
+<h3>4. One Analyst Owns the Whole Model</h3>
+
+<p>In most organizations, one person &mdash; sometimes two &mdash; understands how the ARR model works. They built it, they maintain it, and they are the only ones who can explain its logic when the board asks questions. This creates concentration risk that goes beyond operational inconvenience. When that person goes on vacation, changes roles, or leaves the company, the reporting infrastructure goes with them. The model is not documented, not version-controlled, and not transferable.</p>
+
+<h3>5. Breaks Every Board Cycle</h3>
+
+<p>Every quarter, the same pattern repeats. The board meeting is two weeks away. Finance scrambles to update the model. Someone discovers that the Salesforce data does not match billing. A product launch introduced a new SKU that the model does not account for. The reconciliation takes twice as long as expected. The final board deck is assembled in the last 48 hours, and the team spends more time formatting slides than analyzing what the numbers actually mean. This is not a failure of effort &mdash; it is a failure of infrastructure.</p>
+
+<h2>What Boards Actually Need</h2>
+
+<p>Board members and PE operating partners are not asking for better spreadsheets. They are asking for a fundamentally different level of reporting &mdash; one that reflects how sophisticated investors evaluate SaaS businesses. Here is what that standard looks like.</p>
+
+<h3>1. Automated Daily Refresh from Source Systems</h3>
+
+<p>Board-grade reporting starts with data that is current. Not quarterly-current, but daily-current. When a customer churns on Tuesday, the ARR model should reflect it by Wednesday morning. When expansion revenue closes, it should appear in the waterfall that day. This requires automated pipelines that pull from CRM, billing, and ERP systems on a daily cadence, reconcile the data programmatically, and update the reporting layer without human intervention. The goal is not real-time vanity metrics &mdash; it is eliminating the quarterly scramble entirely.</p>
+
+<h3>2. Full ARR Waterfall with Segment Decomposition</h3>
+
+<p>A board-ready ARR waterfall shows beginning ARR, new logo ARR, expansion ARR, contraction ARR, and churn ARR &mdash; and breaks each category down by segment. That means decomposition by product line, customer size tier, geography, industry vertical, and sales motion. This level of granularity allows boards to see where growth is concentrated, where retention is weakest, and where the business has structural risks that top-line numbers obscure.</p>
+
+<h3>3. Cohort Retention, NRR, GRR by Vintage</h3>
+
+<p>Aggregate retention metrics hide as much as they reveal. A 110% net retention rate looks strong until you discover that one large customer expansion is masking broad-based contraction across the rest of the base. Vintage-level analysis &mdash; tracking each cohort from their starting quarter through subsequent periods &mdash; reveals the true retention behavior of the business. It shows whether newer cohorts retain better or worse than older ones, whether NRR is improving or declining over time, and whether GRR is stable or deteriorating. This is the standard that sophisticated buyers and investors expect.</p>
+
+<h3>4. Defensible in M&amp;A Diligence</h3>
+
+<p>When a buyer conducts quality of earnings analysis on an ARR business, they rebuild the ARR model from source data. If your internal model cannot be traced back to individual transactions in CRM and billing, the diligence team will build their own version &mdash; and the discrepancies between their numbers and yours will become negotiating leverage against you. Board-grade reporting is diligence-grade reporting. Every number should be auditable, every classification decision should be documented, and every assumption should be defensible.</p>
+
+<h3>5. AI-Ready for Agents and Copilots</h3>
+
+<p>The next generation of board reporting is conversational. Instead of waiting for an analyst to build a custom view, board members and operating partners should be able to ask questions in natural language: "Show me NRR by cohort for the enterprise segment over the last eight quarters." "Which product line has the highest expansion rate?" "What is the contraction trend for customers acquired in 2024?" This requires data that is structured, governed, and accessible to AI agents &mdash; not locked in a spreadsheet that only one person understands.</p>
+
+<h2>The Gap Is Not Technical &mdash; It Is Structural</h2>
+
+<blockquote><p>"The biggest challenges are not technical. They are knowing the reporting and operating implications of every decision you make in the model." &mdash; CFO, $100M B2B SaaS</p></blockquote>
+
+<p>This quote captures the core problem. The gap between what most companies build and what boards actually need is not a gap in tools or technology. Every mid-market SaaS company has access to Power BI, Tableau, dbt, Snowflake, and a dozen other platforms that could theoretically produce board-grade output. The gap is in expertise.</p>
+
+<p>Building an ARR waterfall is straightforward. Building one where every classification decision &mdash; how you handle multi-product customers, co-termed renewals, mid-quarter upgrades, partial churn, and reactivations &mdash; matches what a diligence team would produce is not. That requires deep experience across dozens of SaaS businesses, an understanding of how PE firms and buyers evaluate these metrics, and the judgment to know which decisions matter and which do not.</p>
+
+<p>Most finance teams have never been through a sell-side diligence process. They have never had their ARR model challenged by a buyer's quality of earnings team. They have never seen the difference between a model that survives diligence and one that creates a purchase price adjustment. This is not a criticism of those teams &mdash; it is a recognition that this is specialized knowledge that comes from repeated exposure to transactions, not from building one model at one company.</p>
+
+<p>The structural nature of the gap also explains why throwing more technology at the problem does not solve it. A company can migrate from spreadsheets to a modern data stack and still produce output that is not board-ready, because the issue was never the tooling. The issue is the domain expertise required to make the right classification decisions, present the data in the format boards expect, and ensure the output is defensible when someone challenges it.</p>
+
+<h2>How Pacer AI Closes the Gap</h2>
+
+<p>Pacer AI is an AI-native consulting firm built specifically to close this gap. Founded by ex-PwC M&amp;A advisors with experience across $25B+ in SaaS transactions, Pacer combines deep domain expertise with an enterprise data transformation platform to deliver what boards actually need &mdash; not what most teams build.</p>
+
+<p>The approach is direct:</p>
+<ul>
+<li><strong>Unified customer data cube</strong> built from your CRM, billing, and ERP systems &mdash; reconciled programmatically, not manually</li>
+<li><strong>Full ARR waterfall reporting</strong> with segment decomposition by product, cohort, geography, and customer tier</li>
+<li><strong>Vintage retention analysis</strong> showing NRR, GRR, and cohort behavior over time</li>
+<li><strong>Diligence-grade documentation</strong> ensuring every number is traceable and every classification decision is defensible</li>
+<li><strong>AI agent access</strong> for natural-language queries against your customer data, delivered through Power BI and Excel</li>
+<li><strong>Daily automated refresh</strong> &mdash; not a one-time deliverable, but a continuously updated platform</li>
+</ul>
+
+<p>The result: 30 minutes to board-ready, not 30 hours. Updated daily for the pace of operations, not quarterly for the pace of reporting. Learn more about how this works on our <a href="/solutions/arr-snowball-board-reporting/">ARR Snowball solution page</a>.</p>
+
+<h2>Next Steps</h2>
+
+<p>If your current board reporting process involves a quarterly scramble, a single-owner spreadsheet, or numbers you would not want a diligence team to examine closely, it is time to close the gap. Schedule a 30-minute conversation and we will show you what board-grade ARR reporting looks like with your own data.</p>
+
+<p style="text-align:center;margin:2rem 0"><a href="https://calendly.com/pacerai" style="display:inline-block;padding:14px 32px;background:#27899A;color:#fff;border-radius:6px;font-weight:600;text-decoration:none">Get a Sample Board Package</a></p>
+</div>
+
+<!-- ═══════════════════════════════════════ CTA ═══════════════════════════════════════ -->
+<div class="post-cta">
+  <div class="post-cta-inner">
+    <h2>See Your ARR Snowball. Live.</h2>
+    <p>Get a personalized demo showing how Pacer AI transforms your revenue data into board-ready ARR intelligence.</p>
+    <a href="https://calendly.com/pacerai" class="btn-teal">Request a Live Demo</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <svg width="28" height="24" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2 2 L11 14 L2 26" stroke="#4A7FA8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+      </a>
+      <p>M&amp;A-grade ARR intelligence for PE-backed SaaS companies. Built on Microsoft Fabric, Power BI, and AI.</p>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Solutions</div>
+      <ul>
+        <li><a href="#" data-scroll-to="customerdatacube">Customer Data Cube</a></li>
+        <li><a href="#" data-scroll-to="arrsnowball">ARR Snowball</a></li>
+        <li><a href="#" data-scroll-to="transactionready">Transaction-Ready</a></li>
+        <li><a href="#" data-scroll-to="gtmtransformation">GTM Transformation</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Company</div>
+      <ul>
+        <li><a href="#" data-scroll-to="what-is-pacer-ai">About</a></li>
+        <li><a href="https://calendly.com/pacerai">Contact</a></li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Connect</div>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/getpacerai">LinkedIn</a></li>
+        <li><a href="https://calendly.com/pacerai">Schedule a Call</a></li>
+        <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+    <div class="legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if(window.innerWidth>768) return;
+  document.querySelectorAll('#pacerai-post .nav-links > li > a').forEach(function(a){
+    var li=a.parentElement;
+    if(!li.querySelector('.dropdown')) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      li.classList.toggle('mobile-expanded');
+    });
+  });
+})();
+</script>
+</div>
+<!-- /wp:html -->

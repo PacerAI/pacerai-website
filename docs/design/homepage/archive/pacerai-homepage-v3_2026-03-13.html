@@ -1,0 +1,1255 @@
+<style>
+/* Hide TT4 theme chrome */
+.wp-site-blocks > header,
+.wp-site-blocks > footer,
+header.wp-block-template-part,
+footer.wp-block-template-part,
+.wp-block-template-part:first-child { display: none !important; }
+.wp-block-post-title, .wp-block-spacer { display: none !important; }
+html, body, .wp-site-blocks {
+  background: #080E1C !important;
+  background-color: #080E1C !important;
+}
+#pacerai-homepage { width: 100%; max-width: 100vw; overflow-x: hidden; }
+.wp-site-blocks,
+.wp-site-blocks > main,
+.wp-site-blocks > main > .wp-block-group,
+.wp-site-blocks .is-layout-constrained,
+.wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+.has-global-padding,
+.entry-content {
+  max-width: none !important;
+  padding-left: 0 !important; padding-right: 0 !important;
+  margin-left: 0 !important; margin-right: 0 !important;
+  padding-top: 0 !important;
+}
+
+:root {
+  --navy: #080E1C;
+  --navy-mid: #0F1929;
+  --navy-light: #162038;
+  --navy-border: #1E2D4A;
+  --brand: #1C3560;
+  --brand-blue: #2B7DC8;
+  --teal: #27899A;
+  --teal-light: #70C49C;
+  --cream: #F7F3EC;
+  --white: #FFFFFF;
+  --muted: #8A95A8;
+  --text-light: #CDD5E0;
+  --text-mid: #94A3B8;
+  --green: #2DB87A;
+  --red-subtle: #C94C4C;
+}
+
+#pacerai-homepage * { margin: 0; padding: 0; box-sizing: border-box; }
+#pacerai-homepage {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text-light);
+  overflow-x: hidden;
+  font-size: 15px;
+  line-height: 1.65;
+  scroll-behavior: smooth;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(.8); } }
+@keyframes orbFloat {
+  0%,100% { transform:translate(-50%,0) scale(1); }
+  33% { transform:translate(-50%,-20px) scale(1.05); }
+  66% { transform:translate(-50%,15px) scale(.95); }
+}
+@keyframes bounceY {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes flowDot {
+  0% { offset-distance: 0%; opacity:0; }
+  10% { opacity:1; }
+  90% { opacity:1; }
+  100% { offset-distance: 100%; opacity:0; }
+}
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 20px rgba(39,137,154,0.2), 0 0 60px rgba(39,137,154,0.1); }
+  50% { box-shadow: 0 0 30px rgba(39,137,154,0.4), 0 0 80px rgba(39,137,154,0.2); }
+}
+@keyframes tableReveal {
+  from { opacity:0; transform:translateY(20px) scale(0.95); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+@keyframes cellFill {
+  from { opacity:0; transform:translateX(-8px); }
+  to { opacity:1; transform:translateX(0); }
+}
+
+/* Scroll-reveal */
+#pacerai-homepage .reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+#pacerai-homepage .reveal.visible { opacity:1; transform:translateY(0); }
+#pacerai-homepage .reveal-stagger > .reveal:nth-child(1) { transition-delay:0s; }
+#pacerai-homepage .reveal-stagger > .reveal:nth-child(2) { transition-delay:.08s; }
+#pacerai-homepage .reveal-stagger > .reveal:nth-child(3) { transition-delay:.16s; }
+#pacerai-homepage .reveal-stagger > .reveal:nth-child(4) { transition-delay:.24s; }
+#pacerai-homepage .reveal-stagger > .reveal:nth-child(5) { transition-delay:.32s; }
+#pacerai-homepage .reveal-stagger > .reveal:nth-child(6) { transition-delay:.40s; }
+@media (prefers-reduced-motion: reduce) {
+  #pacerai-homepage .reveal { transition:none; opacity:1; transform:none; }
+  #pacerai-homepage * { animation-duration:0.01ms !important; }
+}
+
+/* ─── NAV ─── */
+#pacerai-homepage nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 48px; height:68px;
+  background:rgba(8,14,28,0.92);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(28,53,96,0.6);
+}
+#pacerai-homepage .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+#pacerai-homepage .nav-logo .wordmark {
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:21px; font-weight:bold; color:var(--white);
+}
+#pacerai-homepage .nav-logo .wordmark span { color:var(--teal-light); }
+#pacerai-homepage .nav-links { display:flex; align-items:center; gap:4px; list-style:none; }
+#pacerai-homepage .nav-links > li { position:relative; }
+#pacerai-homepage .nav-links > li > a {
+  display:flex; align-items:center; gap:5px;
+  padding:8px 14px; font-size:13.5px; font-weight:500;
+  color:var(--text-mid); text-decoration:none;
+  border-radius:6px; transition:color .2s,background .2s; cursor:pointer;
+}
+#pacerai-homepage .nav-links > li > a:hover { color:var(--white); background:rgba(255,255,255,0.05); }
+#pacerai-homepage .nav-links > li > a .chevron { font-size:10px; transition:transform .2s; }
+#pacerai-homepage .nav-links > li:hover > a .chevron { transform:rotate(180deg); }
+#pacerai-homepage .dropdown {
+  display:none; position:absolute; top:100%; left:50%;
+  transform:translateX(-50%); background:var(--navy-mid);
+  border:1px solid var(--navy-border); border-radius:12px;
+  padding:20px; padding-top:28px; min-width:520px;
+  box-shadow:0 24px 60px rgba(0,0,0,0.6);
+}
+#pacerai-homepage .dropdown::before { content:''; position:absolute; top:-12px; left:0; right:0; height:12px; }
+#pacerai-homepage .nav-links > li:hover .dropdown { display:block; }
+#pacerai-homepage .dropdown-grid { display:grid; grid-template-columns:1fr 1fr; gap:0 32px; }
+#pacerai-homepage .dropdown-col-label {
+  font-size:10px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--teal);
+  padding-bottom:10px; margin-bottom:6px;
+  border-bottom:1px solid var(--navy-border);
+}
+#pacerai-homepage .dropdown a {
+  display:flex; align-items:flex-start; gap:12px;
+  padding:10px; border-radius:8px; text-decoration:none;
+  transition:background .15s; cursor:pointer;
+}
+#pacerai-homepage .dropdown a:hover { background:rgba(255,255,255,0.04); }
+#pacerai-homepage .dropdown .d-icon {
+  width:32px; height:32px; flex-shrink:0;
+  background:var(--navy-light); border:1px solid var(--navy-border);
+  border-radius:7px; display:flex; align-items:center; justify-content:center;
+  color:var(--teal);
+}
+#pacerai-homepage .dropdown .d-text .d-title { font-size:13px; font-weight:500; color:var(--white); display:block; }
+#pacerai-homepage .dropdown .d-text .d-desc { font-size:12px; color:var(--muted); margin-top:2px; }
+#pacerai-homepage .single-dropdown { min-width:220px; }
+#pacerai-homepage .single-dropdown a {
+  padding:9px 12px; display:block; font-size:13px; font-weight:500;
+  color:var(--text-light); transition:background .15s,color .15s;
+}
+#pacerai-homepage .single-dropdown a:hover { background:rgba(255,255,255,0.05); color:var(--white); }
+#pacerai-homepage .mobile-menu-btn {
+  display:none; flex-direction:column; gap:5px;
+  background:none; border:none; cursor:pointer; padding:8px; z-index:101;
+}
+#pacerai-homepage .mobile-menu-btn span { display:block; width:22px; height:2px; background:var(--text-light); border-radius:2px; transition:all .3s; }
+#pacerai-homepage .mobile-menu-btn.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+#pacerai-homepage .mobile-menu-btn.open span:nth-child(2) { opacity:0; }
+#pacerai-homepage .mobile-menu-btn.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+#pacerai-homepage .nav-right { display:flex; align-items:center; gap:12px; }
+#pacerai-homepage .btn-ghost {
+  padding:8px 18px; font-size:13.5px; font-weight:500;
+  color:var(--text-light); background:transparent;
+  border:1px solid var(--navy-border); border-radius:7px;
+  cursor:pointer; text-decoration:none; transition:all .2s;
+}
+#pacerai-homepage .btn-ghost:hover { color:var(--white); border-color:rgba(39,137,154,0.45); }
+#pacerai-homepage .btn-teal {
+  padding:9px 20px; font-size:13.5px; font-weight:600;
+  color:#fff; background:var(--teal); border:none; border-radius:7px;
+  cursor:pointer; text-decoration:none; transition:all .2s;
+}
+#pacerai-homepage .btn-teal:hover { background:var(--teal-light); transform:translateY(-1px); box-shadow:0 8px 20px rgba(39,137,154,0.35); }
+
+/* ─── HERO ─── */
+#pacerai-homepage .hero {
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+  padding:120px 24px 60px; position:relative; overflow:hidden;
+}
+#pacerai-homepage .hero-bg {
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 900px 600px at 50% 30%, rgba(39,137,154,0.09) 0%, transparent 70%),
+    radial-gradient(ellipse 600px 400px at 80% 60%, rgba(45,184,122,0.04) 0%, transparent 60%),
+    linear-gradient(180deg, var(--navy) 0%, #0B1324 100%);
+}
+#pacerai-homepage .hero-bg::before {
+  content:''; position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(39,137,154,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(39,137,154,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent);
+}
+#pacerai-homepage .hero-orb {
+  position:absolute; width:600px; height:600px;
+  top:10%; left:50%; transform:translateX(-50%);
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(39,137,154,0.12) 0%, rgba(112,196,156,0.06) 40%, transparent 70%);
+  filter:blur(60px); animation:orbFloat 12s ease-in-out infinite;
+  z-index:0; pointer-events:none;
+}
+#pacerai-homepage .hero-eyebrow {
+  position:relative; z-index:1;
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 16px 6px 8px;
+  background:rgba(39,137,154,0.10); border:1px solid rgba(39,137,154,0.22);
+  border-radius:100px; font-size:12px; font-weight:500;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--teal);
+  margin-bottom:28px; animation:fadeUp .8s ease both;
+}
+#pacerai-homepage .hero-eyebrow .dot {
+  width:6px; height:6px; border-radius:50%; background:var(--teal);
+  animation:pulse 2s infinite;
+}
+#pacerai-homepage h1 {
+  position:relative; z-index:1;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(48px,7vw,88px); font-weight:300; line-height:1.06;
+  color:var(--white); max-width:900px;
+  animation:fadeUp .8s .1s ease both;
+}
+#pacerai-homepage h1 em { font-style:italic; color:var(--teal); }
+#pacerai-homepage .hero-sub {
+  position:relative; z-index:1;
+  font-size:17px; font-weight:300; color:var(--text-mid);
+  max-width:540px; line-height:1.7; margin:24px auto 40px;
+  animation:fadeUp .8s .2s ease both;
+}
+#pacerai-homepage .hero-ctas {
+  position:relative; z-index:1;
+  display:flex; align-items:center; gap:14px;
+  animation:fadeUp .8s .3s ease both;
+}
+#pacerai-homepage .btn-lg {
+  padding:14px 30px; font-size:15px; font-weight:600;
+  color:#fff; background:var(--teal); border:none; border-radius:8px;
+  cursor:pointer; text-decoration:none;
+  transition:all .25s; box-shadow:0 4px 24px rgba(39,137,154,0.30);
+}
+#pacerai-homepage .btn-lg:hover { background:var(--teal-light); transform:translateY(-2px); box-shadow:0 10px 32px rgba(112,196,156,0.40); }
+#pacerai-homepage .btn-outline-lg {
+  padding:13px 28px; font-size:15px; font-weight:500;
+  color:var(--white); background:transparent;
+  border:1px solid rgba(255,255,255,0.15); border-radius:8px;
+  cursor:pointer; text-decoration:none; transition:all .2s;
+}
+#pacerai-homepage .btn-outline-lg:hover { border-color:rgba(255,255,255,0.35); background:rgba(255,255,255,0.04); }
+
+/* ═══════════════════════════════════════════
+   SNOWBALL → WATERFALL ANIMATION
+   ═══════════════════════════════════════════ */
+#pacerai-homepage .snowball-section {
+  padding:0 24px 100px; position:relative;
+  display:flex; justify-content:center;
+}
+#pacerai-homepage .snowball-container {
+  width:100%; max-width:1080px;
+  position:relative; min-height:520px;
+}
+#pacerai-homepage #snowball-canvas {
+  position:absolute; inset:0; z-index:1;
+  width:100%; height:100%;
+  pointer-events:none;
+}
+/* The ARR waterfall table that the snowball resolves into */
+#pacerai-homepage .waterfall-table {
+  position:relative; z-index:2;
+  width:100%; max-width:900px; margin:0 auto;
+  background:var(--navy-mid);
+  border:1px solid var(--navy-border);
+  border-radius:16px; overflow:hidden;
+  box-shadow:0 0 0 1px rgba(39,137,154,0.12), 0 40px 120px rgba(0,0,0,0.6), 0 0 80px rgba(39,137,154,0.08);
+  opacity:0; transform:translateY(20px) scale(0.95);
+  transition: opacity 1.2s cubic-bezier(0.16,1,0.3,1), transform 1.2s cubic-bezier(0.16,1,0.3,1);
+}
+#pacerai-homepage .waterfall-table.revealed {
+  opacity:1; transform:translateY(0) scale(1);
+}
+#pacerai-homepage .wf-header-bar {
+  background:var(--navy-light);
+  padding:14px 24px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid var(--navy-border);
+}
+#pacerai-homepage .wf-title {
+  font-size:13px; font-weight:600; color:var(--text-light);
+  letter-spacing:.04em; display:flex; align-items:center; gap:10px;
+}
+#pacerai-homepage .wf-title .wf-dot { width:8px; height:8px; border-radius:50%; background:var(--teal); animation:pulse 2s infinite; }
+#pacerai-homepage .wf-badge {
+  font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  padding:3px 10px; border-radius:100px;
+  background:rgba(45,184,122,0.12); color:var(--green);
+  border:1px solid rgba(45,184,122,0.2);
+}
+#pacerai-homepage .wf-grid {
+  display:grid;
+  grid-template-columns:180px repeat(4,1fr) 1px repeat(1,1fr);
+  font-size:13px;
+}
+#pacerai-homepage .wf-cell {
+  padding:12px 16px;
+  border-bottom:1px solid rgba(30,45,74,0.5);
+  font-variant-numeric:tabular-nums;
+  opacity:0;
+  animation:cellFill .4s ease forwards;
+}
+#pacerai-homepage .waterfall-table.revealed .wf-cell { opacity:0; animation:cellFill .4s ease forwards; }
+/* Stagger each row */
+#pacerai-homepage .waterfall-table.revealed .wf-row:nth-child(1) .wf-cell { animation-delay:.3s; }
+#pacerai-homepage .waterfall-table.revealed .wf-row:nth-child(2) .wf-cell { animation-delay:.45s; }
+#pacerai-homepage .waterfall-table.revealed .wf-row:nth-child(3) .wf-cell { animation-delay:.6s; }
+#pacerai-homepage .waterfall-table.revealed .wf-row:nth-child(4) .wf-cell { animation-delay:.75s; }
+#pacerai-homepage .waterfall-table.revealed .wf-row:nth-child(5) .wf-cell { animation-delay:.9s; }
+#pacerai-homepage .waterfall-table.revealed .wf-row:nth-child(6) .wf-cell { animation-delay:1.05s; }
+#pacerai-homepage .waterfall-table.revealed .wf-row:nth-child(7) .wf-cell { animation-delay:1.2s; }
+#pacerai-homepage .waterfall-table.revealed .wf-row:nth-child(8) .wf-cell { animation-delay:1.35s; }
+#pacerai-homepage .wf-cell.label { font-weight:500; color:var(--text-light); }
+#pacerai-homepage .wf-cell.header {
+  font-size:10px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+  border-bottom:1px solid var(--navy-border);
+}
+#pacerai-homepage .wf-cell.header.hl { color:var(--teal); }
+#pacerai-homepage .wf-cell.pos { color:var(--green); }
+#pacerai-homepage .wf-cell.neg { color:var(--red-subtle); }
+#pacerai-homepage .wf-cell.bold { font-weight:700; color:var(--white); }
+#pacerai-homepage .wf-cell.gold { color:var(--teal); font-weight:600; }
+#pacerai-homepage .wf-cell.sep { padding:0; background:var(--navy-border); min-width:1px; border:none; }
+#pacerai-homepage .wf-row-hl { background:rgba(39,137,154,0.04); }
+
+/* ═══════════════════════════════════════════
+   DATA PIPELINE ANIMATION
+   ═══════════════════════════════════════════ */
+#pacerai-homepage .pipeline-section {
+  padding:100px 24px;
+  background:var(--navy-mid);
+  border-top:1px solid var(--navy-border);
+  border-bottom:1px solid var(--navy-border);
+  overflow:hidden;
+}
+#pacerai-homepage .pipeline-inner { max-width:1080px; margin:0 auto; }
+#pacerai-homepage .pipeline-visual {
+  margin-top:64px;
+  position:relative;
+  height:320px;
+  display:flex; align-items:center; justify-content:center;
+}
+/* Source icons */
+#pacerai-homepage .pipe-sources {
+  position:absolute; left:0; top:0; bottom:0; width:140px;
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:24px;
+}
+#pacerai-homepage .pipe-icon-box {
+  width:72px; height:72px;
+  background:var(--navy-light);
+  border:1px solid var(--navy-border);
+  border-radius:14px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:4px; position:relative;
+  transition:border-color .3s, box-shadow .3s;
+}
+#pacerai-homepage .pipe-icon-box:nth-child(1) { animation:bounceY 3s ease-in-out infinite; }
+#pacerai-homepage .pipe-icon-box:nth-child(2) { animation:bounceY 3s .5s ease-in-out infinite; }
+#pacerai-homepage .pipe-icon-box:nth-child(3) { animation:bounceY 3s 1s ease-in-out infinite; }
+#pacerai-homepage .pipe-icon-box:nth-child(4) { animation:bounceY 3s 1.5s ease-in-out infinite; }
+#pacerai-homepage .pipe-icon-box svg { color:var(--teal); }
+#pacerai-homepage .pipe-icon-label {
+  font-size:9px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+}
+
+/* Central processor */
+#pacerai-homepage .pipe-processor {
+  width:180px; height:180px;
+  background:var(--navy-light);
+  border:2px solid rgba(39,137,154,0.35);
+  border-radius:24px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:8px; position:relative; z-index:2;
+  animation:glowPulse 3s ease-in-out infinite;
+}
+#pacerai-homepage .pipe-processor svg { color:var(--teal); }
+#pacerai-homepage .pipe-processor .proc-label {
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:18px; font-weight:bold; color:var(--white);
+}
+#pacerai-homepage .pipe-processor .proc-label span { color:var(--teal-light); }
+#pacerai-homepage .pipe-processor .proc-sub {
+  font-size:10px; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--muted);
+}
+
+/* Output icons */
+#pacerai-homepage .pipe-outputs {
+  position:absolute; right:0; top:0; bottom:0; width:140px;
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:24px;
+}
+#pacerai-homepage .pipe-out-box {
+  width:100px; height:72px;
+  background:var(--navy-light);
+  border:1px solid rgba(39,137,154,0.25);
+  border-radius:14px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:4px;
+}
+#pacerai-homepage .pipe-out-box svg { color:var(--teal-light); }
+#pacerai-homepage .pipe-out-label {
+  font-size:10px; font-weight:600; color:var(--text-light); letter-spacing:.04em;
+}
+
+/* SVG flow paths + animated dots */
+#pacerai-homepage .pipe-svg {
+  position:absolute; inset:0; z-index:1;
+  pointer-events:none;
+}
+#pacerai-homepage .flow-path {
+  fill:none; stroke:rgba(39,137,154,0.15); stroke-width:2;
+  stroke-dasharray:6 4;
+}
+#pacerai-homepage .flow-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:var(--teal);
+  box-shadow:0 0 12px rgba(39,137,154,0.6);
+  position:absolute;
+  offset-rotate:0deg;
+  animation:flowDot 3s linear infinite;
+}
+#pacerai-homepage .flow-dot.d2 { animation-delay:.6s; background:var(--teal-light); }
+#pacerai-homepage .flow-dot.d3 { animation-delay:1.2s; }
+#pacerai-homepage .flow-dot.d4 { animation-delay:1.8s; background:var(--green); }
+#pacerai-homepage .flow-dot.out1 { animation-delay:.3s; background:var(--teal-light); }
+#pacerai-homepage .flow-dot.out2 { animation-delay:.9s; }
+#pacerai-homepage .flow-dot.out3 { animation-delay:1.5s; background:var(--green); }
+
+/* Number stream overlay on pipeline */
+#pacerai-homepage .num-stream {
+  position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;
+}
+#pacerai-homepage .num-particle {
+  position:absolute; font-size:11px; font-weight:600;
+  font-variant-numeric:tabular-nums;
+  color:rgba(39,137,154,0.2);
+  animation:numFloat linear infinite;
+  pointer-events:none;
+}
+@keyframes numFloat {
+  0% { transform:translateX(-40px); opacity:0; }
+  15% { opacity:1; }
+  85% { opacity:1; }
+  100% { transform:translateX(calc(100vw)); opacity:0; }
+}
+
+/* ─── SECTION SHARED ─── */
+#pacerai-homepage .section { padding:100px 48px; }
+#pacerai-homepage .section-inner { max-width:1080px; margin:0 auto; }
+#pacerai-homepage .section-eyebrow {
+  font-size:11px; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--teal); margin-bottom:16px;
+}
+#pacerai-homepage h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,4.5vw,56px); font-weight:300; line-height:1.1;
+  color:var(--white);
+}
+#pacerai-homepage h2 em { font-style:italic; color:var(--teal); }
+#pacerai-homepage .section-lead {
+  font-size:16px; font-weight:300; color:var(--text-mid);
+  max-width:560px; line-height:1.75; margin-top:18px;
+}
+
+/* ─── LOGO STRIP ─── */
+#pacerai-homepage .logo-strip {
+  padding:48px; border-top:1px solid var(--navy-border);
+  border-bottom:1px solid var(--navy-border); text-align:center;
+}
+#pacerai-homepage .logo-strip .ls-label {
+  font-size:11px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:32px;
+}
+#pacerai-homepage .logo-row {
+  display:flex; align-items:center; justify-content:center;
+  gap:48px; flex-wrap:wrap;
+}
+#pacerai-homepage .logo-item {
+  font-size:14px; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; color:rgba(138,149,168,0.45);
+  display:flex; align-items:center; gap:8px; transition:color .2s;
+}
+#pacerai-homepage .logo-item:hover { color:rgba(112,196,156,0.6); }
+
+/* ─── USE CASES ─── */
+#pacerai-homepage .uc-grid {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:2px;
+  border:1px solid var(--navy-border); border-radius:16px;
+  overflow:hidden; margin-top:48px;
+}
+#pacerai-homepage .uc-card {
+  background:var(--navy-mid); padding:40px;
+  position:relative; overflow:hidden;
+  transition:background .25s; cursor:pointer;
+}
+#pacerai-homepage .uc-card:hover { background:var(--navy-light); }
+#pacerai-homepage .uc-card.primary { grid-column:1/-1; background:var(--navy-light); }
+#pacerai-homepage .uc-card .uc-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:64px; font-weight:300; color:rgba(39,137,154,0.10);
+  position:absolute; top:20px; right:28px; line-height:1;
+}
+#pacerai-homepage .uc-tag {
+  display:inline-block; font-size:10px; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase;
+  padding:4px 10px; border-radius:4px;
+  background:rgba(39,137,154,0.12); color:var(--teal);
+  border:1px solid rgba(39,137,154,0.22); margin-bottom:16px;
+}
+#pacerai-homepage .uc-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px; font-weight:500; color:var(--white); line-height:1.2; margin-bottom:12px;
+}
+#pacerai-homepage .uc-card.primary h3 { font-size:32px; }
+#pacerai-homepage .uc-card p { font-size:14px; color:var(--text-mid); line-height:1.7; max-width:480px; }
+#pacerai-homepage .uc-card .uc-link {
+  display:inline-flex; align-items:center; gap:6px;
+  margin-top:24px; font-size:13px; font-weight:500;
+  color:var(--teal); text-decoration:none; transition:gap .2s; cursor:pointer;
+}
+#pacerai-homepage .uc-card:hover .uc-link { gap:10px; }
+#pacerai-homepage .arr-pill-row { display:flex; gap:10px; margin-top:28px; flex-wrap:wrap; }
+#pacerai-homepage .arr-pill {
+  padding:8px 16px; border-radius:8px; font-size:13px;
+  font-variant-numeric:tabular-nums; font-weight:500;
+}
+#pacerai-homepage .arr-pill.pos { background:rgba(45,184,122,0.1); color:var(--green); border:1px solid rgba(45,184,122,0.15); }
+#pacerai-homepage .arr-pill.neg { background:rgba(201,76,76,0.1); color:var(--red-subtle); border:1px solid rgba(201,76,76,0.15); }
+#pacerai-homepage .arr-pill.neutral { background:rgba(138,149,168,0.1); color:var(--text-mid); border:1px solid rgba(138,149,168,0.15); }
+#pacerai-homepage .arr-pill.gold { background:rgba(39,137,154,0.12); color:var(--teal); border:1px solid rgba(39,137,154,0.22); }
+
+/* ─── RESULTS ─── */
+#pacerai-homepage .results-section {
+  padding:100px 48px; text-align:center;
+  border-top:1px solid var(--navy-border);
+}
+#pacerai-homepage .results-inner { max-width:1080px; margin:0 auto; }
+#pacerai-homepage .results-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:32px; margin-top:64px;
+}
+#pacerai-homepage .result-card {
+  padding:32px 24px; border-radius:16px;
+  background:var(--navy-mid); border:1px solid var(--navy-border);
+  transition:border-color .3s, transform .3s;
+}
+#pacerai-homepage .result-card:hover { border-color:rgba(39,137,154,0.3); transform:translateY(-4px); }
+#pacerai-homepage .result-val {
+  font-family:'Cormorant Garamond',serif;
+  font-size:48px; font-weight:500; color:var(--white); line-height:1;
+}
+#pacerai-homepage .result-val span { color:var(--teal); }
+#pacerai-homepage .result-label { font-size:14px; color:var(--text-mid); margin-top:12px; line-height:1.5; }
+
+/* ─── QUOTE ─── */
+#pacerai-homepage .quote-section { padding:100px 48px; }
+#pacerai-homepage .quote-inner { max-width:800px; margin:0 auto; text-align:center; }
+#pacerai-homepage .quote-mark {
+  font-family:'Cormorant Garamond',serif;
+  font-size:120px; color:rgba(39,137,154,0.12); line-height:.5; margin-bottom:24px;
+}
+#pacerai-homepage blockquote {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(22px,3vw,32px); font-weight:300; font-style:italic;
+  color:var(--white); line-height:1.5; margin-bottom:32px;
+}
+#pacerai-homepage .quote-attr { font-size:13px; color:var(--muted); }
+#pacerai-homepage .quote-attr strong { color:var(--text-light); font-weight:600; }
+
+/* ─── CTA ─── */
+#pacerai-homepage .cta-section {
+  padding:100px 48px; position:relative; overflow:hidden;
+}
+#pacerai-homepage .cta-bg {
+  position:absolute; inset:0;
+  background: linear-gradient(135deg, rgba(39,137,154,0.08) 0%, transparent 50%),
+    linear-gradient(315deg, rgba(112,196,156,0.06) 0%, transparent 50%), var(--navy-mid);
+  border-top:1px solid var(--navy-border);
+}
+#pacerai-homepage .cta-inner {
+  max-width:640px; margin:0 auto; text-align:center;
+  position:relative; z-index:1;
+}
+#pacerai-homepage .cta-inner h2 { font-size:clamp(32px,4vw,52px); }
+#pacerai-homepage .cta-inner p { color:var(--text-mid); font-size:16px; margin:18px 0 40px; line-height:1.7; }
+#pacerai-homepage .cta-buttons { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+/* ─── FOOTER ─── */
+#pacerai-homepage footer {
+  background:var(--navy); border-top:1px solid var(--navy-border);
+  padding:80px 48px 40px;
+}
+#pacerai-homepage .footer-top {
+  display:grid; grid-template-columns:240px 1fr 1fr 1fr 1fr;
+  gap:48px; padding-bottom:64px;
+  border-bottom:1px solid var(--navy-border); margin-bottom:40px;
+}
+#pacerai-homepage .footer-brand p { font-size:13px; color:var(--muted); line-height:1.7; margin-top:16px; }
+#pacerai-homepage .footer-col-head {
+  font-size:11px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--text-light); margin-bottom:20px;
+}
+#pacerai-homepage .footer-col ul { list-style:none; }
+#pacerai-homepage .footer-col ul li { margin-bottom:10px; }
+#pacerai-homepage .footer-col ul li a { font-size:13px; color:var(--muted); text-decoration:none; transition:color .2s; cursor:pointer; }
+#pacerai-homepage .footer-col ul li a:hover { color:var(--teal); }
+#pacerai-homepage .footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+#pacerai-homepage .footer-bottom .copy { font-size:12px; color:var(--muted); }
+#pacerai-homepage .footer-bottom .legal { display:flex; gap:24px; }
+#pacerai-homepage .footer-bottom .legal a { font-size:12px; color:var(--muted); text-decoration:none; transition:color .2s; }
+#pacerai-homepage .footer-bottom .legal a:hover { color:var(--text-mid); }
+
+/* ═══ MOBILE ═══ */
+@media (max-width:768px) {
+  #pacerai-homepage nav { padding:0 16px; height:56px; backdrop-filter:none; background:#080E1C; overflow:visible; }
+  #pacerai-homepage .nav-links {
+    display:none !important; position:fixed; top:56px; left:0; right:0; bottom:0;
+    background:#080E1C; flex-direction:column; align-items:stretch;
+    padding:16px 20px; overflow-y:auto; z-index:200;
+    border-top:1px solid var(--navy-border); list-style:none;
+  }
+  #pacerai-homepage .nav-links.mobile-open { display:flex !important; }
+  #pacerai-homepage .nav-links > li { border-bottom:1px solid var(--navy-border); }
+  #pacerai-homepage .nav-links > li > a { padding:16px 0; font-size:16px; display:flex; justify-content:space-between; color:#CDD5E0; }
+  #pacerai-homepage .nav-links > li > a:hover { background:none; }
+  #pacerai-homepage .nav-links .dropdown { position:static !important; transform:none !important; min-width:0 !important; background:transparent !important; border:none !important; box-shadow:none !important; padding:0 0 12px 16px !important; border-radius:0 !important; padding-top:0 !important; }
+  #pacerai-homepage .nav-links .dropdown::before { display:none; }
+  #pacerai-homepage .nav-links > li:hover .dropdown { display:none !important; }
+  #pacerai-homepage .nav-links > li.mobile-expanded .dropdown { display:block !important; }
+  #pacerai-homepage .nav-links .dropdown a { padding:10px 0; font-size:14px; color:#94A3B8; }
+  #pacerai-homepage .nav-links .dropdown-grid { grid-template-columns:1fr; }
+  #pacerai-homepage .nav-right .btn-ghost { display:none; }
+  #pacerai-homepage .nav-right .btn-teal { padding:7px 14px; font-size:12px; }
+  #pacerai-homepage .mobile-menu-btn { display:flex !important; }
+  #pacerai-homepage .hero { min-height:auto; padding:80px 20px 60px; }
+  #pacerai-homepage .hero-orb { width:300px; height:300px; }
+  #pacerai-homepage h1 { font-size:36px; max-width:100%; }
+  #pacerai-homepage .hero-sub { font-size:15px; margin:18px auto 28px; }
+  #pacerai-homepage .hero-ctas { flex-direction:column; width:100%; }
+  #pacerai-homepage .hero-ctas .btn-lg, #pacerai-homepage .hero-ctas .btn-outline-lg { width:100%; text-align:center; }
+  #pacerai-homepage .snowball-section { padding:0 16px 60px; }
+  #pacerai-homepage .snowball-container { min-height:380px; }
+  #pacerai-homepage .wf-grid { font-size:10px; }
+  #pacerai-homepage .wf-cell { padding:8px 8px; }
+  #pacerai-homepage .wf-cell.header { font-size:8px; }
+  #pacerai-homepage .logo-strip { padding:32px 16px; }
+  #pacerai-homepage .logo-row { gap:20px; }
+  #pacerai-homepage .logo-item { font-size:11px; }
+  #pacerai-homepage .pipeline-section { padding:60px 20px; }
+  #pacerai-homepage .pipeline-visual { height:auto; flex-direction:column; gap:32px; padding:20px 0; }
+  #pacerai-homepage .pipe-sources, #pacerai-homepage .pipe-outputs { position:static; width:100%; flex-direction:row; flex-wrap:wrap; justify-content:center; }
+  #pacerai-homepage .pipe-processor { width:140px; height:140px; }
+  #pacerai-homepage .pipe-svg { display:none; }
+  #pacerai-homepage .flow-dot { display:none; }
+  #pacerai-homepage .num-stream { display:none; }
+  #pacerai-homepage .section { padding:60px 20px; }
+  #pacerai-homepage .uc-grid { grid-template-columns:1fr; }
+  #pacerai-homepage .uc-card { padding:28px 20px; }
+  #pacerai-homepage .uc-card.primary { grid-column:1; }
+  #pacerai-homepage .results-section { padding:60px 20px; }
+  #pacerai-homepage .results-grid { grid-template-columns:repeat(2,1fr); gap:16px; }
+  #pacerai-homepage .result-val { font-size:36px; }
+  #pacerai-homepage .quote-section { padding:60px 20px; }
+  #pacerai-homepage .cta-section { padding:60px 20px; }
+  #pacerai-homepage .cta-buttons { flex-direction:column; }
+  #pacerai-homepage .cta-buttons .btn-lg, #pacerai-homepage .cta-buttons .btn-outline-lg { width:100%; text-align:center; }
+  #pacerai-homepage footer { padding:48px 20px 32px; }
+  #pacerai-homepage .footer-top { grid-template-columns:1fr 1fr; gap:32px 24px; }
+  #pacerai-homepage .footer-brand { grid-column:1/-1; }
+  #pacerai-homepage .footer-bottom { flex-direction:column; align-items:flex-start; }
+  #pacerai-homepage .footer-bottom .legal { flex-wrap:wrap; gap:12px; }
+}
+@media (max-width:1024px) and (min-width:769px) {
+  #pacerai-homepage nav { padding:0 24px; }
+  #pacerai-homepage .nav-links > li > a { padding:8px 8px; font-size:12px; }
+  #pacerai-homepage .section { padding:80px 24px; }
+  #pacerai-homepage .results-grid { grid-template-columns:repeat(2,1fr); }
+  #pacerai-homepage .footer-top { grid-template-columns:1fr 1fr 1fr; gap:32px; }
+  #pacerai-homepage .footer-brand { grid-column:1/-1; }
+  #pacerai-homepage footer { padding:60px 24px 32px; }
+}
+</style>
+
+<div id="pacerai-homepage">
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="/" class="nav-logo">
+    <svg width="32" height="28" viewBox="0 0 32 28" fill="none" aria-hidden="true">
+      <path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span class="wordmark">Pacer&nbsp;<span>AI</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/platform/overview/">Platform <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown" style="min-width:200px">
+        <a href="/platform/overview/">Overview</a><a href="#">Data Ingestion</a><a href="#">Fabric + Power BI</a><a href="#">AI Agents</a><a href="#">Excel + Copilot</a><a href="#">Security &amp; Compliance</a>
+      </div>
+    </li>
+    <li><a href="#">Solutions <span class="chevron">&#9662;</span></a>
+      <div class="dropdown" style="min-width:560px">
+        <div class="dropdown-grid">
+          <div>
+            <div class="dropdown-col-label">Use Cases</div>
+            <a href="/solutions/arr-snowball-board-reporting/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><div class="d-text"><span class="d-title">ARR Snowball Board Reporting</span><span class="d-desc">Board-ready waterfall models</span></div></a>
+            <a href="/solutions/customer-data-cube/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="d-text"><span class="d-title">Customer Data Cube</span><span class="d-desc">Unified revenue analytics</span></div></a>
+            <a href="#"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="d-text"><span class="d-title">Virtual Data Room</span><span class="d-desc">Investor-grade automation</span></div></a>
+            <a href="#"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="d-text"><span class="d-title">Exit Readiness</span><span class="d-desc">M&amp;A due diligence prep</span></div></a>
+          </div>
+          <div>
+            <div class="dropdown-col-label">Industry</div>
+            <a href="#"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div><div class="d-text"><span class="d-title">B2B SaaS</span><span class="d-desc">$50M &ndash; $1B ARR</span></div></a>
+            <a href="#"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div class="d-text"><span class="d-title">PE-Backed SaaS</span><span class="d-desc">Portfolio reporting</span></div></a>
+            <a href="#"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="d-text"><span class="d-title">Pre-IPO SaaS</span><span class="d-desc">S-1 ready metrics</span></div></a>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li><a href="#">Resources <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/blog/">Blog</a><a href="#">Newsletter</a><a href="#">ARR Snowball Guide</a><a href="#">Templates</a><a href="#">Documentation</a>
+      </div>
+    </li>
+    <li><a href="#">Partners</a></li>
+    <li><a href="#">Case Studies</a></li>
+    <li><a href="#">Company <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/company/about/">About</a><a href="#">Founders Story</a><a href="#">Careers</a><a href="/company/contact/">Contact</a>
+      </div>
+    </li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
+    <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(b){var n=document.querySelector('#pacerai-homepage nav'),l=n.querySelector('.nav-links'),o=l.classList.contains('mobile-open');b.classList.toggle('open');l.classList.toggle('mobile-open');document.body.style.overflow=o?'':'hidden';document.documentElement.style.overflow=o?'':'hidden'})(this)"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-eyebrow"><span class="dot"></span> ARR Intelligence &middot; Built for PE-Backed B2B SaaS</div>
+  <h1>Your ARR Snowball Report.<br><em>Automated.</em> Board-Ready.</h1>
+  <p class="hero-sub">Pacer AI transforms raw revenue data &mdash; CRM, billing, and reported &mdash; into due diligence-grade ARR Snowball reports. From raw data to board quality in days, not months.</p>
+  <div class="hero-ctas">
+    <a href="https://calendly.com/pacerai" class="btn-lg">See a Live ARR Demo &rarr;</a>
+    <a href="#pipeline" class="btn-outline-lg">How It Works</a>
+  </div>
+</section>
+
+<!-- ═══ DATA SNOWBALL → ARR WATERFALL ═══ -->
+<section class="snowball-section">
+  <div class="snowball-container">
+    <canvas id="snowball-canvas"></canvas>
+    <div class="waterfall-table" id="waterfall-table">
+      <div class="wf-header-bar">
+        <div class="wf-title"><span class="wf-dot"></span> ARR Snowball &mdash; Quarterly Waterfall</div>
+        <span class="wf-badge">&#9679; Live Data</span>
+      </div>
+      <div class="wf-grid">
+        <!-- Header row -->
+        <div class="wf-row" style="display:contents">
+          <div class="wf-cell header"></div>
+          <div class="wf-cell header hl">Q1 2026</div>
+          <div class="wf-cell header hl">Q2 2026</div>
+          <div class="wf-cell header hl">Q3 2026</div>
+          <div class="wf-cell header hl">Q4 2026</div>
+          <div class="wf-cell sep"></div>
+          <div class="wf-cell header hl">FY 2026</div>
+        </div>
+        <div class="wf-row wf-row-hl" style="display:contents">
+          <div class="wf-cell label bold">Beginning ARR</div>
+          <div class="wf-cell bold">$82.4M</div>
+          <div class="wf-cell bold">$88.1M</div>
+          <div class="wf-cell bold">$95.3M</div>
+          <div class="wf-cell bold">$102.8M</div>
+          <div class="wf-cell sep"></div>
+          <div class="wf-cell bold">$82.4M</div>
+        </div>
+        <div class="wf-row" style="display:contents">
+          <div class="wf-cell label">+ New Business</div>
+          <div class="wf-cell pos">+$3.2M</div>
+          <div class="wf-cell pos">+$4.1M</div>
+          <div class="wf-cell pos">+$4.8M</div>
+          <div class="wf-cell pos">+$5.2M</div>
+          <div class="wf-cell sep"></div>
+          <div class="wf-cell pos">+$17.3M</div>
+        </div>
+        <div class="wf-row" style="display:contents">
+          <div class="wf-cell label">+ Expansion</div>
+          <div class="wf-cell pos">+$2.8M</div>
+          <div class="wf-cell pos">+$3.4M</div>
+          <div class="wf-cell pos">+$3.1M</div>
+          <div class="wf-cell pos">+$3.6M</div>
+          <div class="wf-cell sep"></div>
+          <div class="wf-cell pos">+$12.9M</div>
+        </div>
+        <div class="wf-row" style="display:contents">
+          <div class="wf-cell label">&minus; Contraction</div>
+          <div class="wf-cell neg">&minus;$0.8M</div>
+          <div class="wf-cell neg">&minus;$0.6M</div>
+          <div class="wf-cell neg">&minus;$0.9M</div>
+          <div class="wf-cell neg">&minus;$0.7M</div>
+          <div class="wf-cell sep"></div>
+          <div class="wf-cell neg">&minus;$3.0M</div>
+        </div>
+        <div class="wf-row" style="display:contents">
+          <div class="wf-cell label">&minus; Churn</div>
+          <div class="wf-cell neg">&minus;$1.5M</div>
+          <div class="wf-cell neg">&minus;$1.7M</div>
+          <div class="wf-cell neg">&minus;$1.5M</div>
+          <div class="wf-cell neg">&minus;$1.8M</div>
+          <div class="wf-cell sep"></div>
+          <div class="wf-cell neg">&minus;$6.5M</div>
+        </div>
+        <div class="wf-row" style="display:contents">
+          <div class="wf-cell label">= Net New ARR</div>
+          <div class="wf-cell gold">+$3.7M</div>
+          <div class="wf-cell gold">+$5.2M</div>
+          <div class="wf-cell gold">+$5.5M</div>
+          <div class="wf-cell gold">+$6.3M</div>
+          <div class="wf-cell sep"></div>
+          <div class="wf-cell gold">+$20.7M</div>
+        </div>
+        <div class="wf-row wf-row-hl" style="display:contents">
+          <div class="wf-cell label bold">Ending ARR</div>
+          <div class="wf-cell bold">$88.1M</div>
+          <div class="wf-cell bold">$95.3M</div>
+          <div class="wf-cell bold">$102.8M</div>
+          <div class="wf-cell bold">$111.1M</div>
+          <div class="wf-cell sep"></div>
+          <div class="wf-cell gold" style="font-size:15px;">$111.1M</div>
+        </div>
+        <div class="wf-row" style="display:contents">
+          <div class="wf-cell label">NRR</div>
+          <div class="wf-cell gold">102%</div>
+          <div class="wf-cell gold">103%</div>
+          <div class="wf-cell gold">102%</div>
+          <div class="wf-cell gold">103%</div>
+          <div class="wf-cell sep"></div>
+          <div class="wf-cell gold">125%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TECH PARTNER STRIP ═══ -->
+<div class="logo-strip reveal">
+  <div class="ls-label">Built on the enterprise stack your team already trusts</div>
+  <div class="logo-row">
+    <span class="logo-item">Microsoft Fabric</span>
+    <span class="logo-item">Power BI</span>
+    <span class="logo-item">Azure AI</span>
+    <span class="logo-item">Salesforce</span>
+    <span class="logo-item">HubSpot</span>
+    <span class="logo-item">Stripe</span>
+  </div>
+</div>
+
+<!-- ═══ DATA PIPELINE ANIMATION ═══ -->
+<section class="pipeline-section" id="pipeline">
+  <div class="pipeline-inner">
+    <div class="section-eyebrow reveal" style="text-align:center">How It Works</div>
+    <h2 class="reveal" style="text-align:center">Raw data in. Board deck out.<br><em>Automated.</em></h2>
+    <p class="section-lead reveal" style="text-align:center;margin:18px auto 0;">Connect your systems. Pacer AI does the rest &mdash; on Microsoft's enterprise stack, so your data never leaves your control.</p>
+
+    <div class="pipeline-visual reveal">
+      <!-- Floating number stream background -->
+      <div class="num-stream" id="num-stream"></div>
+
+      <!-- Source systems -->
+      <div class="pipe-sources">
+        <div class="pipe-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="pipe-icon-label">CRM</span>
+        </div>
+        <div class="pipe-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <span class="pipe-icon-label">Billing</span>
+        </div>
+        <div class="pipe-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          <span class="pipe-icon-label">ERP</span>
+        </div>
+        <div class="pipe-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <span class="pipe-icon-label">HRIS</span>
+        </div>
+      </div>
+
+      <!-- SVG flow paths -->
+      <svg class="pipe-svg" viewBox="0 0 1080 320" preserveAspectRatio="none">
+        <!-- Inbound paths -->
+        <path class="flow-path" d="M140,60 C300,60 350,160 450,160" id="fp1"/>
+        <path class="flow-path" d="M140,120 C280,120 350,160 450,160" id="fp2"/>
+        <path class="flow-path" d="M140,200 C280,200 350,160 450,160" id="fp3"/>
+        <path class="flow-path" d="M140,260 C300,260 350,160 450,160" id="fp4"/>
+        <!-- Outbound paths -->
+        <path class="flow-path" d="M630,140 C730,140 780,100 940,100" id="fp5"/>
+        <path class="flow-path" d="M630,160 C730,160 780,160 940,160" id="fp6"/>
+        <path class="flow-path" d="M630,180 C730,180 780,220 940,220" id="fp7"/>
+      </svg>
+
+      <!-- Animated flow dots — inbound -->
+      <div class="flow-dot" style="offset-path:path('M140,60 C300,60 350,160 450,160');"></div>
+      <div class="flow-dot d2" style="offset-path:path('M140,120 C280,120 350,160 450,160');"></div>
+      <div class="flow-dot d3" style="offset-path:path('M140,200 C280,200 350,160 450,160');"></div>
+      <div class="flow-dot d4" style="offset-path:path('M140,260 C300,260 350,160 450,160');"></div>
+      <!-- Animated flow dots — outbound -->
+      <div class="flow-dot out1" style="offset-path:path('M630,140 C730,140 780,100 940,100');"></div>
+      <div class="flow-dot out2" style="offset-path:path('M630,160 C730,160 780,160 940,160');"></div>
+      <div class="flow-dot out3" style="offset-path:path('M630,180 C730,180 780,220 940,220');"></div>
+
+      <!-- Central Pacer AI processor -->
+      <div class="pipe-processor">
+        <svg width="40" height="40" viewBox="0 0 32 28" fill="none" aria-hidden="true">
+          <path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div class="proc-label">Pacer <span>AI</span></div>
+        <div class="proc-sub">Microsoft Fabric</div>
+      </div>
+
+      <!-- Output destinations -->
+      <div class="pipe-outputs">
+        <div class="pipe-out-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span class="pipe-out-label">Power BI</span>
+        </div>
+        <div class="pipe-out-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          <span class="pipe-out-label">Excel</span>
+        </div>
+        <div class="pipe-out-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8V4H8"/><rect x="8" y="8" width="8" height="8" rx="2"/><path d="M4 12H2"/><path d="M22 12h-2"/><path d="M12 2v2"/><path d="M12 22v-2"/></svg>
+          <span class="pipe-out-label">Claude AI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ USE CASES ═══ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">Solutions</div>
+    <h2 class="reveal">Nine use cases. One platform.<br><em>Big 4 frameworks.</em></h2>
+
+    <div class="uc-grid reveal-stagger">
+      <div class="uc-card primary reveal">
+        <span class="uc-num">01</span>
+        <div class="uc-tag">Flagship</div>
+        <h3>ARR Snowball Board Reporting</h3>
+        <p>Automate your entire Monthly Business Review and board deck. Pacer AI ingests CRM and billing data, runs it through Microsoft Fabric, and delivers a complete ARR waterfall model with board-quality Power BI visuals.</p>
+        <div class="arr-pill-row">
+          <span class="arr-pill pos">+ New ARR</span>
+          <span class="arr-pill pos">+ Upsell</span>
+          <span class="arr-pill pos">+ Cross-sell</span>
+          <span class="arr-pill neg">&minus; Churn</span>
+          <span class="arr-pill neg">&minus; Contraction</span>
+          <span class="arr-pill gold">Board Deck</span>
+        </div>
+        <a href="/solutions/arr-snowball-board-reporting/" class="uc-link">Explore ARR Snowball &rarr;</a>
+      </div>
+      <div class="uc-card secondary reveal">
+        <span class="uc-num">02</span>
+        <div class="uc-tag">Data Foundation</div>
+        <h3>Customer Data Cube</h3>
+        <p>Unified customer analytics layer across CRM, billing, and product usage &mdash; dimensionally modeled, ARR-reconciled, and AI-ready.</p>
+        <a href="/solutions/customer-data-cube/" class="uc-link">Learn More &rarr;</a>
+      </div>
+      <div class="uc-card secondary reveal">
+        <span class="uc-num">03</span>
+        <div class="uc-tag">RevOps</div>
+        <h3>Whitespace Visibility</h3>
+        <p>Surface upsell and cross-sell opportunities by cohort, product attach rate, ARR tier, and industry.</p>
+        <a href="https://calendly.com/pacerai" class="uc-link">Learn More &rarr;</a>
+      </div>
+      <div class="uc-card secondary reveal">
+        <span class="uc-num">04</span>
+        <div class="uc-tag">Forecasting</div>
+        <h3>Bottoms-Up Forecasting</h3>
+        <p>Account-level revenue forecast combining renewal probability, expansion signals, and pipeline data.</p>
+        <a href="https://calendly.com/pacerai" class="uc-link">Learn More &rarr;</a>
+      </div>
+      <div class="uc-card secondary reveal">
+        <span class="uc-num">05</span>
+        <div class="uc-tag">M&amp;A</div>
+        <h3>Exit Readiness Package</h3>
+        <p>VDR population, Quality of Earnings, and Quality of Revenue &mdash; built on Big 4 Financial Due Diligence frameworks.</p>
+        <a href="https://calendly.com/pacerai" class="uc-link">Learn More &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ RESULTS ═══ -->
+<section class="results-section">
+  <div class="results-inner">
+    <div class="section-eyebrow reveal" style="text-align:center">By the Numbers</div>
+    <h2 class="reveal" style="text-align:center">Built by practitioners.<br>Proven at <em>scale.</em></h2>
+    <div class="results-grid reveal-stagger">
+      <div class="result-card reveal"><div class="result-val">$2B<span>+</span></div><div class="result-label">ARR analyzed across portfolio companies</div></div>
+      <div class="result-card reveal"><div class="result-val">40<span>+</span></div><div class="result-label">Customer data cubes built from raw source data</div></div>
+      <div class="result-card reveal"><div class="result-val">Days</div><div class="result-label">To board-ready &mdash; not months</div></div>
+      <div class="result-card reveal"><div class="result-val">Big <span>4</span></div><div class="result-label">Financial Due Diligence methodology (PwC TMT)</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ QUOTE ═══ -->
+<section class="quote-section">
+  <div class="quote-inner reveal">
+    <span class="quote-mark">&ldquo;</span>
+    <blockquote>&ldquo;Our board used to get a 40-page slide deck assembled over three weekends. Now Pacer AI produces the ARR Snowball in an afternoon.&rdquo;</blockquote>
+    <div class="quote-attr"><strong>CFO, Series C B2B SaaS Company</strong> &middot; $85M ARR</div>
+  </div>
+</section>
+
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-inner reveal">
+    <div class="section-eyebrow" style="text-align:center">Get Started</div>
+    <h2>Your next board meeting<br>starts <em>here</em></h2>
+    <p>See how Pacer AI transforms your revenue data into a board-ready ARR Snowball report. Live demo with your actual metrics.</p>
+    <div class="cta-buttons">
+      <a href="https://calendly.com/pacerai" class="btn-lg">Request a Live Demo</a>
+      <a href="/company/contact/" class="btn-outline-lg">Talk to a RevOps Expert</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo">
+        <svg width="28" height="24" viewBox="0 0 32 28" fill="none" aria-hidden="true">
+          <path d="M2 2 L11 14 L2 26" stroke="#4A7FA8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#fff;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+      </a>
+      <p>Institutional-grade ARR intelligence for high-growth SaaS companies. Built on Microsoft Fabric, Power BI, and AI.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Platform</div>
+      <ul><li><a href="/platform/overview/">Platform Overview</a></li><li><a href="#">Data Ingestion</a></li><li><a href="#">Microsoft Fabric</a></li><li><a href="#">Power BI Dashboards</a></li><li><a href="#">AI Agents</a></li><li><a href="#">Excel + Copilot</a></li><li><a href="#">Security</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Use Cases</div>
+      <ul><li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li><li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li><li><a href="#">Virtual Data Room</a></li><li><a href="#">Exit Readiness</a></li><li><a href="#">MBR Automation</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Comparisons</div>
+      <ul><li><a href="#">vs. Manual Excel</a></li><li><a href="#">vs. Mosaic Tech</a></li><li><a href="#">vs. Vena Solutions</a></li><li><a href="#">vs. Pigment</a></li><li><a href="#">vs. Causal</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Company</div>
+      <ul><li><a href="/company/about/">About Pacer AI</a></li><li><a href="#">Newsletter</a></li><li><a href="/blog/">Blog</a></li><li><a href="#">Partners</a></li><li><a href="/company/contact/">Contact</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+    <div class="legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Cookie Settings</a><a href="#">LinkedIn</a></div>
+  </div>
+</footer>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+(function(){
+  /* Mobile nav */
+  if(window.innerWidth<=768){
+    document.querySelectorAll('#pacerai-homepage .nav-links > li > a').forEach(function(a){
+      var li=a.parentElement;
+      if(!li.querySelector('.dropdown')) return;
+      a.addEventListener('click',function(e){ e.preventDefault(); li.classList.toggle('mobile-expanded'); });
+    });
+  }
+
+  /* ─── SNOWBALL PARTICLE CANVAS ─── */
+  var canvas = document.getElementById('snowball-canvas');
+  var table = document.getElementById('waterfall-table');
+  if(canvas && canvas.getContext){
+    var ctx = canvas.getContext('2d');
+    var particles = [];
+    var tableRevealed = false;
+    var startTime = Date.now();
+    var CONVERGE_TIME = 3500; // ms before table reveals
+    var symbols = ['$','82.4','3.2','2.8','0.8','1.5','88.1','NRR','102%','+','ARR','Q1','Q2','Q3','Q4','111.1','%','M','17.3','6.5'];
+
+    function resizeCanvas(){
+      var rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Create particles
+    for(var i=0; i<80; i++){
+      particles.push({
+        x: Math.random() * 1200 - 100,
+        y: Math.random() * 600 - 50,
+        homeX: 450 + Math.random() * 200,
+        homeY: 200 + Math.random() * 120,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+        size: Math.random() * 14 + 8,
+        alpha: Math.random() * 0.6 + 0.2,
+        text: symbols[Math.floor(Math.random() * symbols.length)],
+        color: Math.random() > 0.5 ? 'rgba(39,137,154,' : 'rgba(112,196,156,'
+      });
+    }
+
+    function animateSnowball(){
+      var elapsed = Date.now() - startTime;
+      var progress = Math.min(elapsed / CONVERGE_TIME, 1);
+      var eased = progress < 0.5 ? 2*progress*progress : 1-Math.pow(-2*progress+2,2)/2;
+
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      var cx = canvas.width/2;
+      var cy = canvas.height/2;
+
+      for(var i=0; i<particles.length; i++){
+        var p = particles[i];
+        // Drift phase (early) → converge to center
+        if(progress < 1){
+          p.x += p.vx * (1 - eased);
+          p.y += p.vy * (1 - eased);
+          // Pull toward center
+          var targetX = cx + (p.homeX - 550) * (1 - eased);
+          var targetY = cy + (p.homeY - 260) * (1 - eased);
+          p.x += (targetX - p.x) * 0.02 * (1 + eased * 3);
+          p.y += (targetY - p.y) * 0.02 * (1 + eased * 3);
+        } else {
+          // After convergence: shrink and fade
+          p.alpha *= 0.97;
+        }
+
+        // Draw
+        var a = p.alpha * (progress < 0.8 ? 1 : Math.max(0, 1 - (progress - 0.8)/0.2));
+        if(a > 0.01){
+          ctx.font = (600) + ' ' + (p.size * (1 - eased * 0.4)) + 'px DM Sans, sans-serif';
+          ctx.fillStyle = p.color + a + ')';
+          ctx.fillText(p.text, p.x, p.y);
+        }
+      }
+
+      // Draw "snowball" glow at center during convergence
+      if(progress > 0.2 && progress < 1){
+        var glowAlpha = Math.sin((progress - 0.2) / 0.8 * Math.PI) * 0.3;
+        var glowSize = 80 + eased * 160;
+        var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowSize);
+        grad.addColorStop(0, 'rgba(39,137,154,' + glowAlpha + ')');
+        grad.addColorStop(0.5, 'rgba(112,196,156,' + (glowAlpha * 0.4) + ')');
+        grad.addColorStop(1, 'rgba(39,137,154,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, glowSize, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Reveal table
+      if(progress >= 0.85 && !tableRevealed){
+        tableRevealed = true;
+        table.classList.add('revealed');
+      }
+
+      if(progress < 1 || particles.some(function(p){ return p.alpha > 0.02; })){
+        requestAnimationFrame(animateSnowball);
+      }
+    }
+
+    // Start when section is in view
+    var snowObs = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){
+        startTime = Date.now();
+        animateSnowball();
+        snowObs.disconnect();
+      }
+    }, { threshold: 0.3 });
+    snowObs.observe(canvas.parentElement);
+  }
+
+  /* ─── FLOATING NUMBER STREAM ─── */
+  var numStream = document.getElementById('num-stream');
+  if(numStream){
+    var nums = ['$82.4M','NRR 102%','+$3.2M','$88.1M','GRR 98%','+$4.1M','$95.3M','ARR','$111.1M','+$5.2M'];
+    function spawnNum(){
+      var el = document.createElement('span');
+      el.className = 'num-particle';
+      el.textContent = nums[Math.floor(Math.random()*nums.length)];
+      el.style.top = (Math.random()*280+20)+'px';
+      el.style.animationDuration = (6+Math.random()*6)+'s';
+      el.style.animationDelay = (Math.random()*2)+'s';
+      numStream.appendChild(el);
+      setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 14000);
+    }
+    // Spawn periodically
+    setInterval(spawnNum, 800);
+    for(var i=0;i<6;i++) setTimeout(spawnNum, i*300);
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
+    document.querySelectorAll('#pacerai-homepage .reveal').forEach(function(el){ obs.observe(el); });
+  } else {
+    document.querySelectorAll('#pacerai-homepage .reveal').forEach(function(el){ el.classList.add('visible'); });
+  }
+})();
+</script>
+
+</div>

@@ -29,9 +29,14 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | Solutions (parent) | 364 | `solutions` | — | *(placeholder — no content)* |
 | **ARR Snowball** | 372 | `arr-snowball-board-reporting` | 364 | `src/solutions/arr-snowball.html` |
 | **Customer Data Cube** | 373 | `customer-data-cube` | 364 | `src/solutions/customer-data-cube.html` |
-| Company (parent) | 366 | `company` | — | *(placeholder — no content)* |
-| **About** | 374 | `about` | 366 | `src/company/about.html` |
-| **Contact** | 375 | `contact` | 366 | `src/company/contact.html` |
+| **Exit Readiness** | 554 | `transaction-readiness` | 364 | `src/solutions/transaction-readiness.html` |
+| **RevOps Transformation** | 651 | `revops-transformation-pkg` | 364 | `src/solutions/revops-transformation-pkg.html` |
+| **GTM Transformation** | 650 | `gtm-transformation-pkg` | 364 | `src/solutions/gtm-transformation-pkg.html` |
+| **FP&A Transformation** | 652 | `fpanda-transformation-pkg` | 364 | `src/solutions/fpanda-transformation-pkg.html` |
+| **Team** (parent) | 366 | `team` | — | `src/team/team-page.html` |
+| **About** | 374 | `about` | 366 | `src/team/about.html` |
+| **Contact** | 375 | `contact` | 366 | `src/team/contact.html` |
+| **Build vs Hire Blog** | 491 | `build-customer-data-cube-in-house-or-hire` | 230 | `src/blog/posts/491-build.html` |
 | Pricing | 111 | `pricing` | — | *(legacy — not managed by this repo)* |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
@@ -41,8 +46,9 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 - https://getpacerai.com/platform/overview/
 - https://getpacerai.com/solutions/arr-snowball-board-reporting/
 - https://getpacerai.com/solutions/customer-data-cube/
-- https://getpacerai.com/company/about/
-- https://getpacerai.com/company/contact/
+- https://getpacerai.com/team/
+- https://getpacerai.com/team/about/
+- https://getpacerai.com/team/contact/
 
 ## Environment Variables (Required for REST API deploys)
 
@@ -170,6 +176,24 @@ Targets: Performance >= 85, SEO >= 90, Accessibility >= 90, Best Practices >= 90
 - **Update all pages when changing shared elements** — nav, footer, and base CSS are duplicated across all page files. Changes to these must be applied to all files and redeployed.
 - **Page registry** — when creating new WP pages, record the ID in the registry table above
 
+## WordPress.com CSS/JS Pitfalls (Discovered April 2026)
+
+These are silent failures — WordPress won't error, but your styles/scripts won't work:
+
+| Pitfall | What Happens | Fix |
+|---------|-------------|-----|
+| `#pacerai-homepage *` resets margin/padding | Component margins and padding silently zeroed | Add `!important` to all component-level margin/padding |
+| Inline `<script>` tags stripped | Counter animations, smooth scroll, mobile nav JS removed | Use WPCode plugin; set fallback text in HTML |
+| `.question-body p` vs `p.question-body` | CSS selector doesn't match when element IS the tag | Match selector to actual HTML structure; verify with DevTools |
+| Eyebrow/H2 inside grid column | Image aligns with eyebrow, not below heading | Keep eyebrow + H2 outside `.q-section-layout` grid |
+| CSS changes look right in source | WordPress cache or theme CSS overrides silently | Always verify computed styles via browser DevTools after deploy |
+| `src/company/` path in docs | Files are actually at `src/team/about.html` and `src/team/contact.html` | Use `src/team/` paths |
+| Blog post deployed as WP Post | `<style>` tags stripped by WordPress Posts | Deploy blog posts as Pages (parent=230) using build system |
+| Minified JS in WPCode footer gets line breaks inserted | WordPress inserts line breaks mid-token (e.g. `set\nTimeout`, `el.tex\ntContent`), breaking minified code silently | Use non-minified JS with proper line breaks in WPCode Header & Footer; WordPress won't break properly formatted code |
+
+**Design reference:** `docs/design/index-build-long_page_2026_04_03.html` — always diff live CSS against this file when styles don't match.
+**AEO Row spec:** `docs/design/AEO-Row-Text-and-Image.md` — copy-paste-ready CSS for text+image sections.
+
 ## Page Architecture
 
 Every page follows the same pattern:
@@ -199,12 +223,16 @@ Every page follows the same pattern:
 
 ## Brand Constraints
 
+<!-- SOURCE: 01_Foundation/brand/ and 01_Foundation/commercial/cta-language.yml -->
+
 - **Fonts:** DM Sans (body), Cormorant Garamond (headings) — approved by Will
 - **Background:** Dark navy (#080E1C)
 - **Primary accent:** Teal (#27899A), Teal Light (#70C49C)
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents. No playful illustrations or rounded pill buttons.
 - **CTA language:** "Request a Demo", "See a Live ARR Demo", "Talk to a RevOps Expert" — never "Get Started Free"
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."
+
+**Canonical source:** `PacerAI/01_Foundation/` — see brand/, strategy/, and commercial/ for full definitions.
 
 ## Known Issues
 

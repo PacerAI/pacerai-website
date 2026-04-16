@@ -22,7 +22,7 @@ Verify: `echo $WP_BASE_URL && echo $WP_USER && echo ${WP_APP_PASSWORD:0:4}...`
 
 ## Repo Location
 
-`~/Documents/GitHub/04_PacerAI_GTM/website-PacerAI/`
+`~/Documents/GitHub/PacerAI/04_GTM/website-PacerAI/`
 
 Always `cd` into this directory before working. Read `CLAUDE.md` for the authoritative page registry.
 
@@ -38,8 +38,8 @@ Always `cd` into this directory before working. Read `CLAUDE.md` for the authori
 | ARR Snowball | 372 | 364 | `src/solutions/arr-snowball.html` |
 | Customer Data Cube | 373 | 364 | `src/solutions/customer-data-cube.html` |
 | Company (parent) | 366 | — | *(placeholder)* |
-| About | 374 | 366 | `src/company/about.html` |
-| Contact | 375 | 366 | `src/company/contact.html` |
+| About | 374 | 366 | `src/team/about.html` |
+| Contact | 375 | 366 | `src/team/contact.html` |
 
 **Live URLs:**
 - https://getpacerai.com/
@@ -82,7 +82,7 @@ Changes to ANY of these require updating ALL 7 source files and batch redeployin
 - TT4 override CSS (hide theme chrome, force dark bg, hide `.wp-block-post-title`)
 - CSS variables (`:root` brand colors/fonts)
 - Nav HTML (fixed nav with dropdown menus, SVG logo, mobile hamburger)
-- Footer HTML (5-column grid: Brand, Platform, Use Cases, Comparisons, Company)
+- Footer HTML (5-column grid: Brand, Use Cases, Solutions, Team, Connect)
 - Mobile nav JS (hamburger toggle + dropdown expand/collapse)
 - Responsive CSS (768px mobile + 1024px tablet breakpoints)
 
@@ -118,8 +118,8 @@ pages = [
     {"id": 371, "file": "src/platform/overview.html"},
     {"id": 372, "file": "src/solutions/arr-snowball.html"},
     {"id": 373, "file": "src/solutions/customer-data-cube.html"},
-    {"id": 374, "file": "src/company/about.html"},
-    {"id": 375, "file": "src/company/contact.html"},
+    {"id": 374, "file": "src/team/about.html"},
+    {"id": 375, "file": "src/team/contact.html"},
 ]
 
 for p in pages:
@@ -178,6 +178,17 @@ done
 6. **Update all pages for shared changes** — nav, footer, base CSS changes require batch redeploy of all 7 files
 7. **Register new pages** — always update `CLAUDE.md` page registry when creating new WP pages
 
+## WordPress.com CSS/JS Pitfalls (CRITICAL)
+
+1. **`#pacerai-homepage *` resets ALL margin/padding to 0.** Every component margin/padding needs `!important`.
+2. **Inline `<script>` tags are STRIPPED.** Use WPCode plugin for JS. Always set fallback values in HTML.
+3. **CSS selectors must match HTML structure.** `<p class="x">` needs `p.x` not `.x p`. Verify with DevTools.
+4. **Eyebrow + H2 go OUTSIDE `.q-section-layout` grid**, not inside `.q-content`.
+5. **Blog posts deploy as Pages (not Posts)** — WP Posts strip `<style>` tags.
+6. **Company files are at `src/team/`** not `src/company/`.
+7. **Always verify computed styles after deploy** — WordPress cache and theme CSS override silently.
+8. **Design reference is source of truth** — diff live CSS against `docs/design/index-build-long_page_2026_04_03.html`. AEO Row spec at `docs/design/AEO-Row-Text-and-Image.md`.
+
 ## Brand Constraints
 
 - **Fonts:** DM Sans (body), Cormorant Garamond (headings)
@@ -194,7 +205,7 @@ done
 - `docs/deploy/runbook.md` — full deploy instructions
 - `docs/plan/site-tree-and-build-prompts.md` — build prompts for all planned pages
 - `docs/design/pacerai-homepage-v2_2026-03-09.html` — current design reference
-- `01_PacerAI_Foundation/pacer-ai-brand-kit.html` — brand kit
+- `PacerAI/01_Foundation/pacer-ai-brand-kit.html` — brand kit
 
 ## Customer Logo Strip (Homepage)
 

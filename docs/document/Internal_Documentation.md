@@ -141,17 +141,40 @@ All pages deployed via WordPress REST API. See `CLAUDE.md` for full page registr
 
 ## 4. Links & Navigation
 
-### Header Nav (Desktop)
+**Last nav rebuild:** 2026-04-04 / 2026-04-05 — see `docs/review/resources-nav-and-data-model-20260405.md` for the full change log.
+
+### Header Nav (Desktop) — 4 top-level items
+
 | Item | Type | Destination |
 |------|------|-------------|
-| Platform | Dropdown | **Overview** → `/platform/overview/`, Data Ingestion → `#`, Fabric + Power BI → `#`, AI Agents → `#`, Excel + Copilot → `#`, Security & Compliance → `#` |
-| Solutions | Mega dropdown | **Use Cases:** ARR Snowball → `/solutions/arr-snowball-board-reporting/`, Customer Data Cube → `/solutions/customer-data-cube/`, Virtual Data Room → `#`, Exit Readiness → `#`. **Industry:** B2B SaaS → `#`, PE-Backed SaaS → `#`, Pre-IPO SaaS → `#` |
-| Resources | Dropdown | **Blog** → `/blog/`, Agents of Insight Newsletter → `#`, ARR Snowball Guide → `#`, Templates & Frameworks → `#`, Documentation → `#`, Webinars → `#` |
-| Partners | Direct link | `#` (not yet built) |
-| Case Studies | Direct link | `#` (not yet built) |
-| Company | Dropdown | **About** → `/company/about/`, Founders Story → `#`, Careers → `#`, **Contact** → `/company/contact/` |
-| Log In | Button | `https://app.getpacerai.com/.auth/login/aad` |
-| Request Demo | Button | `https://calendly.com/pacerai` |
+| **Overview** | Single dropdown | Use Cases (`#use-cases` via smooth scroll), Solutions overview (`#solutions`), Team overview (`#what-is-pacer-ai`) — homepage-scoped `data-scroll-to` links via inline `_s(event,'name')` helper |
+| **Solutions** | Mega dropdown (2-column grid with SVG icons) | **Solutions column:** Customer Data Cube → `/solutions/customer-data-cube/`, ARR Snowball reporting → `/solutions/arr-snowball-board-reporting/`, Transaction Readiness → `#` (in-page), RevOps Transformation → `#`, GTM Transformation → `#`, FP&A Transformation → `#`. **By Persona column:** Operating Partners → `#`, CFOs → `#`, CROs → `#` |
+| **Resources** | Single dropdown (7 items) | Blog → `/blog/`, ARR Snowballs → `/blog/?filter=arr-snowballs`, Frameworks → `/blog/?filter=frameworks`, Model Templates → `/blog/?filter=model-templates`, Newsletter → `https://agentsofinsight.substack.com/` (new tab), YouTube → `https://www.youtube.com/@PacerAI` (new tab), For RevOps → `/blog/?filter=revops` |
+| **Team** | Single dropdown | Purpose & Mission → `#what-is-pacer-ai`, Team → `/team/about/`, Partners → `#transactionready`, Agent Team → `/team/about/` |
+| Log In | Button (nav-right) | `https://app.getpacerai.com/.auth/login/aad` |
+| Request Demo | Button (nav-right, teal) | `https://calendly.com/pacerai` |
+
+**Sub-page note:** On non-homepage pages, Overview/Team in-page scroll links point to the homepage root (`/`) instead of `data-scroll-to` anchors, since in-page targets only exist on the homepage.
+
+### Homepage smooth scroll helper
+WordPress strips `<script>` tags, so the smooth-scroll helper is injected via `<img onerror>`:
+```html
+<img src="//0" onerror="window._s=function(e,n){e&&e.preventDefault&&e.preventDefault();var t=document.querySelector('[data-section=\"'+n+'\"]');if(t){window.scrollTo(0,t.getBoundingClientRect().top+window.pageYOffset-70);if(e)history.pushState(null,'','#'+n)}};if(location.hash){var h=location.hash.slice(1);setTimeout(function(){window._s(null,h)},300)}this.remove()" style="display:none" alt="">
+```
+Each in-page nav link uses `onclick="_s(event,'section-name')"`. URL hash updates via `pushState` so links like `getpacerai.com/#use-cases` are shareable and auto-scroll on page load.
+
+### Blog Category Filter (deep-linking)
+Blog posts are tagged with `data-category="<slug>"`. The `.cat-pill` filter bar supports:
+- **All Posts** (default)
+- **ARR Snowballs** — `data-filter="arr-snowballs"` (6 posts)
+- **Frameworks** — `data-filter="frameworks"` (0 posts — shows "Coming soon" empty state)
+- **Model Templates** — `data-filter="model-templates"` (0 posts — shows "Coming soon" empty state) *NEW 2026-04-05*
+- **RevOps** — `data-filter="revops"` (1 post)
+- **AI & Agents** — `data-filter="ai-agents"` (0 posts — shows "Coming soon" empty state)
+
+**URL query param auto-select:** `/blog/?filter=<slug>` auto-clicks the matching pill on page load. Used by Resources dropdown links.
+
+**Empty state:** `<div id="blog-empty-state">` shows "Coming soon / New posts on the way" when a filter returns 0 matching cards (except for "All Posts"). Styled with teal eyebrow + links to full blog and newsletter.
 
 ### Footer Links
 | Column | Links |
@@ -167,8 +190,25 @@ All pages deployed via WordPress REST API. See `CLAUDE.md` for full page registr
 |---------|-----|---------|
 | App (Entra ID) | app.getpacerai.com | Client portal login |
 | Calendly | calendly.com/pacerai | Demo scheduling |
-| Substack | TBD | Agents of Insight newsletter |
+| Substack | agentsofinsight.substack.com | Agents of Insight newsletter (linked from Resources dropdown) |
+| YouTube | youtube.com/@PacerAI | Video content (linked from Resources dropdown) |
 | LinkedIn | TBD | Company page |
+
+### Resources Data Model
+Canonical ICP → Problem → Content Pillar → Solution → Resource mapping lives at `docs/plan/resources_data_model.md`. This is the source of truth for every Resources sublink and for any future content that needs a "home" in the taxonomy. Reads from `01_Foundation/customers/`, `01_Foundation/strategy/content-pillars.yml`, and `01_Foundation/products/`.
+
+**Resources taxonomy (8 items, Phase 1 ships 7):**
+
+| # | Sublink | Route | Phase 1 in WP? |
+|---|---|---|---|
+| 1 | Blog | `/blog/` | ✅ |
+| 2 | ARR Snowballs | `/blog/?filter=arr-snowballs` | ✅ |
+| 3 | Frameworks | `/blog/?filter=frameworks` | ✅ |
+| 4 | Model Templates | `/blog/?filter=model-templates` | ✅ |
+| 5 | Newsletter | Substack (new tab) | ✅ |
+| 6 | YouTube | `@PacerAI` (new tab) | ✅ |
+| 7 | For RevOps | `/blog/?filter=revops` | ✅ |
+| 8 | AI Prompt & Skill Library | `04_GTM/prompt-library/index.html` | ❌ Phase 2 |
 
 ---
 

@@ -28,7 +28,7 @@ Verify: `echo $WP_BASE_URL && echo $WP_USER && echo ${WP_APP_PASSWORD:0:4}...`
 
 ## Repo Location
 
-`~/Documents/GitHub/04_PacerAI_GTM/website-PacerAI/`
+`~/Documents/GitHub/PacerAI/04_GTM/website-PacerAI/`
 
 ## File Map
 
@@ -130,7 +130,7 @@ Edit `src/blog/build-posts.py` — add a new entry to the `POSTS` list:
 ### Step 5: Build the Styled Page
 
 ```bash
-cd ~/Documents/GitHub/04_PacerAI_GTM/website-PacerAI
+cd ~/Documents/GitHub/PacerAI/04_GTM/website-PacerAI
 python3 src/blog/build-posts.py
 ```
 

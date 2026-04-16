@@ -8,6 +8,76 @@ This document maps every page planned for getpacerai.com and provides Claude Cod
 
 ## Current State (4 pages, 5 blog posts)
 
+
+
+---
+
+## Product Enables Service Planned Site Tree — April 2026
+
+**Last updated:** 2026-04-06
+**Canonical nav source:** `src/nav-headers.html`
+
+```
+getpacerai.com/
+├── /                    ← LIVE (Page 25)
+├── /solutions/
+├── /resources/
+├── /team/
+├── /login/              ← LIVE (Page 134) — redirect to app
+└── (everything below is the full tree)
+```
+
+```
+getpacerai.com/
+│
+├── / (Homepage aka Overview)                                ✅ LIVE (Page 25)
+│
+├── /solutions/
+│   ├── /solutions/customer-data-cube/                       ✅ LIVE (Page 373)
+│   ├── /solutions/arr-snowball-board-reporting/              ✅ LIVE (Page 372)
+│   ├── /solutions/transaction-readiness/                           ✅ LIVE (Page 554) — Transaction Readiness
+│   ├── /solutions/revops-transformation/                    🔲 PLANNED
+│   ├── /solutions/gtm-transformation/                       🔲 PLANNED
+│   └── /solutions/fpa-transformation/                       🔲 PLANNED
+│
+├── /resources/
+│   ├── /blog/                                               ✅ LIVE (Page 230, 6 posts)
+│   │   └── (filter deep-links: ?filter=arr-snowballs|frameworks|model-templates|revops)
+│   ├── /resources/arr-snowball-guide/                       🔲 PLANNED (gated PDF)
+│   ├── /resources/frameworks/                               🔲 PLANNED (gated downloads)
+│   ├── /resources/model-templates/                          🔲 PLANNED (gated downloads)
+│   ├── /resources/for-revops/                               🔲 PLANNED
+│   ├── /resources/newsletter/                               🔲 PLANNED → agentsofinsight.substack.com
+│   └── /resources/youtube/                                  🔲 PLANNED → youtube.com/@PacerAI
+│
+├── /prompt-library/                                         🔲 PLANNED (source: 04_GTM/prompt-library/index.html)
+│
+├── /team/                                                   (source: docs/design/team/team-page-v2.html)
+│   ├── /team/about/                                         ✅ LIVE (Page 374)
+│   ├── /team/contact/                                       ✅ LIVE (Page 375)
+│   ├── /team/mission/                                       🔲 PLANNED
+│   ├── /team/partners/                                      🔲 PLANNED
+│   └── /team/ai-agents/                                     🔲 PLANNED
+│
+└── /login/                                                  ✅ LIVE (Page 134) — redirect to app
+```
+
+### Nav Dropdown Structure (from `src/nav-headers.html`)
+
+| Nav Item | Type | Dropdown Contents |
+|---|---|---|
+| **Overview** | Single dropdown | Use Cases (`/#use-cases`), Solutions overview (`/#solutions`), Team overview (`/team/about/`) |
+| **Solutions** | Mega dropdown (2 columns) | **Transaction Solutions:** Customer Data Cube, ARR Snowball Reporting, Transaction Readiness (Exit Readiness page). **Transformation Solutions:** RevOps, GTM, FP&A Transformation |
+| **Resources** | Single dropdown (7 items) | Blog, ARR Snowballs, Frameworks, Model Templates (blog filter links), Newsletter (Substack), YouTube, For RevOps |
+| **Team** | Single dropdown | About the Team, Contact, Partners, Agent Team |
+
+
+
+
+# Previous version 2026 March before pivot in April to Product-Enabled Services
+## Enterprise Product Planned Site Tree
+```
+
 ```
 getpacerai.com/
 ├── /                    ← LIVE (Page 25)
@@ -17,11 +87,6 @@ getpacerai.com/
 └── (everything below is PLANNED)
 ```
 
----
-
-## Full Planned Site Tree
-
-```
 getpacerai.com/
 │
 ├── / (Homepage)                                    ✅ LIVE
@@ -40,7 +105,7 @@ getpacerai.com/
 │   ├── /solutions/arr-snowball-board-reporting/     🔲 BUILD (Priority 1)
 │   ├── /solutions/customer-data-cube/              🔲 BUILD (Priority 1)
 │   ├── /solutions/virtual-data-room/               🔲 BUILD (Priority 2)
-│   ├── /solutions/exit-readiness/                  🔲 BUILD (Priority 2)
+│   ├── /solutions/transaction-readiness/                  🔲 BUILD (Priority 2)
 │   ├── /solutions/expansion-enablement/            🔲 BUILD
 │   ├── /solutions/whitespace-visibility/           🔲 BUILD
 │   ├── /solutions/bottoms-up-forecasting/          🔲 BUILD
@@ -306,7 +371,7 @@ Content sections:
 Target keywords: SaaS virtual data room, M&A data room automation, due diligence SaaS
 ```
 
-#### /solutions/exit-readiness/ (Priority 2)
+#### /solutions/transaction-readiness/ (Priority 2)
 ```
 Build the "Exit Readiness" use case page. Reuse homepage nav/footer/theme.
 

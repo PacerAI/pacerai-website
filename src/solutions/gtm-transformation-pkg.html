@@ -1,0 +1,337 @@
+<style>
+/* Hide TT4 theme chrome */
+.wp-site-blocks > header, .wp-site-blocks > footer, header.wp-block-template-part, footer.wp-block-template-part, .wp-block-template-part:first-child { display: none !important; }
+.wp-block-post-title, .wp-block-spacer { display: none !important; }
+html, body, .wp-site-blocks { background: #080E1C !important; background-color: #080E1C !important; }
+#pacerai-homepage { width: 100%; max-width: 100vw; overflow-x: hidden; }
+.wp-site-blocks, .wp-site-blocks > main, .wp-site-blocks > main > .wp-block-group, .wp-site-blocks .is-layout-constrained, .wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)), .has-global-padding, .entry-content { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
+
+  :root {
+    --navy: #080E1C; --navy-mid: #0F1929; --navy-light: #162038; --navy-border: #1E2D4A;
+    --brand: #1C3560; --brand-blue: #2B7DC8; --teal: #27899A; --teal-light: #70C49C;
+    --teal-pale: #D6F0E8; --cream: #F7F3EC; --white: #FFFFFF; --muted: #8A95A8;
+    --text-light: #CDD5E0; --text-mid: #94A3B8; --green: #2DB87A; --red-subtle: #C94C4C;
+  }
+
+  #pacerai-homepage * { margin: 0; padding: 0; box-sizing: border-box; }
+  #pacerai-homepage { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text-light); overflow-x: hidden; font-size: 15px; line-height: 1.65; scroll-behavior: smooth; }
+
+  /* ─── NAV ─── */
+  #pacerai-homepage nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 68px; background: rgba(8,14,28,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(28,53,96,0.6); }
+  #pacerai-homepage .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  #pacerai-homepage .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+  #pacerai-homepage .nav-links > li { position: relative; }
+  #pacerai-homepage .nav-links > li > a { display: flex; align-items: center; gap: 5px; padding: 8px 14px; font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em; color: var(--text-mid); text-decoration: none; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+  #pacerai-homepage .nav-links > li > a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  #pacerai-homepage .nav-links > li > a .chevron { font-size: 10px; margin-top: 1px; transition: transform 0.2s; }
+  #pacerai-homepage .nav-links > li:hover > a .chevron { transform: rotate(180deg); }
+  #pacerai-homepage .dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--navy-mid); border: 1px solid var(--navy-border); border-radius: 12px; padding: 20px; padding-top: 28px; min-width: 520px; box-shadow: 0 24px 60px rgba(0,0,0,0.6); }
+  #pacerai-homepage .dropdown::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+  #pacerai-homepage .nav-links > li:hover .dropdown { display: block; }
+  #pacerai-homepage .dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  #pacerai-homepage .dropdown-col-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); padding-bottom: 10px; margin-bottom: 6px; border-bottom: 1px solid var(--navy-border); }
+  #pacerai-homepage .dropdown a { display: flex; align-items: flex-start; gap: 12px; padding: 10px; border-radius: 8px; text-decoration: none; transition: background 0.15s; }
+  #pacerai-homepage .dropdown a:hover { background: rgba(255,255,255,0.04); }
+  #pacerai-homepage .dropdown .d-icon { width: 32px; height: 32px; flex-shrink: 0; background: var(--navy-light); border: 1px solid var(--navy-border); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  #pacerai-homepage .dropdown .d-text .d-title { font-size: 13px; font-weight: 500; color: var(--white); display: block; line-height: 1.3; }
+  #pacerai-homepage .dropdown .d-text .d-desc { font-size: 12px; color: var(--muted); line-height: 1.4; margin-top: 2px; }
+  #pacerai-homepage .single-dropdown { min-width: 220px; }
+  #pacerai-homepage .single-dropdown a { padding: 9px 12px; border-radius: 8px; text-decoration: none; display: block; font-size: 13px; font-weight: 500; color: var(--text-light); transition: background 0.15s, color 0.15s; }
+  #pacerai-homepage .single-dropdown a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+  #pacerai-homepage .mobile-menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 101; }
+  #pacerai-homepage .mobile-menu-btn span { display: block; width: 22px; height: 2px; background: var(--text-light); border-radius: 2px; transition: all 0.3s; }
+  #pacerai-homepage .mobile-menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  #pacerai-homepage .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+  #pacerai-homepage .mobile-menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  #pacerai-homepage .nav-right { display: flex; align-items: center; gap: 12px; }
+  #pacerai-homepage .btn-ghost { padding: 8px 18px; font-size: 13.5px; font-weight: 500; color: var(--text-light); background: transparent; border: 1px solid var(--navy-border); border-radius: 7px; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+  #pacerai-homepage .btn-ghost:hover { color: var(--white); border-color: rgba(39,137,154,0.45); }
+  #pacerai-homepage .btn-teal { padding: 9px 20px; font-size: 13.5px; font-weight: 600; color: #fff; background: var(--teal); border: none; border-radius: 7px; cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.02em; }
+  #pacerai-homepage .btn-teal:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(39,137,154,0.35); }
+
+  /* ─── HERO ─── */
+  #pacerai-homepage .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 160px 24px 80px; position: relative; overflow: hidden; }
+  #pacerai-homepage .hero-bg { position: absolute; inset: 0; z-index: 0; background: #F8F9FA; }
+  #pacerai-homepage .hero-bg::before { display: none; }
+  #pacerai-homepage .hero-eyebrow { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px 6px 8px; background: rgba(27,54,93,0.10); border: 1px solid rgba(27,54,93,0.22); border-radius: 100px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #1B365D; margin-bottom: 28px; animation: fadeUp 0.8s ease both; }
+  #pacerai-homepage .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: #1B365D; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+  #pacerai-homepage h1 { position: relative; z-index: 1; font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 6vw, 72px); font-weight: 300; line-height: 1.08; color: #1B365D; letter-spacing: -0.01em; max-width: 860px; animation: fadeUp 0.8s 0.1s ease both; }
+  #pacerai-homepage h1 em { font-style: italic; color: #1B365D; }
+  #pacerai-homepage .hero-sub { position: relative; z-index: 1; font-size: 17px; font-weight: 300; color: #4A5568; max-width: 600px; line-height: 1.7; margin: 24px auto 40px; animation: fadeUp 0.8s 0.2s ease both; }
+  #pacerai-homepage .hero-ctas { position: relative; z-index: 1; display: flex; align-items: center; gap: 14px; animation: fadeUp 0.8s 0.3s ease both; }
+  #pacerai-homepage .btn-lg { padding: 14px 30px; font-size: 15px; font-weight: 600; color: #fff; background: var(--teal); border: none; border-radius: 8px; cursor: pointer; text-decoration: none; letter-spacing: 0.02em; transition: all 0.25s; box-shadow: 0 4px 24px rgba(39,137,154,0.30); }
+  #pacerai-homepage .btn-lg:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(112,196,156,0.40); }
+  #pacerai-homepage .btn-outline-lg { padding: 13px 28px; font-size: 15px; font-weight: 500; color: #1B365D; background: transparent; border: 1px solid #1B365D; border-radius: 8px; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+  #pacerai-homepage .btn-outline-lg:hover { background: rgba(27,54,93,0.06); }
+
+  /* ─── SECTIONS ─── */
+  #pacerai-homepage .section { padding: 100px 48px; }
+  #pacerai-homepage .section-inner { max-width: 1080px; margin: 0 auto; }
+  #pacerai-homepage .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
+  #pacerai-homepage h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 4.5vw, 56px); font-weight: 300; line-height: 1.1; color: var(--white); letter-spacing: -0.01em; }
+  #pacerai-homepage h2 em { font-style: italic; color: var(--teal); }
+
+  /* ─── CTA ─── */
+  #pacerai-homepage .cta-section { padding: 100px 48px; background: var(--navy-mid); border-top: 1px solid var(--navy-border); }
+  #pacerai-homepage .cta-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+  #pacerai-homepage .cta-inner h2 { font-size: clamp(32px, 4vw, 52px); }
+  #pacerai-homepage .cta-inner p { color: var(--text-mid); font-size: 16px; margin: 18px 0 40px; line-height: 1.7; }
+  #pacerai-homepage .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ─── FOOTER ─── */
+  #pacerai-homepage footer { background: var(--navy); border-top: 1px solid var(--navy-border); padding: 80px 48px 40px; }
+  #pacerai-homepage .footer-top { display: grid; grid-template-columns: 240px 1fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 64px; border-bottom: 1px solid var(--navy-border); margin-bottom: 40px; }
+  #pacerai-homepage .footer-brand p { font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 16px; }
+  #pacerai-homepage .footer-col-head { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px; }
+  #pacerai-homepage .footer-col ul { list-style: none; }
+  #pacerai-homepage .footer-col ul li { margin-bottom: 10px; }
+  #pacerai-homepage .footer-col ul li a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  #pacerai-homepage .footer-col ul li a:hover { color: var(--teal); }
+  #pacerai-homepage .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  #pacerai-homepage .footer-bottom .copy { font-size: 12px; color: var(--muted); letter-spacing: 0.03em; }
+  #pacerai-homepage .footer-bottom .legal { display: flex; gap: 24px; }
+  #pacerai-homepage .footer-bottom .legal a { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  #pacerai-homepage .footer-bottom .legal a:hover { color: var(--text-mid); }
+
+  /* ─── GTM AGENT CHAIN ─── */
+  #pacerai-homepage .agent-chain-section { padding: 80px 48px; background: #F8F9FA; }
+  #pacerai-homepage .agent-chain-section .section-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ═══ MOBILE ═══ */
+  @media (max-width: 768px) {
+    #pacerai-homepage nav { padding: 0 16px; height: 56px; backdrop-filter: none; background: #080E1C; overflow: visible; }
+    #pacerai-homepage .nav-links { display: none !important; position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background: #080E1C; flex-direction: column; align-items: stretch; padding: 16px 20px; overflow-y: auto; z-index: 200; border-top: 1px solid var(--navy-border); list-style: none; }
+    #pacerai-homepage .nav-links.mobile-open { display: flex !important; }
+    #pacerai-homepage .nav-links > li { border-bottom: 1px solid var(--navy-border); }
+    #pacerai-homepage .nav-links > li > a { padding: 16px 0; font-size: 16px; display: flex; justify-content: space-between; color: #CDD5E0; }
+    #pacerai-homepage .nav-links > li > a:hover { background: none; }
+    #pacerai-homepage .nav-links .dropdown { position: static !important; transform: none !important; min-width: 0 !important; background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 0 12px 16px !important; border-radius: 0 !important; padding-top: 0 !important; }
+    #pacerai-homepage .nav-links .dropdown::before { display: none; }
+    #pacerai-homepage .nav-links > li:hover .dropdown { display: none !important; }
+    #pacerai-homepage .nav-links > li.mobile-expanded .dropdown { display: block !important; }
+    #pacerai-homepage .nav-links .dropdown a { padding: 10px 0; font-size: 14px; color: #94A3B8; }
+    #pacerai-homepage .nav-links .dropdown-grid { grid-template-columns: 1fr; }
+    #pacerai-homepage .nav-right .btn-ghost { display: none; }
+    #pacerai-homepage .nav-right .btn-teal { padding: 7px 14px; font-size: 12px; }
+    #pacerai-homepage .mobile-menu-btn { display: flex !important; }
+
+    #pacerai-homepage .hero { padding: 100px 20px 60px; }
+    #pacerai-homepage h1 { font-size: 36px; max-width: 100%; }
+    #pacerai-homepage .hero-sub { font-size: 15px; }
+    #pacerai-homepage .hero-ctas { flex-direction: column; width: 100%; }
+    #pacerai-homepage .hero-ctas .btn-lg, #pacerai-homepage .hero-ctas .btn-outline-lg { width: 100%; text-align: center; }
+
+    #pacerai-homepage .section { padding: 60px 20px; }
+    #pacerai-homepage .cta-section { padding: 60px 20px; }
+    #pacerai-homepage .cta-buttons { flex-direction: column; align-items: center; }
+    #pacerai-homepage .cta-buttons .btn-lg, #pacerai-homepage .cta-buttons .btn-outline-lg { width: 100%; text-align: center; }
+    #pacerai-homepage footer { padding: 48px 20px 32px; }
+    #pacerai-homepage .footer-top { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
+    #pacerai-homepage .footer-brand { grid-column: 1 / -1; }
+    #pacerai-homepage .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+    #pacerai-homepage .footer-bottom .legal { flex-wrap: wrap; gap: 12px; }
+    #pacerai-homepage .agent-chain-section { padding: 40px 20px; }
+  }
+  @media (max-width: 1024px) and (min-width: 769px) {
+    #pacerai-homepage nav { padding: 0 24px; }
+    #pacerai-homepage .nav-links > li > a { padding: 8px 8px; font-size: 12px; }
+    #pacerai-homepage .section { padding: 80px 24px; }
+    #pacerai-homepage .footer-top { grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+    #pacerai-homepage .footer-brand { grid-column: 1 / -1; }
+    #pacerai-homepage footer { padding: 60px 24px 32px; }
+    #pacerai-homepage .agent-chain-section { padding: 60px 24px; }
+  }
+
+@media(max-width:768px){.footer-top{grid-template-columns:1fr !important;gap:24px !important;padding:40px 24px 24px !important}.footer-brand{text-align:center}}
+.footer-top{display:grid;grid-template-columns:260px repeat(4,1fr);gap:32px;max-width:1200px;margin:0 auto;padding:64px 48px 40px}.footer-tagline{font-size:13px;color:var(--text-mid);line-height:1.6;margin-top:12px}@media(max-width:768px){.footer-top{grid-template-columns:1fr !important;gap:24px !important;padding:40px 24px 24px !important}.footer-brand{text-align:center}}</style>
+
+<div id="pacerai-homepage">
+
+<nav>
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span style="font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+  </a>
+
+  <ul class="nav-links">
+
+    <!-- ─── OVERVIEW ─── -->
+    <li>
+      <a href="/">Overview <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/#investor-questions">Use Cases</a>
+        <a href="/#solutions">Solutions overview</a>
+        <a href="/team/">Team overview</a>
+      </div>
+    </li>
+
+    <!-- ─── SOLUTIONS (mega-dropdown with SVG icons) ─── -->
+    <li>
+      <a href="/#solutions">Solutions <span class="chevron">&#9662;</span></a>
+      <div class="dropdown" style="min-width:580px">
+        <div class="dropdown-grid">
+          <div>
+            <div class="dropdown-col-label">Transaction Solutions</div>
+            <a href="/solutions/customer-data-cube/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="d-text"><span class="d-title">Customer Data Cube</span><span class="d-desc">M&amp;A grade accounts by product revenue</span></div></a>
+            <a href="/solutions/arr-snowball-board-reporting/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><div class="d-text"><span class="d-title">ARR Snowball Reporting</span><span class="d-desc">Board-ready waterfall dashboards</span></div></a>
+            <a href="/solutions/transaction-readiness/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="d-text"><span class="d-title">Transaction Readiness</span><span class="d-desc">QoR, QoE &mdash; diligence-ready in 4 quarters</span></div></a>
+          </div>
+          <div>
+            <div class="dropdown-col-label">Transformation Solutions</div>
+            <a href="/solutions/revops-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg></div><div class="d-text"><span class="d-title">RevOps Transformation</span><span class="d-desc">Segmentation to revenue motions</span></div></a>
+            <a href="/solutions/gtm-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="d-text"><span class="d-title">GTM Transformation</span><span class="d-desc">Agent-powered GTM chain</span></div></a>
+            <a href="/solutions/fpanda-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="d-text"><span class="d-title">FP&amp;A Transformation</span><span class="d-desc">AI model libraries for Excel + Copilot</span></div></a>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <!-- ─── RESOURCES ─── -->
+    <li>
+      <a href="/blog/">Resources <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/blog/">Blog</a>
+        <a href="/blog/?filter=arr-snowballs">ARR Snowballs</a>
+        <a href="/blog/?filter=frameworks">Frameworks</a>
+        <a href="/blog/?filter=model-templates">Model Templates</a>
+        <a href="/blog/?filter=revops">For RevOps</a>
+        <a href="https://agentsofinsight.substack.com/" target="_blank" rel="noopener">Newsletter</a>
+        <a href="https://www.youtube.com/@PacerAI" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </li>
+
+    <!-- ─── TEAM ─── -->
+    <li>
+      <a href="/team/">Team <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/team/#mission">Mission</a>
+        <a href="/team/#pacerai-pipeline">Pacer AI Platform</a>
+        <a href="/team/#team">Team</a>
+        <a href="/team/#partners">Partners</a>
+        <a href="/team/#agents">Agent Team</a>
+      </div>
+    </li>
+
+  </ul>
+
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
+    <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=btn.closest('nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-eyebrow"><span class="dot"></span> Transformation Solutions</div>
+  <h1><em>GTM Transformation pkg.</em></h1>
+  <p class="hero-sub">Territory planning, ICP scoring, and pipeline intelligence built on your customer data cube.</p>
+  <h2 style="position:relative;z-index:1;font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:700;color:#1B365D;letter-spacing:-0.01em;margin:32px 0 40px;animation:fadeUp 0.8s 0.3s ease both;">Coming Soon</h2>
+  <div class="hero-ctas">
+    <a href="https://calendly.com/pacerai" class="btn-lg">Request Demo</a>
+    <a href="/#solutions" class="btn-outline-lg">Back to Solutions</a>
+  </div>
+</section>
+
+<div class="agent-chain-section">
+<div class="section-inner">
+<img src="https://getpacerai.com/wp-content/uploads/2026/04/gtm-transformation-infographic.png" alt="The whole GTM chain is getting automated by agents" style="width:100%;height:auto;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+</div>
+</div>
+
+<footer>
+<div class="footer-top">
+<div class="footer-brand">
+<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+<svg width="28" height="24" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M2 2 L11 14 L2 26" stroke="#4A7FA8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+<span style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+</a>
+<p class="footer-tagline">M&amp;A-grade ARR intelligence for PE-backed SaaS companies. Built on Microsoft Fabric, Power BI, and AI.</p>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Use Cases</div>
+<ul>
+<li><a href="/#arr-growth" data-scroll-to="arr-growth">Revenue Acceleration</a></li>
+<li><a href="/#expansion-drivers" data-scroll-to="expansion-drivers">Expansion Drivers</a></li>
+<li><a href="/#cohort-intelligence" data-scroll-to="cohort-intelligence">Cohort Intelligence</a></li>
+<li><a href="/#gross-retention" data-scroll-to="gross-retention">Gross Retention</a></li>
+<li><a href="/#net-retention" data-scroll-to="net-retention">Net Retention</a></li>
+<li><a href="/#whitespace" data-scroll-to="whitespace">Whitespace</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Solutions</div>
+<ul>
+<li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
+<li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li>
+<li><a href="/solutions/transaction-readiness/">Transaction Readiness</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Team</div>
+<ul>
+<li><a href="/team/#mission">Purpose &amp; Mission</a></li>
+<li><a href="/team/#team">Team</a></li>
+<li><a href="/team/#partners">Partners</a></li>
+<li><a href="/team/contact/">Contact</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Connect</div>
+<ul>
+<li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+<li><a href="https://calendly.com/pacerai">Schedule a Call</a></li>
+<li><a href="/blog/">Blog</a></li>
+<li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+<div class="legal">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+<a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a>
+</div>
+</div>
+</footer>
+
+
+<script>
+// FAQ toggle
+document.querySelectorAll('#pacerai-homepage .faq-q').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var item=btn.parentElement;
+    item.classList.toggle('open');
+  });
+});
+// Mobile menu
+(function(){
+  if(window.innerWidth>768) return;
+  document.querySelectorAll('#pacerai-homepage .nav-links > li > a').forEach(function(a){
+    var li=a.parentElement;
+    if(!li.querySelector('.dropdown')) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      li.classList.toggle('mobile-expanded');
+    });
+  });
+})();
+</script>
+
+</div>

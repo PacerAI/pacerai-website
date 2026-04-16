@@ -53,6 +53,26 @@ See `CLAUDE.md` for the complete WordPress page registry with IDs, slugs, parent
 6. **Update all pages for shared changes.** Nav, footer, and base CSS are duplicated in every file. Changes to shared elements must be applied to all source files and redeployed.
 7. **Register new pages.** When creating a new WP page, record the ID in `CLAUDE.md`'s page registry.
 
+## WordPress.com CSS Gotchas (CRITICAL — Read Before Writing CSS)
+
+These were discovered during the April 2026 homepage rebuild. Violating any of these will result in styles silently failing on the live site.
+
+1. **`#pacerai-homepage *` universal reset zeros ALL margin and padding.** Every component-level margin or padding MUST use `!important` to override. Example: `.aeo-snippet { padding-left: 20px !important; margin: 24px 0 !important; }`
+
+2. **WordPress.com strips ALL inline `<script>` tags.** Counter animations, smooth scroll JS, and mobile hamburger nav JS are removed. Use the WPCode plugin for site-wide JS injection. Always set fallback text content in HTML (e.g., `>$25B+</div>` not `>$0B+</div>`).
+
+3. **CSS selectors must match actual HTML structure.** If the HTML uses `<p class="question-body">`, then `.question-body p` does NOT match (it looks for a `<p>` inside `.question-body`). Use `p.question-body` instead. Always verify selectors with browser DevTools after deploying.
+
+4. **Eyebrow + H2 headings must be OUTSIDE the `.q-section-layout` grid.** If placed inside `.q-content`, the image column aligns with the eyebrow instead of below the heading. Correct: `section-inner > eyebrow > h2 > q-section-layout > (q-content + q-visual)`.
+
+5. **Always verify computed styles on the live site after deploying.** WordPress caching, theme CSS, and the universal reset can silently override your intended styles. Use browser DevTools to check actual rendered color, margin, padding values.
+
+6. **Design reference file is the source of truth for CSS values.** When CSS properties don't match visually, compare the live site CSS to `docs/design/index-build-long_page_2026_04_03.html` using a diff. The design reference CSS was hand-tuned and approved. The AEO Row spec is at `docs/design/AEO-Row-Text-and-Image.md`.
+
+7. **Company/Team source files are at `src/team/` not `src/company/`.** About = `src/team/about.html` (WP ID 374), Contact = `src/team/contact.html` (WP ID 375).
+
+8. **Blog posts deploy as WordPress Pages, not Posts.** WP Posts strip `<style>` tags. Use the blog build system at `src/blog/build-posts.py` and deploy as Pages with parent=230 (Blog).
+
 ## PDBRDD Workflow
 
 Follow this sequence for every change:
@@ -62,12 +82,19 @@ Follow this sequence for every change:
 - Check page registry in `CLAUDE.md` for existing page IDs
 
 ### DESIGN
-- Design source: `docs/design/pacerai-homepage-v2_2026-03-09.html`
-- Brand kit: `01_PacerAI_Foundation/pacer-ai-brand-kit.html`
+- Homepage design: `docs/design/homepage/` (design iterations)
+- Team page design: `docs/design/team/team-page-v2.html`
+- Solution page template: `src/solutions/_template.html` + `docs/plan/solution_page_design.md`
+- Brand kit: `PacerAI/01_Foundation/brand/` (colors.yml, typography.yml, voice.yml, design-system.yml)
+- Brand kit visual reference: `PacerAI/01_Foundation/brand/brand-kit.html` (read-only)
 - Do not deviate from established design patterns without explicit instruction
 
 ### BUILD
 - Each page is a standalone HTML file with inline `<style>` — no external CSS
+- **Nav headers: ALWAYS use `src/nav-headers.html` as the canonical nav source.** This is the single source of truth for navigation across all pages. When updating nav links, edit `src/nav-headers.html` first, then propagate to all `src/` page files. The design reference lives at `docs/design/nav_headers/nav-headers.html`.
+  - Sub-pages use direct URLs (e.g., `/solutions/transaction-readiness/`, `/#use-cases`)
+  - Homepage uses `data-scroll-to` + `onclick="_s(event,'...')"` for in-page scroll
+  - Solutions mega-dropdown is split into two columns: **Transaction Solutions** (Defend) and **Transformation Solutions** (Drive)
 - Shared elements (nav, footer, base CSS, TT4 overrides) are copied into each file
 - All CSS scoped under `#pacerai-homepage` wrapper
 - No `<html>`, `<head>`, or `<body>` tags — WordPress manages the document shell

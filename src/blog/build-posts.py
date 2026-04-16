@@ -11,12 +11,30 @@ import urllib.request
 import urllib.error
 import base64
 
-REPO = "/Users/willsullivan/Documents/GitHub/04_PacerAI_GTM/website-PacerAI"
+REPO = "/Users/willsullivan/Documents/GitHub/PacerAI/04_GTM/website-PacerAI"
 TEMPLATE_PATH = f"{REPO}/src/blog/post-template.html"
 OUTPUT_DIR = f"{REPO}/src/blog/posts"
 
 # Blog post metadata
 POSTS = [
+    {
+        "id": 491,
+        "title": "Should I Build a Customer Data Cube In-House or Hire Someone?",
+        "title_short": "Build vs. Hire",
+        "category": "ARR Snowballs",
+        "date": "April 3, 2026",
+        "date_iso": "2026-04-03",
+        "faq": [
+            {
+                "q": "Should I build a customer data cube in-house or hire someone?",
+                "a": "Most PE-backed SaaS companies that attempt a DIY customer data cube spend 6+ months, require 5-6 specialized team members, and still end up with output that is not board-ready or diligence-defensible. Hiring a specialized firm delivers M&A-grade output in weeks at a fraction of the cost."
+            },
+            {
+                "q": "How long does it take to build a customer data cube?",
+                "a": "Building a customer data cube in-house typically takes 6-12 months of cross-system data unification, classification logic development, and reporting buildout. A specialized firm like Pacer AI can deliver a complete, board-ready data cube in weeks."
+            },
+        ],
+    },
     {
         "id": 441,
         "title": "Why LLMs Can't Build Your ARR Snowball from Operational Data",

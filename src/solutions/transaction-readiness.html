@@ -1,0 +1,833 @@
+<style>
+/* Hide TT4 theme chrome */
+.wp-site-blocks > header, .wp-site-blocks > footer, header.wp-block-template-part, footer.wp-block-template-part, .wp-block-template-part:first-child { display: none !important; }
+.wp-block-post-title, .wp-block-spacer { display: none !important; }
+html, body, .wp-site-blocks { background: #080E1C !important; background-color: #080E1C !important; }
+#pacerai-homepage { width: 100%; max-width: 100vw; overflow-x: hidden; }
+.wp-site-blocks, .wp-site-blocks > main, .wp-site-blocks > main > .wp-block-group, .wp-site-blocks .is-layout-constrained, .wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)), .has-global-padding, .entry-content { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
+
+  :root {
+    --navy: #080E1C; --navy-mid: #0F1929; --navy-light: #162038; --navy-border: #1E2D4A;
+    --brand: #1C3560; --brand-blue: #2B7DC8; --teal: #27899A; --teal-light: #70C49C;
+    --teal-pale: #D6F0E8; --cream: #F7F3EC; --white: #FFFFFF; --muted: #8A95A8;
+    --text-light: #CDD5E0; --text-mid: #94A3B8; --green: #2DB87A; --red-subtle: #C94C4C;
+  }
+
+  #pacerai-homepage * { margin: 0; padding: 0; box-sizing: border-box; }
+  #pacerai-homepage { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text-light); overflow-x: hidden; font-size: 15px; line-height: 1.65; scroll-behavior: smooth; }
+
+  /* ─── NAV ─── */
+  #pacerai-homepage nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 68px; background: rgba(8,14,28,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(28,53,96,0.6); }
+  #pacerai-homepage .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  #pacerai-homepage .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+  #pacerai-homepage .nav-links > li { position: relative; }
+  #pacerai-homepage .nav-links > li > a { display: flex; align-items: center; gap: 5px; padding: 8px 14px; font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em; color: var(--text-mid); text-decoration: none; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+  #pacerai-homepage .nav-links > li > a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  #pacerai-homepage .nav-links > li > a .chevron { font-size: 10px; margin-top: 1px; transition: transform 0.2s; }
+  #pacerai-homepage .nav-links > li:hover > a .chevron { transform: rotate(180deg); }
+  #pacerai-homepage .dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--navy-mid); border: 1px solid var(--navy-border); border-radius: 12px; padding: 20px; padding-top: 28px; min-width: 520px; box-shadow: 0 24px 60px rgba(0,0,0,0.6); }
+  #pacerai-homepage .dropdown::before { content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+  #pacerai-homepage .nav-links > li:hover .dropdown { display: block; }
+  #pacerai-homepage .dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  #pacerai-homepage .dropdown-col-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); padding-bottom: 10px; margin-bottom: 6px; border-bottom: 1px solid var(--navy-border); }
+  #pacerai-homepage .dropdown a { display: flex; align-items: flex-start; gap: 12px; padding: 10px; border-radius: 8px; text-decoration: none; transition: background 0.15s; }
+  #pacerai-homepage .dropdown a:hover { background: rgba(255,255,255,0.04); }
+  #pacerai-homepage .dropdown .d-icon { width: 32px; height: 32px; flex-shrink: 0; background: var(--navy-light); border: 1px solid var(--navy-border); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  #pacerai-homepage .dropdown .d-text .d-title { font-size: 13px; font-weight: 500; color: var(--white); display: block; line-height: 1.3; }
+  #pacerai-homepage .dropdown .d-text .d-desc { font-size: 12px; color: var(--muted); line-height: 1.4; margin-top: 2px; }
+  #pacerai-homepage .single-dropdown { min-width: 220px; }
+  #pacerai-homepage .single-dropdown a { padding: 9px 12px; border-radius: 8px; text-decoration: none; display: block; font-size: 13px; font-weight: 500; color: var(--text-light); transition: background 0.15s, color 0.15s; }
+  #pacerai-homepage .single-dropdown a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+  #pacerai-homepage .mobile-menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 101; }
+  #pacerai-homepage .mobile-menu-btn span { display: block; width: 22px; height: 2px; background: var(--text-light); border-radius: 2px; transition: all 0.3s; }
+  #pacerai-homepage .mobile-menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  #pacerai-homepage .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+  #pacerai-homepage .mobile-menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  #pacerai-homepage .nav-right { display: flex; align-items: center; gap: 12px; }
+  #pacerai-homepage .btn-ghost { padding: 8px 18px; font-size: 13.5px; font-weight: 500; color: var(--text-light); background: transparent; border: 1px solid var(--navy-border); border-radius: 7px; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+  #pacerai-homepage .btn-ghost:hover { color: var(--white); border-color: rgba(39,137,154,0.45); }
+  #pacerai-homepage .btn-teal { padding: 9px 20px; font-size: 13.5px; font-weight: 600; color: #fff; background: var(--teal); border: none; border-radius: 7px; cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.02em; }
+  #pacerai-homepage .btn-teal:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(39,137,154,0.35); }
+
+  /* ─── HERO ─── */
+  #pacerai-homepage .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 160px 24px 80px; position: relative; overflow: hidden; }
+  #pacerai-homepage .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 900px 600px at 50% 30%, rgba(39,137,154,0.09) 0%, transparent 70%), radial-gradient(ellipse 600px 400px at 80% 60%, rgba(45,184,122,0.04) 0%, transparent 60%), linear-gradient(180deg, var(--navy) 0%, #0B1324 100%); }
+  #pacerai-homepage .hero-bg::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(39,137,154,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(39,137,154,0.05) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent); }
+  #pacerai-homepage .hero-eyebrow { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px 6px 8px; background: rgba(39,137,154,0.10); border: 1px solid rgba(39,137,154,0.22); border-radius: 100px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 28px; animation: fadeUp 0.8s ease both; }
+  #pacerai-homepage .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+  #pacerai-homepage h1 { position: relative; z-index: 1; font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 6vw, 72px); font-weight: 300; line-height: 1.08; color: var(--white); letter-spacing: -0.01em; max-width: 860px; animation: fadeUp 0.8s 0.1s ease both; }
+  #pacerai-homepage h1 em { font-style: italic; color: var(--teal); }
+  #pacerai-homepage .hero-sub { position: relative; z-index: 1; font-size: 17px; font-weight: 300; color: var(--text-mid); max-width: 600px; line-height: 1.7; margin: 24px auto 40px; animation: fadeUp 0.8s 0.2s ease both; }
+  #pacerai-homepage .hero-ctas { position: relative; z-index: 1; display: flex; align-items: center; gap: 14px; animation: fadeUp 0.8s 0.3s ease both; }
+  #pacerai-homepage .btn-lg { padding: 14px 30px; font-size: 15px; font-weight: 600; color: #fff; background: var(--teal); border: none; border-radius: 8px; cursor: pointer; text-decoration: none; letter-spacing: 0.02em; transition: all 0.25s; box-shadow: 0 4px 24px rgba(39,137,154,0.30); }
+  #pacerai-homepage .btn-lg:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(112,196,156,0.40); }
+  #pacerai-homepage .btn-outline-lg { padding: 13px 28px; font-size: 15px; font-weight: 500; color: var(--white); background: transparent; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+  #pacerai-homepage .btn-outline-lg:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.04); }
+
+  /* ─── SECTIONS ─── */
+  #pacerai-homepage .section { padding: 100px 48px; }
+  #pacerai-homepage .section-inner { max-width: 1080px; margin: 0 auto; }
+  #pacerai-homepage .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
+  #pacerai-homepage h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 4.5vw, 56px); font-weight: 300; line-height: 1.1; color: var(--white); letter-spacing: -0.01em; }
+  #pacerai-homepage h2 em { font-style: italic; color: var(--teal); }
+  #pacerai-homepage .section-lead { font-size: 17px; font-weight: 300; color: var(--text-mid); max-width: 560px; line-height: 1.7; margin-top: 18px; }
+
+  /* ─── AEO DEFINITION CARD ─── */
+  #pacerai-homepage .aeo-card { background: var(--navy-mid); border: 1px solid var(--navy-border); border-left: 3px solid var(--teal); border-radius: 12px; padding: 36px 40px; margin-top: 48px; max-width: 860px; }
+  #pacerai-homepage .aeo-card .aeo-label { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
+  #pacerai-homepage .aeo-card p { font-size: 15px; color: var(--text-light); line-height: 1.8; }
+
+  /* ─── PROBLEM CARDS ─── */
+  #pacerai-homepage .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+  #pacerai-homepage .problem-card { background: var(--navy-mid); border: 1px solid var(--navy-border); border-radius: 12px; padding: 32px; }
+  #pacerai-homepage .problem-card .pc-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; background: rgba(201,76,76,0.08); border: 1px solid rgba(201,76,76,0.15); margin-bottom: 18px; }
+  #pacerai-homepage .problem-card h4 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 8px; line-height: 1.3; }
+  #pacerai-homepage .problem-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+
+  /* ─── ARR PILL ROW ─── */
+  #pacerai-homepage .arr-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 48px; justify-content: center; }
+  #pacerai-homepage .arr-flow-pill { padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 6px; }
+  #pacerai-homepage .arr-flow-pill.begin { background: rgba(39,137,154,0.12); color: var(--teal); border: 1px solid rgba(39,137,154,0.22); }
+  #pacerai-homepage .arr-flow-pill.pos { background: rgba(45,184,122,0.1); color: var(--green); border: 1px solid rgba(45,184,122,0.15); }
+  #pacerai-homepage .arr-flow-pill.neg { background: rgba(201,76,76,0.1); color: var(--red-subtle); border: 1px solid rgba(201,76,76,0.15); }
+  #pacerai-homepage .arr-flow-pill.end { background: rgba(39,137,154,0.15); color: var(--teal-light); border: 1px solid rgba(39,137,154,0.3); font-weight: 700; }
+  #pacerai-homepage .arr-flow-arrow { color: var(--muted); font-size: 16px; }
+
+  /* ─── COMPONENT GRID ─── */
+  #pacerai-homepage .comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; border: 1px solid var(--navy-border); border-radius: 16px; overflow: hidden; }
+  #pacerai-homepage .comp-card { background: var(--navy-mid); padding: 32px; transition: background 0.2s; }
+  #pacerai-homepage .comp-card:hover { background: var(--navy-light); }
+  #pacerai-homepage .comp-card.growth { border-left: 3px solid var(--green); }
+  #pacerai-homepage .comp-card.loss { border-left: 3px solid var(--red-subtle); }
+  #pacerai-homepage .comp-card.total { border-left: 3px solid var(--teal); }
+  #pacerai-homepage .comp-card .cc-icon { font-size: 22px; margin-bottom: 14px; }
+  #pacerai-homepage .comp-card h4 { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+  #pacerai-homepage .comp-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+  /* ─── PERSONA CARDS ─── */
+  #pacerai-homepage .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+  #pacerai-homepage .persona-card { background: var(--navy-mid); border: 1px solid var(--navy-border); border-radius: 12px; padding: 32px; position: relative; overflow: hidden; }
+  #pacerai-homepage .persona-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--brand), var(--teal), var(--teal-light)); }
+  #pacerai-homepage .persona-card .pc-role { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
+  #pacerai-homepage .persona-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: var(--white); margin-bottom: 12px; line-height: 1.2; }
+  #pacerai-homepage .persona-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+
+  /* ─── QUOTE ─── */
+  #pacerai-homepage .quote-section { padding: 100px 48px; }
+  #pacerai-homepage .quote-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+  #pacerai-homepage .quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 120px; color: rgba(39,137,154,0.12); line-height: 0.5; margin-bottom: 24px; display: block; }
+  #pacerai-homepage blockquote { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 3vw, 32px); font-weight: 300; font-style: italic; color: var(--white); line-height: 1.5; margin-bottom: 32px; }
+  #pacerai-homepage .quote-attr { font-size: 13px; color: var(--muted); letter-spacing: 0.06em; }
+  #pacerai-homepage .quote-attr strong { color: var(--text-light); font-weight: 600; }
+
+  /* ─── FAQ ─── */
+  #pacerai-homepage .faq-section { background: var(--navy-mid); border-top: 1px solid var(--navy-border); border-bottom: 1px solid var(--navy-border); }
+  #pacerai-homepage .faq-list { margin-top: 48px; max-width: 760px; }
+  #pacerai-homepage .faq-item { border-bottom: 1px solid var(--navy-border); }
+  #pacerai-homepage .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--white); transition: color 0.2s; background: none; border: none; width: 100%; text-align: left; font-family: 'DM Sans', sans-serif; }
+  #pacerai-homepage .faq-q:hover { color: var(--teal); }
+  #pacerai-homepage .faq-toggle { font-size: 20px; color: var(--teal); transition: transform 0.2s; flex-shrink: 0; margin-left: 16px; }
+  #pacerai-homepage .faq-a { display: none; padding: 0 0 22px; font-size: 14px; color: var(--text-mid); line-height: 1.75; max-width: 680px; }
+  #pacerai-homepage .faq-item.open .faq-a { display: block; }
+  #pacerai-homepage .faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+  /* ─── CTA ─── */
+  #pacerai-homepage .cta-section { padding: 100px 48px; background: var(--navy-mid); border-top: 1px solid var(--navy-border); }
+  #pacerai-homepage .cta-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+  #pacerai-homepage .cta-inner h2 { font-size: clamp(32px, 4vw, 52px); }
+  #pacerai-homepage .cta-inner p { color: var(--text-mid); font-size: 16px; margin: 18px 0 40px; line-height: 1.7; }
+  #pacerai-homepage .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ─── FOOTER ─── */
+  #pacerai-homepage footer { background: var(--navy); border-top: 1px solid var(--navy-border); padding: 80px 48px 40px; }
+  #pacerai-homepage .footer-top { display: grid; grid-template-columns: 240px 1fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 64px; border-bottom: 1px solid var(--navy-border); margin-bottom: 40px; }
+  #pacerai-homepage .footer-brand p { font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 16px; }
+  #pacerai-homepage .footer-col-head { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px; }
+  #pacerai-homepage .footer-col ul { list-style: none; }
+  #pacerai-homepage .footer-col ul li { margin-bottom: 10px; }
+  #pacerai-homepage .footer-col ul li a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  #pacerai-homepage .footer-col ul li a:hover { color: var(--teal); }
+  #pacerai-homepage .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  #pacerai-homepage .footer-bottom .copy { font-size: 12px; color: var(--muted); letter-spacing: 0.03em; }
+  #pacerai-homepage .footer-bottom .legal { display: flex; gap: 24px; }
+  #pacerai-homepage .footer-bottom .legal a { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  #pacerai-homepage .footer-bottom .legal a:hover { color: var(--text-mid); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ═══ MOBILE ═══ */
+  @media (max-width: 768px) {
+    #pacerai-homepage nav { padding: 0 16px; height: 56px; backdrop-filter: none; background: #080E1C; overflow: visible; }
+    #pacerai-homepage .nav-links { display: none !important; position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background: #080E1C; flex-direction: column; align-items: stretch; padding: 16px 20px; overflow-y: auto; z-index: 200; border-top: 1px solid var(--navy-border); list-style: none; }
+    #pacerai-homepage .nav-links.mobile-open { display: flex !important; }
+    #pacerai-homepage .nav-links > li { border-bottom: 1px solid var(--navy-border); }
+    #pacerai-homepage .nav-links > li > a { padding: 16px 0; font-size: 16px; display: flex; justify-content: space-between; color: #CDD5E0; }
+    #pacerai-homepage .nav-links > li > a:hover { background: none; }
+    #pacerai-homepage .nav-links .dropdown { position: static !important; transform: none !important; min-width: 0 !important; background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 0 12px 16px !important; border-radius: 0 !important; padding-top: 0 !important; }
+    #pacerai-homepage .nav-links .dropdown::before { display: none; }
+    #pacerai-homepage .nav-links > li:hover .dropdown { display: none !important; }
+    #pacerai-homepage .nav-links > li.mobile-expanded .dropdown { display: block !important; }
+    #pacerai-homepage .nav-links .dropdown a { padding: 10px 0; font-size: 14px; color: #94A3B8; }
+    #pacerai-homepage .nav-links .dropdown-grid { grid-template-columns: 1fr; }
+    #pacerai-homepage .nav-right .btn-ghost { display: none; }
+    #pacerai-homepage .nav-right .btn-teal { padding: 7px 14px; font-size: 12px; }
+    #pacerai-homepage .mobile-menu-btn { display: flex !important; }
+
+    #pacerai-homepage .hero { padding: 100px 20px 60px; }
+    #pacerai-homepage h1 { font-size: 36px; max-width: 100%; }
+    #pacerai-homepage .hero-sub { font-size: 15px; }
+    #pacerai-homepage .hero-ctas { flex-direction: column; width: 100%; }
+    #pacerai-homepage .hero-ctas .btn-lg, #pacerai-homepage .hero-ctas .btn-outline-lg { width: 100%; text-align: center; }
+
+    #pacerai-homepage .section { padding: 60px 20px; }
+    #pacerai-homepage .aeo-card { padding: 24px 20px; }
+    #pacerai-homepage .problem-grid { grid-template-columns: 1fr; }
+    #pacerai-homepage .arr-flow { flex-direction: column; }
+    #pacerai-homepage .arr-flow-arrow { transform: rotate(90deg); }
+    #pacerai-homepage .comp-grid { grid-template-columns: 1fr; }
+    #pacerai-homepage .persona-grid { grid-template-columns: 1fr; }
+    #pacerai-homepage .quote-section { padding: 60px 20px; }
+    #pacerai-homepage .quote-mark { font-size: 80px; }
+    #pacerai-homepage blockquote { font-size: 20px; }
+    #pacerai-homepage .cta-section { padding: 60px 20px; }
+    #pacerai-homepage .cta-buttons { flex-direction: column; align-items: center; }
+    #pacerai-homepage .cta-buttons .btn-lg, #pacerai-homepage .cta-buttons .btn-outline-lg { width: 100%; text-align: center; }
+    #pacerai-homepage footer { padding: 48px 20px 32px; }
+    #pacerai-homepage .footer-top { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
+    #pacerai-homepage .footer-brand { grid-column: 1 / -1; }
+    #pacerai-homepage .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+    #pacerai-homepage .footer-bottom .legal { flex-wrap: wrap; gap: 12px; }
+  }
+  @media (max-width: 1024px) and (min-width: 769px) {
+    #pacerai-homepage nav { padding: 0 24px; }
+    #pacerai-homepage .nav-links > li > a { padding: 8px 8px; font-size: 12px; }
+    #pacerai-homepage .section { padding: 80px 24px; }
+    #pacerai-homepage .problem-grid { grid-template-columns: 1fr 1fr; }
+    #pacerai-homepage .comp-grid { grid-template-columns: 1fr 1fr; }
+    #pacerai-homepage .persona-grid { grid-template-columns: 1fr; }
+    #pacerai-homepage .footer-top { grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+    #pacerai-homepage .footer-brand { grid-column: 1 / -1; }
+    #pacerai-homepage footer { padding: 60px 24px 32px; }
+  }
+
+@media(max-width:768px){.footer-top{grid-template-columns:1fr !important;gap:24px !important;padding:40px 24px 24px !important}.footer-brand{text-align:center}}
+.footer-top{display:grid;grid-template-columns:260px repeat(4,1fr);gap:32px;max-width:1200px;margin:0 auto;padding:64px 48px 40px}.footer-tagline{font-size:13px;color:var(--text-mid);line-height:1.6;margin-top:12px}@media(max-width:768px){.footer-top{grid-template-columns:1fr !important;gap:24px !important;padding:40px 24px 24px !important}.footer-brand{text-align:center}}
+/* EXIT READINESS TIMELINE */
+:root {
+      --navy: #080E1C; --navy-mid: #0F1729; --navy-light: #162036; --navy-border: #1E2A45;
+      --teal: #27899A; --teal-light: #70C49C; --green: #2DB87A; --red: #C94C4C; --gold: #D4A843;
+      --brand-blue: #1C3560; --blue-active: #2B7DC8;
+      --text: #E8ECF1; --text-mid: #CDD5E0; --muted: #8A95A7;
+      --veach-crimson: #8B0000;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --glass-bg: rgba(15,25,41,0.6); --glass-border: rgba(39,137,154,0.15);
+      --glass-border-hover: rgba(39,137,154,0.35); --glass-blur: blur(16px);
+      --glass-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--navy); color: var(--text); font-size: 15px; line-height: 1.7; }
+    
+    .er-timeline-section {
+      max-width: 1100px; margin: 0 auto; padding: 80px 40px;
+    }
+    .er-timeline-section .section-eyebrow {
+      font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--teal); font-weight: 600; margin-bottom: 12px; text-align: center;
+    }
+    .er-timeline-section h2 {
+      font-family: var(--font-heading); font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700; color: #fff; line-height: 1.2; text-align: center; margin-bottom: 16px;
+    }
+    .er-timeline-section h2 em { font-style: italic; color: var(--teal-light); }
+    .er-timeline-section .section-sub {
+      font-size: 15px; color: var(--text-mid); text-align: center;
+      max-width: 600px; margin: 0 auto 64px;
+    }
+    
+    .er-timeline {
+      position: relative; padding: 0 0 40px;
+    }
+    
+    .er-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--navy-border);
+      transform: translateX(-50%);
+    }
+    
+    .er-timeline-progress {
+      position: absolute;
+      left: 50%; top: 0;
+      width: 2px; height: 0;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, var(--brand-blue), var(--blue-active), var(--teal), var(--teal-light));
+      transition: height 0.1s linear;
+      z-index: 1;
+    }
+    
+    .er-tl-item {
+      display: flex; align-items: flex-start;
+      position: relative; z-index: 2;
+      margin-bottom: 60px;
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .er-tl-item.in-view {
+      opacity: 1; transform: translateY(0);
+    }
+    .er-tl-item:last-child { margin-bottom: 0; }
+    
+    .er-tl-item.tl-right .er-tl-content { margin-left: auto; }
+    .er-tl-item.tl-left .er-tl-content { margin-right: auto; }
+    .er-tl-item.tl-right .er-tl-label { order: -1; text-align: right; }
+    .er-tl-item.tl-left .er-tl-label { order: 1; text-align: left; }
+    
+    .er-tl-content {
+      width: 42%; padding: 28px 24px;
+      background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow);
+      border-radius: 14px;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .er-tl-content:hover {
+      border-color: var(--glass-border-hover);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.4), 0 0 30px rgba(39,137,154,0.08);
+      transform: translateY(-4px);
+    }
+    @supports not (backdrop-filter: blur(16px)) { .er-tl-content { background: var(--navy-mid); } }
+    .er-tl-content h3 {
+      font-family: var(--font-heading); font-size: 20px; font-weight: 700;
+      color: #fff; margin: 0 0 6px; line-height: 1.25;
+    }
+    .er-tl-content .er-tl-sub {
+      font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 12px; font-weight: 600;
+    }
+    .er-tl-content .er-tl-sub.pacer { color: var(--teal); }
+    .er-tl-content .er-tl-sub.veach { color: var(--veach-crimson); }
+    .er-tl-content .er-tl-sub.joint { color: var(--gold); }
+    .er-tl-content p { font-size: 13.5px; color: var(--text-mid); line-height: 1.65; margin: 0; }
+    
+    .er-tl-deliverables {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px;
+      margin-top: 14px; list-style: none;
+    }
+    .er-tl-deliverables li {
+      font-size: 12px; color: var(--muted); line-height: 1.5;
+      padding-left: 16px; position: relative;
+    }
+    .er-tl-deliverables li::before {
+      content: '';
+      position: absolute; left: 0; top: 7px;
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+    .er-tl-deliverables li.qor::before { background: var(--teal); }
+    .er-tl-deliverables li.qoe::before { background: var(--veach-crimson); }
+    
+    .er-tl-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 14px; }
+    .er-tl-pills span {
+      font-size: 10px; font-weight: 600; padding: 3px 10px;
+      border-radius: 4px; letter-spacing: 0.5px;
+    }
+    .er-tl-pills .pill-teal { background: rgba(39,137,154,0.1); color: var(--teal); border: 1px solid rgba(39,137,154,0.2); }
+    .er-tl-pills .pill-crimson { background: rgba(139,0,0,0.1); color: var(--veach-crimson); border: 1px solid rgba(139,0,0,0.15); }
+    .er-tl-pills .pill-gold { background: rgba(212,168,67,0.1); color: var(--gold); border: 1px solid rgba(212,168,67,0.2); }
+    .er-tl-pills .pill-green { background: rgba(45,184,122,0.1); color: var(--green); border: 1px solid rgba(45,184,122,0.2); }
+    .er-tl-pills .pill-red { background: rgba(201,76,76,0.1); color: var(--red); border: 1px solid rgba(201,76,76,0.2); }
+    
+    .er-tl-marker {
+      position: absolute; left: 50%; top: 24px;
+      width: 44px; height: 44px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: #fff;
+      z-index: 2;
+      border: 3px solid var(--navy);
+      transition: transform 0.4s ease, box-shadow 0.5s ease, background 0.5s ease, color 0.5s ease;
+    }
+    .er-tl-item.in-view .er-tl-marker {
+      transform: translateX(-50%) scale(1.1);
+    }
+    
+    .er-tl-marker.m-start { background: var(--navy-border); color: var(--muted); }
+    .er-tl-marker.m-q1 { background: var(--navy-border); color: var(--muted); }
+    .er-tl-marker.m-q2 { background: var(--navy-border); color: var(--muted); }
+    .er-tl-marker.m-q3 { background: var(--navy-border); color: var(--muted); }
+    .er-tl-marker.m-q4 { background: var(--navy-border); color: var(--muted); }
+    .er-tl-marker.m-end { background: var(--navy-border); color: var(--muted); }
+    
+    .er-tl-marker.marker-active.m-start { background: var(--teal); color: #fff; box-shadow: 0 0 24px rgba(39,137,154,0.5); }
+    .er-tl-marker.marker-active.m-q1 { background: var(--brand-blue); color: #fff; box-shadow: 0 0 24px rgba(28,53,96,0.6); }
+    .er-tl-marker.marker-active.m-q2 { background: var(--blue-active); color: #fff; box-shadow: 0 0 24px rgba(43,125,200,0.5); }
+    .er-tl-marker.marker-active.m-q3 { background: var(--teal); color: #fff; box-shadow: 0 0 24px rgba(39,137,154,0.5); }
+    .er-tl-marker.marker-active.m-q4 { background: var(--teal-light); color: var(--navy); box-shadow: 0 0 24px rgba(112,196,156,0.5); }
+    .er-tl-marker.marker-active.m-end { background: linear-gradient(135deg, var(--teal), var(--teal-light)); color: #fff; box-shadow: 0 0 24px rgba(39,137,154,0.5); }
+    
+    .er-tl-label {
+      width: 42%; padding-top: 28px;
+      font-family: var(--font-heading); font-size: 28px; font-weight: 700;
+      color: rgba(255,255,255,0.08);
+      line-height: 1.1;
+      user-select: none;
+    }
+    .er-tl-item.in-view .er-tl-label { color: rgba(255,255,255,0.12); }
+    
+    .er-tl-content::after {
+      content: '';
+      position: absolute; top: 34px;
+      width: 0; height: 0;
+      border: 8px solid transparent;
+    }
+    .er-tl-item.tl-right .er-tl-content::after {
+      left: calc(42% + 1px);
+      border-right: 10px solid var(--glass-border);
+      border-left: none;
+    }
+    .er-tl-item.tl-left .er-tl-content::after {
+      right: calc(42% + 1px);
+      border-left: 10px solid var(--glass-border);
+      border-right: none;
+    }
+    
+    .er-tl-cta {
+      display: inline-block; margin-top: 16px;
+      padding: 14px 30px; border-radius: 8px;
+      background: var(--teal); color: #fff;
+      font-size: 14px; font-weight: 600; font-family: var(--font-body);
+      text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 4px 24px rgba(39,137,154,0.30);
+    }
+    .er-tl-cta:hover { background: #2e9aad; box-shadow: 0 6px 32px rgba(39,137,154,0.40); transform: translateY(-2px); }
+    
+    @media (max-width: 768px) {
+      .er-timeline-section { padding: 60px 20px; }
+      .er-timeline::before { left: 24px; }
+      .er-timeline-progress { left: 24px; }
+      .er-tl-item { flex-direction: column; padding-left: 60px; }
+      .er-tl-item.tl-right .er-tl-content,
+      .er-tl-item.tl-left .er-tl-content { width: 100%; margin: 0; }
+      .er-tl-label { display: none; }
+      .er-tl-marker { left: 24px; top: 0; }
+      .er-tl-item.in-view .er-tl-marker { transform: translateX(-50%) scale(1.05); }
+      .er-tl-content::after { display: none; }
+      .er-tl-deliverables { grid-template-columns: 1fr; }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @media (max-width: 768px) {
+      
+    }
+</style>
+
+<div id="pacerai-homepage">
+
+<nav>
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span style="font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+  </a>
+
+  <ul class="nav-links">
+
+    
+    <li>
+      <a href="/">Overview <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/#investor-questions">Use Cases</a>
+        <a href="/#solutions">Solutions overview</a>
+        <a href="/team/">Team overview</a>
+      </div>
+    </li>
+
+    
+    <li>
+      <a href="/#solutions">Solutions <span class="chevron">&#9662;</span></a>
+      <div class="dropdown" style="min-width:580px">
+        <div class="dropdown-grid">
+          <div>
+            <div class="dropdown-col-label">Transaction Solutions</div>
+            <a href="/solutions/customer-data-cube/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="d-text"><span class="d-title">Customer Data Cube</span><span class="d-desc">M&amp;A grade accounts by product revenue</span></div></a>
+            <a href="/solutions/arr-snowball-board-reporting/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><div class="d-text"><span class="d-title">ARR Snowball Reporting</span><span class="d-desc">Board-ready waterfall dashboards</span></div></a>
+            <a href="/solutions/transaction-readiness/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="d-text"><span class="d-title">Transaction Readiness</span><span class="d-desc">QoR, QoE &mdash; diligence-ready in 4 quarters</span></div></a>
+          </div>
+          <div>
+            <div class="dropdown-col-label">Transformation Solutions</div>
+            <a href="/solutions/revops-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg></div><div class="d-text"><span class="d-title">RevOps Transformation</span><span class="d-desc">Segmentation to revenue motions</span></div></a>
+            <a href="/solutions/gtm-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="d-text"><span class="d-title">GTM Transformation</span><span class="d-desc">Agent-powered GTM chain</span></div></a>
+            <a href="/solutions/fpanda-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="d-text"><span class="d-title">FP&amp;A Transformation</span><span class="d-desc">AI model libraries for Excel + Copilot</span></div></a>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    
+    <li>
+      <a href="/blog/">Resources <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/blog/">Blog</a>
+        <a href="/blog/?filter=arr-snowballs">ARR Snowballs</a>
+        <a href="/blog/?filter=frameworks">Frameworks</a>
+        <a href="/blog/?filter=model-templates">Model Templates</a>
+        <a href="/blog/?filter=revops">For RevOps</a>
+        <a href="https://agentsofinsight.substack.com/" target="_blank" rel="noopener">Newsletter</a>
+        <a href="https://www.youtube.com/@PacerAI" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </li>
+
+    
+    <li>
+      <a href="/team/">Team <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/team/#mission">Mission</a>
+        <a href="/team/#pacerai-pipeline">Pacer AI Platform</a>
+        <a href="/team/#team">Team</a>
+        <a href="/team/#partners">Partners</a>
+        <a href="/team/#agents">Agent Team</a>
+      </div>
+    </li>
+
+  </ul>
+
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
+    <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=btn.closest('nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-eyebrow"><span class="dot"></span>Exit Readiness Service &middot; Transaction Solutions</div>
+  <h1>Get Transaction Ready<br><em>without the Big 4 expense.</em></h1>
+  <p class="hero-sub">Quality of Revenue + Quality of Earnings &mdash; a unified 4-quarter service co-built with Veach AI. Defensible ARR, cohorts, and EBITDA walk your buyer&rsquo;s diligence team can&rsquo;t tear apart. Typical valuation at risk: $25M&ndash;$35M.</p>
+  <div class="hero-ctas">
+    <a href="https://calendly.com/pacerai" class="btn-lg">Request an Exit Readiness Assessment &rarr;</a>
+    <a href="#the-pain" class="btn-outline-lg">See the 4-quarter framework</a>
+  </div>
+</section>
+
+<section class="section" data-section="the-pain" id="the-pain">
+  <div class="section-inner">
+    <div class="section-eyebrow">The Reality</div>
+    <h2>You know this feeling.</h2>
+    <p class="lead">Buy-side diligence team arrives Monday. By Tuesday they want an ARR Snowball by vintage, segment, and product &mdash; and a 3-way NRR reconciliation your board has never seen. You have three weeks to produce something you&rsquo;ve never had to produce before.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="p-icon">&#9888;&#65039;</div>
+        <h4>ARR Won&rsquo;t Survive Buy-Side Scrutiny</h4>
+        <p>Your ARR data is unaudited and inconsistent across CRM, billing, and GL. When the diligence team pulls it apart, deals delay or collapse.</p>
+      </div>
+      <div class="problem-card">
+        <div class="p-icon">&#128256;</div>
+        <h4>Your Numbers Change Depending on Who Exports</h4>
+        <p>ARR figures shift depending on the system and the analyst. Different cuts, different definitions, different totals. The buyer will find every gap.</p>
+      </div>
+      <div class="problem-card">
+        <div class="p-icon">&#8987;</div>
+        <h4>Late Data Requests Derail the Timeline</h4>
+        <p>Three-week scrambles to produce vintage cohort NRR. Every delay gives the buyer more time &mdash; and more leverage &mdash; to retrade price.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--navy-mid);border-top:1px solid var(--navy-border);border-bottom:1px solid var(--navy-border);" data-section="the-foresight">
+  <div class="section-inner">
+    <div class="section-eyebrow">What You Don't See Yet</div>
+    <h2>The real cost isn&rsquo;t the diligence. It&rsquo;s the $25M haircut.</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px;">
+      <div style="padding:28px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;">
+        <div style="font-size:11px;font-weight:600;color:var(--red,#C94C4C);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">The Stakes</div>
+        <h3 style="font-size:20px;color:var(--white);margin-bottom:12px;font-family:var(--font-heading);">A $50M ARR at 12x = $600M</h3>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">Then diligence finds a 13-point NRR spread, 22% EBITDA adjustments, and a 3-week scramble to produce a basic cohort analysis. Multiple retrades to 9x. You just lost $150M before anyone signed anything.</p>
+      </div>
+      <div style="padding:28px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;">
+        <div style="font-size:11px;font-weight:600;color:var(--red,#C94C4C);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">The Risk</div>
+        <h3 style="font-size:20px;color:var(--white);margin-bottom:12px;font-family:var(--font-heading);">Diligence teams aren&rsquo;t looking for yes.</h3>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">They&rsquo;re looking for reasons to renegotiate. Every data gap is a $2M&ndash;$5M line item on the price adjustment memo. The best reporting infrastructure you can build is the one buyers can&rsquo;t attack.</p>
+      </div>
+    </div>
+    <blockquote style="max-width:780px;margin:40px auto 0;padding:20px 28px;border-left:3px solid var(--teal);font-family:var(--font-heading);font-size:18px;color:var(--cream);line-height:1.7;font-style:italic;">
+      &ldquo;I spent years on the buy side at PwC TMT. I&rsquo;ve seen exactly what makes diligence teams nervous &mdash; and what makes them move fast.&rdquo;
+      <div style="margin-top:12px;font-family:var(--font-body);font-size:13px;color:var(--text-mid);font-style:normal;">&mdash; Will Sullivan, Founder</div>
+    </blockquote>
+  </div>
+</section>
+
+<section class="section" data-section="why-expert">
+  <div class="section-inner" style="text-align:center;">
+    <div class="section-eyebrow">Two Firms. Both Practitioners.</div>
+    <h2>Built by someone who has been <em>in the data room.</em></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:32px auto 0;max-width:960px;">
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:24px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;backdrop-filter:var(--glass-blur);text-align:left;">
+        <div style="flex-shrink:0;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-light));display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:var(--navy);">WS</div>
+        <div>
+          <div style="font-family:var(--font-heading);font-size:18px;color:var(--white);margin-bottom:4px;">Will Sullivan</div>
+          <div style="font-size:12px;color:var(--teal);margin-bottom:6px;font-weight:600;">Founder, Pacer AI &middot; Quality of Revenue</div>
+          <div style="font-size:12px;color:var(--text-mid);line-height:1.5;">Ex-PwC TMT Financial Due Diligence &middot; West Point Graduate &middot; $25B+ M&amp;A &middot; 40+ Data Cubes &middot; 50+ ARR Snowballs</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:24px;background:var(--glass-bg);border:1px solid rgba(201,76,76,0.25);border-radius:12px;backdrop-filter:var(--glass-blur);text-align:left;">
+        <div style="flex-shrink:0;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#C94C4C,#E07B7B);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:var(--navy);">AV</div>
+        <div>
+          <div style="font-family:var(--font-heading);font-size:18px;color:var(--white);margin-bottom:4px;">Alexander Veach</div>
+          <div style="font-size:12px;color:#C94C4C;margin-bottom:6px;font-weight:600;">Founder, Veach AI &middot; Quality of Earnings</div>
+          <div style="font-size:12px;color:var(--text-mid);line-height:1.5;">Ex-PwC &middot; QoE Specialist &middot; 9-phase algorithmic diligence methodology &middot; EBITDA normalization &middot; Working capital &middot; Balance sheet validation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-section="deliverables">
+  <div class="section-inner">
+    <div class="section-eyebrow">What You Get</div>
+    <h2>Specific outputs. <em>Not vague promises.</em></h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px;">
+      <div class="sol-card" style="padding:24px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;">
+        <div style="font-size:24px;margin-bottom:10px;">&#128202;</div>
+        <h4 style="color:var(--white);font-size:16px;margin-bottom:8px;">Customer Data Cube</h4>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">Unified account-product revenue from CRM + billing + GL. The foundation everything else builds on.</p>
+      </div>
+      <div class="sol-card" style="padding:24px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;">
+        <div style="font-size:24px;margin-bottom:10px;">&#127754;</div>
+        <h4 style="color:var(--white);font-size:16px;margin-bottom:8px;">ARR Snowball Waterfall</h4>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">Board-ready ARR decomposition by cohort, market, segment, and vintage year.</p>
+      </div>
+      <div class="sol-card" style="padding:24px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;">
+        <div style="font-size:24px;margin-bottom:10px;">&#128176;</div>
+        <h4 style="color:var(--white);font-size:16px;margin-bottom:8px;">EBITDA Walk</h4>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">Reported &rarr; Adjusted with line-item schedule and peer benchmarking.</p>
+      </div>
+      <div class="sol-card" style="padding:24px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;">
+        <div style="font-size:24px;margin-bottom:10px;">&#128200;</div>
+        <h4 style="color:var(--white);font-size:16px;margin-bottom:8px;">3-Way NRR Diligence</h4>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">True NRR, NRR incl. Lapsed, NRR excl. Returning &mdash; all within a 5-point spread.</p>
+      </div>
+      <div class="sol-card" style="padding:24px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;">
+        <div style="font-size:24px;margin-bottom:10px;">&#128203;</div>
+        <h4 style="color:var(--white);font-size:16px;margin-bottom:8px;">Full QoE Report</h4>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">30&ndash;100 page buyer-ready document. Veach AI, algorithmic 9-phase methodology.</p>
+      </div>
+      <div class="sol-card" style="padding:24px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;">
+        <div style="font-size:24px;margin-bottom:10px;">&#127942;</div>
+        <h4 style="color:var(--white);font-size:16px;margin-bottom:8px;">Exit Readiness Score</h4>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.6;">Unified 0&ndash;100 rubric (50% QoR + 50% QoE). Score 76+ = transaction-ready.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-section" data-section="proof">
+  <div class="quote-inner" style="max-width:820px;margin:0 auto;text-align:center;padding:80px 48px;">
+    <div class="section-eyebrow" style="text-align:center;">Customer Story</div>
+    <h2 style="max-width:680px;margin:12px auto 24px;">PE-backed healthtech: NRR 101% &rarr; 105% in 6 months.</h2>
+    <blockquote style="font-family:var(--font-heading);font-size:22px;color:var(--cream);line-height:1.5;font-style:italic;margin:0 auto 24px;max-width:680px;">
+      &ldquo;The CFO walked into sell-side diligence with a confident growth narrative &mdash; not a defensive one.&rdquo;
+    </blockquote>
+    <div style="font-size:13px;color:var(--text-mid);margin-bottom:32px;">
+      End of hold period &middot; preparing sell-side
+    </div>
+    <div style="display:inline-block;padding:24px 40px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;margin-bottom:32px;">
+      <div style="font-family:var(--font-heading);font-size:44px;color:var(--teal-light);font-weight:700;">+4 pts</div>
+      <div style="font-size:13px;color:var(--text-mid);margin-top:4px;">NRR lift &rarr; multiple expansion</div>
+    </div>
+    <div>
+      <a href="/blog/?filter=arr-snowballs" style="display:inline-block;padding:12px 24px;font-size:14px;font-weight:600;color:var(--teal);border:1px solid rgba(39,137,154,.35);border-radius:4px;text-decoration:none;transition:all 0.2s;">Read the full case study on the blog &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="section faq-section" data-section="faq">
+  <div class="section-inner">
+    <div class="section-eyebrow">Frequently Asked Questions</div>
+    <h2>Common questions about <em>Exit Readiness</em></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">How long does the Exit Readiness program take? <span class="faq-toggle">+</span></button>
+        <div class="faq-a">Four quarters end-to-end, but you can start at any phase. Most companies begin in Q1 Foundation (data cube + basic waterfall). If board-level reporting already exists, we can start in Q2 or Q3. The Q4 Transaction phase runs on-demand when the buyer&rsquo;s diligence team arrives.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How is this different from a Big 4 Quality of Earnings engagement? <span class="faq-toggle">+</span></button>
+        <div class="faq-a">Big 4 QoE is a one-shot report produced during a transaction. Exit Readiness is a 4-quarter progressive program that builds the data infrastructure before diligence &mdash; so the numbers already hold when the QoE report is produced. It&rsquo;s also practitioner-built (both founders are ex-PwC TMT), not a junior-staffed deliverable.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What does it cost? <span class="faq-toggle">+</span></button>
+        <div class="faq-a">The ARR Diagnostic is $10K&ndash;$25K over 2&ndash;4 weeks. The Data Cube Build is 0.05% of ARR (minimum $25K). The Essentials platform subscription runs $70K&ndash;$78K per year. The full 4-quarter Exit Readiness Program is quoted per engagement based on scope and the Veach AI QoE component.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How soon before an expected exit should we start? <span class="faq-toggle">+</span></button>
+        <div class="faq-a">Ideally 12&ndash;18 months before the process starts. Six months is still workable. Under three months is triage mode &mdash; we can still help, but you lose the advantage of rebuilding data that fails diligence checks.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What if our data is a mess? <span class="faq-toggle">+</span></button>
+        <div class="faq-a">That&rsquo;s exactly what Q1 Foundation is for. We start from wherever you are &mdash; fragmented CRM exports, inconsistent billing platforms, gaps in historical records. The first deliverable is a consistent ARR definition and the first version of the customer data cube.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" data-section="cta">
+  <div class="cta-inner" style="max-width:680px;margin:0 auto;text-align:center;padding:80px 48px;">
+    <div class="section-eyebrow" style="text-align:center;">Get Started</div>
+    <h2>Find out where you stand.</h2>
+    <p style="font-size:16px;color:var(--text-mid);line-height:1.6;margin:16px auto 32px;max-width:520px;">30-minute Exit Readiness Assessment. Indicative 0&ndash;100 score. 4-quarter roadmap. No commitment.</p>
+    <div class="cta-buttons" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://calendly.com/pacerai" class="btn-lg">Request an Exit Readiness Assessment &rarr;</a>
+      <a href="/team/contact/" class="btn-outline-lg">See the 4-quarter framework</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+<div class="footer-top">
+<div class="footer-brand">
+<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+<svg width="28" height="24" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M2 2 L11 14 L2 26" stroke="#4A7FA8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+<span style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+</a>
+<p class="footer-tagline">M&amp;A-grade ARR intelligence for PE-backed SaaS companies. Built on Microsoft Fabric, Power BI, and AI.</p>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Use Cases</div>
+<ul>
+<li><a href="/#arr-growth" data-scroll-to="arr-growth">Revenue Acceleration</a></li>
+<li><a href="/#expansion-drivers" data-scroll-to="expansion-drivers">Expansion Drivers</a></li>
+<li><a href="/#cohort-intelligence" data-scroll-to="cohort-intelligence">Cohort Intelligence</a></li>
+<li><a href="/#gross-retention" data-scroll-to="gross-retention">Gross Retention</a></li>
+<li><a href="/#net-retention" data-scroll-to="net-retention">Net Retention</a></li>
+<li><a href="/#whitespace" data-scroll-to="whitespace">Whitespace</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Solutions</div>
+<ul>
+<li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
+<li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li>
+<li><a href="/solutions/transaction-readiness/">Transaction Readiness</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Team</div>
+<ul>
+<li><a href="/team/#mission">Purpose &amp; Mission</a></li>
+<li><a href="/team/#team">Team</a></li>
+<li><a href="/team/#partners">Partners</a></li>
+<li><a href="/team/contact/">Contact</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Connect</div>
+<ul>
+<li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+<li><a href="https://calendly.com/pacerai">Schedule a Call</a></li>
+<li><a href="/blog/">Blog</a></li>
+<li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+<div class="legal">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+<a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a>
+</div>
+</div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How long does it take to get started?", "acceptedAnswer": {"@type": "Answer", "text": "Most companies are producing their first ARR Snowball report within 2–4 weeks of engagement. The timeline depends on the number of data sources and the complexity of your revenue model."}},
+    {"@type": "Question", "name": "What data sources do I need?", "acceptedAnswer": {"@type": "Answer", "text": "At minimum, you need a CRM (Salesforce, HubSpot, or Dynamics 365) and a billing system (Stripe, Chargebee, Zuora, or similar). Pacer AI normalizes everything into a unified revenue model."}},
+    {"@type": "Question", "name": "How is Pacer AI different from building in Excel?", "acceptedAnswer": {"@type": "Answer", "text": "Excel ARR models are manual, error-prone, and stale by the time they reach the board. Pacer AI automates the entire pipeline and keeps it current with scheduled refreshes."}},
+    {"@type": "Question", "name": "Can I customize the ARR Snowball definitions?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Every engagement starts with aligning on ARR definitions. We configure the semantic model to match your board's definitions exactly."}},
+    {"@type": "Question", "name": "Is my data secure?", "acceptedAnswer": {"@type": "Answer", "text": "Pacer AI runs on Microsoft Fabric within your own Azure tenant. Your data never leaves your control. We use Entra ID authentication, row-level security, and encryption in transit and at rest."}}
+  ]
+}
+</script>
+
+<script>
+// FAQ toggle
+document.querySelectorAll('#pacerai-homepage .faq-q').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var item=btn.parentElement;
+    item.classList.toggle('open');
+  });
+});
+// Mobile menu
+(function(){
+  if(window.innerWidth>768) return;
+  document.querySelectorAll('#pacerai-homepage .nav-links > li > a').forEach(function(a){
+    var li=a.parentElement;
+    if(!li.querySelector('.dropdown')) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      li.classList.toggle('mobile-expanded');
+    });
+  });
+})();
+</script>
+
+</div>

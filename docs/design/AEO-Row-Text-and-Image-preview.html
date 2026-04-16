@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AEO Row: Text and Image — Component Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #080E1C; --navy-mid: #0F1729; --navy-border: #1E2A45;
+    --teal: #27899A; --teal-light: #70C49C;
+    --white: #FFFFFF; --text-light: #CDD5E0; --text-mid: #94A3B8;
+    --font-heading: 'Cormorant Garamond', serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-body); background: var(--navy); color: var(--text-light); font-size: 15px; line-height: 1.7; }
+
+  .section { padding: 80px 48px; }
+  .section-inner { max-width: 1280px; margin: 0 auto; }
+  .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
+  h2 { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 44px); font-weight: 700; color: var(--white); line-height: 1.2; }
+  h2 em { font-style: italic; color: var(--teal-light); }
+
+  .q-section-layout { display: grid; grid-template-columns: 3fr 2fr; gap: 48px; align-items: start; margin-top: 16px; }
+  .q-section-layout.reverse { grid-template-columns: 2fr 3fr; }
+  .q-section-layout.reverse .q-visual { order: -1; }
+
+  .aeo-snippet { font-size: 17px; color: var(--text-light); line-height: 1.75; margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--teal); }
+  p.question-body { margin-top: 20px; font-size: 15px; color: #566478; line-height: 1.75; }
+
+  .q-visual img { width: 100%; height: auto; max-height: 480px; object-fit: contain; display: block; border-radius: 10px; background: #fff; padding: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+
+  /* Spacer indicator (design-only, shows the 48px gap) */
+  .spacer-indicator { border-top: 1px dashed rgba(39,137,154,0.3); margin-top: 16px; position: relative; }
+  .spacer-indicator::after { content: '16px spacer'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--teal); background: var(--navy); padding: 0 12px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .label { text-align: center; padding: 40px 20px 20px; font-size: 13px; color: var(--teal); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+
+  @media (max-width: 768px) {
+    .section { padding: 60px 20px; }
+    .q-section-layout { grid-template-columns: 1fr; gap: 32px; margin-top: 36px; }
+    .q-section-layout.reverse .q-visual { order: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="label">Standard variant (text left, image right)</div>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Helping CROs understand</div>
+    <h2>What is driving our expansion ARR?</h2>
+    <div class="spacer-indicator"></div>
+    <div class="q-section-layout">
+      <div class="q-content">
+        <p class="aeo-snippet">Expansion ARR breaks into three distinct motions &mdash; upsell (more of the same), cross-sell (new products), and pricing uplift &mdash; each driven by different teams, playbooks, and signals. Knowing which motion dominates tells you whether growth is repeatable.</p>
+        <p class="question-body">Most companies report expansion as a single line. That hides whether growth comes from one whale upsell or broad-based cross-sell adoption. Mastery means decomposing expansion by motion, by product, by market &mdash; and tying each to the GTM play that produced it. Expansion only scales when you can name the motion and the muscle behind it.</p>
+      </div>
+      <div class="q-visual">
+        <img src="../../src/homepage/img/market-analysis-expansion-drivers.png" alt="Pacer AI - Market Analysis showing Upsell and Cross-sell expansion drivers by market">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="label">Reverse variant (image left, text right)</div>
+
+<section class="section" style="background:var(--navy-mid);border-top:1px solid var(--navy-border);border-bottom:1px solid var(--navy-border);">
+  <div class="section-inner">
+    <div class="section-eyebrow">Cohort Intelligence</div>
+    <h2>Which cohort is our primary business driver?</h2>
+    <div class="spacer-indicator"></div>
+    <div class="q-section-layout reverse">
+      <div class="q-content">
+        <p class="aeo-snippet">Cohort analysis groups customers by acquisition period and tracks their revenue trajectory over time &mdash; revealing whether your business compounds from the base or erodes beneath headline growth.</p>
+        <p class="question-body">Most companies look at retention in aggregate. That masks the reality: your 2022 cohort may be expanding 115% while your 2024 cohort churns at 20%. Mastery means cutting by vintage, by segment, by market &mdash; and understanding which acquisition era built your durable base versus which is still proving itself.</p>
+      </div>
+      <div class="q-visual">
+        <img src="../../src/homepage/img/cohort-market-acct-size.png" alt="Pacer AI - Cohort analysis by market and account size">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="label">Standard variant (text left, image right)</div>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Retention Drivers</div>
+    <h2>How can we improve our Gross Retention?</h2>
+    <div class="spacer-indicator"></div>
+    <div class="q-section-layout">
+      <div class="q-content">
+        <p class="aeo-snippet">Gross retention rate measures the percentage of recurring revenue retained from existing customers, excluding expansion &mdash; the purest signal of whether customers stay because they need your product or leave because they don&rsquo;t.</p>
+        <p class="question-body">Most companies track GRR as a single number. That tells you the symptom, not the cause. Mastery means segmenting GRR by product, by market, by account size, and by vintage &mdash; then identifying which combinations have structural churn risk versus which are operationally fixable. Retention improves when you stop treating it as one problem.</p>
+      </div>
+      <div class="q-visual">
+        <img src="../../src/homepage/img/gross-retention-vintage.png" alt="Pacer AI - Vintage Year Gross Retention from First Purchase">
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
