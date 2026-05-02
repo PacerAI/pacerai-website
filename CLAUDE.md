@@ -98,6 +98,27 @@ docs/
 │   └── Internal_Documentation.md       # Messaging, positioning, site tree, SEO strategy
 └── deploy/
     └── runbook.md                      # Deploy instructions
+
+pacerai-context/
+├── pacerai.md                          # Canonical company context (products, personas, differentiation)
+└── apollo_ai.md                        # Apollo.io AI Context Center paste-ready document
+```
+
+## Local Development Scripts
+
+```bash
+# Preview locally (simulates WordPress rendering — strips scripts, injects WPCode CSS)
+python3 scripts/preview.py                    # http://localhost:5500/src/homepage/index-build.html
+
+# Validate before deploy (char count, broken links, footer/nav consistency)
+python3 scripts/validate.py                   # All pages
+python3 scripts/validate.py src/homepage/index-build.html  # Single file
+
+# Deploy with built-in validation + backup + verification
+python3 scripts/deploy.py 25                  # Deploy homepage
+python3 scripts/deploy.py all                 # Deploy all pages
+python3 scripts/deploy.py 25 --dry-run        # Preview what would happen
+python3 scripts/deploy.py 25 --force          # Skip validation
 ```
 
 ## Key Workflows
@@ -190,6 +211,7 @@ These are silent failures — WordPress won't error, but your styles/scripts won
 | `src/company/` path in docs | Files are actually at `src/team/about.html` and `src/team/contact.html` | Use `src/team/` paths |
 | Blog post deployed as WP Post | `<style>` tags stripped by WordPress Posts | Deploy blog posts as Pages (parent=230) using build system |
 | Minified JS in WPCode footer gets line breaks inserted | WordPress inserts line breaks mid-token (e.g. `set\nTimeout`, `el.tex\ntContent`), breaking minified code silently | Use non-minified JS with proper line breaks in WPCode Header & Footer; WordPress won't break properly formatted code |
+| Homepage CSS too large for inline `<style>` | Homepage CSS is ~37K chars — inline would push page over 68K limit | CSS externalized to WPCode Header injection. Source: `src/homepage/wpcode-homepage-css.css`. Update WPCode snippet in WP Admin when CSS changes. |
 
 **Design reference:** `docs/design/index-build-long_page_2026_04_03.html` — always diff live CSS against this file when styles don't match.
 **AEO Row spec:** `docs/design/AEO-Row-Text-and-Image.md` — copy-paste-ready CSS for text+image sections.
@@ -223,7 +245,7 @@ Every page follows the same pattern:
 
 ## Brand Constraints
 
-<!-- SOURCE: 01_Foundation/brand/ and 01_Foundation/commercial/cta-language.yml -->
+<!-- SOURCE: pacerai-foundation/brand/ and pacerai-foundation/commercial/cta-language.yml -->
 
 - **Fonts:** DM Sans (body), Cormorant Garamond (headings) — approved by Will
 - **Background:** Dark navy (#080E1C)
@@ -232,13 +254,37 @@ Every page follows the same pattern:
 - **CTA language:** "Request a Demo", "See a Live ARR Demo", "Talk to a RevOps Expert" — never "Get Started Free"
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."
 
-**Canonical source:** `PacerAI/01_Foundation/` — see brand/, strategy/, and commercial/ for full definitions.
+**Canonical source:** `PacerAI/pacerai-foundation/` — see brand/, strategy/, and commercial/ for full definitions.
 
 ## Known Issues
 
 - **Homepage slug is `no-title`** — needs Will's review before changing (affects permalink)
-- **Yoast meta description missing** — must be set in WP admin per PRD
-- **Yoast page title** — should be "Pacer AI — ARR Intelligence for PE-Backed SaaS"
+- **Yoast meta descriptions** — Cannot be set via REST API on WordPress.com. Must be set in WP Admin per page. Excerpts have been set as fallback. Pages needing Yoast meta: Transaction Readiness (554), RevOps (651), GTM (650), FP&A (652). Homepage (25), ARR Snowball (372), Customer Data Cube (373), Team (366) already have Yoast descriptions.
+- **Yoast page title** — should be "Pacer AI — ARR Intelligence for PE-Backed SaaS" (already set for homepage)
+
+## Resolved Issues (April 2026)
+
+- **Jetpack sitemap disabled** — Yoast sitemap is now sole sitemap source
+- **Empty parent pages** — `/solutions/` and `/platform/` now redirect to homepage sections
+- **Orphaned blog posts** — 6 root-level posts re-parented under `/blog/`
+- **Anchor rename** — `#pacerai-pipeline` renamed to `#pacer-ai-platform` across all pages
+- **JSON-LD structured data** — All pages now have Service schema for AI scraper discoverability
+
+## SEO & Structured Data
+
+All pages now include `Service` schema.org markup in JSON-LD for AI scraper discoverability:
+
+| Page | Schema Types |
+|------|-------------|
+| Homepage | Organization (with OfferCatalog of 7 Services), WebSite, WebPage |
+| ARR Snowball | Service, WebPage |
+| Customer Data Cube | Service, WebPage, FAQPage |
+| Transaction Readiness | Service, WebPage, FAQPage |
+| RevOps Transformation | Service, WebPage |
+| GTM Transformation | Service, WebPage |
+| FP&A Transformation | Service, WebPage |
+
+**AI Context Center:** `pacerai-context/apollo_ai.md` contains the paste-ready document for Apollo.io's AI agent. Update this file when products or positioning change.
 
 ## Claude Code Skill
 

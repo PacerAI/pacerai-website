@@ -1,4 +1,4 @@
-# AGENTS.md — website-PacerAI
+# AGENTS.md — pacerai-website
 
 Instructions for Claude Code operating in this repository.
 
@@ -85,8 +85,8 @@ Follow this sequence for every change:
 - Homepage design: `docs/design/homepage/` (design iterations)
 - Team page design: `docs/design/team/team-page-v2.html`
 - Solution page template: `src/solutions/_template.html` + `docs/plan/solution_page_design.md`
-- Brand kit: `PacerAI/01_Foundation/brand/` (colors.yml, typography.yml, voice.yml, design-system.yml)
-- Brand kit visual reference: `PacerAI/01_Foundation/brand/brand-kit.html` (read-only)
+- Brand kit: `PacerAI/pacerai-foundation/brand/` (colors.yml, typography.yml, voice.yml, design-system.yml)
+- Brand kit visual reference: `PacerAI/pacerai-foundation/brand/brand-kit.html` (read-only)
 - Do not deviate from established design patterns without explicit instruction
 
 ### BUILD
