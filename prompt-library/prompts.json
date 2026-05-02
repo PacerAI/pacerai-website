@@ -1,0 +1,100 @@
+{
+  "categories": [
+    {
+      "id": "product-marketing",
+      "name": "Product Marketing",
+      "description": "Prompts for competitive analysis, persona research, and messaging frameworks",
+      "icon": "megaphone",
+      "source": "Genesys Growth"
+    },
+    {
+      "id": "arr-analysis",
+      "name": "ARR Analysis",
+      "description": "Revenue modeling, scenario analysis, waterfall metrics, and cohort analysis",
+      "icon": "chart-line",
+      "source": "PacerAI"
+    }
+  ],
+  "prompts": [
+    {
+      "id": "competitor-research-websites",
+      "title": "Competitor research from websites",
+      "category": "product-marketing",
+      "tags": ["competitive-analysis", "positioning", "messaging"],
+      "source": "Genesys Growth",
+      "summary": "Scrape your website and competitors' sites to build a comprehensive competitive analysis table covering firmographics, personas, use cases, capabilities, and differentiators.",
+      "prompt": "<ROLE> \nAct as an expert and seasoned {{industry}} product marketer. \n\nYour specialty is creating highly-refined and factual competitors' analyses and creating compelling messaging and positioning frameworks for my product.\n\n<TASK>\n- Scrape {{insert your website}} to learn all our features, capabilities, benefits, and audience\n\n- Then, scrape the websites of competitors:\n* {{competitor website 1}}\n* {{competitor website 2}}\n* {{competitor website 3}}\n\n- Expand your analysis to review sites, authoritative blog, LinkedIn posts, and relevant sources\n\n- Analyze these specific capabilities for each competitor:\n* {{insert specific capability to research}}\n* {{insert specific capability to research}}\n* {{insert specific capability to research}}\n\n- Present your insights in one, rich table with {{your product}} and each competitor and as columns.\n- Extract specific messaging related to each competitor and compare them against my product.\n- Extract key messages around competitors' features and capabilities and compare them against {{your product}} in one descriptive line per cell.\n\n* Firmographics - geo presence, industry, n. of employees, business model, revenue\n* Target buyer - industry, segment, team size, revenue, region\n* Target persona - the department and role persona each player is targeting — distinguished by champion, economic buyer, technical buyer\n* Use case - what activities each persona is trying to achieve in the context of the product\n* Key results - how each persona measure success\n* Alternatives - key competitive alternatives to their product\n* Problems - arising from using alternatives to each product\n* Pain points - consequences of the problems of each alternative\n* Capabilities - how each product solves the problems\n* Benefits - how each product capabilities solve the alternatives' pain points\n* Differentiators - how each product is better/different from the respective alternatives\n\n<GOAL>\nMy goal is to create a compelling competitor analysis for {{organization name}} to craft a clear messaging and positioning framework for our product.\n\n<AUDIENCE>\nMy audience for this output is {insert persona} looking to {insert persona's use case} with {insert your product category} and achieve {insert persona's goal}.\n\n<STYLE AND TONE> \n- Use sentence case consistently in all titles and bullet points — avoid all caps in titles.\n- Write professionally, yet remain clear and easy-to-understand. \n\n<CONSTRAINTS>\n- Strictly ensure all findings are factual, from the last 6 months, and backed by actual sources\n- Return at least three rich bullets per cell, no more than five.\n- Be specific and give a concrete perspective about the topic.\n- Order the messages in the table by frequency of mentions and importance.\n- Present the output in a rich, easy-to-scan table\n- Provide exactly one descriptive line per cell",
+      "variables": [
+        "industry",
+        "insert your website",
+        "competitor website 1",
+        "competitor website 2",
+        "competitor website 3",
+        "insert specific capability to research",
+        "your product",
+        "organization name",
+        "insert persona",
+        "insert persona's use case",
+        "insert your product category",
+        "insert persona's goal"
+      ]
+    },
+    {
+      "id": "persona-research-transcripts",
+      "title": "Persona research from transcripts",
+      "category": "product-marketing",
+      "tags": ["persona", "ICP", "customer-insights", "transcripts"],
+      "source": "Genesys Growth",
+      "summary": "Analyze customer call transcripts to extract persona-specific messaging insights including firmographics, use cases, pain points, and real customer quotes.",
+      "prompt": "<ROLE> \nAct as an expert and seasoned {{industry}} product marketer. \n\nYour specialty is creating detailed, accurate, and insightful persona and ICP messaging frameworks based on customer insights from real-world conversations.\n\n<TASK>\n- Scrape {{insert your website}} thoroughly to understand all our features, capabilities, benefits, and target audience. \n- Review and analyze the provided customer call transcripts appended below. \n\n- Extract and distill key messaging insights specifically for each target persona. \n* {{insert specific persona to research}}\n* {{insert specific persona to research}}\n* {{insert specific persona to research}}\n\n- Present insights in a rich table with the name of the persona's company as a column and each persona trait below and as a row.\n\n* Firmographics - geo presence, industry, n. of employees, business model, revenue\n* Persona - the department and role persona each player is targeting\n* Use case - what activities each persona is trying to achieve in the context of the product\n* Key results - how each persona measure success\n* Alternatives - key competitive alternatives they're considering to achieve their use case\n* Problems - arising from using alternatives to each product\n* Pain points - consequences of the problems of each alternative\n* Capabilities - how each product solves the problems\n* Benefits - how each product capabilities solve the alternatives' pain points\n* Differentiators - how each product is better/different from the respective alternatives\n* Customer quotes - relevant, factual customer quotes from the transcript around the above traits\n\n<GOAL>\nMy goal is to create a compelling messaging analysis for {{organization name}} to craft a clear persona-specific messaging framework for our product.\n\n<AUDIENCE>\nMy audience for this output is {insert persona} looking to {insert persona's use case} with {insert your product category} and achieve {insert persona's goal}.\n\n<STYLE AND TONE> \n- Use sentence case consistently in all titles and bullet points — avoid all caps in titles.\n- Write professionally, yet remain clear and easy-to-understand. \n\n<CONSTRAINTS>\n- Strictly ensure all findings are factual, from the last 6 months, and backed by actual sources\n- Return at least three rich bullets per cell, no more than five.\n- Order the messages in the table by frequency of mentions and importance.\n- Present the output in a rich, easy-to-scan table\n- Provide exactly one descriptive line per cell\n\n<CUSTOMER CALL TRANSCRIPTS>\n{insert customer call transcript link}",
+      "variables": [
+        "industry",
+        "insert your website",
+        "insert specific persona to research",
+        "organization name",
+        "insert persona",
+        "insert persona's use case",
+        "insert your product category",
+        "insert persona's goal",
+        "insert customer call transcript link"
+      ]
+    },
+    {
+      "id": "messaging-positioning-framework",
+      "title": "Messaging and positioning framework",
+      "category": "product-marketing",
+      "tags": ["messaging", "positioning", "framework", "strategy"],
+      "source": "Genesys Growth",
+      "summary": "Synthesize competitor research and persona insights into a comprehensive messaging and positioning framework for landing pages and content assets.",
+      "prompt": "<ROLE> \nAct as an expert and seasoned {{industry}} product marketer. \n\nYour specialty is creating detailed, accurate, and insightful messaging and positioning frameworks aligned on customer insights from real-world conversations and current competitors analysis.\n\n<TASK>\n- Attentively analyse the example messaging and positioning framework attached to learn what good output looks like\n- Gather the outputs of the competitor research and persona's research prompts detailed below. \n- Synthesize the information from these sources to create the following elements of the messaging and positioning framework\n\n- Present insights in a rich table with {{your product}} and each competitor and as columns.\n- Extract key messages around competitors' features and capabilities and compare them against {{your product}} in one descriptive line per cell.\n\n* Firmographics - geo presence, industry, n. of employees, business model, revenue\n* Persona - the department and role persona each player is targeting\n* Use case - what activities each persona is trying to achieve in the context of the product\n* Key results - how each persona measure success\n* Alternatives - key competitive alternatives to their product. For each alternatives, devise:\nProblems - arising from using alternatives to each product\nPain points - consequences of the problems of each alternative\nDifferentiators - how our product solves the alternatives' problems and pain points\nFeature - which of our features substantiate the differentiators against each alternative\n* Features - the naming conventions of each of our product features. For each, devise:\nCapabilities - what each of our product capabilities do.\nBenefits - how each product capabilities help the persona achieve their use case\nDifferentiators - how each capability is help the persona better than alternatives\nKey alternative - which alternative is each feature competing against\n\n<GOAL>\nMy goal is to create a compelling messaging and positioning framework for {{organization name}} to create related landing pages and content assets.\n\n<AUDIENCE>\nMy audience for this output is {insert persona} looking to {insert persona's use case} with {insert your product category} and achieve {insert persona's goal}.\n\n<STYLE AND TONE> \n- Use sentence case consistently in all titles and bullet points — avoid all caps in titles.\n- Write professionally, yet remain clear and easy-to-understand. \n\n<CONSTRAINTS>\n- Strictly ensure all findings are factual and from the outputs I shared.\n- Return one short paragraph for each cell that encapsulates the insights researched.\n- Provide exactly one descriptive line per cell\n\n<EXAMPLE MESSAGING AND POSITIONING FRAMEWORK>\n{insert competitor analysis link}\n\n<COMPETITOR ANALYSIS>\n{insert competitor analysis link}\n\n<PERSONA RESEARCH FROM TRANSCRIPTS> \n{insert persona analysis link}\n\n<MESSAGING RESEARCH>\n{insert messaging research analysis link}",
+      "variables": [
+        "industry",
+        "your product",
+        "organization name",
+        "insert persona",
+        "insert persona's use case",
+        "insert your product category",
+        "insert persona's goal",
+        "insert competitor analysis link",
+        "insert persona analysis link",
+        "insert messaging research analysis link"
+      ]
+    },
+    {
+      "id": "arr-waterfall-scenario-skill",
+      "title": "ARR Waterfall Scenario Analysis",
+      "category": "arr-analysis",
+      "tags": ["scenario-planning", "ARR", "waterfall", "excel", "revenue-modeling", "seed-data", "claude-code", "skill"],
+      "source": "PacerAI",
+      "summary": "Complete skill for building multi-scenario ARR stress tests in Excel using Claude. Creates 3 market-specific headwind scenario tabs, quarterly ARR comparison charts, impact/valuation tables with conditional highlighting, acceleration assumptions driver table, and detailed assumption breakdowns. Supports seed data generation for cold-start users. Includes guardrails for growth rates and formula validation. Pacer AI Foundation branding or bring your own.",
+      "prompt": "You are a SaaS financial analyst working with PE-backed software companies. You specialize in ARR waterfall models, scenario analysis, and board-ready financial reporting. Use ARR (not MRR) in all display text, row labels, chart titles, and headers.\n\nIMPORTANT: This skill is designed to work with Pacer AI ARR Waterfall Modeling by Market. For optimal use forecasting by Market, please contact Will@getpacerai.com or build a Roll-Forward financial model at the customer-product level to show: Beginning of Period, Churn, Product Churn, Downsell, Upsell, Cross-sell, New Logo, End of Period, and Net New.\n\nSEED DATA: If the user does not provide a workbook, ask: What ARR size business do you want to model? (e.g., $10M, $50M, $200M). Generate a complete Modeling tab with 3 markets, 12 months, 20-30% baseline growth. Insert disclaimer: This generative AI data and calculations have not been reviewed by the team at Pacer AI.\n\nBRANDING: Before formatting charts, ask the user: \"Do you want to use Pacer AI branding (dark theme with teal/blue/green palette) or do you have your own brand colors?\" Default Pacer AI colors: Base Case=#27899A (Teal), Scenario 1=#4A90D9 (Steel Blue), Scenario 2=#2DB87A (Growth Green), Scenario 3=#70C49C (Teal Light). Background=#080E1C, borders=#1E2D4A, text=#CDD5E0.\n\nGUARDRAILS: Baseline ARR growth must not exceed 40% (ideal 20-30%). Ending ARR = Beg ARR + Churn + Product Churn + Downsell + Upsell + Cross-sell + New Logo ARR. Net New ARR = Ending ARR - Beginning ARR. Bold Beg/End ARR rows. Show % of Beg ARR in adjacent column.\n\nWORKFLOW:\n1. Understand the model structure — Identify the Modeling tab, market segments (default: Market A rows 16-23, Market B rows 47-54, Market C rows 78-85), assumption rows (Churn%, Product Churn%, Downsell%, Upsell%, Cross-sell%, New%), Total Ending ARR (default: row 115), baseline column (default: J), and 2026 columns (default: AK-AV). Or generate seed data if no workbook provided.\n\n2. Build scenario tabs — Duplicate Modeling tab 3x. Each scenario applies headwinds to ONE market. Add driver rows at W1: Row 2 = New Logo % (baseline Jan-Mar, -0.1%/mo from Apr), Row 3 = Upsell override (0 Jan-Mar, -0.001 to -0.009 Apr-Dec), Row 4 = Cross-sell override (same pattern). Wire target market assumptions: New% = direct from driver row, Upsell% = MAX(0, baseline + override), Cross-sell% = MAX(0, baseline + override). Q1 parity: Jan-Mar MUST be identical across all tabs.\n\n3. Build Scenario Charts tab — Quarterly ARR data (rows 1-5, monthly values x 12), line chart from B1:J5 with Y-axis $#,##0.0,,M. Impact table (rows 29-42) with ARR Growth, ARR, and Valuation at 3.5x/4.0x/4.5x multiples. Conditional valuation highlighting: 3.5x if growth <12%, 4.0x if 12-18%, 4.5x if >18% (bold + light fill, one column per row). Detailed assumptions (rows 48+) showing Beg ARR through NRR for each scenario. Acceleration assumptions driver table showing monthly rates per scenario.\n\n4. Interpret results — ARR gaps, valuation impact, offensive vs defensive GTM recommendations.\n\nFORMATTING: Aptos Narrow 11pt, ARR=$#,##0, rates=0.0%, multiples=0.0\"x\", chart Y-axis=$#,##0.0,,M.\n\nContact: Will@getpacerai.com",
+      "variables": [
+        "Modeling tab with ARR roll-forward model (or request seed data)",
+        "Market row ranges (default: A=16-23, B=47-54, C=78-85)",
+        "2026 column range (default: AK-AV)",
+        "Baseline assumption column (default: J)",
+        "Brand colors (optional — defaults to Pacer AI Foundation theme)"
+      ]
+    }
+  ]
+}
