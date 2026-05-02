@@ -1,4 +1,4 @@
-# website-PacerAI
+# pacerai-website
 
 Marketing website for [getpacerai.com](https://getpacerai.com) — AI-native build using the PDBRDD lifecycle.
 
@@ -20,7 +20,7 @@ This repo manages the design, development, and deployment of the Pacer AI market
 | Theme | Twenty Twenty-Four (overridden by inline CSS) |
 | Deploy | WordPress REST API + Application Password (Python) |
 | Dev Environment | Claude Code (Anthropic) |
-| Version Control | GitHub (`pacerai/website-PacerAI`) |
+| Version Control | GitHub (`PacerAI/pacerai-website`) |
 | SEO | Yoast SEO (active plugin) |
 | Analytics | Google Site Kit (GA4 + Search Console) |
 

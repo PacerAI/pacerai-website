@@ -17,8 +17,8 @@ These were discovered during the April 3, 2026 deployment. Violating any of thes
 | **Anchor navigation** | Use `data-section="name"` attributes + JS smooth scroll instead of `id=` | See PRD Section 0 for the JS workaround pattern |
 | **`<section>` tags** | `<section>` tags ARE allowed and work. Do NOT replace with `<div>`. | The March version uses 8 `<section>` tags and they render fine |
 | **HTML comments** | Remove ALL `<!-- ... -->` comments before deploying | Comments may confuse the WordPress block parser |
-| **External CSS** | Do NOT use `<link rel="stylesheet">` — WordPress moves it into the body and it may not load | Keep all CSS inline in a `<style>` block. Minify to stay under size limit. |
-| **External JS** | Do NOT use `<script src="...">` | Same issue as CSS — keep JS inline |
+| **External CSS** | Do NOT use `<link rel="stylesheet">` inside `<!-- wp:html -->` — WordPress moves it into the body and it may not load | **For pages over ~60K chars:** Move CSS to WPCode Header & Footer plugin (injects into `<head>` before content block, bypasses the limitation). Keep CSS in `src/homepage/wpcode-homepage-css.css` as the source file. **For pages under 60K:** Inline `<style>` is fine. |
+| **External JS** | Do NOT use `<script src="...">` inside `<!-- wp:html -->` | JS is already delivered via WPCode Header & Footer plugin (footer injection). See changelog 2026-04-03. |
 | **Images** | All images must use full WordPress URLs (`https://getpacerai.com/wp-content/uploads/...`) | Local `img/` paths won't resolve on WordPress |
 | **Google Fonts** | Do NOT add `<link>` tags for fonts — WordPress loads them via the theme | Adding font links wastes characters and may break |
 
@@ -26,10 +26,20 @@ These were discovered during the April 3, 2026 deployment. Violating any of thes
 
 | Component | Target | Notes |
 |---|---|---|
-| CSS (minified inline) | ~30,000 chars max | Remove comments, collapse whitespace, shorten selectors |
-| HTML body | ~35,000 chars max | Remove comments, minimal indentation |
-| JavaScript | ~2,000 chars | Counter animation + mobile nav + smooth scroll |
-| **Total** | **< 67,000 chars** | Leave 2K buffer under the ~69K limit |
+| CSS | **Externalized via WPCode** | Homepage CSS (~37K) lives in `src/homepage/wpcode-homepage-css.css` and is injected via WPCode Header & Footer plugin. Not counted against the `<!-- wp:html -->` block limit. |
+| HTML body (content + nav + footer) | ~35,000 chars | Remove comments, minimal indentation |
+| JavaScript | Via WPCode | Counter animation + mobile nav + smooth scroll delivered via WPCode footer injection |
+| JSON-LD | ~4,000 chars | Structured data stays inline (needed per-page) |
+| **Total in wp:html block** | **< 67,000 chars** | Leave 2K buffer under the ~69K limit |
+
+### WPCode CSS Delivery (Homepage)
+
+The homepage CSS is too large (~37K chars) to fit inline alongside content. It is delivered via the **WPCode Header & Footer** plugin:
+
+1. **Source file:** `src/homepage/wpcode-homepage-css.css` (also synced to `src/homepage/homepage-v2.css`)
+2. **WPCode location:** Header injection → wraps in `<style>` tags → loads in `<head>` before page content
+3. **WordPress behavior:** WPCode injects into `<head>` BEFORE the content block is processed, so the CSS is available when the HTML renders. This bypasses the `<link rel="stylesheet">` limitation.
+4. **When to update:** After any CSS changes, update both the source file AND the WPCode snippet in WP Admin → WPCode → Header & Footer
 
 ### Pre-Deploy Size Check
 

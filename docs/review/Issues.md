@@ -79,3 +79,16 @@ Identified during PLAN phase (2026-03-09). Must be addressed before or during DE
 - **Action:** Preserved all functionality while keeping under the limit by (a) shortening label "Agents of Insight Newsletter" → "Newsletter", (b) dropping `rel="noopener"` from `target="_blank"` links (modern browsers add implicit `noopener` for `target="_blank"`), (c) removing the unused `.diy-challenges` CSS rule.
 - **Status:** MONITORED (2026-04-05)
 - **Follow-up:** Before adding new sections to the homepage, run a CSS audit for dead selectors from previously removed sections (investor-questions, DIY challenges, question-nav-grid). Those are probably still lurking in the minified CSS block.
+
+## 12. Metadata audit — Yoast meta descriptions, OG images, title consistency
+
+- **Impact:** 7 pages have no Yoast meta description (Google auto-generates poorly). 3 blog posts have broken OG descriptions (nav HTML leaking into social previews). 11 pages missing OG images. Yoast title format inconsistent ("— Pacer AI" vs "- Get Pacer AI").
+- **Action required (WP Admin):**
+  1. Set Yoast meta descriptions on 7 pages (see `webpages-metadata.md` for exact copy)
+  2. Fix 3 blog posts with broken OG descriptions (setting meta desc fixes this)
+  3. Standardize all Yoast titles to `[Title] — Pacer AI` format
+  4. Upload and set OG images for 11 pages (create 3 default branded images: solutions, blog, company)
+  5. Review Team page (366) noindex setting — intentional?
+- **Reference:** Full audit and recommended values in `/webpages-metadata.md`
+- **Status:** PENDING — requires WP Admin access (Yoast fields not writable via REST API on WordPress.com)
+- **Priority:** HIGH — broken OG descriptions are actively hurting social sharing and AI scraper quality

@@ -28,19 +28,33 @@ Verify: `echo $WP_BASE_URL && echo $WP_USER && echo ${WP_APP_PASSWORD:0:4}...`
 
 ## Repo Location
 
-`~/Documents/GitHub/PacerAI/04_GTM/website-PacerAI/`
+`~/Documents/GitHub/PacerAI/pacerai-website/`
 
 ## File Map
 
 ```
 src/blog/
 ├── index-build.html          # Blog listing page (WP ID 230)
-├── post-template.html        # Shared dark-theme template
+├── post-template.html        # Shared dark-theme template (includes nav + footer)
 ├── build-posts.py            # Build script: template + content → styled page
 └── posts/
     ├── content-{id}.html     # Raw article HTML (input)
     └── {id}-build.html       # Complete styled page (output)
+
+src/nav-headers.html            # CANONICAL nav header (single source of truth)
+docs/design/footer/footer.html  # CANONICAL footer (single source of truth)
 ```
+
+## Nav Header
+
+The `<nav>` in `post-template.html` must match `src/nav-headers.html` (the sub-page version). When the nav is updated:
+
+1. Edit `src/nav-headers.html` first
+2. Copy the `<nav>...</nav>` block into `post-template.html`
+3. Rebuild all posts: `python3 src/blog/build-posts.py`
+4. Redeploy affected posts
+
+The canonical nav includes: Overview, Solutions (mega-dropdown with Transaction + Transformation columns and SVG icons), Resources, Team, Log In, and Request Demo.
 
 ## Workflow
 
@@ -130,7 +144,7 @@ Edit `src/blog/build-posts.py` — add a new entry to the `POSTS` list:
 ### Step 5: Build the Styled Page
 
 ```bash
-cd ~/Documents/GitHub/PacerAI/04_GTM/website-PacerAI
+cd ~/Documents/GitHub/PacerAI/pacerai-website
 python3 src/blog/build-posts.py
 ```
 

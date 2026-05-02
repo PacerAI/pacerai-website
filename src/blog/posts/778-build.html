@@ -552,8 +552,8 @@ html, body, .wp-site-blocks {
   "@graph": [
     {
       "@type": "Article",
-      "headline": "{{TITLE}}",
-      "datePublished": "{{DATE_ISO}}",
+      "headline": "How I Helped a Client Grow NRR from 101% to 105% in 6 Months",
+      "datePublished": "2026-04-17",
       "author": {
         "@type": "Organization",
         "name": "Pacer AI",
@@ -568,12 +568,41 @@ html, body, .wp-site-blocks {
           "url": "https://getpacerai.com/wp-content/uploads/2025/04/PacerAI_Logo_Horizontal_Full-Color-scaled.webp"
         }
       },
-      "articleSection": "{{CATEGORY}}",
+      "articleSection": "ARR Snowballs",
       "mainEntityOfPage": {
         "@type": "WebPage"
       }
     }
-    {{FAQ_JSON}}
+    ,
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+            {
+                  "@type": "Question",
+                  "name": "How can PE-backed SaaS companies improve NRR before a transaction?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Decompose NRR into upsell, cross-sell, churn, product churn, and downsell. Identify which levers drive each movement, then implement targeted operational changes \u2014 pricing adjustments, product sunsetting, and data story alignment."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What is the relationship between product churn and logo churn?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Customers who drop a product (product churn) often churn entirely within 12 months. Addressing product churn early \u2014 by sunsetting underperforming add-ons \u2014 can prevent downstream logo churn."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "How does NRR impact SaaS valuation multiples?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Companies with NRR above 105% are valued in a different category of comparable companies. Even a 4-point NRR improvement can meaningfully increase the valuation multiple at exit."
+                  }
+            }
+      ]
+}
   ]
 }
 </script>
@@ -669,19 +698,92 @@ html, body, .wp-site-blocks {
     <span class="sep">/</span>
     <a href="/blog/">Blog</a>
     <span class="sep">/</span>
-    <span>{{TITLE_SHORT}}</span>
+    <span>NRR Case Study</span>
   </div>
-  <div class="post-category-badge">{{CATEGORY}}</div>
-  <h1>{{TITLE}}</h1>
+  <div class="post-category-badge">ARR Snowballs</div>
+  <h1>How I Helped a Client Grow NRR from 101% to 105% in 6 Months</h1>
   <div class="post-meta">
     <span class="author">Pacer AI</span>
-    <span>{{DATE}}</span>
+    <span>April 17, 2026</span>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════ CONTENT ═══════════════════════════════════════ -->
 <div class="post-content">
-{{CONTENT}}
+<p>A PE-backed healthcare software company had reached the end of its hold period and was ready to exit. Their NRR was 101% &mdash; technically above the 100% threshold, but not the kind of number that commands a premium multiple. Six months later, it was 105%. Here&rsquo;s how we got there.</p>
+
+<h2>What Did the Starting NRR Look Like?</h2>
+
+<p>The company&rsquo;s ARR Snowball told a clear story. Beginning NRR at 100%, with -4% churn, -3% product churn, -1% downsell, +3% upsell, and +6% cross-sell, ending at 101%.</p>
+
+<p>The cross-sell number looked healthy at 6%, but it was masking a problem. The company had acquired 5 businesses in 6 years under PE ownership, accumulating add-on products that customers didn&rsquo;t want. Customers grew frustrated with add-on products, and that frustration was showing up as product churn &mdash; which was a leading indicator of full logo churn.</p>
+
+<p>The <a href="/solutions/arr-snowball-board-reporting/">ARR Snowball decomposition</a> revealed that the growth wasn&rsquo;t durable. Cross-sell was high because the company kept pushing add-ons, but product churn and logo churn were eating the gains.</p>
+
+<h2>2% Increase from Improving Upsell</h2>
+
+<p>The first lever was pricing discipline &mdash; two straightforward operational changes:</p>
+
+<ul>
+  <li><strong>1% from annual CPI price increases on renewals.</strong> The company had never implemented automatic price escalation. We added a standard CPI increase to the renewal process. This is table stakes for <a href="https://www.bvp.com/atlas/the-saas-glossary" target="_blank" rel="noopener">net revenue retention</a>, but many PE-backed companies skip it, especially those that grew through acquisition rather than organic GTM maturity.</li>
+  <li><strong>1% from fixing revenue leakage.</strong> We found customers on outdated pricing &mdash; contracts that had auto-renewed for years without adjustment. Getting these customers onto current pricing recovered ARR that was already owed. <a href="https://www.saascapital.com/blog-posts/the-saas-business-index-update-benchmarks-for-private-b2b-saas-companies/" target="_blank" rel="noopener">SaaS Capital&rsquo;s research on NRR</a> consistently shows that pricing optimization is one of the fastest paths to NRR improvement.</li>
+</ul>
+
+<p>Neither of these required new products, new customers, or new GTM motions. Just operational rigor applied to existing customer relationships.</p>
+
+<h2>Investigating Churn Drivers: The Product Churn Pattern</h2>
+
+<p>The <a href="/solutions/arr-snowball-board-reporting/">ARR Snowball analysis</a> uncovered a critical pattern: <strong>the majority of customers who churned had dropped a product (product churn) within twelve months before churning entirely.</strong></p>
+
+<p>This wasn&rsquo;t random. The company had acquired 5 companies in 6 years, amassing add-on products that were difficult to manage. Customers&rsquo; frustration over add-on products they purchased led them to look at competitors&rsquo; offerings, which eventually led to switching to a competitor.</p>
+
+<p>The <a href="/solutions/customer-data-cube/">Customer Data Cube</a> made this pattern visible at the account-product level. Without account-product granularity, product churn and logo churn look like two separate problems. With it, the causal chain becomes clear: product frustration leads to product churn, which leads to logo churn.</p>
+
+<h2>2% Increase from Addressing Product Churn</h2>
+
+<p>The insight drove a counterintuitive recommendation: <strong>sunset products to grow NRR.</strong></p>
+
+<ul>
+  <li>We recommended accelerating the sunsetting of 2 of the 4 add-on products immediately, rather than waiting for the end of the calendar year</li>
+  <li>We initiated the sunsetting of the other 2 add-on products to be removed next quarter, before sell-side fireside chats started</li>
+</ul>
+
+<p>Less is more. By removing the products that were causing frustration, the company stopped the product churn &rarr; logo churn cascade. The short-term ARR hit from sunsetting was more than offset by the reduction in downstream churn.</p>
+
+<p>This is a pattern <a href="https://openviewpartners.com/blog/saas-benchmarks/" target="_blank" rel="noopener">OpenView Partners has documented</a> across high-performing SaaS companies: product portfolio rationalization often improves retention metrics more than product expansion.</p>
+
+<h2>1% from Aligning the Data Story with the Growth Story</h2>
+
+<p>The final lever was about how churn was presented, not how it was measured.</p>
+
+<p>In the company&rsquo;s most recent acquisition, approximately 75 customers had provided notification that they would cancel their subscription due to the acquisition, but hadn&rsquo;t formally churned yet. These were known future churners &mdash; M&amp;A-related attrition, not organic business failure.</p>
+
+<p>When building the sell-side data cube, we tagged and fenced off these customers to show their impact separately. This accomplished two things:</p>
+
+<ol>
+  <li>It removed ~1% of known M&amp;A-related churn from the organic NRR number</li>
+  <li>It highlighted the company&rsquo;s sophistication in handling the complexities of acquiring and integrating bolt-on acquisitions</li>
+</ol>
+
+<p>The result: the organic growth story was cleaner and more defensible &mdash; exactly what a <a href="https://www.bain.com/insights/topics/due-diligence/" target="_blank" rel="noopener">buy-side diligence team</a> would want to see.</p>
+
+<h2>The Impact: From 101% to 105%</h2>
+
+<p>The ending NRR waterfall told a different story: -3% churn, -1% product churn, -1% downsell, +5% upsell, +4% cross-sell = <strong>105% ending NRR.</strong></p>
+
+<p>Three outcomes that mattered at exit:</p>
+
+<ul>
+  <li><strong>Increased valuation multiple.</strong> Showing 5% organic growth put the company in a different category of comparable companies. NRR above 105% changes the conversation from &ldquo;stable business&rdquo; to &ldquo;compounding business&rdquo; &mdash; and the multiple reflects it.</li>
+  <li><strong>Prepared for diligence.</strong> The CFO went into sell-side diligence with a clear, confident growth narrative rather than a defensive, explanation-laden position. Every number had a decomposition. Every movement had a driver.</li>
+  <li><strong>Operational alignment.</strong> The data team learned to work with finance to drive strategic impact &mdash; a capability that transferred to the acquirer and added value beyond the transaction itself.</li>
+</ul>
+
+<h2>Why This Matters for Your Exit</h2>
+
+<p>Every PE-backed SaaS company approaching exit faces the same question: can you prove that your growth is durable? An <a href="/solutions/arr-snowball-board-reporting/">ARR Snowball</a> that decomposes NRR into its constituent movements &mdash; and connects those movements to operational decisions &mdash; is the difference between a story and a proof.</p>
+
+<p>The moves that took this company from 101% to 105% weren&rsquo;t complex. They were operational: price discipline, product rationalization, and data story alignment. But they required the right analytical foundation to identify, prioritize, and measure.</p>
 </div>
 
 <!-- ═══════════════════════════════════════ CTA ═══════════════════════════════════════ -->

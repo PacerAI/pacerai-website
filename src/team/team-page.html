@@ -97,43 +97,43 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
 @keyframes flowDot { 0%{ offset-distance:0%; opacity:0; } 10%{ opacity:1; } 90%{ opacity:1; } 100%{ offset-distance:100%; opacity:0; } }
 @keyframes glowPulse { 0%,100%{ box-shadow:0 0 20px rgba(39,137,154,0.3), inset 0 0 20px rgba(39,137,154,0.05); } 50%{ box-shadow:0 0 40px rgba(39,137,154,0.5), inset 0 0 30px rgba(39,137,154,0.1); } }
 @keyframes numStreamFloat { 0%{ transform:translateX(-60px); opacity:0; } 15%{ opacity:0.12; } 85%{ opacity:0.12; } 100%{ transform:translateX(1100px); opacity:0; } }
-#pacerai-pipeline { max-width: 1100px; margin: 0 auto; }
-#pacerai-pipeline .section-eyebrow { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 12px; text-align: center; }
-#pacerai-pipeline h2 { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 44px); font-weight: 700; color: #fff; line-height: 1.2; text-align: center; }
-#pacerai-pipeline h2 em { font-style: italic; color: var(--teal-light); }
-#pacerai-pipeline .section-lead { font-size: 17px; color: var(--text-mid); max-width: 640px; line-height: 1.7; text-align: center; margin: 18px auto 0; }
-#pacerai-pipeline .pipeline-visual { position: relative; margin-top: 60px; height: 320px; }
-#pacerai-pipeline .pipe-sources { position: absolute; left: 0; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-around; gap: 12px; width: 120px; z-index: 2; }
-#pacerai-pipeline .pipe-icon-box { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--teal); animation: bounceY 3s ease-in-out infinite; }
-#pacerai-pipeline .pipe-icon-box:nth-child(2){ animation-delay: .5s; }
-#pacerai-pipeline .pipe-icon-box:nth-child(3){ animation-delay: 1s; }
-#pacerai-pipeline .pipe-icon-box:nth-child(4){ animation-delay: 1.5s; }
-#pacerai-pipeline .pipe-icon-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
-#pacerai-pipeline .pipe-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
-#pacerai-pipeline .flow-path { fill: none; stroke: var(--navy-border); stroke-width: 1.5; stroke-dasharray: 6 4; }
-#pacerai-pipeline .flow-dot { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 8px rgba(39,137,154,0.6); offset-distance: 0%; animation: flowDot 3s linear infinite; z-index: 3; }
-#pacerai-pipeline .flow-dot.d2 { animation-delay: 0.4s; }
-#pacerai-pipeline .flow-dot.d3 { animation-delay: 0.8s; }
-#pacerai-pipeline .flow-dot.d4 { animation-delay: 1.2s; }
-#pacerai-pipeline .flow-dot.out1 { animation-delay: 0.2s; background: var(--teal-light); box-shadow: 0 0 8px rgba(112,196,156,0.6); }
-#pacerai-pipeline .flow-dot.out2 { animation-delay: 0.6s; background: var(--teal-light); box-shadow: 0 0 8px rgba(112,196,156,0.6); }
-#pacerai-pipeline .flow-dot.out3 { animation-delay: 1.0s; background: var(--teal-light); box-shadow: 0 0 8px rgba(112,196,156,0.6); }
-#pacerai-pipeline .pipe-processor { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, rgba(39,137,154,0.12), rgba(15,23,41,0.9)); border: 1.5px solid rgba(39,137,154,0.25); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; z-index: 4; animation: glowPulse 4s ease-in-out infinite; }
-#pacerai-pipeline .proc-label { font-family: Georgia,'Times New Roman',serif; font-size: 18px; font-weight: 700; color: #fff; margin-top: 8px; }
-#pacerai-pipeline .proc-label span { color: var(--teal-light); }
-#pacerai-pipeline .proc-sub { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
-#pacerai-pipeline .pipe-outputs { position: absolute; right: 0; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-around; gap: 12px; width: 120px; z-index: 2; align-items: flex-end; }
-#pacerai-pipeline .pipe-out-box { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--teal-light); }
-#pacerai-pipeline .pipe-out-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
-#pacerai-pipeline .num-stream { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
-#pacerai-pipeline .num-particle { position: absolute; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; color: var(--teal); opacity: 0; animation: numStreamFloat 10s linear forwards; white-space: nowrap; }
+#pacer-ai-platform { max-width: 1100px; margin: 0 auto; }
+#pacer-ai-platform .section-eyebrow { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 12px; text-align: center; }
+#pacer-ai-platform h2 { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 44px); font-weight: 700; color: #fff; line-height: 1.2; text-align: center; }
+#pacer-ai-platform h2 em { font-style: italic; color: var(--teal-light); }
+#pacer-ai-platform .section-lead { font-size: 17px; color: var(--text-mid); max-width: 640px; line-height: 1.7; text-align: center; margin: 18px auto 0; }
+#pacer-ai-platform .pipeline-visual { position: relative; margin-top: 60px; height: 340px; }
+#pacer-ai-platform .pipe-sources { position: absolute; left: 0; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-around; gap: 12px; width: 120px; z-index: 2; }
+#pacer-ai-platform .pipe-icon-box { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--teal); animation: bounceY 3s ease-in-out infinite; }
+#pacer-ai-platform .pipe-icon-box:nth-child(2){ animation-delay: .5s; }
+#pacer-ai-platform .pipe-icon-box:nth-child(3){ animation-delay: 1s; }
+#pacer-ai-platform .pipe-icon-box:nth-child(4){ animation-delay: 1.5s; }
+#pacer-ai-platform .pipe-icon-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+#pacer-ai-platform .pipe-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+#pacer-ai-platform .flow-path { fill: none; stroke: var(--navy-border); stroke-width: 1.5; stroke-dasharray: 6 4; }
+#pacer-ai-platform .flow-dot { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 8px rgba(39,137,154,0.6); offset-distance: 0%; animation: flowDot 3s linear infinite; z-index: 3; }
+#pacer-ai-platform .flow-dot.d2 { animation-delay: 0.4s; }
+#pacer-ai-platform .flow-dot.d3 { animation-delay: 0.8s; }
+#pacer-ai-platform .flow-dot.d4 { animation-delay: 1.2s; }
+#pacer-ai-platform .flow-dot.out1 { animation-delay: 0.2s; background: var(--teal-light); box-shadow: 0 0 8px rgba(112,196,156,0.6); }
+#pacer-ai-platform .flow-dot.out2 { animation-delay: 0.6s; background: var(--teal-light); box-shadow: 0 0 8px rgba(112,196,156,0.6); }
+#pacer-ai-platform .flow-dot.out3 { animation-delay: 1.0s; background: var(--teal-light); box-shadow: 0 0 8px rgba(112,196,156,0.6); }
+#pacer-ai-platform .pipe-processor { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, rgba(39,137,154,0.12), rgba(15,23,41,0.9)); border: 1.5px solid rgba(39,137,154,0.25); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; z-index: 4; animation: glowPulse 4s ease-in-out infinite; }
+#pacer-ai-platform .proc-label { font-family: Georgia,'Times New Roman',serif; font-size: 18px; font-weight: 700; color: #fff; margin-top: 8px; }
+#pacer-ai-platform .proc-label span { color: var(--teal-light); }
+#pacer-ai-platform .proc-sub { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+#pacer-ai-platform .pipe-outputs { position: absolute; right: 0; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-around; gap: 12px; width: 280px; z-index: 2; align-items: flex-end; }
+#pacer-ai-platform .pipe-out-box { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--teal-light); }
+#pacer-ai-platform .pipe-out-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+#pacer-ai-platform .num-stream { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+#pacer-ai-platform .num-particle { position: absolute; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; color: var(--teal); opacity: 0; animation: numStreamFloat 10s linear forwards; white-space: nowrap; }
 @media (max-width: 768px) {
-  #pacerai-pipeline .pipeline-visual { height: auto; flex-direction: column; gap: 32px; padding: 20px 0; display: flex; }
-  #pacerai-pipeline .pipe-sources, #pacerai-pipeline .pipe-outputs { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; }
-  #pacerai-pipeline .pipe-processor { position: static; transform: none; width: 140px; height: 140px; margin: 0 auto; }
-  #pacerai-pipeline .pipe-svg { display: none; }
-  #pacerai-pipeline .flow-dot { display: none; }
-  #pacerai-pipeline .num-stream { display: none; }
+  #pacer-ai-platform .pipeline-visual { height: auto; flex-direction: column; gap: 32px; padding: 20px 0; display: flex; }
+  #pacer-ai-platform .pipe-sources, #pacer-ai-platform .pipe-outputs { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  #pacer-ai-platform .pipe-processor { position: static; transform: none; width: 140px; height: 140px; margin: 0 auto; }
+  #pacer-ai-platform .pipe-svg { display: none; }
+  #pacer-ai-platform .flow-dot { display: none; }
+  #pacer-ai-platform .num-stream { display: none; }
 }
 
 /* ─── CTA ─── */
@@ -199,7 +199,7 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
     <li>
       <a href="/">Overview <span class="chevron">&#9662;</span></a>
       <div class="dropdown single-dropdown">
-        <a href="/#investor-questions">Use Cases</a>
+        <a href="/#use-cases">Use Cases</a>
         <a href="/#solutions">Solutions overview</a>
         <a href="/team/">Team overview</a>
       </div>
@@ -238,7 +238,7 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
       <a href="/team/">Team <span class="chevron">&#9662;</span></a>
       <div class="dropdown single-dropdown">
         <a href="#mission">Mission</a>
-        <a href="#pacerai-pipeline">Pacer AI Platform</a>
+        <a href="#pacer-ai-platform">Pacer AI Platform</a>
         <a href="#team">Team</a>
         <a href="#partners">Partners</a>
         <a href="#agents">Agent Team</a>
@@ -281,10 +281,10 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
 </section>
 
 <section class="section" style="padding:80px 48px;">
-  <div id="pacerai-pipeline">
-    <div class="section-eyebrow">Pacer AI Platform</div>
-    <h2>Revenue Data to Revenue Intelligence<br><em>built for diligence.</em></h2>
-    <p class="section-lead">More than an AI data team in a box &mdash; Pacer AI is built for M&amp;A-grade ARR diligence with an auditable, glass-box approach on Microsoft&rsquo;s enterprise-grade security.</p>
+  <div id="pacer-ai-platform">
+    <div class="section-eyebrow">How It Works</div>
+    <h2>Operational data in. Revenue intelligence <em>out.</em></h2>
+    <p class="section-lead">Connect your CRM, billing, and ERP. Pacer AI builds the customer data cube on Microsoft Fabric, then streams live dashboards, Excel models, and AI agent access.</p>
     <div class="pipeline-visual">
       <div class="num-stream" id="num-stream"></div>
       <div class="pipe-sources">
@@ -330,18 +330,34 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
         <div class="proc-label">Pacer <span>AI</span></div>
         <div class="proc-sub">Microsoft Fabric</div>
       </div>
-      <div class="pipe-outputs">
-        <div class="pipe-out-box">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          <span class="pipe-out-label">Power BI</span>
+      <div class="pipe-outputs" style="width:280px;">
+        <div style="display:flex;align-items:stretch;gap:8px;">
+          <div class="pipe-out-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <span class="pipe-out-label">Dashboards</span>
+          </div>
+          <span style="color:var(--teal);font-weight:700;align-self:center;">+</span>
+          <div class="pipe-out-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            <span class="pipe-out-label">Pacer AI Analyst Agent</span>
+          </div>
         </div>
-        <div class="pipe-out-box">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-          <span class="pipe-out-label">Excel</span>
+        <div style="display:flex;align-items:stretch;gap:8px;">
+          <div class="pipe-out-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            <span class="pipe-out-label">Excel (Embedded Data)</span>
+          </div>
+          <span style="color:var(--teal);font-weight:700;align-self:center;">+</span>
+          <div class="pipe-out-box">
+            <svg width="20" height="20" viewBox="0 0 24 24"><g stroke="#D97757" stroke-width="2.4" stroke-linecap="round" transform="translate(12 12)"><line y2="-10"/><line y2="-10" transform="rotate(36)"/><line y2="-10" transform="rotate(72)"/><line y2="-10" transform="rotate(108)"/><line y2="-10" transform="rotate(144)"/><line y2="-10" transform="rotate(180)"/><line y2="-10" transform="rotate(216)"/><line y2="-10" transform="rotate(252)"/><line y2="-10" transform="rotate(288)"/><line y2="-10" transform="rotate(324)"/></g></svg>
+            <span class="pipe-out-label">Claude in Excel</span>
+          </div>
         </div>
-        <div class="pipe-out-box">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8V4H8"/><rect x="8" y="8" width="8" height="8" rx="2"/><path d="M4 12H2"/><path d="M22 12h-2"/><path d="M12 2v2"/><path d="M12 22v-2"/></svg>
-          <span class="pipe-out-label">Claude AI</span>
+        <div style="display:flex;justify-content:center;width:100%;">
+          <div class="pipe-out-box" style="width:200px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            <span class="pipe-out-label">Customer Data Cube</span>
+          </div>
         </div>
       </div>
     </div>
@@ -550,12 +566,16 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
 <li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
 <li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li>
 <li><a href="/solutions/transaction-readiness/">Transaction Readiness</a></li>
+<li><a href="/solutions/revops-transformation-pkg/">RevOps Transformation</a></li>
+<li><a href="/solutions/gtm-transformation-pkg/">GTM Transformation</a></li>
+<li><a href="/solutions/fpanda-transformation-pkg/">FP&amp;A Transformation</a></li>
 </ul>
 </div>
 <div class="footer-col">
 <div class="footer-col-head">Team</div>
 <ul>
-<li><a href="/team/#mission">Purpose &amp; Mission</a></li>
+<li><a href="/team/#mission">Mission</a></li>
+<li><a href="/platform/overview/">Pacer AI Platform</a></li>
 <li><a href="/team/#team">Team</a></li>
 <li><a href="/team/#partners">Partners</a></li>
 <li><a href="/team/contact/">Contact</a></li>

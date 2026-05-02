@@ -192,8 +192,9 @@ html, body, .wp-site-blocks { background: #FFFFFF !important; background-color: 
     #pacerai-homepage .hero-ctas { flex-direction: column; width: 100%; }
     #pacerai-homepage .hero-ctas .btn-lg, #pacerai-homepage .hero-ctas .btn-outline-lg { width: 100%; text-align: center; }
     #pacerai-homepage .section { padding: 60px 20px; }
-    #pacerai-homepage .q-section-layout { grid-template-columns: 1fr; gap: 32px; }
-    #pacerai-homepage .q-section-layout.reverse .q-visual { order: 0; }
+    #pacerai-homepage .q-section-layout { grid-template-columns: 1fr !important; gap: 32px; }
+    #pacerai-homepage .q-section-layout.reverse { grid-template-columns: 1fr !important; }
+    #pacerai-homepage .q-section-layout.reverse .q-visual { order: 0 !important; }
     .expert-card { flex-direction: column; text-align: center; }
     .expert-tags { justify-content: center; }
     .method-timeline { grid-template-columns: 1fr; }
@@ -378,10 +379,10 @@ html, body, .wp-site-blocks { background: #FFFFFF !important; background-color: 
     <div class="hero-image-wrap">
       <div class="wp-cta-card">
         <div class="wp-cta-badge">Free White Paper</div>
-        <img src="/01_Foundation/products/arr-snowball/content/imgs/whitepaper/cover-thumbnail.png" alt="Board Quality ARR Snowballs — Pacer AI White Paper" class="wp-cta-cover">
+        <img src="https://getpacerai.com/wp-content/uploads/2026/04/arr-snowball-whitepaper-cover.png" alt="Board Quality ARR Snowballs — Pacer AI White Paper" class="wp-cta-cover">
         <div class="wp-cta-title">Board Quality ARR Snowballs</div>
         <div class="wp-cta-desc">Understand ARR growth drivers before your buyers do. 12 pages of M&A-grade insight.</div>
-        <form class="wp-cta-form" onsubmit="event.preventDefault(); var email=this.querySelector('input').value; this.querySelector('button').textContent='Downloading...'; this.querySelector('input').disabled=true; var a=document.createElement('a'); a.href='/01_Foundation/products/arr-snowball/content/white-papers/ARR-Snowballs-Pacer-AI.pdf'; a.download='Board-Quality-ARR-Snowballs-Pacer-AI.pdf'; a.click(); setTimeout(function(){document.querySelector('.wp-cta-form button').textContent='Downloaded ✓';},1000);">
+        <form class="wp-cta-form" id="wp-cta-dl-form">
           <input type="email" placeholder="Enter your work email" required>
           <button type="submit">Download Free White Paper &rarr;</button>
         </form>
@@ -404,8 +405,8 @@ html, body, .wp-site-blocks { background: #FFFFFF !important; background-color: 
         </div>
       </div>
       <div class="q-visual">
-        <a href="/01_Foundation/img/ARR_Waterfall_Concepts/ARR Waterfall - level 1 basic ARR Waterfall no analysis excel.png" target="_blank" class="zoom-trigger">
-          <img src="/01_Foundation/img/ARR_Waterfall_Concepts/ARR Waterfall - level 1 basic ARR Waterfall no analysis excel.png" alt="Basic ARR Waterfall showing Beginning ARR, Churn, Contraction, Expansion, and New movements across 12/31/23, 12/31/24, 12/31/25 with Ending ARR, GRR, and NRR calculations">
+        <a href="https://getpacerai.com/wp-content/uploads/2026/04/arr-waterfall-level-1-basic.png" target="_blank" class="zoom-trigger">
+          <img src="https://getpacerai.com/wp-content/uploads/2026/04/arr-waterfall-level-1-basic.png" alt="Basic ARR Waterfall showing Beginning ARR, Churn, Contraction, Expansion, and New movements across 12/31/23, 12/31/24, 12/31/25 with Ending ARR, GRR, and NRR calculations">
         </a>
       </div>
     </div>
@@ -425,8 +426,8 @@ html, body, .wp-site-blocks { background: #FFFFFF !important; background-color: 
         </div>
       </div>
       <div class="q-visual">
-        <a href="/01_Foundation/img/ARR_Waterfall_Concepts/ARR Waterfall - level 3 Advanced Account-Product Waterfall excel.png" target="_blank" class="zoom-trigger">
-          <img src="/01_Foundation/img/ARR_Waterfall_Concepts/ARR Waterfall - level 3 Advanced Account-Product Waterfall excel.png" alt="Advanced account-product ARR Snowball showing Up for Renewal, Renewal Base, Beginning ARR, Churn, Product Churn, Downsell, Upsell, Cross-sell, New, Lapsed, Returning, and Ending ARR with % of Beginning, GRR, NRR, account counts, and average ARR per account across 12/31/23, 12/31/24, 12/31/25">
+        <a href="https://getpacerai.com/wp-content/uploads/2026/04/arr-waterfall-level-3-advanced.png" target="_blank" class="zoom-trigger">
+          <img src="https://getpacerai.com/wp-content/uploads/2026/04/arr-waterfall-level-3-advanced.png" alt="Advanced account-product ARR Snowball showing Up for Renewal, Renewal Base, Beginning ARR, Churn, Product Churn, Downsell, Upsell, Cross-sell, New, Lapsed, Returning, and Ending ARR with % of Beginning, GRR, NRR, account counts, and average ARR per account across 12/31/23, 12/31/24, 12/31/25">
         </a>
       </div>
     </div>
@@ -446,8 +447,8 @@ html, body, .wp-site-blocks { background: #FFFFFF !important; background-color: 
         </div>
       </div>
       <div class="q-visual">
-        <a href="/01_Foundation/img/Product_Images/Pacer AI - Whitespace dashboard.png" target="_blank" class="zoom-trigger">
-          <img src="/01_Foundation/img/Product_Images/Pacer AI - Whitespace dashboard.png" alt="Pacer AI Whitespace Dashboard showing Expansion White Space by Market, White Space by Market &amp; Account Size, Expansion White Space by Account, and Expansion Potential &amp; Renewal Date views">
+        <a href="https://getpacerai.com/wp-content/uploads/2026/04/pacer-ai-whitespace-dashboard.png" target="_blank" class="zoom-trigger">
+          <img src="https://getpacerai.com/wp-content/uploads/2026/04/pacer-ai-whitespace-dashboard.png" alt="Pacer AI Whitespace Dashboard showing Expansion White Space by Market, White Space by Market &amp; Account Size, Expansion White Space by Account, and Expansion Potential &amp; Renewal Date views">
         </a>
       </div>
     </div>

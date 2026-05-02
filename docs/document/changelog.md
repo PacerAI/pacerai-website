@@ -4,6 +4,32 @@ All deployments logged here in reverse chronological order.
 
 ---
 
+## 2026-04-19 — Site Cleanup: Redirects, Anchor Rename, Blog Re-parenting, Meta Descriptions
+
+- **Pages deployed:** All 14 managed pages + redirects for 2 parent pages
+- **Deployed by:** Claude Code
+- **Changes:**
+  - **Anchor rename:** `#pacerai-pipeline` → `#pacer-ai-platform` across all 23 HTML source files (CSS selectors, HTML ids, nav links)
+  - **Parent page redirects:** `/solutions/` (364) redirects to `/#solutions`, `/platform/` (362) redirects to `/team/#pacer-ai-platform`
+  - **Blog re-parenting:** 6 orphaned root-level blog posts re-parented under Blog (230). URLs changed from `/{slug}/` to `/blog/{slug}/`
+  - **Yoast excerpts:** Set page excerpts for all 12 managed pages as meta description fallback. Yoast `_yoast_wpseo_metadesc` not writable via REST API on WordPress.com — requires WP Admin.
+  - **Jetpack sitemap disabled:** Toggled off by Will in WP Admin. Yoast sitemap (`/sitemap_index.xml`) is now sole sitemap.
+
+---
+
+## 2026-04-19 — SEO Structured Data + AI Context Center
+
+- **Pages modified:** Home (25), ARR Snowball (372), Customer Data Cube (373), Transaction Readiness (554), RevOps Transformation (651), GTM Transformation (650), FP&A Transformation (652)
+- **Deployed by:** Claude Code
+- **Changes:**
+  - **Homepage JSON-LD:** Updated Organization description to enumerate all 7 products. Added `hasOfferCatalog` with `OfferCatalog` containing 7 `Service` entries with names, descriptions, and URLs. Updated WebPage description to list all products.
+  - **Solution pages JSON-LD:** Added `Service` and `WebPage` schema to all 6 solution pages. Pages that had only `FAQPage` schema (Customer Data Cube, Transaction Readiness) now use `@graph` with Service + WebPage + FAQPage. Pages with no schema (RevOps, GTM, FP&A Transformation) now have Service + WebPage schema. ARR Snowball Organization schema replaced with Service + WebPage.
+  - **New folder:** `pacerai-context/` with `pacerai.md` (canonical company context) and `apollo_ai.md` (Apollo.io AI Context Center paste-ready document with schema explanation).
+- **Why:** Apollo.io's AI agent only scraped 3 products from the homepage because the JSON-LD description was too narrow and no Service schema existed. These changes ensure AI scrapers discover all 7 products from structured data alone.
+- **Note:** Pages are NOT deployed yet — source files updated, deploy via REST API required.
+
+---
+
 ## 2026-04-07 — Typed Hero Rotation + CTA Update (Homepage)
 - **Pages deployed:** Home (25)
 - **Deployed by:** Will Sullivan

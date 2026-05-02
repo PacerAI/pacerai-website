@@ -166,7 +166,7 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
     <li>
       <a href="/">Overview <span class="chevron">&#9662;</span></a>
       <div class="dropdown single-dropdown">
-        <a href="/#investor-questions">Use Cases</a>
+        <a href="/#use-cases">Use Cases</a>
         <a href="/#solutions">Solutions overview</a>
         <a href="/team/">Team overview</a>
       </div>
@@ -212,7 +212,7 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
       <a href="/team/">Team <span class="chevron">&#9662;</span></a>
       <div class="dropdown single-dropdown">
         <a href="/team/#mission">Mission</a>
-        <a href="/team/#pacerai-pipeline">Pacer AI Platform</a>
+        <a href="/team/#pacer-ai-platform">Pacer AI Platform</a>
         <a href="/team/#team">Team</a>
         <a href="/team/#partners">Partners</a>
         <a href="/team/#agents">Agent Team</a>
@@ -280,12 +280,16 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
 <li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
 <li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li>
 <li><a href="/solutions/transaction-readiness/">Transaction Readiness</a></li>
+<li><a href="/solutions/revops-transformation-pkg/">RevOps Transformation</a></li>
+<li><a href="/solutions/gtm-transformation-pkg/">GTM Transformation</a></li>
+<li><a href="/solutions/fpanda-transformation-pkg/">FP&amp;A Transformation</a></li>
 </ul>
 </div>
 <div class="footer-col">
 <div class="footer-col-head">Team</div>
 <ul>
-<li><a href="/team/#mission">Purpose &amp; Mission</a></li>
+<li><a href="/team/#mission">Mission</a></li>
+<li><a href="/platform/overview/">Pacer AI Platform</a></li>
 <li><a href="/team/#team">Team</a></li>
 <li><a href="/team/#partners">Partners</a></li>
 <li><a href="/team/contact/">Contact</a></li>
@@ -332,6 +336,28 @@ document.querySelectorAll('#pacerai-homepage .faq-q').forEach(function(btn){
     });
   });
 })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "name": "GTM Transformation",
+      "description": "Territory planning, ICP scoring, and pipeline intelligence powered by an agent chain. Automates sales and marketing operations using the customer data foundation for PE-backed SaaS companies.",
+      "url": "https://getpacerai.com/solutions/gtm-transformation-pkg/",
+      "provider": {"@type": "Organization", "name": "Pacer AI", "url": "https://getpacerai.com"},
+      "serviceType": "Go-to-Market Operations",
+      "audience": {"@type": "Audience", "audienceType": "PE-backed SaaS companies at $50M-$1B ARR"}
+    },
+    {
+      "@type": "WebPage",
+      "name": "GTM Transformation - Pacer AI",
+      "url": "https://getpacerai.com/solutions/gtm-transformation-pkg/",
+      "description": "Territory planning, ICP scoring, and pipeline intelligence built on your customer data cube. Agent-powered GTM operations for PE-backed SaaS companies."
+    }
+  ]
+}
 </script>
 
 </div>

@@ -1,0 +1,37 @@
+{
+  "25": {
+    "title": "Home",
+    "slug": "no-title",
+    "content_len": 69297
+  },
+  "372": {
+    "title": "ARR Snowball Board Reporting",
+    "slug": "arr-snowball-board-reporting",
+    "content_len": 63999
+  },
+  "373": {
+    "title": "Customer Data Cube",
+    "slug": "customer-data-cube",
+    "content_len": 47756
+  },
+  "554": {
+    "title": "Exit Readiness",
+    "slug": "transaction-readiness",
+    "content_len": 60046
+  },
+  "651": {
+    "title": "RevOps Transformation",
+    "slug": "revops-transformation-pkg",
+    "content_len": 27556
+  },
+  "650": {
+    "title": "GTM Transformation",
+    "slug": "gtm-transformation-pkg",
+    "content_len": 27542
+  },
+  "652": {
+    "title": "FP&#038;A Transformation",
+    "slug": "fpanda-transformation-pkg",
+    "content_len": 27535
+  }
+}

@@ -552,8 +552,8 @@ html, body, .wp-site-blocks {
   "@graph": [
     {
       "@type": "Article",
-      "headline": "{{TITLE}}",
-      "datePublished": "{{DATE_ISO}}",
+      "headline": "How I Helped a Client Grow NRR from 101% to 105% in 6 Months",
+      "datePublished": "2026-04-17",
       "author": {
         "@type": "Organization",
         "name": "Pacer AI",
@@ -568,12 +568,41 @@ html, body, .wp-site-blocks {
           "url": "https://getpacerai.com/wp-content/uploads/2025/04/PacerAI_Logo_Horizontal_Full-Color-scaled.webp"
         }
       },
-      "articleSection": "{{CATEGORY}}",
+      "articleSection": "ARR Snowballs",
       "mainEntityOfPage": {
         "@type": "WebPage"
       }
     }
-    {{FAQ_JSON}}
+    ,
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+            {
+                  "@type": "Question",
+                  "name": "How can PE-backed SaaS companies improve NRR before a transaction?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Decompose NRR into upsell, cross-sell, churn, product churn, and downsell. Identify which levers drive each movement, then implement targeted operational changes \u2014 pricing adjustments, product sunsetting, and data story alignment."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What is the relationship between product churn and logo churn?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Customers who drop a product (product churn) often churn entirely within 12 months. Addressing product churn early \u2014 by sunsetting underperforming add-ons \u2014 can prevent downstream logo churn."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "How does NRR impact SaaS valuation multiples?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Companies with NRR above 105% are valued in a different category of comparable companies. Even a 4-point NRR improvement can meaningfully increase the valuation multiple at exit."
+                  }
+            }
+      ]
+}
   ]
 }
 </script>
@@ -593,70 +622,49 @@ html, body, .wp-site-blocks {
   </a>
 
   <ul class="nav-links">
-
-    <!-- ─── OVERVIEW ─── -->
     <li>
-      <a href="/">Overview <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/#use-cases">Use Cases</a>
-        <a href="/#solutions">Solutions overview</a>
-        <a href="/team/">Team overview</a>
-      </div>
+      <a href="#" data-scroll-to="overview">Overview <span class="chevron">&#9662;</span></a>
+      <ul class="nav-dropdown">
+        <li><a href="#" data-scroll-to="investor-questions">Use Cases</a></li>
+        <li><a href="#" data-scroll-to="solutions">Solutions</a></li>
+        <li><a href="#" data-scroll-to="what-is-pacer-ai">About</a></li>
+      </ul>
     </li>
-
-    <!-- ─── SOLUTIONS (mega-dropdown with SVG icons) ─── -->
     <li>
-      <a href="/#solutions">Solutions <span class="chevron">&#9662;</span></a>
-      <div class="dropdown" style="min-width:580px">
-        <div class="dropdown-grid">
-          <div>
-            <div class="dropdown-col-label">Transaction Solutions</div>
-            <a href="/solutions/customer-data-cube/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="d-text"><span class="d-title">Customer Data Cube</span><span class="d-desc">M&amp;A grade accounts by product revenue</span></div></a>
-            <a href="/solutions/arr-snowball-board-reporting/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><div class="d-text"><span class="d-title">ARR Snowball Reporting</span><span class="d-desc">Board-ready waterfall dashboards</span></div></a>
-            <a href="/solutions/transaction-readiness/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="d-text"><span class="d-title">Transaction Readiness</span><span class="d-desc">QoR, QoE &mdash; diligence-ready in 4 quarters</span></div></a>
-          </div>
-          <div>
-            <div class="dropdown-col-label">Transformation Solutions</div>
-            <a href="/solutions/revops-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg></div><div class="d-text"><span class="d-title">RevOps Transformation</span><span class="d-desc">Segmentation to revenue motions</span></div></a>
-            <a href="/solutions/gtm-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="d-text"><span class="d-title">GTM Transformation</span><span class="d-desc">Agent-powered GTM chain</span></div></a>
-            <a href="/solutions/fpanda-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="d-text"><span class="d-title">FP&amp;A Transformation</span><span class="d-desc">AI model libraries for Excel + Copilot</span></div></a>
-          </div>
-        </div>
-      </div>
+      <a href="#" data-scroll-to="investor-questions">Use Cases <span class="chevron">&#9662;</span></a>
+      <ul class="nav-dropdown">
+        <li><a href="#" data-scroll-to="arr-growth">Where is Revenue Accelerating?</a></li>
+        <li><a href="#" data-scroll-to="expansion-drivers">What is Driving Expansion ARR?</a></li>
+        <li><a href="#" data-scroll-to="cross-sell-upsell">Which Cohort is Our Primary Driver?</a></li>
+        <li><a href="#" data-scroll-to="gross-retention">Improve Gross Retention</a></li>
+        <li><a href="#" data-scroll-to="net-retention">Improve Net Retention</a></li>
+        <li><a href="#" data-scroll-to="whitespace">Whitespace Opportunity</a></li>
+      </ul>
     </li>
-
-    <!-- ─── RESOURCES ─── -->
     <li>
-      <a href="/blog/">Resources <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/blog/">Blog</a>
-        <a href="/blog/?filter=arr-snowballs">ARR Snowballs</a>
-        <a href="/blog/?filter=frameworks">Frameworks</a>
-        <a href="/blog/?filter=model-templates">Model Templates</a>
-        <a href="/blog/?filter=revops">For RevOps</a>
-        <a href="https://agentsofinsight.substack.com/" target="_blank" rel="noopener">Newsletter</a>
-        <a href="https://www.youtube.com/@PacerAI" target="_blank" rel="noopener">YouTube</a>
-      </div>
+      <a href="#" data-scroll-to="solutions">Solutions <span class="chevron">&#9662;</span></a>
+      <ul class="nav-dropdown">
+        <li><a href="#" data-scroll-to="customerdatacube">Customer Data Cube</a></li>
+        <li><a href="#" data-scroll-to="arrsnowball">ARR Snowball Reporting</a></li>
+        <li><a href="#" data-scroll-to="transactionready">Transaction Readiness</a></li>
+        <li><a href="#" data-scroll-to="solutions">RevOps Transformation</a></li>
+        <li><a href="#" data-scroll-to="solutions">GTM Transformation</a></li>
+        <li><a href="#" data-scroll-to="solutions">FP&amp;A Transformation</a></li>
+      </ul>
     </li>
-
-    <!-- ─── TEAM ─── -->
     <li>
-      <a href="/team/">Team <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/team/#mission">Mission</a>
-        <a href="/team/#pacer-ai-platform">Pacer AI Platform</a>
-        <a href="/team/#team">Team</a>
-        <a href="/team/#partners">Partners</a>
-        <a href="/team/#agents">Agent Team</a>
-      </div>
+      <a href="#" data-scroll-to="what-is-pacer-ai">About <span class="chevron">&#9662;</span></a>
+      <ul class="nav-dropdown">
+        <li><a href="#" data-scroll-to="what-is-pacer-ai">The Firm</a></li>
+        <li><a href="#" data-scroll-to="faq">FAQ</a></li>
+      </ul>
     </li>
-
   </ul>
 
   <div class="nav-right">
     <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
     <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
-    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=btn.closest('nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=document.querySelector('#pacerai-homepage nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -669,19 +677,92 @@ html, body, .wp-site-blocks {
     <span class="sep">/</span>
     <a href="/blog/">Blog</a>
     <span class="sep">/</span>
-    <span>{{TITLE_SHORT}}</span>
+    <span>NRR Case Study</span>
   </div>
-  <div class="post-category-badge">{{CATEGORY}}</div>
-  <h1>{{TITLE}}</h1>
+  <div class="post-category-badge">ARR Snowballs</div>
+  <h1>How I Helped a Client Grow NRR from 101% to 105% in 6 Months</h1>
   <div class="post-meta">
     <span class="author">Pacer AI</span>
-    <span>{{DATE}}</span>
+    <span>April 17, 2026</span>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════ CONTENT ═══════════════════════════════════════ -->
 <div class="post-content">
-{{CONTENT}}
+<p>A PE-backed healthcare software company had reached the end of its hold period and was ready to exit. Their NRR was 101% &mdash; technically above the 100% threshold, but not the kind of number that commands a premium multiple. Six months later, it was 105%. Here&rsquo;s how we got there.</p>
+
+<h2>What Did the Starting NRR Look Like?</h2>
+
+<p>The company&rsquo;s ARR Snowball told a clear story. Beginning NRR at 100%, with -4% churn, -3% product churn, -1% downsell, +3% upsell, and +6% cross-sell, ending at 101%.</p>
+
+<p>The cross-sell number looked healthy at 6%, but it was masking a problem. The company had acquired 5 businesses in 6 years under PE ownership, accumulating add-on products that customers didn&rsquo;t want. Customers grew frustrated with add-on products, and that frustration was showing up as product churn &mdash; which was a leading indicator of full logo churn.</p>
+
+<p>The <a href="/solutions/arr-snowball-board-reporting/">ARR Snowball decomposition</a> revealed that the growth wasn&rsquo;t durable. Cross-sell was high because the company kept pushing add-ons, but product churn and logo churn were eating the gains.</p>
+
+<h2>2% Increase from Improving Upsell</h2>
+
+<p>The first lever was pricing discipline &mdash; two straightforward operational changes:</p>
+
+<ul>
+  <li><strong>1% from annual CPI price increases on renewals.</strong> The company had never implemented automatic price escalation. We added a standard CPI increase to the renewal process. This is table stakes for <a href="https://www.bvp.com/atlas/the-saas-glossary" target="_blank" rel="noopener">net revenue retention</a>, but many PE-backed companies skip it, especially those that grew through acquisition rather than organic GTM maturity.</li>
+  <li><strong>1% from fixing revenue leakage.</strong> We found customers on outdated pricing &mdash; contracts that had auto-renewed for years without adjustment. Getting these customers onto current pricing recovered ARR that was already owed. <a href="https://www.saascapital.com/blog-posts/the-saas-business-index-update-benchmarks-for-private-b2b-saas-companies/" target="_blank" rel="noopener">SaaS Capital&rsquo;s research on NRR</a> consistently shows that pricing optimization is one of the fastest paths to NRR improvement.</li>
+</ul>
+
+<p>Neither of these required new products, new customers, or new GTM motions. Just operational rigor applied to existing customer relationships.</p>
+
+<h2>Investigating Churn Drivers: The Product Churn Pattern</h2>
+
+<p>The <a href="/solutions/arr-snowball-board-reporting/">ARR Snowball analysis</a> uncovered a critical pattern: <strong>the majority of customers who churned had dropped a product (product churn) within twelve months before churning entirely.</strong></p>
+
+<p>This wasn&rsquo;t random. The company had acquired 5 companies in 6 years, amassing add-on products that were difficult to manage. Customers&rsquo; frustration over add-on products they purchased led them to look at competitors&rsquo; offerings, which eventually led to switching to a competitor.</p>
+
+<p>The <a href="/solutions/customer-data-cube/">Customer Data Cube</a> made this pattern visible at the account-product level. Without account-product granularity, product churn and logo churn look like two separate problems. With it, the causal chain becomes clear: product frustration leads to product churn, which leads to logo churn.</p>
+
+<h2>2% Increase from Addressing Product Churn</h2>
+
+<p>The insight drove a counterintuitive recommendation: <strong>sunset products to grow NRR.</strong></p>
+
+<ul>
+  <li>We recommended accelerating the sunsetting of 2 of the 4 add-on products immediately, rather than waiting for the end of the calendar year</li>
+  <li>We initiated the sunsetting of the other 2 add-on products to be removed next quarter, before sell-side fireside chats started</li>
+</ul>
+
+<p>Less is more. By removing the products that were causing frustration, the company stopped the product churn &rarr; logo churn cascade. The short-term ARR hit from sunsetting was more than offset by the reduction in downstream churn.</p>
+
+<p>This is a pattern <a href="https://openviewpartners.com/blog/saas-benchmarks/" target="_blank" rel="noopener">OpenView Partners has documented</a> across high-performing SaaS companies: product portfolio rationalization often improves retention metrics more than product expansion.</p>
+
+<h2>1% from Aligning the Data Story with the Growth Story</h2>
+
+<p>The final lever was about how churn was presented, not how it was measured.</p>
+
+<p>In the company&rsquo;s most recent acquisition, approximately 75 customers had provided notification that they would cancel their subscription due to the acquisition, but hadn&rsquo;t formally churned yet. These were known future churners &mdash; M&amp;A-related attrition, not organic business failure.</p>
+
+<p>When building the sell-side data cube, we tagged and fenced off these customers to show their impact separately. This accomplished two things:</p>
+
+<ol>
+  <li>It removed ~1% of known M&amp;A-related churn from the organic NRR number</li>
+  <li>It highlighted the company&rsquo;s sophistication in handling the complexities of acquiring and integrating bolt-on acquisitions</li>
+</ol>
+
+<p>The result: the organic growth story was cleaner and more defensible &mdash; exactly what a <a href="https://www.bain.com/insights/topics/due-diligence/" target="_blank" rel="noopener">buy-side diligence team</a> would want to see.</p>
+
+<h2>The Impact: From 101% to 105%</h2>
+
+<p>The ending NRR waterfall told a different story: -3% churn, -1% product churn, -1% downsell, +5% upsell, +4% cross-sell = <strong>105% ending NRR.</strong></p>
+
+<p>Three outcomes that mattered at exit:</p>
+
+<ul>
+  <li><strong>Increased valuation multiple.</strong> Showing 5% organic growth put the company in a different category of comparable companies. NRR above 105% changes the conversation from &ldquo;stable business&rdquo; to &ldquo;compounding business&rdquo; &mdash; and the multiple reflects it.</li>
+  <li><strong>Prepared for diligence.</strong> The CFO went into sell-side diligence with a clear, confident growth narrative rather than a defensive, explanation-laden position. Every number had a decomposition. Every movement had a driver.</li>
+  <li><strong>Operational alignment.</strong> The data team learned to work with finance to drive strategic impact &mdash; a capability that transferred to the acquirer and added value beyond the transaction itself.</li>
+</ul>
+
+<h2>Why This Matters for Your Exit</h2>
+
+<p>Every PE-backed SaaS company approaching exit faces the same question: can you prove that your growth is durable? An <a href="/solutions/arr-snowball-board-reporting/">ARR Snowball</a> that decomposes NRR into its constituent movements &mdash; and connects those movements to operational decisions &mdash; is the difference between a story and a proof.</p>
+
+<p>The moves that took this company from 101% to 105% weren&rsquo;t complex. They were operational: price discipline, product rationalization, and data story alignment. But they required the right analytical foundation to identify, prioritize, and measure.</p>
 </div>
 
 <!-- ═══════════════════════════════════════ CTA ═══════════════════════════════════════ -->
@@ -695,68 +776,56 @@ html, body, .wp-site-blocks {
 
 <!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
 <footer>
-<div class="footer-top">
-<div class="footer-brand">
-<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-<svg width="28" height="24" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-<path d="M2 2 L11 14 L2 26" stroke="#4A7FA8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-<path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-<path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-</svg>
-<span style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
-</a>
-<p class="footer-tagline">M&amp;A-grade ARR intelligence for PE-backed SaaS companies. Built on Microsoft Fabric, Power BI, and AI.</p>
-</div>
-<div class="footer-col">
-<div class="footer-col-head">Use Cases</div>
-<ul>
-<li><a href="/#arr-growth" data-scroll-to="arr-growth">Revenue Acceleration</a></li>
-<li><a href="/#expansion-drivers" data-scroll-to="expansion-drivers">Expansion Drivers</a></li>
-<li><a href="/#cohort-intelligence" data-scroll-to="cohort-intelligence">Cohort Intelligence</a></li>
-<li><a href="/#gross-retention" data-scroll-to="gross-retention">Gross Retention</a></li>
-<li><a href="/#net-retention" data-scroll-to="net-retention">Net Retention</a></li>
-<li><a href="/#whitespace" data-scroll-to="whitespace">Whitespace</a></li>
-</ul>
-</div>
-<div class="footer-col">
-<div class="footer-col-head">Solutions</div>
-<ul>
-<li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
-<li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li>
-<li><a href="/solutions/transaction-readiness/">Transaction Readiness</a></li>
-<li><a href="/solutions/revops-transformation-pkg/">RevOps Transformation</a></li>
-<li><a href="/solutions/gtm-transformation-pkg/">GTM Transformation</a></li>
-<li><a href="/solutions/fpanda-transformation-pkg/">FP&amp;A Transformation</a></li>
-</ul>
-</div>
-<div class="footer-col">
-<div class="footer-col-head">Team</div>
-<ul>
-<li><a href="/team/#mission">Mission</a></li>
-<li><a href="/platform/overview/">Pacer AI Platform</a></li>
-<li><a href="/team/#team">Team</a></li>
-<li><a href="/team/#partners">Partners</a></li>
-<li><a href="/team/contact/">Contact</a></li>
-</ul>
-</div>
-<div class="footer-col">
-<div class="footer-col-head">Connect</div>
-<ul>
-<li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
-<li><a href="https://calendly.com/pacerai">Schedule a Call</a></li>
-<li><a href="/blog/">Blog</a></li>
-<li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
-</ul>
-</div>
-</div>
-<div class="footer-bottom">
-<div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
-<div class="legal">
-<a href="#">Privacy Policy</a>
-<a href="#">Terms of Service</a>
-<a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a>
-</div>
-</div>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <svg width="28" height="24" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2 2 L11 14 L2 26" stroke="#4A7FA8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+      </a>
+      <p>M&amp;A-grade ARR intelligence for PE-backed SaaS companies. Built on Microsoft Fabric, Power BI, and AI.</p>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Solutions</div>
+      <ul>
+        <li><a href="#" data-scroll-to="customerdatacube">Customer Data Cube</a></li>
+        <li><a href="#" data-scroll-to="arrsnowball">ARR Snowball</a></li>
+        <li><a href="#" data-scroll-to="transactionready">Transaction-Ready</a></li>
+        <li><a href="#" data-scroll-to="gtmtransformation">GTM Transformation</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Company</div>
+      <ul>
+        <li><a href="#" data-scroll-to="what-is-pacer-ai">About</a></li>
+        <li><a href="https://calendly.com/pacerai">Contact</a></li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-head">Connect</div>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/getpacerai">LinkedIn</a></li>
+        <li><a href="https://calendly.com/pacerai">Schedule a Call</a></li>
+        <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+    <div class="legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
 </footer>
 
 <script>

@@ -22,7 +22,7 @@ Verify: `echo $WP_BASE_URL && echo $WP_USER && echo ${WP_APP_PASSWORD:0:4}...`
 
 ## Repo Location
 
-`~/Documents/GitHub/PacerAI/04_GTM/website-PacerAI/`
+`~/Documents/GitHub/PacerAI/pacerai-website/`
 
 Always `cd` into this directory before working. Read `CLAUDE.md` for the authoritative page registry.
 

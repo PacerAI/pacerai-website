@@ -1,28 +1,32 @@
 <style>
-/* Hide TT4 theme chrome */
+/* TT4 hide */
 .wp-site-blocks > header, .wp-site-blocks > footer, header.wp-block-template-part, footer.wp-block-template-part, .wp-block-template-part:first-child { display: none !important; }
 .wp-block-post-title, .wp-block-spacer { display: none !important; }
-html, body, .wp-site-blocks { background: #080E1C !important; background-color: #080E1C !important; }
+html, body, .wp-site-blocks { background: #FFFFFF !important; background-color: #FFFFFF !important; }
 #pacerai-homepage { width: 100%; max-width: 100vw; overflow-x: hidden; }
 .wp-site-blocks, .wp-site-blocks > main, .wp-site-blocks > main > .wp-block-group, .wp-site-blocks .is-layout-constrained, .wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)), .has-global-padding, .entry-content { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
 
   :root {
     --navy: #080E1C; --navy-mid: #0F1929; --navy-light: #162038; --navy-border: #1E2D4A;
     --brand: #1C3560; --brand-blue: #2B7DC8; --teal: #27899A; --teal-light: #70C49C;
-    --teal-pale: #D6F0E8; --cream: #F7F3EC; --white: #FFFFFF; --muted: #8A95A8;
-    --text-light: #CDD5E0; --text-mid: #94A3B8; --green: #2DB87A; --red-subtle: #C94C4C;
+    --teal-pale: #D6F0E8; --cream: #F7F3EC; --white: #FFFFFF; --muted: #718096;
+    --heading: #1A202C; --body-text: #2D3748; --text-mid: #718096;
+    --green: #15803D; --red-muted: #B03A3A;
+    --section-alt: #F8FAFC; --card-bg: #F8FAFC; --card-border: #E2E8F0;
+    --font-heading: 'Cormorant Garamond', serif;
+    --font-body: 'DM Sans', sans-serif;
   }
 
   #pacerai-homepage * { margin: 0; padding: 0; box-sizing: border-box; }
-  #pacerai-homepage { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text-light); overflow-x: hidden; font-size: 15px; line-height: 1.65; scroll-behavior: smooth; }
+  #pacerai-homepage { font-family: var(--font-body); background: #FFFFFF; color: var(--body-text); overflow-x: hidden; font-size: 15px; line-height: 1.65; scroll-behavior: smooth; }
 
-  /* ─── NAV ─── */
+  /* NAV */
   #pacerai-homepage nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 68px; background: rgba(8,14,28,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(28,53,96,0.6); }
   #pacerai-homepage .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   #pacerai-homepage .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
   #pacerai-homepage .nav-links > li { position: relative; }
-  #pacerai-homepage .nav-links > li > a { display: flex; align-items: center; gap: 5px; padding: 8px 14px; font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em; color: var(--text-mid); text-decoration: none; border-radius: 6px; transition: color 0.2s, background 0.2s; }
-  #pacerai-homepage .nav-links > li > a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  #pacerai-homepage .nav-links > li > a { display: flex; align-items: center; gap: 5px; padding: 8px 14px; font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em; color: #94A3B8; text-decoration: none; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+  #pacerai-homepage .nav-links > li > a:hover { color: #fff; background: rgba(255,255,255,0.05); }
   #pacerai-homepage .nav-links > li > a .chevron { font-size: 10px; margin-top: 1px; transition: transform 0.2s; }
   #pacerai-homepage .nav-links > li:hover > a .chevron { transform: rotate(180deg); }
   #pacerai-homepage .dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--navy-mid); border: 1px solid var(--navy-border); border-radius: 12px; padding: 20px; padding-top: 28px; min-width: 520px; box-shadow: 0 24px 60px rgba(0,0,0,0.6); }
@@ -32,131 +36,139 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
   #pacerai-homepage .dropdown-col-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); padding-bottom: 10px; margin-bottom: 6px; border-bottom: 1px solid var(--navy-border); }
   #pacerai-homepage .dropdown a { display: flex; align-items: flex-start; gap: 12px; padding: 10px; border-radius: 8px; text-decoration: none; transition: background 0.15s; }
   #pacerai-homepage .dropdown a:hover { background: rgba(255,255,255,0.04); }
-  #pacerai-homepage .dropdown .d-icon { width: 32px; height: 32px; flex-shrink: 0; background: var(--navy-light); border: 1px solid var(--navy-border); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-  #pacerai-homepage .dropdown .d-text .d-title { font-size: 13px; font-weight: 500; color: var(--white); display: block; line-height: 1.3; }
-  #pacerai-homepage .dropdown .d-text .d-desc { font-size: 12px; color: var(--muted); line-height: 1.4; margin-top: 2px; }
+  #pacerai-homepage .dropdown .d-icon { width: 32px; height: 32px; flex-shrink: 0; background: var(--navy-light); border: 1px solid var(--navy-border); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--teal); }
+  #pacerai-homepage .dropdown .d-text .d-title { font-size: 13px; font-weight: 500; color: #fff; display: block; line-height: 1.3; }
+  #pacerai-homepage .dropdown .d-text .d-desc { font-size: 12px; color: #8A95A8; line-height: 1.4; margin-top: 2px; }
   #pacerai-homepage .single-dropdown { min-width: 220px; }
-  #pacerai-homepage .single-dropdown a { padding: 9px 12px; border-radius: 8px; text-decoration: none; display: block; font-size: 13px; font-weight: 500; color: var(--text-light); transition: background 0.15s, color 0.15s; }
-  #pacerai-homepage .single-dropdown a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+  #pacerai-homepage .single-dropdown a { padding: 9px 12px; border-radius: 8px; text-decoration: none; display: block; font-size: 13px; font-weight: 500; color: #CDD5E0; transition: background 0.15s, color 0.15s; }
+  #pacerai-homepage .single-dropdown a:hover { background: rgba(255,255,255,0.05); color: #fff; }
   #pacerai-homepage .mobile-menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 101; }
-  #pacerai-homepage .mobile-menu-btn span { display: block; width: 22px; height: 2px; background: var(--text-light); border-radius: 2px; transition: all 0.3s; }
+  #pacerai-homepage .mobile-menu-btn span { display: block; width: 22px; height: 2px; background: #CDD5E0; border-radius: 2px; transition: all 0.3s; }
   #pacerai-homepage .mobile-menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
   #pacerai-homepage .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
   #pacerai-homepage .mobile-menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
   #pacerai-homepage .nav-right { display: flex; align-items: center; gap: 12px; }
-  #pacerai-homepage .btn-ghost { padding: 8px 18px; font-size: 13.5px; font-weight: 500; color: var(--text-light); background: transparent; border: 1px solid var(--navy-border); border-radius: 7px; cursor: pointer; text-decoration: none; transition: all 0.2s; }
-  #pacerai-homepage .btn-ghost:hover { color: var(--white); border-color: rgba(39,137,154,0.45); }
+  #pacerai-homepage .btn-ghost { padding: 8px 18px; font-size: 13.5px; font-weight: 500; color: #CDD5E0; background: transparent; border: 1px solid var(--navy-border); border-radius: 7px; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+  #pacerai-homepage .btn-ghost:hover { color: #fff; border-color: rgba(39,137,154,0.45); }
   #pacerai-homepage .btn-teal { padding: 9px 20px; font-size: 13.5px; font-weight: 600; color: #fff; background: var(--teal); border: none; border-radius: 7px; cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.02em; }
   #pacerai-homepage .btn-teal:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(39,137,154,0.35); }
 
-  /* ─── HERO ─── */
-  #pacerai-homepage .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 160px 24px 80px; position: relative; overflow: hidden; }
-  #pacerai-homepage .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 900px 600px at 50% 30%, rgba(39,137,154,0.09) 0%, transparent 70%), radial-gradient(ellipse 600px 400px at 80% 60%, rgba(45,184,122,0.04) 0%, transparent 60%), linear-gradient(180deg, var(--navy) 0%, #0B1324 100%); }
-  #pacerai-homepage .hero-bg::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(39,137,154,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(39,137,154,0.05) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent); }
-  #pacerai-homepage .hero-eyebrow { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px 6px 8px; background: rgba(39,137,154,0.10); border: 1px solid rgba(39,137,154,0.22); border-radius: 100px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 28px; animation: fadeUp 0.8s ease both; }
+  /* HERO */
+  #pacerai-homepage .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 140px 48px 80px; position: relative; overflow: hidden; background: #FFFFFF; }
+  #pacerai-homepage .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 900px 600px at 30% 40%, rgba(39,137,154,0.06) 0%, transparent 70%), radial-gradient(ellipse 600px 400px at 70% 50%, rgba(112,196,156,0.04) 0%, transparent 60%); }
+  #pacerai-homepage .hero-bg::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(39,137,154,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(39,137,154,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent); }
+  .hero-split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; width: 100%; }
+  #pacerai-homepage .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px 6px 8px; background: rgba(39,137,154,0.08); border: 1px solid rgba(39,137,154,0.18); border-radius: 100px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 28px; animation: fadeUp 0.8s ease both; }
   #pacerai-homepage .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
-  #pacerai-homepage h1 { position: relative; z-index: 1; font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 6vw, 72px); font-weight: 300; line-height: 1.08; color: var(--white); letter-spacing: -0.01em; max-width: 860px; animation: fadeUp 0.8s 0.1s ease both; }
+  #pacerai-homepage h1 { font-family: var(--font-heading); font-size: clamp(36px, 4.5vw, 58px); font-weight: 300; line-height: 1.1; color: var(--heading); letter-spacing: -0.01em; animation: fadeUp 0.8s 0.1s ease both; }
   #pacerai-homepage h1 em { font-style: italic; color: var(--teal); }
-  #pacerai-homepage .hero-sub { position: relative; z-index: 1; font-size: 17px; font-weight: 300; color: var(--text-mid); max-width: 600px; line-height: 1.7; margin: 24px auto 40px; animation: fadeUp 0.8s 0.2s ease both; }
-  #pacerai-homepage .hero-ctas { position: relative; z-index: 1; display: flex; align-items: center; gap: 14px; animation: fadeUp 0.8s 0.3s ease both; }
+  #pacerai-homepage .hero-sub { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.75; margin: 24px 0 36px; animation: fadeUp 0.8s 0.2s ease both; }
+  #pacerai-homepage .hero-ctas { display: flex; align-items: center; gap: 14px; animation: fadeUp 0.8s 0.3s ease both; }
   #pacerai-homepage .btn-lg { padding: 14px 30px; font-size: 15px; font-weight: 600; color: #fff; background: var(--teal); border: none; border-radius: 8px; cursor: pointer; text-decoration: none; letter-spacing: 0.02em; transition: all 0.25s; box-shadow: 0 4px 24px rgba(39,137,154,0.30); }
   #pacerai-homepage .btn-lg:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(112,196,156,0.40); }
-  #pacerai-homepage .btn-outline-lg { padding: 13px 28px; font-size: 15px; font-weight: 500; color: var(--white); background: transparent; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; cursor: pointer; text-decoration: none; transition: all 0.2s; }
-  #pacerai-homepage .btn-outline-lg:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.04); }
+  #pacerai-homepage .btn-outline-lg { padding: 13px 28px; font-size: 15px; font-weight: 500; color: var(--heading); background: transparent; border: 1px solid var(--card-border); border-radius: 8px; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+  #pacerai-homepage .btn-outline-lg:hover { border-color: var(--teal); color: var(--teal); background: rgba(39,137,154,0.04); }
+  .hero-image-wrap { animation: fadeUp 0.8s 0.3s ease both; }
+  .hero-image-caption { margin-top: 12px; font-size: 12px; color: var(--muted); text-align: center; }
 
-  /* ─── SECTIONS ─── */
+  /* White Paper CTA Card */
+  .wp-cta-card { background: transparent; border: none; border-radius: 16px; padding: 24px 0; text-align: center; max-width: 400px; margin: 0 auto; }
+  .wp-cta-badge { display: inline-block; background: rgba(39,137,154,0.15); color: var(--teal); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 4px 12px; border-radius: 4px; margin-bottom: 16px; text-transform: uppercase; }
+  .wp-cta-cover { width: 100%; max-width: 280px; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); margin-bottom: 20px; border: 1px solid #E2E8F0; }
+  .wp-cta-title { font-family: var(--font-body); font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+  .wp-cta-desc { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+  .wp-cta-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+  .wp-cta-form input[type="email"] { width: 100%; padding: 16px 18px; font-size: 16px; font-family: var(--font-body); background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 10px; color: #1A202C; outline: none; transition: border-color 0.2s; }
+  .wp-cta-form input[type="email"]:focus { border-color: var(--teal); }
+  .wp-cta-form input[type="email"]::placeholder { color: #A0AEC0; }
+  .wp-cta-form button { width: 100%; padding: 16px 24px; font-size: 16px; font-weight: 600; background: var(--teal); color: #fff; border: none; border-radius: 10px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 16px rgba(39,137,154,0.30); }
+  .wp-cta-form button:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(39,137,154,0.40); }
+  .wp-cta-privacy { font-size: 11px; color: #A0AEC0; }
+
+  /* SECTIONS */
   #pacerai-homepage .section { padding: 100px 48px; }
   #pacerai-homepage .section-inner { max-width: 1080px; margin: 0 auto; }
   #pacerai-homepage .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
-  #pacerai-homepage h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 4.5vw, 56px); font-weight: 300; line-height: 1.1; color: var(--white); letter-spacing: -0.01em; }
+  #pacerai-homepage h2 { font-family: var(--font-heading); font-size: clamp(34px, 4.5vw, 56px); font-weight: 300; line-height: 1.1; color: var(--heading); letter-spacing: -0.01em; }
   #pacerai-homepage h2 em { font-style: italic; color: var(--teal); }
-  #pacerai-homepage .section-lead { font-size: 17px; font-weight: 300; color: var(--text-mid); max-width: 560px; line-height: 1.7; margin-top: 18px; }
+  #pacerai-homepage .section-lead { font-size: 16px; font-weight: 300; color: var(--muted); max-width: 560px; line-height: 1.75; margin-top: 18px; }
 
-  /* ─── AEO DEFINITION CARD ─── */
-  #pacerai-homepage .aeo-card { background: var(--navy-mid); border: 1px solid var(--navy-border); border-left: 3px solid var(--teal); border-radius: 12px; padding: 36px 40px; margin-top: 48px; max-width: 860px; }
-  #pacerai-homepage .aeo-card .aeo-label { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
-  #pacerai-homepage .aeo-card p { font-size: 15px; color: var(--text-light); line-height: 1.8; }
+  /* Q-SECTION-LAYOUT */
+  #pacerai-homepage .q-section-layout { display: grid; grid-template-columns: 3fr 2fr; gap: 48px; align-items: start; margin-top: 16px !important; }
+  #pacerai-homepage .q-section-layout.reverse { grid-template-columns: 2fr 3fr; }
+  #pacerai-homepage .q-section-layout.reverse .q-visual { order: -1; }
+  #pacerai-homepage .q-visual { width: 100%; border-radius: 12px; overflow: hidden; }
+  #pacerai-homepage .q-visual img { width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border: 1px solid var(--card-border); transition: transform 0.2s; }
+  #pacerai-homepage .q-visual img:hover { transform: scale(1.01); }
+  #pacerai-homepage .aeo-snippet { font-size: 17px; color: var(--heading); line-height: 1.75; margin: 24px 0 !important; padding-left: 20px !important; border-left: 3px solid var(--teal); font-weight: 400; }
+  #pacerai-homepage .question-body p, #pacerai-homepage p.question-body { margin-top: 20px !important; font-size: 15px; color: #8A95A8; line-height: 1.75; }
 
-  /* ─── PROBLEM CARDS ─── */
-  #pacerai-homepage .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
-  #pacerai-homepage .problem-card { background: var(--navy-mid); border: 1px solid var(--navy-border); border-radius: 12px; padding: 32px; }
-  #pacerai-homepage .problem-card .pc-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; background: rgba(201,76,76,0.08); border: 1px solid rgba(201,76,76,0.15); margin-bottom: 18px; }
-  #pacerai-homepage .problem-card h4 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 8px; line-height: 1.3; }
-  #pacerai-homepage .problem-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+  /* EXPERT CARD */
+  .expert-card { display: flex; align-items: center; gap: 20px; margin: 32px auto 0; padding: 28px 32px; max-width: 820px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; text-align: left; }
+  .expert-avatar { flex-shrink: 0; width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--teal), var(--teal-light)); display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: #fff; }
+  .expert-name { font-family: var(--font-heading); font-size: 22px; color: var(--heading); margin-bottom: 4px; }
+  .expert-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .expert-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .expert-tags span { font-size: 12px; padding: 4px 10px; border-radius: 4px; background: rgba(39,137,154,0.06); color: var(--teal); border: 1px solid rgba(39,137,154,0.15); }
 
-  /* ─── ARR PILL ROW ─── */
-  #pacerai-homepage .arr-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 48px; justify-content: center; }
-  #pacerai-homepage .arr-flow-pill { padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 6px; }
-  #pacerai-homepage .arr-flow-pill.begin { background: rgba(39,137,154,0.12); color: var(--teal); border: 1px solid rgba(39,137,154,0.22); }
-  #pacerai-homepage .arr-flow-pill.pos { background: rgba(45,184,122,0.1); color: var(--green); border: 1px solid rgba(45,184,122,0.15); }
-  #pacerai-homepage .arr-flow-pill.neg { background: rgba(201,76,76,0.1); color: var(--red-subtle); border: 1px solid rgba(201,76,76,0.15); }
-  #pacerai-homepage .arr-flow-pill.end { background: rgba(39,137,154,0.15); color: var(--teal-light); border: 1px solid rgba(39,137,154,0.3); font-weight: 700; }
-  #pacerai-homepage .arr-flow-arrow { color: var(--muted); font-size: 16px; }
+  /* METHOD TIMELINE */
+  .method-timeline { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; margin-top: 40px; }
+  .method-step { padding: 24px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; position: relative; }
+  .method-step.step-highlight { background: rgba(39,137,154,0.04); border: 1px solid rgba(39,137,154,0.25); }
+  .step-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--teal); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+  .step-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--teal); }
+  .method-step h3 { font-size: 18px; color: var(--heading); margin-bottom: 10px; font-family: var(--font-heading); }
+  .method-step p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .method-step ul { list-style: none; padding: 0; margin: 0 0 12px 0; font-size: 12px; color: var(--muted); }
+  .method-step ul li { padding: 4px 0; }
+  .step-duration { font-size: 11px; color: var(--teal); font-weight: 600; }
 
-  /* ─── COMPONENT GRID ─── */
-  #pacerai-homepage .comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; border: 1px solid var(--navy-border); border-radius: 16px; overflow: hidden; }
-  #pacerai-homepage .comp-card { background: var(--navy-mid); padding: 32px; transition: background 0.2s; }
-  #pacerai-homepage .comp-card:hover { background: var(--navy-light); }
-  #pacerai-homepage .comp-card.growth { border-left: 3px solid var(--green); }
-  #pacerai-homepage .comp-card.loss { border-left: 3px solid var(--red-subtle); }
-  #pacerai-homepage .comp-card.total { border-left: 3px solid var(--teal); }
-  #pacerai-homepage .comp-card .cc-icon { font-size: 22px; margin-bottom: 14px; }
-  #pacerai-homepage .comp-card h4 { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
-  #pacerai-homepage .comp-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  /* DELIVERABLES */
+  .deliv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+  .deliv-card { padding: 16px !important; background: rgba(248,250,252,0.65); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(39,137,154,0.15); border-radius: 14px; min-height: 220px; box-shadow: 0 4px 24px rgba(27,54,93,0.06), inset 0 1px 0 rgba(255,255,255,0.6); transition: border-color 0.2s, box-shadow 0.2s; }
+  .deliv-card:hover { border-color: rgba(39,137,154,0.35); box-shadow: 0 8px 32px rgba(27,54,93,0.1), inset 0 1px 0 rgba(255,255,255,0.6); }
+  .deliv-card .d-ico { font-size: 24px; margin-bottom: 10px; }
+  .deliv-card h4 { color: var(--heading); font-size: 16px; margin-bottom: 8px; }
+  .deliv-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
-  /* ─── PERSONA CARDS ─── */
-  #pacerai-homepage .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
-  #pacerai-homepage .persona-card { background: var(--navy-mid); border: 1px solid var(--navy-border); border-radius: 12px; padding: 32px; position: relative; overflow: hidden; }
-  #pacerai-homepage .persona-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--brand), var(--teal), var(--teal-light)); }
-  #pacerai-homepage .persona-card .pc-role { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
-  #pacerai-homepage .persona-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: var(--white); margin-bottom: 12px; line-height: 1.2; }
-  #pacerai-homepage .persona-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
 
-  /* ─── QUOTE ─── */
-  #pacerai-homepage .quote-section { padding: 100px 48px; }
-  #pacerai-homepage .quote-inner { max-width: 800px; margin: 0 auto; text-align: center; }
-  #pacerai-homepage .quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 120px; color: rgba(39,137,154,0.12); line-height: 0.5; margin-bottom: 24px; display: block; }
-  #pacerai-homepage blockquote { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 3vw, 32px); font-weight: 300; font-style: italic; color: var(--white); line-height: 1.5; margin-bottom: 32px; }
-  #pacerai-homepage .quote-attr { font-size: 13px; color: var(--muted); letter-spacing: 0.06em; }
-  #pacerai-homepage .quote-attr strong { color: var(--text-light); font-weight: 600; }
+  /* Utility classes (extracted from inline styles) */
+  #pacerai-homepage .zoom-trigger { cursor: zoom-in; display: block; }
+  #pacerai-homepage .section-alt-bg { background: var(--section-alt); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); }
+  #pacerai-homepage .center-inner { text-align: center; }
 
-  /* ─── FAQ ─── */
-  #pacerai-homepage .faq-section { background: var(--navy-mid); border-top: 1px solid var(--navy-border); border-bottom: 1px solid var(--navy-border); }
-  #pacerai-homepage .faq-list { margin-top: 48px; max-width: 760px; }
-  #pacerai-homepage .faq-item { border-bottom: 1px solid var(--navy-border); }
-  #pacerai-homepage .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--white); transition: color 0.2s; background: none; border: none; width: 100%; text-align: left; font-family: 'DM Sans', sans-serif; }
-  #pacerai-homepage .faq-q:hover { color: var(--teal); }
-  #pacerai-homepage .faq-toggle { font-size: 20px; color: var(--teal); transition: transform 0.2s; flex-shrink: 0; margin-left: 16px; }
-  #pacerai-homepage .faq-a { display: none; padding: 0 0 22px; font-size: 14px; color: var(--text-mid); line-height: 1.75; max-width: 680px; }
-  #pacerai-homepage .faq-item.open .faq-a { display: block; }
-  #pacerai-homepage .faq-item.open .faq-toggle { transform: rotate(45deg); }
-
-  /* ─── CTA ─── */
-  #pacerai-homepage .cta-section { padding: 100px 48px; background: var(--navy-mid); border-top: 1px solid var(--navy-border); }
+  /* CTA */
+  #pacerai-homepage .cta-section { padding: 100px 48px; background: var(--section-alt); border-top: 1px solid var(--card-border); }
   #pacerai-homepage .cta-inner { max-width: 640px; margin: 0 auto; text-align: center; }
   #pacerai-homepage .cta-inner h2 { font-size: clamp(32px, 4vw, 52px); }
-  #pacerai-homepage .cta-inner p { color: var(--text-mid); font-size: 16px; margin: 18px 0 40px; line-height: 1.7; }
+  #pacerai-homepage .cta-inner p { color: var(--muted); font-size: 16px; margin: 18px 0 40px; line-height: 1.7; }
   #pacerai-homepage .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-  /* ─── FOOTER ─── */
+  /* QUOTE */
+  #pacerai-homepage .quote-section { padding: 100px 48px; background: #FFFFFF; }
+  #pacerai-homepage .quote-inner { max-width: 820px; margin: 0 auto; text-align: center; }
+  #pacerai-homepage blockquote { font-family: var(--font-heading); font-size: clamp(22px, 3vw, 32px); font-weight: 300; font-style: italic; color: var(--heading); line-height: 1.5; margin-bottom: 32px; }
+
+  /* FOOTER */
   #pacerai-homepage footer { background: var(--navy); border-top: 1px solid var(--navy-border); padding: 80px 48px 40px; }
   #pacerai-homepage .footer-top { display: grid; grid-template-columns: 240px 1fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 64px; border-bottom: 1px solid var(--navy-border); margin-bottom: 40px; }
-  #pacerai-homepage .footer-brand p { font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 16px; }
-  #pacerai-homepage .footer-col-head { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px; }
+  #pacerai-homepage .footer-brand p { font-size: 13px; color: #8A95A8; line-height: 1.7; margin-top: 16px; }
+  #pacerai-homepage .footer-col-head { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #CDD5E0; margin-bottom: 20px; }
   #pacerai-homepage .footer-col ul { list-style: none; }
   #pacerai-homepage .footer-col ul li { margin-bottom: 10px; }
-  #pacerai-homepage .footer-col ul li a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  #pacerai-homepage .footer-col ul li a { font-size: 13px; color: #8A95A8; text-decoration: none; transition: color 0.2s; }
   #pacerai-homepage .footer-col ul li a:hover { color: var(--teal); }
   #pacerai-homepage .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-  #pacerai-homepage .footer-bottom .copy { font-size: 12px; color: var(--muted); letter-spacing: 0.03em; }
+  #pacerai-homepage .footer-bottom .copy { font-size: 12px; color: #8A95A8; letter-spacing: 0.03em; }
   #pacerai-homepage .footer-bottom .legal { display: flex; gap: 24px; }
-  #pacerai-homepage .footer-bottom .legal a { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-  #pacerai-homepage .footer-bottom .legal a:hover { color: var(--text-mid); }
+  #pacerai-homepage .footer-bottom .legal a { font-size: 12px; color: #8A95A8; text-decoration: none; transition: color 0.2s; }
+  #pacerai-homepage .footer-bottom .legal a:hover { color: #94A3B8; }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ═══ MOBILE ═══ */
+  /* MOBILE */
   @media (max-width: 768px) {
     #pacerai-homepage nav { padding: 0 16px; height: 56px; backdrop-filter: none; background: #080E1C; overflow: visible; }
     #pacerai-homepage .nav-links { display: none !important; position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background: #080E1C; flex-direction: column; align-items: stretch; padding: 16px 20px; overflow-y: auto; z-index: 200; border-top: 1px solid var(--navy-border); list-style: none; }
@@ -173,22 +185,21 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
     #pacerai-homepage .nav-right .btn-ghost { display: none; }
     #pacerai-homepage .nav-right .btn-teal { padding: 7px 14px; font-size: 12px; }
     #pacerai-homepage .mobile-menu-btn { display: flex !important; }
-
     #pacerai-homepage .hero { padding: 100px 20px 60px; }
+    .hero-split { grid-template-columns: 1fr; gap: 32px; }
     #pacerai-homepage h1 { font-size: 36px; max-width: 100%; }
     #pacerai-homepage .hero-sub { font-size: 15px; }
     #pacerai-homepage .hero-ctas { flex-direction: column; width: 100%; }
     #pacerai-homepage .hero-ctas .btn-lg, #pacerai-homepage .hero-ctas .btn-outline-lg { width: 100%; text-align: center; }
-
     #pacerai-homepage .section { padding: 60px 20px; }
-    #pacerai-homepage .aeo-card { padding: 24px 20px; }
-    #pacerai-homepage .problem-grid { grid-template-columns: 1fr; }
-    #pacerai-homepage .arr-flow { flex-direction: column; }
-    #pacerai-homepage .arr-flow-arrow { transform: rotate(90deg); }
-    #pacerai-homepage .comp-grid { grid-template-columns: 1fr; }
-    #pacerai-homepage .persona-grid { grid-template-columns: 1fr; }
+    #pacerai-homepage .q-section-layout { grid-template-columns: 1fr !important; gap: 32px; }
+    #pacerai-homepage .q-section-layout.reverse { grid-template-columns: 1fr !important; }
+    #pacerai-homepage .q-section-layout.reverse .q-visual { order: 0 !important; }
+    .expert-card { flex-direction: column; text-align: center; }
+    .expert-tags { justify-content: center; }
+    .method-timeline { grid-template-columns: 1fr; }
+    .deliv-grid { grid-template-columns: 1fr; }
     #pacerai-homepage .quote-section { padding: 60px 20px; }
-    #pacerai-homepage .quote-mark { font-size: 80px; }
     #pacerai-homepage blockquote { font-size: 20px; }
     #pacerai-homepage .cta-section { padding: 60px 20px; }
     #pacerai-homepage .cta-buttons { flex-direction: column; align-items: center; }
@@ -203,16 +214,84 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
     #pacerai-homepage nav { padding: 0 24px; }
     #pacerai-homepage .nav-links > li > a { padding: 8px 8px; font-size: 12px; }
     #pacerai-homepage .section { padding: 80px 24px; }
-    #pacerai-homepage .problem-grid { grid-template-columns: 1fr 1fr; }
-    #pacerai-homepage .comp-grid { grid-template-columns: 1fr 1fr; }
-    #pacerai-homepage .persona-grid { grid-template-columns: 1fr; }
+    .hero-split { gap: 32px; }
+    .method-timeline { grid-template-columns: 1fr 1fr; }
+    .deliv-grid { grid-template-columns: 1fr 1fr; min-height: auto; }
     #pacerai-homepage .footer-top { grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
     #pacerai-homepage .footer-brand { grid-column: 1 / -1; }
     #pacerai-homepage footer { padding: 60px 24px 32px; }
   }
+  /* PIPELINE ANIMATION */
+  /* --- PIPELINE ANIMATION (light) --- */
+  @keyframes pipeBounce { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
+  @keyframes pipeFlow { 0%{ offset-distance:0%; opacity:0; } 10%{ opacity:1; } 90%{ opacity:1; } 100%{ offset-distance:100%; opacity:0; } }
+  @keyframes pipeGlow { 0%,100%{ box-shadow:0 4px 20px rgba(27,54,93,0.08); } 50%{ box-shadow:0 4px 32px rgba(27,54,93,0.16); } }
+  @keyframes pipeNumFloat { 0%{ transform:translateX(-60px); opacity:0; } 15%{ opacity:0.07; } 85%{ opacity:0.07; } 100%{ transform:translateX(1100px); opacity:0; } }
 
-@media(max-width:768px){.footer-top{grid-template-columns:1fr !important;gap:24px !important;padding:40px 24px 24px !important}.footer-brand{text-align:center}}
-.footer-top{display:grid;grid-template-columns:260px repeat(4,1fr);gap:32px;max-width:1200px;margin:0 auto;padding:64px 48px 40px}.footer-tagline{font-size:13px;color:var(--text-mid);line-height:1.6;margin-top:12px}@media(max-width:768px){.footer-top{grid-template-columns:1fr !important;gap:24px !important;padding:40px 24px 24px !important}.footer-brand{text-align:center}}</style>
+  #pacerai-homepage .pipeline-section .pipeline-visual { position: relative; margin-top: 60px; height: 340px; background: transparent; max-width: 1000px; margin-left: auto; margin-right: auto; }
+  #pacerai-homepage .pipeline-section .pipe-sources { position: absolute; left: 0; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-around; gap: 12px; width: 130px; z-index: 2; }
+  #pacerai-homepage .pipeline-section .pipe-icon-box { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 6px !important; color: #1B365D; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 10px 8px !important; animation: pipeBounce 3s ease-in-out infinite; cursor: default; transition: border-color 0.2s, box-shadow 0.2s; }
+  #pacerai-homepage .pipeline-section .pipe-icon-box:hover { border-color: #1B365D; box-shadow: 0 2px 12px rgba(27,54,93,0.1); }
+  #pacerai-homepage .pipeline-section .pipe-icon-box:nth-child(2) { animation-delay: .5s; }
+  #pacerai-homepage .pipeline-section .pipe-icon-box:nth-child(3) { animation-delay: 1s; }
+  #pacerai-homepage .pipeline-section .pipe-icon-box:nth-child(4) { animation-delay: 1.5s; }
+  #pacerai-homepage .pipeline-section .pipe-icon-label { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: #718096; font-weight: 600; }
+  #pacerai-homepage .pipeline-section .pipe-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+  #pacerai-homepage .pipeline-section .flow-path { fill: none; stroke: #E2E8F0; stroke-width: 1.5; stroke-dasharray: 6 4; }
+  #pacerai-homepage .pipeline-section .flow-dot { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: #1B365D; box-shadow: 0 0 10px rgba(27,54,93,0.5); offset-distance: 0%; animation: pipeFlow 3s linear infinite; z-index: 3; }
+  #pacerai-homepage .pipeline-section .flow-dot.d2 { animation-delay: 0.4s; }
+  #pacerai-homepage .pipeline-section .flow-dot.d3 { animation-delay: 0.8s; }
+  #pacerai-homepage .pipeline-section .flow-dot.d4 { animation-delay: 1.2s; }
+  #pacerai-homepage .pipeline-section .flow-dot.out1 { animation-delay: 0.2s; background: #27899A; box-shadow: 0 0 10px rgba(39,137,154,0.5); }
+  #pacerai-homepage .pipeline-section .flow-dot.out2 { animation-delay: 0.6s; background: #27899A; box-shadow: 0 0 10px rgba(39,137,154,0.5); }
+  #pacerai-homepage .pipeline-section .flow-dot.out3 { animation-delay: 1.0s; background: #27899A; box-shadow: 0 0 10px rgba(39,137,154,0.5); }
+  #pacerai-homepage .pipeline-section .pipe-processor { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 190px; height: 190px; border-radius: 50%; background: #FFFFFF; border: 2px solid #1B365D; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important; z-index: 4; animation: pipeGlow 4s ease-in-out infinite; }
+  #pacerai-homepage .pipeline-section .proc-label { font-family: Georgia,'Times New Roman',serif !important; font-size: 20px !important; font-weight: 700 !important; color: #1A202C !important; margin-top: 6px !important; display: block !important; }
+  #pacerai-homepage .pipeline-section .proc-label span { color: #27899A !important; }
+  #pacerai-homepage .pipeline-section .proc-sub { font-size: 9px !important; letter-spacing: 1.8px !important; text-transform: uppercase; color: #718096 !important; font-weight: 500; display: block !important; }
+  #pacerai-homepage .pipeline-section .pipe-outputs { position: absolute; right: 0; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-around; gap: 12px; width: 130px; z-index: 2; align-items: flex-end; }
+  #pacerai-homepage .pipeline-section .pipe-out-box { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 6px !important; color: #27899A; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 10px 8px !important; cursor: default; transition: border-color 0.2s, box-shadow 0.2s; }
+  #pacerai-homepage .pipeline-section .pipe-out-box:hover { border-color: #27899A; box-shadow: 0 2px 12px rgba(39,137,154,0.1); }
+  #pacerai-homepage .pipeline-section .pipe-out-label { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: #718096; font-weight: 600; }
+  #pacerai-homepage .pipeline-section .num-stream-lt { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  #pacerai-homepage .pipeline-section .num-particle-lt { position: absolute; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; color: #1B365D; opacity: 0; animation: pipeNumFloat 10s linear forwards; white-space: nowrap; }
+
+  @media (max-width: 768px) {
+    #pacerai-homepage .pipeline-section .pipeline-visual { height: auto; display: flex; flex-direction: column; gap: 32px; padding: 20px 0; }
+    #pacerai-homepage .pipeline-section .pipe-sources, #pacerai-homepage .pipeline-section .pipe-outputs { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    #pacerai-homepage .pipeline-section .pipe-processor { position: static; transform: none; width: 150px; height: 150px; margin: 0 auto; }
+    #pacerai-homepage .pipeline-section .pipe-svg { display: none; }
+    #pacerai-homepage .pipeline-section .flow-dot { display: none; }
+    #pacerai-homepage .pipeline-section .num-stream-lt { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; } }
+
+  /* COMPARISON */
+  #pacerai-homepage .compare-section .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border-radius: 16px; overflow: hidden; margin-top: 48px; }
+  #pacerai-homepage .compare-section .compare-col {
+    background: #fff; border: 1px solid var(--card-border);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06); padding: 40px 36px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  #pacerai-homepage .compare-section .compare-col:hover { border-color: var(--card-border); box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
+  #pacerai-homepage .compare-section .compare-col.old-way { border-left: 3px solid var(--red-muted); background: linear-gradient(135deg, rgba(201,76,76,0.03) 0%, #fff 50%); }
+  #pacerai-homepage .compare-section .compare-col.pacer-way { border-left: 3px solid var(--green); background: linear-gradient(135deg, rgba(45,184,122,0.03) 0%, #fff 50%); }
+  #pacerai-homepage .compare-section .compare-heading { font-family: var(--font-heading); font-size: 24px; font-weight: 700; margin-bottom: 28px; color: var(--heading); }
+  #pacerai-homepage .compare-section .old-way .compare-heading { color: var(--muted); }
+  #pacerai-homepage .compare-section .pacer-way .compare-heading { color: var(--muted); }
+  #pacerai-homepage .compare-section .compare-list { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+  #pacerai-homepage .compare-section .compare-list li { font-size: 15px; line-height: 1.6; color: var(--body-text); display: flex; align-items: flex-start; gap: 12px; text-align: left; }
+  #pacerai-homepage .compare-section .old-way .compare-list li { color: var(--body-text); }
+  #pacerai-homepage .compare-section .compare-list .icon { flex-shrink: 0; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px; margin-top: 2px; }
+  #pacerai-homepage .compare-section .old-way .icon { background: rgba(176,58,58,0.15); color: var(--red-muted); }
+  #pacerai-homepage .compare-section .pacer-way .icon { background: rgba(21,128,61,0.15); color: var(--green); }
+  #pacerai-homepage .compare-section .old-way del { text-decoration: line-through; text-decoration-color: rgba(176,58,58,0.5); color: var(--body-text); }
+
+  @media (max-width: 768px) {
+    #pacerai-homepage .compare-section .compare-grid { grid-template-columns: 1fr; }
+    #pacerai-homepage .compare-section .compare-col { padding: 28px 24px; }
+  }
+</style>
 
 <div id="pacerai-homepage">
 
@@ -225,22 +304,17 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
     </svg>
     <span style="font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
   </a>
-
   <ul class="nav-links">
-
-    <!-- ─── OVERVIEW ─── -->
     <li>
       <a href="/">Overview <span class="chevron">&#9662;</span></a>
       <div class="dropdown single-dropdown">
-        <a href="/#investor-questions">Use Cases</a>
+        <a href="/#use-cases">Use Cases</a>
         <a href="/#solutions">Solutions overview</a>
-        <a href="/team/">Team overview</a>
+        <a href="/team/about/">Team overview</a>
       </div>
     </li>
-
-    <!-- ─── SOLUTIONS (mega-dropdown with SVG icons) ─── -->
     <li>
-      <a href="/#solutions">Solutions <span class="chevron">&#9662;</span></a>
+      <a href="/">Solutions <span class="chevron">&#9662;</span></a>
       <div class="dropdown" style="min-width:580px">
         <div class="dropdown-grid">
           <div>
@@ -258,8 +332,6 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
         </div>
       </div>
     </li>
-
-    <!-- ─── RESOURCES ─── -->
     <li>
       <a href="/blog/">Resources <span class="chevron">&#9662;</span></a>
       <div class="dropdown single-dropdown">
@@ -267,240 +339,312 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
         <a href="/blog/?filter=arr-snowballs">ARR Snowballs</a>
         <a href="/blog/?filter=frameworks">Frameworks</a>
         <a href="/blog/?filter=model-templates">Model Templates</a>
+        <a href="https://agentsofinsight.substack.com/" target="_blank">Newsletter</a>
+        <a href="https://www.youtube.com/@PacerAI" target="_blank">YouTube</a>
         <a href="/blog/?filter=revops">For RevOps</a>
-        <a href="https://agentsofinsight.substack.com/" target="_blank" rel="noopener">Newsletter</a>
-        <a href="https://www.youtube.com/@PacerAI" target="_blank" rel="noopener">YouTube</a>
       </div>
     </li>
-
-    <!-- ─── TEAM ─── -->
     <li>
       <a href="/team/">Team <span class="chevron">&#9662;</span></a>
       <div class="dropdown single-dropdown">
         <a href="/team/#mission">Mission</a>
-        <a href="/team/#pacerai-pipeline">Pacer AI Platform</a>
+        <a href="/team/#pacer-ai-platform">Pacer AI Platform</a>
         <a href="/team/#team">Team</a>
         <a href="/team/#partners">Partners</a>
         <a href="/team/#agents">Agent Team</a>
       </div>
     </li>
-
   </ul>
-
   <div class="nav-right">
     <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
     <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
-    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=btn.closest('nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=document.querySelector('#pacerai-homepage nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
-
-
-
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <div class="hero-eyebrow"><span class="dot"></span> ARR Snowball Board Reporting · Flagship Use Case</div>
-  <h1>Your ARR Snowball Report.<br><em>Board-Ready in Days, Not Months.</em></h1>
-  <p class="hero-sub">Stop spending months building ARR waterfalls in spreadsheets. Pacer AI automates the entire process — from raw CRM and billing data to investor-grade ARR Snowball reports your board will actually trust.</p>
-  <div class="hero-ctas">
-    <a href="https://calendly.com/pacerai" class="btn-lg">See Your ARR Snowball →</a>
-    <a href="#what-is" class="btn-outline-lg">What Is an ARR Snowball?</a>
-  </div>
-</section>
-
-
-
-<section class="section" id="what-is">
-  <div class="section-inner">
-    <div class="section-eyebrow">Definition</div>
-    <h2>What is an <em>ARR Snowball?</em></h2>
-    <div class="aeo-card">
-      <div class="aeo-label">Answer Engine Optimized</div>
-      <p>An ARR Snowball (also called an ARR Waterfall or ARR Bridge) is a financial model that tracks how Annual Recurring Revenue changes period-over-period. It decomposes ARR movement into components: Beginning ARR, plus New Business, plus Expansion (upsell and cross-sell), minus Contraction (downgrades), minus Churn (lost customers), equals Ending ARR. It is the standard framework used by B2B SaaS boards, PE investors, and M&amp;A advisors to evaluate revenue quality and growth efficiency.</p>
+  <div class="hero-split">
+    <div class="hero-text">
+      <div class="hero-eyebrow"><span class="dot"></span>ARR Snowball Reporting</div>
+      <h1>ARR Snowball Reporting is what Pacer AI <em>was built for.</em></h1>
+      <p class="hero-sub">M&amp;A-grade ARR waterfall with upsell, cross-sell, downsell, and product churn decomposition. Board-ready every month. Defensible in diligence.</p>
+      <div class="hero-ctas">
+        <a href="https://calendly.com/pacerai" class="btn-lg">Get a Sample Board Package &rarr;</a>
+        <a href="#deliverables" class="btn-outline-lg">See What's Included</a>
+      </div>
     </div>
-  </div>
-</section>
-
-
-
-<section class="section" style="border-top:1px solid var(--navy-border);">
-  <div class="section-inner">
-    <div class="section-eyebrow">The Problem</div>
-    <h2>Building an ARR Snowball in-house is<br><em>harder than it looks</em></h2>
-    <p class="section-lead">Most companies underestimate the complexity. Here's what it actually takes.</p>
-
-    <div class="problem-grid">
-      <div class="problem-card">
-        <div class="pc-icon">⏳</div>
-        <h4>3–6 months to build</h4>
-        <p>Source decisions, granularity levels, period reporting, static vs. streaming — each compounds the timeline before a single waterfall row is written. Then add another month each cycle to maintain it.</p>
-      </div>
-      <div class="problem-card">
-        <div class="pc-icon">👥</div>
-        <h4>Requires a rare team</h4>
-        <p>You need a Financial Analyst, Data Engineer, Analytics Engineer, and at least one person with deep ARR modelling experience. That combination is hard to staff and expensive to retain.</p>
-      </div>
-      <div class="problem-card">
-        <div class="pc-icon">📋</div>
-        <h4>A table is not a board report</h4>
-        <p>Displaying numbers is one thing. Addressing ARR drivers by cohort and translating them into business implications for a board or acquirer is an entirely different skill set.</p>
+    <div class="hero-image-wrap">
+      <div class="wp-cta-card">
+        <div class="wp-cta-badge">Free White Paper</div>
+        <img src="https://getpacerai.com/wp-content/uploads/2026/04/arr-snowball-whitepaper-cover.png" alt="Board Quality ARR Snowballs — Pacer AI White Paper" class="wp-cta-cover">
+        <div class="wp-cta-title">Board Quality ARR Snowballs</div>
+        <div class="wp-cta-desc">Understand ARR growth drivers before your buyers do. 12 pages of M&A-grade insight.</div>
+        <form class="wp-cta-form" id="wp-cta-dl-form">
+          <input type="email" placeholder="Enter your work email" required>
+          <button type="submit">Download Free White Paper &rarr;</button>
+        </form>
+        <div class="wp-cta-privacy">No spam. Unsubscribe anytime.</div>
       </div>
     </div>
   </div>
 </section>
-
-
-
-<section class="section" style="background:var(--navy-mid);border-top:1px solid var(--navy-border);border-bottom:1px solid var(--navy-border);">
+<!-- PAIN POINT 1 -->
+<section class="section" id="the-challenge">
   <div class="section-inner">
-    <div class="section-eyebrow">The Pacer AI Solution</div>
-    <h2>Automated ARR Snowball.<br><em>Always current. Always defensible.</em></h2>
-    <p class="section-lead">Pacer AI ingests your CRM and billing data, runs it through Microsoft Fabric, and delivers a complete ARR waterfall model with board-quality Power BI visuals. No spreadsheets. No manual reconciliation.</p>
+    <div class="section-eyebrow">The Challenge</div>
+    <h2>Why do boards of recurring revenue companies need more than <em>a basic ARR Waterfall?</em></h2>
 
-    <div class="arr-flow">
-      <div class="arr-flow-pill begin">Beginning ARR</div>
-      <span class="arr-flow-arrow">→</span>
-      <div class="arr-flow-pill pos">+ New Business</div>
-      <span class="arr-flow-arrow">→</span>
-      <div class="arr-flow-pill pos">+ Expansion</div>
-      <span class="arr-flow-arrow">→</span>
-      <div class="arr-flow-pill neg">− Contraction</div>
-      <span class="arr-flow-arrow">→</span>
-      <div class="arr-flow-pill neg">− Churn</div>
-      <span class="arr-flow-arrow">=</span>
-      <div class="arr-flow-pill end">Ending ARR</div>
-    </div>
-  </div>
-</section>
-
-
-
-<section class="section">
-  <div class="section-inner">
-    <div class="section-eyebrow">Components</div>
-    <h2>The six building blocks of your <em>ARR Snowball</em></h2>
-
-    <div class="comp-grid">
-      <div class="comp-card total">
-        <div class="cc-icon">📐</div>
-        <h4>Beginning ARR</h4>
-        <p>The starting point for each period — the ending ARR from the previous period, fully reconciled to your source systems.</p>
+    <div class="q-section-layout">
+      <div class="q-content">
+        <p class="aeo-snippet">Boards and leadership teams of recurring revenue businesses need to know expansion rate and the drivers of expansion and contraction in order to improve the durable revenue growth of the business.</p>
+        <div class="question-body">
+          <p>A basic ARR Waterfall (one period displayed only) or a basic ARR Snowball (multiple periods displayed using an ARR Waterfall format) doesn&rsquo;t provide upsell and cross-sell visibility or the percentage of the ARR movement broken out.</p>
+        </div>
       </div>
-      <div class="comp-card growth">
-        <div class="cc-icon">🆕</div>
-        <h4>New Business</h4>
-        <p>ARR from net-new logos acquired during the period. First contracts, initial deal sizes, and landing patterns.</p>
-      </div>
-      <div class="comp-card growth">
-        <div class="cc-icon">📈</div>
-        <h4>Expansion</h4>
-        <p>ARR growth from existing customers — upsells, cross-sells, and price increases. The engine of capital-efficient growth.</p>
-      </div>
-      <div class="comp-card loss">
-        <div class="cc-icon">📉</div>
-        <h4>Contraction</h4>
-        <p>ARR reduction from existing customers who downgrade — fewer seats, lower tiers, or reduced usage commitments.</p>
-      </div>
-      <div class="comp-card loss">
-        <div class="cc-icon">🚪</div>
-        <h4>Churn</h4>
-        <p>ARR lost from customers who leave entirely. The most scrutinized component in any board meeting or due diligence review.</p>
-      </div>
-      <div class="comp-card total">
-        <div class="cc-icon">🎯</div>
-        <h4>Ending ARR</h4>
-        <p>The result. Beginning ARR + New + Expansion − Contraction − Churn. This number defines your run-rate and your valuation.</p>
+      <div class="q-visual">
+        <a href="https://getpacerai.com/wp-content/uploads/2026/04/arr-waterfall-level-1-basic.png" target="_blank" class="zoom-trigger">
+          <img src="https://getpacerai.com/wp-content/uploads/2026/04/arr-waterfall-level-1-basic.png" alt="Basic ARR Waterfall showing Beginning ARR, Churn, Contraction, Expansion, and New movements across 12/31/23, 12/31/24, 12/31/25 with Ending ARR, GRR, and NRR calculations">
+        </a>
       </div>
     </div>
   </div>
 </section>
-
-
-
-<section class="section" style="border-top:1px solid var(--navy-border);">
+<!-- PAIN POINT 2 -->
+<section class="section" class="section-alt-bg" id="first-time-build">
   <div class="section-inner">
-    <div class="section-eyebrow">Built For</div>
-    <h2>Who uses the <em>ARR Snowball?</em></h2>
+    <div class="section-eyebrow">First-Time Build</div>
+    <h2>What should a board-quality <em>ARR Snowball analysis</em> look like?</h2>
 
-    <div class="persona-grid">
-      <div class="persona-card">
-        <div class="pc-role">CFO / VP Finance</div>
-        <h4>Board Decks &amp; Investor Updates</h4>
-        <p>Generate board-ready ARR Snowball reports in hours instead of weeks. Automated variance commentary, PowerPoint export, and full audit trail for every number.</p>
+    <div class="q-section-layout reverse">
+      <div class="q-content">
+        <p class="aeo-snippet">A board-quality ARR Snowball should show cross-sell and upsell along with product churn and downsell in order to understand the drivers of expansion and contraction. Additionally, management teams and the board need to be able to see under the hood on Churn to see how much ARR was up for renewal, and how much churned. The same &ldquo;double-click&rdquo; is needed to understand how much New ARR is from customer winbacks (returning &gt;12 mo&rsquo;s) and poor renewal process (Lapsed &lt;12 mo&rsquo;s). The percentage analysis of ARR as a % of Beginning makes the ARR Snowball easier to digest so users can quickly see churn rates and upsell rates.</p>
+        <div class="question-body">
+          <p>Clearly an ARR Snowball of this granularity and supporting information wouldn&rsquo;t go on a slide, but the analysis to explain the ARR growth drivers and the churn drivers is what ARR Snowballs are built for.</p>
+        </div>
       </div>
-      <div class="persona-card">
-        <div class="pc-role">PE Operating Partner</div>
-        <h4>Portfolio Standardization</h4>
-        <p>Deploy the same ARR Snowball framework across every portfolio company. Compare performance, track value creation, and prepare for exit — all from one platform.</p>
-      </div>
-      <div class="persona-card">
-        <div class="pc-role">M&amp;A Advisor / Diligence Team</div>
-        <h4>Due Diligence Acceleration</h4>
-        <p>Produce Quality of Revenue exhibits from live data. Defend ARR definitions with full lineage back to source transactions. Be ready before the LOI hits.</p>
+      <div class="q-visual">
+        <a href="https://getpacerai.com/wp-content/uploads/2026/04/arr-waterfall-level-3-advanced.png" target="_blank" class="zoom-trigger">
+          <img src="https://getpacerai.com/wp-content/uploads/2026/04/arr-waterfall-level-3-advanced.png" alt="Advanced account-product ARR Snowball showing Up for Renewal, Renewal Base, Beginning ARR, Churn, Product Churn, Downsell, Upsell, Cross-sell, New, Lapsed, Returning, and Ending ARR with % of Beginning, GRR, NRR, account counts, and average ARR per account across 12/31/23, 12/31/24, 12/31/25">
+        </a>
       </div>
     </div>
   </div>
 </section>
-
-
-
-<section class="quote-section">
-  <div class="quote-inner">
-    <span class="quote-mark">"</span>
-    <blockquote>"Our board used to get a 40-page slide deck assembled over three weekends. Now Pacer AI produces the ARR Snowball in an afternoon — and the commentary actually explains the variances."</blockquote>
-    <div class="quote-attr"><strong>CFO, Series C B2B SaaS Company</strong> · $85M ARR</div>
-  </div>
-</section>
-
-
-
-<section class="section faq-section">
+<!-- PAIN POINT 3 -->
+<section class="section" id="beyond-reporting">
   <div class="section-inner">
-    <div class="section-eyebrow">Frequently Asked Questions</div>
-    <h2>Common questions about <em>ARR Snowball</em> reporting</h2>
+    <div class="section-eyebrow">Beyond Reporting</div>
+    <h2>Are ARR Snowballs <em>only used for reporting?</em></h2>
 
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-q">How long does it take to get started? <span class="faq-toggle">+</span></button>
-        <div class="faq-a">Most companies are producing their first ARR Snowball report within 2–4 weeks of engagement. The timeline depends on the number of data sources and the complexity of your revenue model. We handle all the data engineering and modeling.</div>
+    <div class="q-section-layout">
+      <div class="q-content">
+        <p class="aeo-snippet">No, building an ARR Snowball requires data engineering and data modeling which allows analytics professionals to calculate and display whitespace by account (upsell and cross-sell opportunities), by market (aggregate of account whitespace) and by key account (subsidiary accounts of a global account to sell to).</p>
+        <div class="question-body">
+          <p>The architecture required to build ARR Snowballs also allows analytics professionals to create multi-dimensional cohort views to see where growth is accelerating and why. Which products drive cross-sell. Which account sizes drive NRR and many more views.</p>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q">What data sources do I need? <span class="faq-toggle">+</span></button>
-        <div class="faq-a">At minimum, you need a CRM (Salesforce, HubSpot, or Dynamics 365) and a billing system (Stripe, Chargebee, Zuora, or similar). We can also ingest ERP data, spreadsheets, and custom APIs. Pacer AI normalizes everything into a unified revenue model.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">How is Pacer AI different from building in Excel? <span class="faq-toggle">+</span></button>
-        <div class="faq-a">Excel ARR models are manual, error-prone, and stale by the time they reach the board. Pacer AI automates the entire pipeline — ingestion, reconciliation, modeling, and visualization — and keeps it current with scheduled refreshes. Every number is traceable back to its source transaction.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Can I customize the ARR Snowball definitions? <span class="faq-toggle">+</span></button>
-        <div class="faq-a">Yes. Every engagement starts with aligning on ARR definitions — what counts as new vs. expansion, how multi-year deals are annualized, how free trials and pilots are treated. We configure the semantic model to match your board's definitions exactly.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Is my data secure? <span class="faq-toggle">+</span></button>
-        <div class="faq-a">Absolutely. Pacer AI runs on Microsoft Fabric within your own Azure tenant. Your data never leaves your control. We use Entra ID authentication, row-level security, and encryption in transit and at rest. No data is shared between clients.</div>
+      <div class="q-visual">
+        <a href="https://getpacerai.com/wp-content/uploads/2026/04/pacer-ai-whitespace-dashboard.png" target="_blank" class="zoom-trigger">
+          <img src="https://getpacerai.com/wp-content/uploads/2026/04/pacer-ai-whitespace-dashboard.png" alt="Pacer AI Whitespace Dashboard showing Expansion White Space by Market, White Space by Market &amp; Account Size, Expansion White Space by Account, and Expansion Potential &amp; Renewal Date views">
+        </a>
       </div>
     </div>
   </div>
 </section>
+<!-- HOW IT WORKS: Animated Pipeline (light variant) -->
+<section class="section pipeline-section" class="section-alt-bg">
+  <div style="text-align:center;max-width:1100px;margin:0 auto;padding:0 48px;">
+    <div class="section-eyebrow">How It Works</div>
+    <h2>Operational data in. Revenue intelligence <em>out.</em></h2>
+    <p class="section-lead" style="max-width:640px;margin:18px auto 0;">Connect your CRM, billing, and ERP. Pacer AI builds the customer data cube on Microsoft Fabric, then streams live dashboards, Excel models, and AI agent access.</p>
 
+    <div class="pipeline-visual" style="max-width:none;">
+      <div class="num-stream-lt" id="num-stream-lt"></div>
+      <div class="pipe-sources">
+        <div class="pipe-icon-box">
+          <img width="24" height="24" alt="CRM" src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%231B365D' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E">
+          <span class="pipe-icon-label">CRM</span>
+        </div>
+        <div class="pipe-icon-box">
+          <img width="24" height="24" alt="Billing" src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%231B365D' stroke-width='2' stroke-linecap='round'%3E%3Crect x='1' y='4' width='22' height='16' rx='2'/%3E%3Cline x1='1' y1='10' x2='23' y2='10'/%3E%3C/svg%3E">
+          <span class="pipe-icon-label">Billing</span>
+        </div>
+        <div class="pipe-icon-box">
+          <img width="24" height="24" alt="ERP" src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%231B365D' stroke-width='2' stroke-linecap='round'%3E%3Cellipse cx='12' cy='5' rx='9' ry='3'/%3E%3Cpath d='M21 12c0 1.66-4 3-9 3s-9-1.34-9-3'/%3E%3Cpath d='M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5'/%3E%3C/svg%3E">
+          <span class="pipe-icon-label">ERP</span>
+        </div>
+        <div class="pipe-icon-box">
+          <img width="24" height="24" alt="HRIS" src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%231B365D' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cline x1='19' y1='8' x2='19' y2='14'/%3E%3Cline x1='22' y1='11' x2='16' y2='11'/%3E%3C/svg%3E">
+          <span class="pipe-icon-label">HRIS</span>
+        </div>
+      </div>
+      <svg class="pipe-svg" viewBox="0 0 1000 340" preserveAspectRatio="none"><path class="flow-path" d="M150,55 C300,55 360,170 430,170"></path><path class="flow-path" d="M150,125 C290,125 360,170 430,170"></path><path class="flow-path" d="M150,215 C290,215 360,170 430,170"></path><path class="flow-path" d="M150,285 C300,285 360,170 430,170"></path><path class="flow-path" d="M570,145 C660,145 710,85 850,85"></path><path class="flow-path" d="M570,170 C660,170 710,170 850,170"></path><path class="flow-path" d="M570,195 C660,195 710,255 850,255"></path></svg>
+      <div class="flow-dot" style="offset-path:path('M150,55 C300,55 360,170 430,170');"></div>
+      <div class="flow-dot d2" style="offset-path:path('M150,125 C290,125 360,170 430,170');"></div>
+      <div class="flow-dot d3" style="offset-path:path('M150,215 C290,215 360,170 430,170');"></div>
+      <div class="flow-dot d4" style="offset-path:path('M150,285 C300,285 360,170 430,170');"></div>
+      <div class="flow-dot out1" style="offset-path:path('M570,145 C660,145 710,85 850,85');"></div>
+      <div class="flow-dot out2" style="offset-path:path('M570,170 C660,170 710,170 850,170');"></div>
+      <div class="flow-dot out3" style="offset-path:path('M570,195 C660,195 710,255 850,255');"></div>
+      <div class="pipe-processor">
+        <img width="44" height="36" alt="" src="data:image/svg+xml,%3Csvg viewBox='0 0 32 28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2L11 14L2 26' stroke='%231C3D6E' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M11 2L20 14L11 26' stroke='%2327899A' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M20 2L29 14L20 26' stroke='%2370C49C' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+        <div class="proc-label">Pacer <span>AI</span></div>
+        <div class="proc-sub">Microsoft Fabric</div>
+      </div>
+      <div class="pipe-outputs" style="width:295px;">
+        <div style="display:flex;align-items:stretch;gap:8px;">
+          <div class="pipe-out-box" style="width:130px;">
+            <img width="24" height="24" alt="Dashboards" src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%2327899A' stroke-width='2' stroke-linecap='round'%3E%3Cline x1='18' y1='20' x2='18' y2='10'/%3E%3Cline x1='12' y1='20' x2='12' y2='4'/%3E%3Cline x1='6' y1='20' x2='6' y2='14'/%3E%3C/svg%3E">
+            <span class="pipe-out-label">Dashboards</span>
+          </div>
+          <span style="color:#27899A;font-weight:700;align-self:center;">+</span>
+          <div class="pipe-out-box" style="width:130px;">
+            <img width="24" height="24" alt="Pacer AI Analyst Agent" src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%2327899A' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E">
+            <span class="pipe-out-label">Pacer AI Analyst Agent</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:stretch;gap:8px;">
+          <div class="pipe-out-box" style="width:130px;">
+            <img width="24" height="24" alt="Excel" src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%2327899A' stroke-width='2' stroke-linecap='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cpath d='M3 9h18'/%3E%3Cpath d='M9 21V9'/%3E%3C/svg%3E">
+            <span class="pipe-out-label">Excel (Embedded Data)</span>
+          </div>
+          <span style="color:#27899A;font-weight:700;align-self:center;">+</span>
+          <div class="pipe-out-box" style="width:130px;">
+            <img width="24" height="24" alt="Claude in Excel" src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%23D97757' stroke-width='2.4' stroke-linecap='round' transform='translate(12 12)'%3E%3Cline y2='-10'/%3E%3Cline y2='-10' transform='rotate(36)'/%3E%3Cline y2='-10' transform='rotate(72)'/%3E%3Cline y2='-10' transform='rotate(108)'/%3E%3Cline y2='-10' transform='rotate(144)'/%3E%3Cline y2='-10' transform='rotate(180)'/%3E%3Cline y2='-10' transform='rotate(216)'/%3E%3Cline y2='-10' transform='rotate(252)'/%3E%3Cline y2='-10' transform='rotate(288)'/%3E%3Cline y2='-10' transform='rotate(324)'/%3E%3C/g%3E%3C/svg%3E">
+            <span class="pipe-out-label">Claude in Excel</span>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;width:100%;">
+          <div class="pipe-out-box" style="width:200px;">
+            <img width="24" height="24" alt="Customer Data Cube" src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%2327899A' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z'/%3E%3Cpolyline points='3.27 6.96 12 12.01 20.73 6.96'/%3E%3Cline x1='12' y1='22.08' x2='12' y2='12'/%3E%3C/svg%3E">
+            <span class="pipe-out-label">Customer Data Cube</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- THE PACER METHOD (hidden for now) -->
+<section class="section" id="the-method" style="display:none;background:var(--section-alt);border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border);">
+  <div class="section-inner">
+    <div class="section-eyebrow">The Pacer Method</div>
+    <h2>Four phases. 8-16 weeks. <em>Diligence-grade waterfall.</em></h2>
+    <p class="section-lead" style="max-width:720px;">Every engagement follows the same proven sequence. Steps 1-3 build the foundation. Step 4 is what makes it defensible &mdash; a waterfall that survives 30 minutes of buyer diligence.</p>
 
+    <div class="method-timeline">
+      <div class="method-step">
+        <div class="step-header">
+          <div class="step-num">1</div>
+          <div class="step-label">DIAGNOSE</div>
+        </div>
+        <h3>Baseline ARR definitions</h3>
+        <p>ARR definition alignment across all stakeholders. Source system mapping. Current reporting gap analysis. Identify inconsistencies between CRM, billing, and finance.</p>
+        <ul>
+          <li>&bull; ARR definition document</li>
+          <li>&bull; Source-to-report mapping</li>
+          <li>&bull; Gap analysis report</li>
+        </ul>
+        <div class="step-duration">2-4 weeks</div>
+      </div>
 
+      <div class="method-step">
+        <div class="step-header">
+          <div class="step-num">2</div>
+          <div class="step-label">DESIGN</div>
+        </div>
+        <h3>Build the waterfall &amp; cohorts</h3>
+        <p>ARR Snowball waterfall model (New, Upsell, Cross-sell, Downsell, Product Churn, Logo Churn). NRR/GRR cohort analysis by vintage, market, account size. Board view templates.</p>
+        <ul>
+          <li>&bull; Waterfall model</li>
+          <li>&bull; Cohort framework</li>
+          <li>&bull; NRR 3-way test design</li>
+          <li>&bull; Board package template</li>
+        </ul>
+        <div class="step-duration">4-8 weeks</div>
+      </div>
+
+      <div class="method-step">
+        <div class="step-header">
+          <div class="step-num">3</div>
+          <div class="step-label">DEPLOY</div>
+        </div>
+        <h3>Automate month-close</h3>
+        <p>Month-close automation. Board package generation in 30 minutes (not 30 hours). Dashboards dashboards with drill-through. Excel streaming for financial modeling.</p>
+        <ul>
+          <li>&bull; Automated monthly refresh</li>
+          <li>&bull; Board-ready Dashboards dashboards</li>
+          <li>&bull; Excel live connection</li>
+        </ul>
+        <div class="step-duration">2-4 weeks</div>
+      </div>
+
+      <div class="method-step step-highlight">
+        <div class="step-header">
+          <div class="step-num" style="background:var(--teal-light);color:var(--navy);">4</div>
+          <div class="step-label" style="color:var(--teal-light);">DEFEND</div>
+        </div>
+        <h3>Diligence-grade waterfall</h3>
+        <p>24-month trailing waterfall. Three-way NRR test (True NRR, NRR incl. Lapsed, NRR excl. Returning). Methodology documentation. Diligence Q&amp;A response support.</p>
+        <ul>
+          <li>&bull; Diligence-grade waterfall (24+ months)</li>
+          <li>&bull; NRR methodology defense document</li>
+          <li>&bull; Data room population</li>
+        </ul>
+        <div class="step-duration" style="color:var(--teal-light);">On-demand</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- DELIVERABLES -->
+<section class="section" id="deliverables" style="background:linear-gradient(135deg, rgba(39,137,154,0.06) 0%, rgba(112,196,156,0.04) 50%, rgba(27,54,93,0.06) 100%);">
+  <div class="section-inner">
+    <div class="section-eyebrow">What You Get</div>
+    <h2 style="font-size:clamp(28px,3.5vw,44px);">Expert support. Streaming dashboards. M&amp;A-grade analysis. <em>ARR models in Excel with Claude.</em></h2>
+    <div class="deliv-grid">
+      <div class="deliv-card">
+        <div class="d-ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        </div>
+        <h4>Customer Data Cube</h4>
+        <p>Unified account-product-period data model from CRM, billing, and ERP. The foundation everything else depends on.</p>
+      </div>
+      <div class="deliv-card">
+        <div class="d-ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h4>ARR Snowball Dashboards<br>+ Pacer AI Analyst Agent</h4>
+        <p>Interactive dashboards with drill-through to account-product detail, plus a natural-language Analyst Agent for ad-hoc questions against your ARR data.</p>
+      </div>
+      <div class="deliv-card">
+        <div class="d-ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <h4>Embedded in Excel<br>+ Claude in Excel prompts</h4>
+        <p>Live-connected Excel model with the ARR Snowball embedded, plus ready-to-run Claude in Excel prompts for on-the-fly analysis and commentary.</p>
+      </div>
+      <div class="deliv-card">
+        <div class="d-ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h4>Expert support through office hours and Slack</h4>
+        <p>Weekly office hours and a dedicated Slack channel with our ARR analysts. Ongoing advisory for operationalizing your snowball.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- CTA -->
 <section class="cta-section">
-  <div class="cta-inner">
-    <div class="section-eyebrow" style="text-align:center">Get Started</div>
-    <h2>See your <em>ARR Snowball</em></h2>
-    <p>Walk through a live demo using your actual revenue data. See how Pacer AI transforms raw CRM and billing records into a board-ready ARR Snowball report.</p>
-    <div class="cta-buttons">
-      <a href="https://calendly.com/pacerai" class="btn-lg">Request a Live Demo</a>
-      <a href="/team/contact/" class="btn-outline-lg">Talk to a RevOps Expert</a>
+  <div class="cta-inner" style="max-width:680px;margin:0 auto;text-align:center;padding:80px 48px;">
+    <div class="section-eyebrow" class="center-inner">Get Started</div>
+    <h2>Partner with Pacer AI to work with M&amp;A experts <em>and AI Engineers</em></h2>
+    <div class="cta-buttons" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px;">
+      <a href="https://calendly.com/pacerai" class="btn-lg">Schedule a Meeting &rarr;</a>
     </div>
   </div>
 </section>
-
-
-
 <footer>
 <div class="footer-top">
 <div class="footer-brand">
@@ -531,12 +675,16 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
 <li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
 <li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li>
 <li><a href="/solutions/transaction-readiness/">Transaction Readiness</a></li>
+<li><a href="/solutions/revops-transformation-pkg/">RevOps Transformation</a></li>
+<li><a href="/solutions/gtm-transformation-pkg/">GTM Transformation</a></li>
+<li><a href="/solutions/fpanda-transformation-pkg/">FP&amp;A Transformation</a></li>
 </ul>
 </div>
 <div class="footer-col">
 <div class="footer-col-head">Team</div>
 <ul>
-<li><a href="/team/#mission">Purpose &amp; Mission</a></li>
+<li><a href="/team/#mission">Mission</a></li>
+<li><a href="/platform/overview/">Pacer AI Platform</a></li>
 <li><a href="/team/#team">Team</a></li>
 <li><a href="/team/#partners">Partners</a></li>
 <li><a href="/team/contact/">Contact</a></li>
@@ -561,30 +709,56 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
 </div>
 </div>
 </footer>
-
+<script>
+(function(){
+  var c = document.getElementById('num-stream-lt');
+  if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var nums = ['$24,035','$81,115','$88,980','$118,795','106.7%','NRR 101.3%','GRR 91.3%','$197,545','$510,470','29.4%'];
+  function spawn() {
+    var el = document.createElement('span');
+    el.className = 'num-particle-lt';
+    el.textContent = nums[Math.floor(Math.random() * nums.length)];
+    el.style.top = (Math.random() * 280) + 'px';
+    el.style.animationDuration = (8 + Math.random() * 6) + 's';
+    el.style.fontSize = (9 + Math.random() * 4) + 'px';
+    c.appendChild(el);
+    el.addEventListener('animationend', function(){ el.remove(); });
+  }
+  for (var i = 0; i < 6; i++) setTimeout(spawn, i * 1500);
+  setInterval(spawn, 2000);
+})();
+</script>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {"@type": "Question", "name": "How long does it take to get started?", "acceptedAnswer": {"@type": "Answer", "text": "Most companies are producing their first ARR Snowball report within 2–4 weeks of engagement. The timeline depends on the number of data sources and the complexity of your revenue model."}},
-    {"@type": "Question", "name": "What data sources do I need?", "acceptedAnswer": {"@type": "Answer", "text": "At minimum, you need a CRM (Salesforce, HubSpot, or Dynamics 365) and a billing system (Stripe, Chargebee, Zuora, or similar). Pacer AI normalizes everything into a unified revenue model."}},
-    {"@type": "Question", "name": "How is Pacer AI different from building in Excel?", "acceptedAnswer": {"@type": "Answer", "text": "Excel ARR models are manual, error-prone, and stale by the time they reach the board. Pacer AI automates the entire pipeline and keeps it current with scheduled refreshes."}},
-    {"@type": "Question", "name": "Can I customize the ARR Snowball definitions?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Every engagement starts with aligning on ARR definitions. We configure the semantic model to match your board's definitions exactly."}},
-    {"@type": "Question", "name": "Is my data secure?", "acceptedAnswer": {"@type": "Answer", "text": "Pacer AI runs on Microsoft Fabric within your own Azure tenant. Your data never leaves your control. We use Entra ID authentication, row-level security, and encryption in transit and at rest."}}
+  "@graph": [
+    {
+      "@type": "Service",
+      "name": "ARR Snowball Reporting",
+      "description": "Automated board-ready ARR waterfall dashboards showing new logo, expansion, contraction, and churn by product, vertical, and cohort. Multi-period ARR waterfall with upsell, cross-sell, downsell, and product churn decomposition. Replaces manual Excel reporting with live Power BI dashboards.",
+      "url": "https://getpacerai.com/solutions/arr-snowball-board-reporting/",
+      "provider": {
+        "@type": "Organization",
+        "name": "Pacer AI",
+        "url": "https://getpacerai.com",
+        "sameAs": ["https://www.linkedin.com/company/getpacerai"]
+      },
+      "serviceType": "ARR Intelligence",
+      "areaServed": "Worldwide",
+      "audience": {"@type": "Audience", "audienceType": "PE-backed SaaS companies at $50M-$1B ARR"}
+    },
+    {
+      "@type": "WebPage",
+      "name": "ARR Snowball Reporting - Pacer AI",
+      "url": "https://getpacerai.com/solutions/arr-snowball-board-reporting/",
+      "description": "M&A-grade ARR Snowball board reporting for PE-backed SaaS companies. Automated ARR waterfall dashboards with expansion, contraction, and churn decomposition by product and vertical."
+    }
   ]
 }
 </script>
 
 <script>
-// FAQ toggle
-document.querySelectorAll('#pacerai-homepage .faq-q').forEach(function(btn){
-  btn.addEventListener('click',function(){
-    var item=btn.parentElement;
-    item.classList.toggle('open');
-  });
-});
 // Mobile menu
 (function(){
   if(window.innerWidth>768) return;

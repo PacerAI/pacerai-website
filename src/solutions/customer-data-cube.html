@@ -225,7 +225,7 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
     <li>
       <a href="/">Overview <span class="chevron">&#9662;</span></a>
       <div class="dropdown single-dropdown">
-        <a href="/#investor-questions">Use Cases</a>
+        <a href="/#use-cases">Use Cases</a>
         <a href="/#solutions">Solutions overview</a>
         <a href="/team/">Team overview</a>
       </div>
@@ -271,7 +271,7 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
       <a href="/team/">Team <span class="chevron">&#9662;</span></a>
       <div class="dropdown single-dropdown">
         <a href="/team/#mission">Mission</a>
-        <a href="/team/#pacerai-pipeline">Pacer AI Platform</a>
+        <a href="/team/#pacer-ai-platform">Pacer AI Platform</a>
         <a href="/team/#team">Team</a>
         <a href="/team/#partners">Partners</a>
         <a href="/team/#agents">Agent Team</a>
@@ -554,12 +554,16 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
 <li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
 <li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li>
 <li><a href="/solutions/transaction-readiness/">Transaction Readiness</a></li>
+<li><a href="/solutions/revops-transformation-pkg/">RevOps Transformation</a></li>
+<li><a href="/solutions/gtm-transformation-pkg/">GTM Transformation</a></li>
+<li><a href="/solutions/fpanda-transformation-pkg/">FP&amp;A Transformation</a></li>
 </ul>
 </div>
 <div class="footer-col">
 <div class="footer-col-head">Team</div>
 <ul>
-<li><a href="/team/#mission">Purpose &amp; Mission</a></li>
+<li><a href="/team/#mission">Mission</a></li>
+<li><a href="/platform/overview/">Pacer AI Platform</a></li>
 <li><a href="/team/#team">Team</a></li>
 <li><a href="/team/#partners">Partners</a></li>
 <li><a href="/team/contact/">Contact</a></li>
@@ -589,13 +593,32 @@ html, body, .wp-site-blocks { background: #080E1C !important; background-color: 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {"@type": "Question", "name": "What data sources does the Customer Data Cube connect?", "acceptedAnswer": {"@type": "Answer", "text": "The Customer Data Cube ingests data from CRM systems (Salesforce, HubSpot, Dynamics 365), billing platforms (Stripe, Chargebee, Zuora), support tools (Zendesk, Intercom), and product analytics. We normalize and deduplicate customer entities across all sources into a single unified record."}},
-    {"@type": "Question", "name": "How is this different from a CDP or data warehouse?", "acceptedAnswer": {"@type": "Answer", "text": "CDPs focus on marketing data and identity resolution for ad targeting. Data warehouses store raw data but require analysts to build models on top. The Customer Data Cube is a pre-built, revenue-focused semantic model designed for SaaS metrics like ARR, retention, LTV, and cohort analysis."}},
-    {"@type": "Question", "name": "How long does implementation take?", "acceptedAnswer": {"@type": "Answer", "text": "Most Customer Data Cube implementations are live within 3-5 weeks. The timeline depends on the number of source systems and complexity of your customer hierarchy."}},
-    {"@type": "Question", "name": "Can I define custom dimensions and segments?", "acceptedAnswer": {"@type": "Answer", "text": "Absolutely. While we provide six foundational dimensions out of the box, every engagement includes custom segmentation aligned to your go-to-market model."}},
-    {"@type": "Question", "name": "Does it integrate with our existing Power BI reports?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The Customer Data Cube is built as a Microsoft Fabric semantic model, which connects natively to Power BI. You can build new reports on the cube or connect existing Power BI dashboards to it."}}
+  "@graph": [
+    {
+      "@type": "Service",
+      "name": "Customer Data Cube",
+      "description": "Dimensionally modeled revenue data unifying CRM, billing, and ERP into a single analytical layer. Enables cohort analysis, product-level P&L, and vertical segmentation for PE-backed SaaS companies.",
+      "url": "https://getpacerai.com/solutions/customer-data-cube/",
+      "provider": {"@type": "Organization", "name": "Pacer AI", "url": "https://getpacerai.com"},
+      "serviceType": "Customer Data Infrastructure",
+      "audience": {"@type": "Audience", "audienceType": "PE-backed SaaS companies at $50M-$1B ARR"}
+    },
+    {
+      "@type": "WebPage",
+      "name": "Customer Data Cube - Pacer AI",
+      "url": "https://getpacerai.com/solutions/customer-data-cube/",
+      "description": "Build a unified customer data cube from CRM, billing, and ERP data. Revenue-focused semantic model for ARR, retention, LTV, and cohort analysis."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "What data sources does the Customer Data Cube connect?", "acceptedAnswer": {"@type": "Answer", "text": "The Customer Data Cube ingests data from CRM systems (Salesforce, HubSpot, Dynamics 365), billing platforms (Stripe, Chargebee, Zuora), support tools (Zendesk, Intercom), and product analytics. We normalize and deduplicate customer entities across all sources into a single unified record."}},
+        {"@type": "Question", "name": "How is this different from a CDP or data warehouse?", "acceptedAnswer": {"@type": "Answer", "text": "CDPs focus on marketing data and identity resolution for ad targeting. Data warehouses store raw data but require analysts to build models on top. The Customer Data Cube is a pre-built, revenue-focused semantic model designed for SaaS metrics like ARR, retention, LTV, and cohort analysis."}},
+        {"@type": "Question", "name": "How long does implementation take?", "acceptedAnswer": {"@type": "Answer", "text": "Most Customer Data Cube implementations are live within 3-5 weeks. The timeline depends on the number of source systems and complexity of your customer hierarchy."}},
+        {"@type": "Question", "name": "Can I define custom dimensions and segments?", "acceptedAnswer": {"@type": "Answer", "text": "Absolutely. While we provide six foundational dimensions out of the box, every engagement includes custom segmentation aligned to your go-to-market model."}},
+        {"@type": "Question", "name": "Does it integrate with our existing Power BI reports?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The Customer Data Cube is built as a Microsoft Fabric semantic model, which connects natively to Power BI. You can build new reports on the cube or connect existing Power BI dashboards to it."}}
+      ]
+    }
   ]
 }
 </script>

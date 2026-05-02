@@ -11,12 +11,56 @@ import urllib.request
 import urllib.error
 import base64
 
-REPO = "/Users/willsullivan/Documents/GitHub/PacerAI/04_GTM/website-PacerAI"
+REPO = "/Users/willsullivan/Documents/GitHub/PacerAI/pacerai-website"
 TEMPLATE_PATH = f"{REPO}/src/blog/post-template.html"
 OUTPUT_DIR = f"{REPO}/src/blog/posts"
 
 # Blog post metadata
 POSTS = [
+    {
+        "id": "board-quality-arr-snowballs",
+        "title": "Board Quality ARR Snowballs: Understand Your ARR Growth Drivers Before Your Acquirers Do",
+        "title_short": "Board Quality ARR Snowballs",
+        "category": "ARR Snowballs",
+        "date": "April 17, 2026",
+        "date_iso": "2026-04-17",
+        "faq": [
+            {
+                "q": "What is a board-quality ARR Snowball?",
+                "a": "A board-quality ARR Snowball is an M&A-grade multi-period ARR waterfall analysis that shows revenue movements (churn, product churn, downsell, upsell, cross-sell, new, lapsed, returning) at the account-product level, with % of beginning analysis, vintage and cohort cuts, and full reconciliation to financial statements."
+            },
+            {
+                "q": "Why can't FP&A software produce M&A-grade ARR analysis?",
+                "a": "FP&A and RevOps tools are built for scale with a one-size-fits-all approach. They produce basic ARR tables that prioritize presentation over perspective. M&A-grade analysis requires account-product granularity, driver decomposition, and vintage analysis that these tools cannot provide."
+            },
+            {
+                "q": "What questions should boards and CFOs be able to answer about ARR?",
+                "a": "Four key questions: (1) Can you explain the drivers of ARR growth and how you have accelerated them? (2) Which cohorts drive NRR and why? (3) How have you improved upsell and cross-sell rates? (4) What drives churn and what is your strategy to mitigate it? Plus a bonus: How much whitespace is there to sell into?"
+            },
+        ],
+    },
+    {
+        "id": 778,
+        "title": "How I Helped a Client Grow NRR from 101% to 105% in 6 Months",
+        "title_short": "NRR Case Study",
+        "category": "ARR Snowballs",
+        "date": "April 17, 2026",
+        "date_iso": "2026-04-17",
+        "faq": [
+            {
+                "q": "How can PE-backed SaaS companies improve NRR before a transaction?",
+                "a": "Decompose NRR into upsell, cross-sell, churn, product churn, and downsell. Identify which levers drive each movement, then implement targeted operational changes — pricing adjustments, product sunsetting, and data story alignment."
+            },
+            {
+                "q": "What is the relationship between product churn and logo churn?",
+                "a": "Customers who drop a product (product churn) often churn entirely within 12 months. Addressing product churn early — by sunsetting underperforming add-ons — can prevent downstream logo churn."
+            },
+            {
+                "q": "How does NRR impact SaaS valuation multiples?",
+                "a": "Companies with NRR above 105% are valued in a different category of comparable companies. Even a 4-point NRR improvement can meaningfully increase the valuation multiple at exit."
+            },
+        ],
+    },
     {
         "id": 491,
         "title": "Should I Build a Customer Data Cube In-House or Hire Someone?",
