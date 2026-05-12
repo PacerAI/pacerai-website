@@ -34,7 +34,127 @@ DEFAULT_FILES = [
 ]
 
 
-def validate_file(filepath, strict=False):
+def _strip_html(content):
+    """Strip <style>, <script>, and remaining tags so text checks don't match CSS or JS."""
+    text = re.sub(r"<style[^>]*>.*?</style>", " ", content, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r"<script[^>]*>.*?</script>", " ", text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r"<!--.*?-->", " ", text, flags=re.DOTALL)
+    text = re.sub(r"<[^>]+>", " ", text)
+    return text
+
+
+def load_voice_rules():
+    """Pull forbidden words/phrases from foundation/brand/voice.yml and anti-ai-writing-style.md.
+
+    Hand-parsed (no PyYAML dependency). Voice.yml is simple list-of-strings under known keys.
+    """
+    rules = {"forbidden_words": [], "forbidden_phrases": []}
+
+    voice_path = os.path.join(REPO, "foundation/brand/voice.yml")
+    if os.path.exists(voice_path):
+        with open(voice_path) as f:
+            voice_text = f.read()
+        for key in ("forbidden_words", "forbidden_phrases"):
+            m = re.search(rf"^{key}:\s*\n((?:[ \t]*-[ \t]+.+\n)+)", voice_text, re.MULTILINE)
+            if not m:
+                continue
+            for line in m.group(1).splitlines():
+                line = line.strip()
+                if not line.startswith("- "):
+                    continue
+                item = line[2:].strip()
+                if (item.startswith('"') and item.endswith('"')) or \
+                   (item.startswith("'") and item.endswith("'")):
+                    item = item[1:-1]
+                if item:
+                    rules[key].append(item)
+
+    anti_path = os.path.join(REPO, "foundation/brand/anti-ai-writing-style.md")
+    if os.path.exists(anti_path):
+        with open(anti_path) as f:
+            anti_text = f.read()
+        for label in ("Vendor sludge", "AI tells", "Hedges"):
+            m = re.search(rf"\*\*{re.escape(label)}:\*\*\s*([^.]+)\.", anti_text)
+            if not m:
+                continue
+            for raw in m.group(1).split(","):
+                word = re.sub(r"\s*\(.*?\)", "", raw).strip()
+                if word:
+                    rules["forbidden_words"].append(word)
+
+    seen = set()
+    deduped = []
+    for w in rules["forbidden_words"]:
+        wl = w.lower()
+        if wl and wl not in seen:
+            seen.add(wl)
+            deduped.append(w)
+    rules["forbidden_words"] = deduped
+    return rules
+
+
+def validate_voice(content, voice_rules):
+    """Flag banned words/phrases from voice.yml + anti-ai-writing-style.md."""
+    failures = []
+    text = _strip_html(content)
+    text_lower = text.lower()
+
+    hits = []
+    for word in voice_rules["forbidden_words"]:
+        pattern = r"\b" + re.escape(word.lower()) + r"\b"
+        m = re.search(pattern, text_lower)
+        if not m:
+            continue
+        start = max(0, m.start() - 30)
+        end = min(len(text), m.end() + 30)
+        ctx = " ".join(text[start:end].split())
+        hits.append((word, ctx))
+
+    for phrase in voice_rules["forbidden_phrases"]:
+        idx = text_lower.find(phrase.lower())
+        if idx < 0:
+            continue
+        start = max(0, idx - 20)
+        end = min(len(text), idx + len(phrase) + 20)
+        ctx = " ".join(text[start:end].split())
+        hits.append((phrase, ctx))
+
+    for term, ctx in hits[:10]:
+        failures.append(f"VOICE: banned term '{term}' — ...{ctx}...")
+    if len(hits) > 10:
+        failures.append(f"VOICE: ...and {len(hits) - 10} more banned-term hits")
+    return failures
+
+
+def validate_foundation(content):
+    """Verify pricing tier mentions match foundation/pricing/pricing-packaging.yml.
+
+    v0 scope: any $X/mo, $X/year, $X/yr mention in content must appear verbatim in
+    the foundation pricing file. Catches accidental price drift in published pages.
+    """
+    failures = []
+    pricing_path = os.path.join(REPO, "foundation/pricing/pricing-packaging.yml")
+    if not os.path.exists(pricing_path):
+        return failures
+
+    with open(pricing_path) as f:
+        pricing_text = f.read()
+
+    price_pattern = r'\$[\d,]+(?:\.\d+)?[KkMm]?/(?:mo|month|year|yr|annum)'
+    foundation_prices = {p.lower() for p in re.findall(price_pattern, pricing_text)}
+    text = _strip_html(content)
+    content_prices = set(re.findall(price_pattern, text))
+
+    drifted = sorted(p for p in content_prices if p.lower() not in foundation_prices)
+    if drifted:
+        failures.append(
+            f"FOUNDATION: pricing mention(s) not in foundation/pricing/pricing-packaging.yml: {drifted}. "
+            f"Either update foundation first, or correct the page to match canonical pricing."
+        )
+    return failures
+
+
+def validate_file(filepath, strict=False, voice_rules=None):
     """Run all validation checks on a single file. Returns (passes, warnings, failures)."""
     rel = os.path.relpath(filepath, REPO)
     is_homepage = rel == HOMEPAGE_FILE
@@ -125,6 +245,22 @@ def validate_file(filepath, strict=False):
     else:
         passes.append("NAV STRUCTURE: OK")
 
+    # 11. Voice lint (foundation/brand/voice.yml + anti-ai-writing-style.md)
+    if voice_rules is None:
+        voice_rules = load_voice_rules()
+    voice_failures = validate_voice(content, voice_rules)
+    if voice_failures:
+        failures.extend(voice_failures)
+    else:
+        passes.append("VOICE LINT: OK")
+
+    # 12. Foundation check (pricing facts match foundation/pricing/pricing-packaging.yml)
+    foundation_failures = validate_foundation(content)
+    if foundation_failures:
+        failures.extend(foundation_failures)
+    else:
+        passes.append("FOUNDATION CHECK: OK")
+
     return passes, warnings, failures
 
 
@@ -137,6 +273,8 @@ def main():
     else:
         files = [os.path.join(REPO, f) for f in DEFAULT_FILES]
 
+    voice_rules = load_voice_rules()
+
     total_pass = 0
     total_warn = 0
     total_fail = 0
@@ -144,6 +282,8 @@ def main():
     print("=" * 60)
     print("PRE-DEPLOY VALIDATION — getpacerai.com")
     print("=" * 60)
+    print(f"Voice rules loaded: {len(voice_rules['forbidden_words'])} banned words, "
+          f"{len(voice_rules['forbidden_phrases'])} banned phrases")
 
     for filepath in files:
         if not os.path.exists(filepath):
@@ -151,7 +291,7 @@ def main():
             continue
 
         rel = os.path.relpath(filepath, REPO)
-        passes, warnings, failures = validate_file(filepath, strict)
+        passes, warnings, failures = validate_file(filepath, strict, voice_rules)
 
         status = "FAIL" if failures else ("WARN" if warnings else "PASS")
         icon = {"PASS": "✅", "WARN": "⚠️ ", "FAIL": "❌"}[status]

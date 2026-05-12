@@ -17,3 +17,5 @@ paths:
 5. **SEO metadata required.** Every page needs: title tag (<60 chars), meta description (<155 chars), H1 matching the primary keyword, structured data (JSON-LD) where applicable.
 
 6. **Test locally before publish.** Use `npm run dev` or `npm run preview` to verify rendering. Visual check is the last line of defense.
+
+7. **Pre-publish hook is enforced.** `.claude/hooks/pre-publish-check.sh` runs `scripts/validate.py --strict` automatically before any `python3 scripts/deploy.py` Bash invocation (except `--dry-run`). Voice lint (rule 3) and foundation pricing check (rule 2) are now deterministic — bypassing them requires editing foundation/ or fixing the page. Don't disable the hook to ship faster; either fix the content or update foundation, then re-run.
