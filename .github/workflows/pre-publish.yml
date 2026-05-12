@@ -1,0 +1,62 @@
+name: Pre-Publish Validation
+
+# Cloud-side counterpart to .claude/hooks/pre-publish-check.sh (W1.1).
+# Runs scripts/validate.py --strict on every PR that touches publishable
+# artifacts, so voice / foundation / HTML regressions are caught in CI even
+# when the local PreToolUse hook is bypassed (e.g., direct REST API push,
+# external contributor, fresh laptop without the hook installed).
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'src/**'
+      - 'foundation/**'
+      - 'scripts/validate.py'
+      - 'scripts/deploy.py'
+      - '.github/workflows/pre-publish.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'foundation/**'
+      - 'scripts/validate.py'
+
+# Cancel superseded runs on the same ref — saves CI minutes on rapid pushes.
+concurrency:
+  group: pre-publish-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate.py --strict
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository (with foundation submodule)
+        uses: actions/checkout@v4
+        with:
+          # foundation/ is a git submodule; without it the voice + pricing
+          # rule files are missing and the validator silently no-ops those
+          # checks. recursive is cheap and future-proofs nested submodules.
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Confirm foundation files are present
+        run: |
+          test -f foundation/brand/voice.yml \
+            || (echo "::error::foundation/brand/voice.yml missing — submodule checkout failed" && exit 1)
+          test -f foundation/brand/anti-ai-writing-style.md \
+            || (echo "::error::foundation/brand/anti-ai-writing-style.md missing — submodule checkout failed" && exit 1)
+          test -f foundation/pricing/pricing-packaging.yml \
+            || (echo "::error::foundation/pricing/pricing-packaging.yml missing — submodule checkout failed" && exit 1)
+
+      - name: Run pre-publish validation (strict)
+        run: python3 scripts/validate.py --strict
