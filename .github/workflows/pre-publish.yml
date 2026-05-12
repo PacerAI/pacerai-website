@@ -35,13 +35,27 @@ jobs:
       contents: read
 
     steps:
+      - name: Preflight — confirm FOUNDATION_REPO_TOKEN is configured
+        env:
+          FOUNDATION_REPO_TOKEN: ${{ secrets.FOUNDATION_REPO_TOKEN }}
+        run: |
+          if [ -z "$FOUNDATION_REPO_TOKEN" ]; then
+            echo "::error::Missing repo secret FOUNDATION_REPO_TOKEN."
+            echo "::error::foundation/ is a private submodule (PacerAI/pacerai-foundation); the default GITHUB_TOKEN cannot clone it."
+            echo "::error::Create a fine-grained PAT with contents:read on PacerAI/pacerai-website AND PacerAI/pacerai-foundation, then add it as the repo secret FOUNDATION_REPO_TOKEN."
+            exit 1
+          fi
+
       - name: Checkout repository (with foundation submodule)
         uses: actions/checkout@v4
         with:
-          # foundation/ is a git submodule; without it the voice + pricing
-          # rule files are missing and the validator silently no-ops those
-          # checks. recursive is cheap and future-proofs nested submodules.
+          # foundation/ is a private git submodule; without it the voice +
+          # pricing rule files are missing and the validator silently no-ops
+          # those checks. The default GITHUB_TOKEN can't reach a separate
+          # private repo, so we pass a PAT with cross-repo read access.
+          # recursive is cheap and future-proofs nested submodules.
           submodules: recursive
+          token: ${{ secrets.FOUNDATION_REPO_TOKEN }}
           fetch-depth: 1
 
       - name: Set up Python
