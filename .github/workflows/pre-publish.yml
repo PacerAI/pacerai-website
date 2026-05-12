@@ -1,0 +1,133 @@
+name: Pre-Publish Validation
+
+# Cloud-side counterpart to .claude/hooks/pre-publish-check.sh (W1.1).
+# Runs scripts/validate.py --strict on every PR that touches publishable
+# artifacts, so voice / foundation / HTML regressions are caught in CI even
+# when the local PreToolUse hook is bypassed (e.g., direct REST API push,
+# external contributor, fresh laptop without the hook installed).
+#
+# Scoping (clean-as-you-go):
+#   - PR or push changes ONLY src/** files → validate just those files.
+#   - PR or push changes scripts/validate.py → validate ALL default files
+#     (validator change should re-baseline everything; forces legacy
+#     cleanup before validator edits ship).
+#   - Otherwise → skip. Legacy violations on unrelated pages don't block
+#     unrelated PRs.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'src/**'
+      - 'scripts/validate.py'
+      - 'scripts/deploy.py'
+      - '.github/workflows/pre-publish.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'scripts/validate.py'
+
+concurrency:
+  group: pre-publish-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate.py --strict
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Preflight — confirm FOUNDATION_REPO_TOKEN is configured
+        env:
+          FOUNDATION_REPO_TOKEN: ${{ secrets.FOUNDATION_REPO_TOKEN }}
+        run: |
+          if [ -z "$FOUNDATION_REPO_TOKEN" ]; then
+            echo "::error::Missing repo secret FOUNDATION_REPO_TOKEN."
+            echo "::error::foundation/ is a private submodule (PacerAI/pacerai-foundation); the default GITHUB_TOKEN cannot clone it."
+            echo "::error::Create a fine-grained PAT with contents:read on PacerAI/pacerai-website AND PacerAI/pacerai-foundation, then add it as the repo secret FOUNDATION_REPO_TOKEN."
+            exit 1
+          fi
+
+      - name: Checkout repository (with foundation submodule)
+        uses: actions/checkout@v4
+        with:
+          # foundation/ is a private git submodule; without it the voice +
+          # pricing rule files are missing and the validator silently no-ops
+          # those checks. The default GITHUB_TOKEN can't reach a separate
+          # private repo, so we pass a PAT with cross-repo read access.
+          submodules: recursive
+          token: ${{ secrets.FOUNDATION_REPO_TOKEN }}
+          # fetch-depth: 0 — need history to diff against base ref for scoping.
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Confirm foundation files are present
+        run: |
+          test -f foundation/brand/voice.yml \
+            || (echo "::error::foundation/brand/voice.yml missing — submodule checkout failed" && exit 1)
+          test -f foundation/brand/anti-ai-writing-style.md \
+            || (echo "::error::foundation/brand/anti-ai-writing-style.md missing — submodule checkout failed" && exit 1)
+          test -f foundation/pricing/pricing-packaging.yml \
+            || (echo "::error::foundation/pricing/pricing-packaging.yml missing — submodule checkout failed" && exit 1)
+
+      - name: Determine validation scope
+        id: scope
+        run: |
+          set -u
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_REF="${{ github.event.pull_request.base.ref }}"
+            git fetch origin "$BASE_REF" --depth=1
+            BASE="origin/$BASE_REF"
+          else
+            BASE="${{ github.event.before }}"
+            if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+              echo "mode=skip" >> "$GITHUB_OUTPUT"
+              echo "No diff base (initial push) — skipping validation."
+              exit 0
+            fi
+          fi
+
+          rules_changed=$(git diff --name-only --diff-filter=AMR "$BASE...HEAD" -- 'scripts/validate.py' || true)
+          src_changed=$(git diff --name-only --diff-filter=AMR "$BASE...HEAD" -- 'src/' || true)
+
+          if [ -n "$rules_changed" ]; then
+            echo "mode=full" >> "$GITHUB_OUTPUT"
+            echo "scripts/validate.py changed — running FULL validation against all default files."
+          elif [ -n "$src_changed" ]; then
+            existing=""
+            while IFS= read -r f; do
+              [ -n "$f" ] && [ -f "$f" ] && existing+="$f "
+            done <<< "$src_changed"
+            existing=$(echo "$existing" | xargs)
+            if [ -z "$existing" ]; then
+              echo "mode=skip" >> "$GITHUB_OUTPUT"
+              echo "Changed src files are all deletes/renames-away — nothing to validate."
+            else
+              echo "mode=scoped" >> "$GITHUB_OUTPUT"
+              echo "files=$existing" >> "$GITHUB_OUTPUT"
+              echo "Validating changed src files:"
+              printf '  %s\n' $existing
+            fi
+          else
+            echo "mode=skip" >> "$GITHUB_OUTPUT"
+            echo "No src or validator changes — skipping validation."
+          fi
+
+      - name: Run pre-publish validation (full)
+        if: steps.scope.outputs.mode == 'full'
+        run: python3 scripts/validate.py --strict
+
+      - name: Run pre-publish validation (scoped)
+        if: steps.scope.outputs.mode == 'scoped'
+        run: python3 scripts/validate.py --strict ${{ steps.scope.outputs.files }}
+
+      - name: Validation skipped
+        if: steps.scope.outputs.mode == 'skip'
+        run: echo "No publishable content or validator changes in this diff — nothing to validate."
