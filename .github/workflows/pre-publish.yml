@@ -5,13 +5,20 @@ name: Pre-Publish Validation
 # artifacts, so voice / foundation / HTML regressions are caught in CI even
 # when the local PreToolUse hook is bypassed (e.g., direct REST API push,
 # external contributor, fresh laptop without the hook installed).
+#
+# Scoping (clean-as-you-go):
+#   - PR or push changes ONLY src/** files → validate just those files.
+#   - PR or push changes scripts/validate.py → validate ALL default files
+#     (validator change should re-baseline everything; forces legacy
+#     cleanup before validator edits ship).
+#   - Otherwise → skip. Legacy violations on unrelated pages don't block
+#     unrelated PRs.
 
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - 'src/**'
-      - 'foundation/**'
       - 'scripts/validate.py'
       - 'scripts/deploy.py'
       - '.github/workflows/pre-publish.yml'
@@ -19,10 +26,8 @@ on:
     branches: [main]
     paths:
       - 'src/**'
-      - 'foundation/**'
       - 'scripts/validate.py'
 
-# Cancel superseded runs on the same ref — saves CI minutes on rapid pushes.
 concurrency:
   group: pre-publish-${{ github.ref }}
   cancel-in-progress: true
@@ -53,10 +58,10 @@ jobs:
           # pricing rule files are missing and the validator silently no-ops
           # those checks. The default GITHUB_TOKEN can't reach a separate
           # private repo, so we pass a PAT with cross-repo read access.
-          # recursive is cheap and future-proofs nested submodules.
           submodules: recursive
           token: ${{ secrets.FOUNDATION_REPO_TOKEN }}
-          fetch-depth: 1
+          # fetch-depth: 0 — need history to diff against base ref for scoping.
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -72,5 +77,57 @@ jobs:
           test -f foundation/pricing/pricing-packaging.yml \
             || (echo "::error::foundation/pricing/pricing-packaging.yml missing — submodule checkout failed" && exit 1)
 
-      - name: Run pre-publish validation (strict)
+      - name: Determine validation scope
+        id: scope
+        run: |
+          set -u
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_REF="${{ github.event.pull_request.base.ref }}"
+            git fetch origin "$BASE_REF" --depth=1
+            BASE="origin/$BASE_REF"
+          else
+            BASE="${{ github.event.before }}"
+            if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+              echo "mode=skip" >> "$GITHUB_OUTPUT"
+              echo "No diff base (initial push) — skipping validation."
+              exit 0
+            fi
+          fi
+
+          rules_changed=$(git diff --name-only --diff-filter=AMR "$BASE...HEAD" -- 'scripts/validate.py' || true)
+          src_changed=$(git diff --name-only --diff-filter=AMR "$BASE...HEAD" -- 'src/' || true)
+
+          if [ -n "$rules_changed" ]; then
+            echo "mode=full" >> "$GITHUB_OUTPUT"
+            echo "scripts/validate.py changed — running FULL validation against all default files."
+          elif [ -n "$src_changed" ]; then
+            existing=""
+            while IFS= read -r f; do
+              [ -n "$f" ] && [ -f "$f" ] && existing+="$f "
+            done <<< "$src_changed"
+            existing=$(echo "$existing" | xargs)
+            if [ -z "$existing" ]; then
+              echo "mode=skip" >> "$GITHUB_OUTPUT"
+              echo "Changed src files are all deletes/renames-away — nothing to validate."
+            else
+              echo "mode=scoped" >> "$GITHUB_OUTPUT"
+              echo "files=$existing" >> "$GITHUB_OUTPUT"
+              echo "Validating changed src files:"
+              printf '  %s\n' $existing
+            fi
+          else
+            echo "mode=skip" >> "$GITHUB_OUTPUT"
+            echo "No src or validator changes — skipping validation."
+          fi
+
+      - name: Run pre-publish validation (full)
+        if: steps.scope.outputs.mode == 'full'
         run: python3 scripts/validate.py --strict
+
+      - name: Run pre-publish validation (scoped)
+        if: steps.scope.outputs.mode == 'scoped'
+        run: python3 scripts/validate.py --strict ${{ steps.scope.outputs.files }}
+
+      - name: Validation skipped
+        if: steps.scope.outputs.mode == 'skip'
+        run: echo "No publishable content or validator changes in this diff — nothing to validate."
