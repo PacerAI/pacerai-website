@@ -1,3 +1,54 @@
+<!-- OS-pointer block (managed by pacerai-os spec #2); domain content preserved verbatim below -->
+
+# AGENTS.md — pacerai-website
+
+This repo is operated under the Pacer AI orchestration layer (`pacerai-os`).
+Any agent opening a session here reads this file first.
+
+## Source of truth
+
+The spec-or-ad-hoc gate and the spec lifecycle are owned by `pacerai-os`. Do not
+re-implement them here.
+
+- Gate: [`pacerai-os/POLICY.md`](../pacerai-os/POLICY.md)
+- Spec standard (SPIDRDD): [`pacerai-os/SPEC-STANDARD.md`](../pacerai-os/SPEC-STANDARD.md)
+- Runbook (how the OS runs): [`pacerai-os/RUNBOOK.md`](../pacerai-os/RUNBOOK.md)
+- Contracts (cross-repo interfaces, Archie-stewarded): [`pacerai-os/contracts/`](../pacerai-os/contracts/)
+
+## Operator role
+
+This repo's operator is **repo-operator** — a role, not a named agent.
+Whichever Claude session picks up a dispatch in this repo *is* the operator,
+acting under this repo's configuration:
+
+- Operator config: [`.claude/operator.md`](.claude/operator.md)
+- This repo's cadence (static — who runs, when, what they report): [`CADENCE.md`](CADENCE.md)
+- This repo's status (dynamic — current health, goal progress): [`STATUS.md`](STATUS.md)
+
+## Handoff direction (the contract that keeps the OS thin)
+
+- **Ike (Orchestrator) hands work in.** Ike never edits files inside this repo.
+- **The operator writes only inside this repo.** Cross-repo work requires a new
+  dispatch from Ike. If implementation reveals a contract change is needed,
+  stop and notify Ike — the spec loops back to Design.
+- **The OS reads `STATUS.md`.** Status is how this repo reports up; Ike never
+  writes status on the repo's behalf.
+
+## Ad hoc edits
+
+Local-only edits with no cross-repo blast radius are allowed without a spec,
+per `pacerai-os/POLICY.md`. Every ad hoc edit is logged in this repo's
+[`AD-HOC-LOG.md`](AD-HOC-LOG.md). Three ad hoc edits to the same file in 7 days
+trigger escalation to a spec.
+
+## What to read next
+
+1. [`pacerai-os/POLICY.md`](../pacerai-os/POLICY.md) — run the gate.
+2. [`CADENCE.md`](CADENCE.md) — what this repo runs and on what schedule.
+3. [`STATUS.md`](STATUS.md) — what state this repo is in right now.
+4. The dispatched spec, if a dispatch is in flight.
+
+---
 # AGENTS.md — pacerai-website
 
 Instructions for Claude Code operating in this repository.

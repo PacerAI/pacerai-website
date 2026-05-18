@@ -38,5 +38,12 @@
         ]
       }
     ]
+  },
+  "operator": {
+    "role": "repo-operator",
+    "config": ".claude/operator.md",
+    "commit_scope": "pacerai-website-only",
+    "status_file": "STATUS.md",
+    "cadence_file": "CADENCE.md"
   }
 }
