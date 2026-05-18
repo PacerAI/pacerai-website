@@ -138,3 +138,8 @@ The skill includes the full page registry, deploy workflows (single, batch, new 
 - **Accent:** Teal (#27899A), Teal Light (#70C49C)
 - **Aesthetic:** Minimal, financial-professional. No playful UI elements.
 - **CTA language:** "Request a Demo", "Talk to a RevOps Expert" — never "Get Started Free"
+
+
+---
+
+*PacerAI-OS started May 18th 2026.*
