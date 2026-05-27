@@ -46,7 +46,7 @@ inputs:
 outputs:
   - src/
   - WordPress REST API @ getpacerai.com
-last_reviewed: 2026-05-18
+last_reviewed: 2026-05-27
 ---
 
 # Notes
