@@ -1,10 +1,11 @@
 # CLAUDE.md
 
-@foundation/pricing/product-pricing-funnel.md
 @foundation/pricing/product-pricing-portfolio.md
-@foundation/pricing/product-pricing-rationale.md
-@foundation/pricing/product-pricing-customer-maturity-mapping.md
 @foundation/pricing/product-pricing-tiers.md
+
+<!-- pacerai-foundation/pricing/product-pricing-funnel.md intentionally NOT @-imported; reference on demand. Per spec #34 / agent-repo-foundation-wiring.md pricing matrix. -->
+<!-- pacerai-foundation/pricing/product-pricing-rationale.md intentionally NOT @-imported; reference on demand. Per spec #34 / agent-repo-foundation-wiring.md pricing matrix. -->
+<!-- pacerai-foundation/pricing/product-pricing-customer-maturity-mapping.md intentionally NOT @-imported; reference on demand. Per spec #34 / agent-repo-foundation-wiring.md pricing matrix. -->
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
