@@ -4,6 +4,7 @@
 @foundation/pricing/product-pricing-portfolio.md
 @foundation/pricing/product-pricing-rationale.md
 @foundation/pricing/product-pricing-customer-maturity-mapping.md
+@foundation/pricing/product-pricing-tiers.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
