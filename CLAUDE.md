@@ -45,12 +45,14 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | **About** | 374 | `about` | 366 | `src/team/about.html` |
 | **Contact** | 375 | `contact` | 366 | `src/team/contact.html` |
 | **Build vs Hire Blog** | 491 | `build-customer-data-cube-in-house-or-hire` | 230 | `src/blog/posts/491-build.html` |
+| **cRPO Blog** | 865 | `what-is-current-performance-obligation` | 230 | `src/blog/posts/crpo-build.html` |
 | Pricing | 111 | `pricing` | — | *(legacy — not managed by this repo)* |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
 **Live URLs:**
 - https://getpacerai.com/
 - https://getpacerai.com/blog/
+- https://getpacerai.com/blog/what-is-current-performance-obligation/
 - https://getpacerai.com/platform/overview/
 - https://getpacerai.com/solutions/arr-snowball-board-reporting/
 - https://getpacerai.com/solutions/customer-data-cube/

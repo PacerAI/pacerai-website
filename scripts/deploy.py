@@ -36,6 +36,7 @@ PAGE_REGISTRY = {
     366: "src/team/team-page.html",
     374: "src/team/about.html",
     375: "src/team/contact.html",
+    865: "src/blog/posts/crpo-build.html",
 }
 
 PAGE_NAMES = {
@@ -43,6 +44,7 @@ PAGE_NAMES = {
     372: "ARR Snowball", 373: "Customer Data Cube", 554: "Transaction Readiness",
     651: "RevOps Transformation", 650: "GTM Transformation", 652: "FP&A Transformation",
     366: "Team Page", 374: "About", 375: "Contact",
+    865: "cRPO Blog",
 }
 
 
