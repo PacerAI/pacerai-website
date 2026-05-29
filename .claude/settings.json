@@ -1,4 +1,5 @@
 {
+  "enabledMcpjsonServers": ["wordpress-site"],
   "permissions": {
     "allow": [
       "Bash(npm run build*)",
