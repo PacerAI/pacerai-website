@@ -1,0 +1,413 @@
+{
+  "id": 865,
+  "date": "2026-05-29T10:18:24",
+  "date_gmt": "2026-05-29T16:18:24",
+  "guid": {
+    "rendered": "https://getpacerai.com/?page_id=865",
+    "raw": "https://getpacerai.com/?page_id=865"
+  },
+  "modified": "2026-05-29T10:18:25",
+  "modified_gmt": "2026-05-29T16:18:25",
+  "password": "",
+  "slug": "what-is-current-performance-obligation",
+  "status": "publish",
+  "type": "page",
+  "link": "https://getpacerai.com/blog/what-is-current-performance-obligation/",
+  "title": {
+    "raw": "What is cRPO? The Operator's Guide to Current Remaining Performance Obligations",
+    "rendered": "What is cRPO? The Operator&#8217;s Guide to Current Remaining Performance Obligations"
+  },
+  "content": {
+    "raw": "",
+    "rendered": "",
+    "protected": false,
+    "block_version": 0
+  },
+  "excerpt": {
+    "raw": "",
+    "rendered": "",
+    "protected": false
+  },
+  "author": 235927395,
+  "featured_media": 0,
+  "parent": 230,
+  "menu_order": 0,
+  "comment_status": "closed",
+  "ping_status": "closed",
+  "template": "",
+  "meta": {
+    "_crdt_document": "{\"document\":\"AAAM2vKIpgoAyLvKowEECYYBtgHmAlBEAgAXKAGoASECJwIoBCcAKAAnAAQAqAChACj2AtACc3RhdGV2ZXJzaW9uZG9jdW1lbnRzbHVnc3RhdGV2ZXJzaW9uZG9jdW1lbnRkYXRlZG9jdW1lbnRzdGF0dXNkb2N1bWVudHRpdGxlZG9jdW1lbnRjb250ZW50ZG9jdW1lbnRleGNlcnB0ZG9jdW1lbnRhdXRob3Jkb2N1bWVudGZlYXR1cmVkX21lZGlhZG9jdW1lbnRjb21tZW50X3N0YXR1c2RvY3VtZW50cGluZ19zdGF0dXNkb2N1bWVudHRlbXBsYXRlZG9jdW1lbnRtZXRhZm9vdG5vdGVzZG9jdW1lbnRibG9ja3NXaGF0IGlzIGNSUE8/IFRoZSBPcGVyYXRvcidzIEd1aWRlIHRvIEN1cnJlbnQgUmVtYWluaW5nIFBlcmZvcm1hbmNlIE9ibGlnYXRpb25zc3RhdGVzYXZlZEF0c3RhdGVzYXZlZEJ5BQcIBAUHCAQIBggFCAcIBwgGCA4IDggLSAEECQgGjwEFBwUHCQENAAABAAAAAQRCAQEABAEjQQ0CBAB9AXcNd2hhdC1pcy1jcnBvLXcMd2hhdC1pcy1jcnBvdwt3aGF0LWlzLWNycHcKd2hhdC1pcy1jcncJd2hhdC1pcy1jdwp3aGF0LWlzLWN1dwt3aGF0LWlzLWN1cncMd2hhdC1pcy1jdXJydw13aGF0LWlzLWN1cnJldw53aGF0LWlzLWN1cnJlbncPd2hhdC1pcy1jdXJyZW50dxB3aGF0LWlzLWN1cnJlbnQtdxF3aGF0LWlzLWN1cnJlbnQtcHcSd2hhdC1pcy1jdXJyZW50LXBldxN3aGF0LWlzLWN1cnJlbnQtcGVydxR3aGF0LWlzLWN1cnJlbnQtcGVyZncVd2hhdC1pcy1jdXJyZW50LXBlcmZvdxZ3aGF0LWlzLWN1cnJlbnQtcGVyZm9ydxd3aGF0LWlzLWN1cnJlbnQtcGVyZm9ybXcYd2hhdC1pcy1jdXJyZW50LXBlcmZvcm1hdxl3aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFudxp3aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFuY3cbd2hhdC1pcy1jdXJyZW50LXBlcmZvcm1hbmNldxx3aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFuY2Utdx13aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFuY2Utb3ced2hhdC1pcy1jdXJyZW50LXBlcmZvcm1hbmNlLW9idx93aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFuY2Utb2JsdyB3aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFuY2Utb2JsaXchd2hhdC1pcy1jdXJyZW50LXBlcmZvcm1hbmNlLW9ibGljdyB3aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFuY2Utb2JsaXchd2hhdC1pcy1jdXJyZW50LXBlcmZvcm1hbmNlLW9ibGlndyJ3aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFuY2Utb2JsaWdhdyN3aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFuY2Utb2JsaWdhdHckd2hhdC1pcy1jdXJyZW50LXBlcmZvcm1hbmNlLW9ibGlnYXRpdyV3aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFuY2Utb2JsaWdhdGlvdyZ3aGF0LWlzLWN1cnJlbnQtcGVyZm9ybWFuY2Utb2JsaWdhdGlvbncHcHVibGlzaBMAfaPd/+ABfQB3BmNsb3NlZHcGY2xvc2VkdwB3AHcTMjAyNi0wNS0yOVQxMDoxMzoxMHtCeedILSIQAH2Iu8qjAQKauYSTBQEBIsid5VECAAJbAA==\",\"updateId\":846188760}",
+    "footnotes": ""
+  },
+  "permalink_template": "https://getpacerai.com/blog/%pagename%/",
+  "generated_slug": "what-is-crpo-the-operators-guide-to-current-remaining-performance-obligations",
+  "class_list": [
+    "post-865",
+    "page",
+    "type-page",
+    "status-publish",
+    "hentry"
+  ],
+  "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v27.7 - https://yoast.com/product/yoast-seo-wordpress/ -->\n<title>What is cRPO? The Operator&#039;s Guide to Current Remaining Performance Obligations - Get Pacer AI</title>\n<!-- Admin only notice: this page does not show a meta description because it does not have one, either write it for this page specifically or go into the [Yoast SEO - Settings] menu and set up a template. -->\n<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" />\n<link rel=\"canonical\" href=\"https://getpacerai.com/blog/what-is-current-performance-obligation/\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:locale\" content=\"en_US\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:type\" content=\"article\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:title\" content=\"What is cRPO? The Operator&#039;s Guide to Current Remaining Performance Obligations - Get Pacer AI\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:url\" content=\"https://getpacerai.com/blog/what-is-current-performance-obligation/\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:site_name\" content=\"Get Pacer AI\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"article:modified_time\" content=\"2026-05-29T16:18:25+00:00\" class=\"yoast-seo-meta-tag\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" class=\"yoast-seo-meta-tag\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https:\\/\\/getpacerai.com\\/blog\\/what-is-current-performance-obligation\\/\",\"url\":\"https:\\/\\/getpacerai.com\\/blog\\/what-is-current-performance-obligation\\/\",\"name\":\"What is cRPO? The Operator's Guide to Current Remaining Performance Obligations - Get Pacer AI\",\"isPartOf\":{\"@id\":\"https:\\/\\/getpacerai.com\\/#website\"},\"datePublished\":\"2026-05-29T16:18:24+00:00\",\"dateModified\":\"2026-05-29T16:18:25+00:00\",\"breadcrumb\":{\"@id\":\"https:\\/\\/getpacerai.com\\/blog\\/what-is-current-performance-obligation\\/#breadcrumb\"},\"inLanguage\":\"en-US\",\"potentialAction\":[{\"@type\":\"ReadAction\",\"target\":[\"https:\\/\\/getpacerai.com\\/blog\\/what-is-current-performance-obligation\\/\"]}]},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/getpacerai.com\\/blog\\/what-is-current-performance-obligation\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https:\\/\\/getpacerai.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Blog\",\"item\":\"https:\\/\\/getpacerai.com\\/blog\\/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"What is cRPO? The Operator&#8217;s Guide to Current Remaining Performance Obligations\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/getpacerai.com\\/#website\",\"url\":\"https:\\/\\/getpacerai.com\\/\",\"name\":\"Get Pacer AI\",\"description\":\"End-to-End GTM operations visibility\",\"publisher\":{\"@id\":\"https:\\/\\/getpacerai.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/getpacerai.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/getpacerai.com\\/#organization\",\"name\":\"Pacer AI\",\"url\":\"https:\\/\\/getpacerai.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https:\\/\\/getpacerai.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/i0.wp.com\\/getpacerai.com\\/wp-content\\/uploads\\/2025\\/11\\/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1\",\"contentUrl\":\"https:\\/\\/i0.wp.com\\/getpacerai.com\\/wp-content\\/uploads\\/2025\\/11\\/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1\",\"width\":512,\"height\":512,\"caption\":\"Pacer AI\"},\"image\":{\"@id\":\"https:\\/\\/getpacerai.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.linkedin.com\\/company\\/pacer-ai\",\"https:\\/\\/www.youtube.com\\/@PacerAI\"]}]}</script>\n<!-- / Yoast SEO plugin. -->",
+  "yoast_head_json": {
+    "title": "What is cRPO? The Operator's Guide to Current Remaining Performance Obligations - Get Pacer AI",
+    "robots": {
+      "index": "index",
+      "follow": "follow",
+      "max-snippet": "max-snippet:-1",
+      "max-image-preview": "max-image-preview:large",
+      "max-video-preview": "max-video-preview:-1"
+    },
+    "canonical": "https://getpacerai.com/blog/what-is-current-performance-obligation/",
+    "og_locale": "en_US",
+    "og_type": "article",
+    "og_title": "What is cRPO? The Operator's Guide to Current Remaining Performance Obligations - Get Pacer AI",
+    "og_url": "https://getpacerai.com/blog/what-is-current-performance-obligation/",
+    "og_site_name": "Get Pacer AI",
+    "article_modified_time": "2026-05-29T16:18:25+00:00",
+    "twitter_card": "summary_large_image",
+    "schema": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://getpacerai.com/blog/what-is-current-performance-obligation/",
+          "url": "https://getpacerai.com/blog/what-is-current-performance-obligation/",
+          "name": "What is cRPO? The Operator's Guide to Current Remaining Performance Obligations - Get Pacer AI",
+          "isPartOf": {
+            "@id": "https://getpacerai.com/#website"
+          },
+          "datePublished": "2026-05-29T16:18:24+00:00",
+          "dateModified": "2026-05-29T16:18:25+00:00",
+          "breadcrumb": {
+            "@id": "https://getpacerai.com/blog/what-is-current-performance-obligation/#breadcrumb"
+          },
+          "inLanguage": "en-US",
+          "potentialAction": [
+            {
+              "@type": "ReadAction",
+              "target": [
+                "https://getpacerai.com/blog/what-is-current-performance-obligation/"
+              ]
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://getpacerai.com/blog/what-is-current-performance-obligation/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://getpacerai.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://getpacerai.com/blog/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "What is cRPO? The Operator&#8217;s Guide to Current Remaining Performance Obligations"
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://getpacerai.com/#website",
+          "url": "https://getpacerai.com/",
+          "name": "Get Pacer AI",
+          "description": "End-to-End GTM operations visibility",
+          "publisher": {
+            "@id": "https://getpacerai.com/#organization"
+          },
+          "potentialAction": [
+            {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://getpacerai.com/?s={search_term_string}"
+              },
+              "query-input": {
+                "@type": "PropertyValueSpecification",
+                "valueRequired": true,
+                "valueName": "search_term_string"
+              }
+            }
+          ],
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://getpacerai.com/#organization",
+          "name": "Pacer AI",
+          "url": "https://getpacerai.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "inLanguage": "en-US",
+            "@id": "https://getpacerai.com/#/schema/logo/image/",
+            "url": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2025/11/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1",
+            "contentUrl": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2025/11/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1",
+            "width": 512,
+            "height": 512,
+            "caption": "Pacer AI"
+          },
+          "image": {
+            "@id": "https://getpacerai.com/#/schema/logo/image/"
+          },
+          "sameAs": [
+            "https://www.linkedin.com/company/pacer-ai",
+            "https://www.youtube.com/@PacerAI"
+          ]
+        }
+      ]
+    }
+  },
+  "jetpack_likes_enabled": true,
+  "jetpack_sharing_enabled": true,
+  "jetpack_shortlink": "https://wp.me/PgRFPe-dX",
+  "jetpack-related-posts": [
+    {
+      "id": 366,
+      "url": "https://getpacerai.com/team/",
+      "url_meta": {
+        "origin": 865,
+        "position": 0
+      },
+      "title": "Team \u2014 Pacer AI",
+      "author": "Will Sullivan",
+      "date": "March 10, 2026",
+      "format": false,
+      "excerpt": "Meet the Pacer AI team. Founded by Will Sullivan, ex-PwC PE transaction advisory. Building M&A-grade ARR intelligence for recurring revenue businesses.",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    },
+    {
+      "id": 374,
+      "url": "https://getpacerai.com/team/about/",
+      "url_meta": {
+        "origin": 865,
+        "position": 1
+      },
+      "title": "About",
+      "author": "Will Sullivan",
+      "date": "March 10, 2026",
+      "format": false,
+      "excerpt": "About Pacer AI \u2014 our mission, platform architecture, and the team building ARR intelligence for PE-backed SaaS companies.",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    },
+    {
+      "id": 441,
+      "url": "https://getpacerai.com/blog/why-llms-cant-build-your-arr-snowball-from-operational-data/",
+      "url_meta": {
+        "origin": 865,
+        "position": 2
+      },
+      "title": "Why LLMs Can&#8217;t Build Your ARR Snowball from Operational Data",
+      "author": "Will Sullivan",
+      "date": "March 10, 2026",
+      "format": false,
+      "excerpt": "Pacer\u00a0AI Overview \u25be Use Cases Solutions overview Team overview Solutions \u25be Transaction Solutions Customer Data CubeM&A grade accounts by product revenue ARR Snowball ReportingBoard-ready waterfall dashboards Transaction ReadinessQoR, QoE \u2014 diligence-ready in 4 quarters Transformation Solutions RevOps TransformationSegmentation to revenue motions GTM TransformationAgent-powered GTM chain FP&A TransformationAI model libraries for\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    },
+    {
+      "id": 372,
+      "url": "https://getpacerai.com/solutions/arr-snowball-board-reporting/",
+      "url_meta": {
+        "origin": 865,
+        "position": 3
+      },
+      "title": "ARR Snowball Board Reporting",
+      "author": "Will Sullivan",
+      "date": "March 10, 2026",
+      "format": false,
+      "excerpt": "Automated board-ready ARR waterfall dashboards showing new logo, expansion, contraction, and churn by product, vertical, and cohort. Replaces manual Excel reporting.",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "CRM",
+        "src": "data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%231B365D' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E",
+        "width": 350,
+        "height": 200
+      },
+      "classes": []
+    },
+    {
+      "id": 491,
+      "url": "https://getpacerai.com/blog/build-customer-data-cube-in-house-or-hire/",
+      "url_meta": {
+        "origin": 865,
+        "position": 4
+      },
+      "title": "Should I Build a Customer Data Cube In-House or Hire Someone?",
+      "author": "Will Sullivan",
+      "date": "April 3, 2026",
+      "format": false,
+      "excerpt": "Pacer\u00a0AI Overview \u25be Use Cases Solutions overview Team overview Solutions \u25be Transaction Solutions Customer Data CubeM&A grade accounts by product revenue ARR Snowball ReportingBoard-ready waterfall dashboards Transaction ReadinessQoR, QoE \u2014 diligence-ready in 4 quarters Transformation Solutions RevOps TransformationSegmentation to revenue motions GTM TransformationAgent-powered GTM chain FP&A TransformationAI model libraries for\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    },
+    {
+      "id": 376,
+      "url": "https://getpacerai.com/blog/prevent-churn-in-high-value-accounts-with-arr-snowball/",
+      "url_meta": {
+        "origin": 865,
+        "position": 5
+      },
+      "title": "Prevent Churn in High-Value Accounts with ARR Snowball",
+      "author": "Will Sullivan",
+      "date": "March 10, 2026",
+      "format": false,
+      "excerpt": "Pacer\u00a0AI Platform \u25be Overview Data Ingestion Fabric + Power BI AI Agents Excel + Copilot Security & Compliance Solutions \u25be Use Cases \ud83d\udccaARR Snowball Board ReportingBoard-ready waterfall models in minutes \ud83e\uddcaCustomer Data CubeUnified customer revenue analytics \ud83d\udcc1Virtual Data RoomInvestor-grade data room automation \ud83d\ude80Exit ReadinessM&A-grade revenue due diligence prep Industry \u2601\ufe0fB2B\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    }
+  ],
+  "_links": {
+    "self": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/865",
+        "targetHints": {
+          "allow": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ]
+        }
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages"
+      }
+    ],
+    "about": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/types/page"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://getpacerai.com/wp-json/wp/v2/users/235927395"
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://getpacerai.com/wp-json/wp/v2/comments?post=865"
+      }
+    ],
+    "version-history": [
+      {
+        "count": 1,
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/865/revisions"
+      }
+    ],
+    "predecessor-version": [
+      {
+        "id": 867,
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/865/revisions/867"
+      }
+    ],
+    "up": [
+      {
+        "embeddable": true,
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/230"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/media?parent=865"
+      }
+    ],
+    "wp:action-publish": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/865"
+      }
+    ],
+    "wp:action-unfiltered-html": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/865"
+      }
+    ],
+    "wp:action-assign-author": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/865"
+      }
+    ],
+    "curies": [
+      {
+        "name": "wp",
+        "href": "https://api.w.org/{rel}",
+        "templated": true
+      }
+    ]
+  }
+}
