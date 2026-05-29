@@ -11,12 +11,38 @@ import urllib.request
 import urllib.error
 import base64
 
-REPO = "/Users/willsullivan/Documents/GitHub/PacerAI/pacerai-website"
+REPO = "/Users/willsullivan/Documents/pacerai/pacerai-website"
 TEMPLATE_PATH = f"{REPO}/src/blog/post-template.html"
 OUTPUT_DIR = f"{REPO}/src/blog/posts"
 
 # Blog post metadata
 POSTS = [
+    {
+        "id": "crpo",
+        "title": "What is cRPO? The Operator's Guide to Current Remaining Performance Obligations",
+        "title_short": "cRPO vs ARR",
+        "category": "Diligence",
+        "date": "May 28, 2026",
+        "date_iso": "2026-05-28",
+        "faq": [
+            {
+                "q": "What is cRPO?",
+                "a": "cRPO (current Remaining Performance Obligations) is the 12-month forward-bookings figure on every public SaaS company's balance sheet. It is the dollar value of contracted revenue that will be recognized as revenue over the next 12 months. Required disclosure under FASB ASC 606 since 2018."
+            },
+            {
+                "q": "How is cRPO different from ARR?",
+                "a": "cRPO comes from the balance sheet — audited, GAAP, and required by ASC 606 — and covers exactly the next 12 months of contracted revenue. ARR is management-disclosed (non-GAAP), is an annualized run-rate at a point in time, and its definition varies by company. cRPO is what the auditor signed off on; ARR is what management told you."
+            },
+            {
+                "q": "Why does cRPO matter for SaaS diligence?",
+                "a": "cRPO is the leading indicator the trailing P&L cannot show. If cRPO grows faster than reported revenue, the forward book is compounding faster than recognition — bullish. If cRPO decelerates below revenue growth, the book is shrinking relative to recognition — bearish. It also survives auditor scrutiny in a way that management-defined ARR does not."
+            },
+            {
+                "q": "What is the cRPO-RPO spread?",
+                "a": "The cRPO-RPO spread is the gap between 12-month cRPO growth and total RPO growth. A widening spread (cRPO growing faster than total RPO) means contract durations are shortening — customers are signing 2-year deals where they used to sign 3-year. Workday's Q1 FY27 print showed a 460 bp spread, which CFO Zane Rowe confirmed reflected shorter renewal durations."
+            },
+        ],
+    },
     {
         "id": "board-quality-arr-snowballs",
         "title": "Board Quality ARR Snowballs: Understand Your ARR Growth Drivers Before Your Acquirers Do",
