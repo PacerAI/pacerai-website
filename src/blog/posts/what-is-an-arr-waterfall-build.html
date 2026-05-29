@@ -1,0 +1,1061 @@
+<!-- wp:html -->
+<style>
+/* Hide TT4 theme chrome */
+.wp-site-blocks > header,
+.wp-site-blocks > footer,
+header.wp-block-template-part,
+footer.wp-block-template-part,
+.wp-block-template-part:first-child { display: none !important; }
+
+/* Hide TT4 page title header */
+.entry-header,
+.wp-block-post-title,
+h1.wp-block-post-title,
+.wp-block-spacer,
+.page .entry-header,
+.page-header { display: none !important; }
+
+html, body, .wp-site-blocks {
+  background: #080E1C !important;
+  background-color: #080E1C !important;
+}
+
+#pacerai-post {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.wp-site-blocks,
+.wp-site-blocks > main,
+.wp-site-blocks > main > .wp-block-group,
+.wp-site-blocks .is-layout-constrained,
+.wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+.has-global-padding,
+.entry-content {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-top: 0 !important;
+}
+
+  :root {
+    --navy: #080E1C;
+    --navy-mid: #0F1929;
+    --navy-light: #162038;
+    --navy-border: #1E2D4A;
+    --brand: #1C3560;
+    --brand-blue: #2B7DC8;
+    --teal: #27899A;
+    --teal-light: #70C49C;
+    --teal-pale: #D6F0E8;
+    --cream: #F7F3EC;
+    --white: #FFFFFF;
+    --muted: #8A95A8;
+    --text-light: #CDD5E0;
+    --text-mid: #94A3B8;
+    --green: #2DB87A;
+    --red-subtle: #C94C4C;
+  }
+
+  #pacerai-post * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  #pacerai-post {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text-light);
+    overflow-x: hidden;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ─── NAV ─── */
+  #pacerai-post nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    height: 68px;
+    background: rgba(8,14,28,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(28,53,96,0.6);
+  }
+
+  #pacerai-post .nav-links {
+    display: flex; align-items: center; gap: 4px;
+    list-style: none;
+  }
+  #pacerai-post .nav-links > li { position: relative; }
+  #pacerai-post .nav-links > li > a {
+    display: flex; align-items: center; gap: 5px;
+    padding: 8px 14px;
+    font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em;
+    color: var(--text-mid);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  #pacerai-post .nav-links > li > a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  #pacerai-post .nav-links > li > a .chevron {
+    font-size: 10px; margin-top: 1px;
+    transition: transform 0.2s;
+  }
+  #pacerai-post .nav-links > li:hover > a .chevron { transform: rotate(180deg); }
+
+  /* Dropdown */
+  #pacerai-post .dropdown {
+    display: none;
+    position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 12px;
+    padding: 20px;
+    padding-top: 28px;
+    min-width: 520px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  }
+  #pacerai-post .dropdown::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: 0; right: 0;
+    height: 12px;
+  }
+  #pacerai-post .nav-links > li:hover .dropdown { display: block; }
+
+  #pacerai-post .dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  #pacerai-post .dropdown-col-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal);
+    padding-bottom: 10px; margin-bottom: 6px;
+    border-bottom: 1px solid var(--navy-border);
+  }
+  #pacerai-post .dropdown a {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 10px; border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  #pacerai-post .dropdown a:hover { background: rgba(255,255,255,0.04); }
+  #pacerai-post .dropdown .d-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: var(--navy-light);
+    border: 1px solid var(--navy-border);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  #pacerai-post .dropdown .d-text .d-title {
+    font-size: 13px; font-weight: 500; color: var(--white);
+    display: block; line-height: 1.3;
+  }
+  #pacerai-post .dropdown .d-text .d-desc {
+    font-size: 12px; color: var(--muted); line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  #pacerai-post .single-dropdown { min-width: 220px; }
+  #pacerai-post .single-dropdown a {
+    padding: 9px 12px; border-radius: 8px;
+    text-decoration: none; display: block;
+    font-size: 13px; font-weight: 500; color: var(--text-light);
+    transition: background 0.15s, color 0.15s;
+  }
+  #pacerai-post .single-dropdown a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+
+  /* Hamburger */
+  #pacerai-post .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 101;
+  }
+  #pacerai-post .mobile-menu-btn span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--text-light);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  #pacerai-post .nav-right {
+    display: flex; align-items: center; gap: 12px;
+  }
+  #pacerai-post .btn-ghost {
+    padding: 8px 18px; font-size: 13.5px; font-weight: 500;
+    color: var(--text-light); background: transparent;
+    border: 1px solid var(--navy-border); border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  #pacerai-post .btn-ghost:hover { color: var(--white); border-color: rgba(39,137,154,0.45); }
+  #pacerai-post .btn-teal {
+    padding: 9px 20px; font-size: 13.5px; font-weight: 600;
+    color: #fff; background: var(--teal);
+    border: none; border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s; letter-spacing: 0.02em;
+  }
+  #pacerai-post .btn-teal:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(39,137,154,0.35); }
+
+  /* ─── POST HERO ─── */
+  #pacerai-post .post-hero {
+    padding: 88px 48px 48px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  #pacerai-post .post-breadcrumb {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 24px;
+  }
+  #pacerai-post .post-breadcrumb a {
+    color: var(--teal); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .post-breadcrumb a:hover { color: var(--teal-light); }
+  #pacerai-post .post-breadcrumb .sep { color: var(--navy-border); }
+  #pacerai-post .post-category-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(39,137,154,0.10);
+    border: 1px solid rgba(39,137,154,0.22);
+    border-radius: 100px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 16px;
+  }
+  #pacerai-post .post-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4.5vw, 48px);
+    font-weight: 400; line-height: 1.15;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  #pacerai-post .post-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 14px; color: var(--muted);
+  }
+  #pacerai-post .post-meta .author { color: var(--text-light); font-weight: 500; }
+
+  /* ─── ARTICLE CONTENT ─── */
+  #pacerai-post .post-content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  #pacerai-post .post-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px; font-weight: 500;
+    color: var(--white);
+    margin-top: 48px; margin-bottom: 16px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  #pacerai-post .post-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500;
+    color: var(--white);
+    margin-top: 32px; margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  #pacerai-post .post-content p {
+    margin-bottom: 20px;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+  #pacerai-post .post-content a {
+    color: var(--teal);
+    text-decoration: underline;
+    text-decoration-color: rgba(39,137,154,0.3);
+    text-underline-offset: 3px;
+    transition: color 0.2s, text-decoration-color 0.2s;
+  }
+  #pacerai-post .post-content a:hover {
+    color: var(--teal-light);
+    text-decoration-color: var(--teal-light);
+  }
+  #pacerai-post .post-content strong { color: var(--white); font-weight: 600; }
+  #pacerai-post .post-content em { font-style: italic; }
+
+  #pacerai-post .post-content ul,
+  #pacerai-post .post-content ol {
+    margin-bottom: 20px;
+    padding-left: 24px;
+  }
+  #pacerai-post .post-content li {
+    margin-bottom: 8px;
+    line-height: 1.7;
+    color: var(--text-light);
+  }
+  #pacerai-post .post-content li::marker {
+    color: var(--teal);
+  }
+
+  #pacerai-post .post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0 32px;
+    font-size: 14px;
+    border: 1px solid var(--navy-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  #pacerai-post .post-content thead {
+    background: var(--navy-light);
+  }
+  #pacerai-post .post-content th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--white);
+    border-bottom: 2px solid var(--navy-border);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  #pacerai-post .post-content td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--navy-border);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  #pacerai-post .post-content tbody tr:hover {
+    background: rgba(255,255,255,0.02);
+  }
+  #pacerai-post .post-content tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  #pacerai-post .post-content hr,
+  #pacerai-post .post-content .wp-block-separator {
+    border: none;
+    border-top: 1px solid var(--navy-border);
+    margin: 40px 0;
+  }
+
+  #pacerai-post .post-content blockquote {
+    border-left: 3px solid var(--teal);
+    padding: 16px 24px;
+    margin: 24px 0;
+    background: rgba(39,137,154,0.05);
+    border-radius: 0 8px 8px 0;
+  }
+  #pacerai-post .post-content blockquote p {
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 0;
+  }
+
+  #pacerai-post .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 8px 0;
+  }
+  #pacerai-post .post-content figure {
+    margin: 32px 0;
+    text-align: center;
+  }
+  #pacerai-post .post-content figcaption {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  #pacerai-post .post-content .wp-block-table {
+    margin: 24px 0 32px;
+    overflow-x: auto;
+  }
+  #pacerai-post .post-content .wp-block-table table {
+    margin: 0;
+  }
+
+  /* ─── POST CTA ─── */
+  #pacerai-post .post-cta {
+    max-width: 760px;
+    margin: 0 auto 80px;
+    padding: 0 48px;
+  }
+  #pacerai-post .post-cta-inner {
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+  }
+  #pacerai-post .post-cta-inner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  #pacerai-post .post-cta-inner p {
+    font-size: 16px; color: var(--text-mid);
+    margin-bottom: 24px; max-width: 480px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ─── */
+  #pacerai-post footer {
+    border-top: 1px solid var(--navy-border);
+    padding: 60px 48px 32px;
+    background: var(--navy);
+  }
+  #pacerai-post .footer-top {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  #pacerai-post .footer-brand p {
+    font-size: 13.5px; color: var(--muted); line-height: 1.65;
+    margin-top: 14px; max-width: 300px;
+  }
+  #pacerai-post .footer-col-head {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--white); margin-bottom: 16px;
+  }
+  #pacerai-post .footer-col ul { list-style: none; }
+  #pacerai-post .footer-col li { margin-bottom: 10px; }
+  #pacerai-post .footer-col a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .footer-col a:hover { color: var(--teal-light); }
+  #pacerai-post .footer-bottom {
+    border-top: 1px solid var(--navy-border);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  #pacerai-post .footer-bottom .copy {
+    font-size: 12.5px; color: var(--muted);
+  }
+  #pacerai-post .footer-bottom .legal { display: flex; gap: 24px; }
+  #pacerai-post .footer-bottom .legal a {
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .footer-bottom .legal a:hover { color: var(--text-mid); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    #pacerai-post nav {
+      padding: 0 16px;
+      height: 56px;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: #080E1C;
+      overflow: visible;
+    }
+    #pacerai-post .nav-links {
+      display: none !important;
+      position: fixed;
+      top: 56px; left: 0; right: 0; bottom: 0;
+      background: #080E1C;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px 20px;
+      overflow-y: auto;
+      z-index: 200;
+      border-top: 1px solid var(--navy-border);
+      list-style: none;
+    }
+    #pacerai-post .nav-links.mobile-open { display: flex !important; }
+    #pacerai-post .nav-links > li { border-bottom: 1px solid var(--navy-border); }
+    #pacerai-post .nav-links > li > a {
+      padding: 16px 0; font-size: 16px; border-bottom: none;
+      display: flex; justify-content: space-between; color: #CDD5E0;
+    }
+    #pacerai-post .nav-links > li > a:hover { background: none; }
+    #pacerai-post .nav-links .dropdown {
+      position: static !important; transform: none !important;
+      min-width: 0 !important; background: transparent !important;
+      border: none !important; box-shadow: none !important;
+      padding: 0 0 12px 16px !important; border-radius: 0 !important;
+      padding-top: 0 !important;
+    }
+    #pacerai-post .nav-links .dropdown::before { display: none; }
+    #pacerai-post .nav-links > li:hover .dropdown { display: none !important; }
+    #pacerai-post .nav-links > li.mobile-expanded .dropdown { display: block !important; }
+    #pacerai-post .nav-links .dropdown a { padding: 10px 0; font-size: 14px; color: #94A3B8; }
+    #pacerai-post .nav-links .dropdown-grid { grid-template-columns: 1fr; }
+    #pacerai-post .nav-right .btn-ghost { display: none; }
+    #pacerai-post .nav-right .btn-teal { padding: 7px 14px; font-size: 12px; }
+    #pacerai-post .mobile-menu-btn { display: flex !important; }
+
+    #pacerai-post .post-hero {
+      padding: 72px 20px 24px;
+    }
+    #pacerai-post .post-hero h1 { font-size: 28px; }
+    #pacerai-post .post-content {
+      padding: 0 20px 60px;
+    }
+    #pacerai-post .post-content h2 { font-size: 24px; margin-top: 36px; }
+    #pacerai-post .post-content h3 { font-size: 19px; }
+    #pacerai-post .post-content table {
+      font-size: 12px;
+      display: block;
+      overflow-x: auto;
+    }
+    #pacerai-post .post-content th,
+    #pacerai-post .post-content td {
+      padding: 8px 10px;
+      min-width: 100px;
+    }
+    #pacerai-post .post-cta { padding: 0 20px; }
+    #pacerai-post .post-cta-inner { padding: 32px 20px; }
+    #pacerai-post .post-cta-inner h2 { font-size: 26px; }
+    #pacerai-post footer { padding: 48px 20px 32px; }
+    #pacerai-post .footer-top {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+    }
+    #pacerai-post .footer-brand { grid-column: 1 / -1; }
+    #pacerai-post .footer-bottom {
+      flex-direction: column; align-items: flex-start; gap: 12px;
+    }
+    #pacerai-post .footer-bottom .legal { flex-wrap: wrap; gap: 12px; }
+  }
+
+  @media (max-width: 1024px) and (min-width: 769px) {
+    #pacerai-post nav { padding: 0 24px; }
+    #pacerai-post .nav-links > li > a { padding: 8px 8px; font-size: 12px; }
+    #pacerai-post .post-hero { padding: 84px 32px 36px; }
+    #pacerai-post .post-content { padding: 0 32px 60px; }
+    #pacerai-post .post-cta { padding: 0 32px; }
+    #pacerai-post .footer-top {
+      grid-template-columns: 1fr 1fr 1fr; gap: 32px;
+    }
+    #pacerai-post .footer-brand { grid-column: 1 / -1; }
+    #pacerai-post footer { padding: 60px 24px 32px; }
+  }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "What Is an ARR Waterfall? Definition, Components, and How to Build One",
+      "datePublished": "2026-05-29",
+      "author": {
+        "@type": "Organization",
+        "name": "Pacer AI",
+        "url": "https://getpacerai.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Pacer AI",
+        "url": "https://getpacerai.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://getpacerai.com/wp-content/uploads/2025/04/PacerAI_Logo_Horizontal_Full-Color-scaled.webp"
+        }
+      },
+      "articleSection": "ARR Snowballs",
+      "mainEntityOfPage": {
+        "@type": "WebPage"
+      }
+    }
+    ,
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+            {
+                  "@type": "Question",
+                  "name": "What is an ARR Waterfall in simple terms?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "An ARR Waterfall is a chart that shows how your annual recurring revenue changed during a period by separating the additions (new customers, expansion) from the subtractions (downgrades, churn) so you can see exactly what drove the net change. It is also called an ARR bridge or ARR rollforward."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What is the difference between an ARR Waterfall and an ARR Snowball?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "An ARR Waterfall decomposes a single period's ARR change into its components (new, expansion, contraction, churn). An ARR Snowball compounds multiple periods' ending ARR forward to show trajectory over time. The Waterfall answers what happened this quarter; the Snowball answers where the business is heading."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Is an ARR Waterfall the same as an ARR Bridge?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. ARR Waterfall, ARR Bridge, ARR Rollforward, recurring revenue rollforward, and ARR walk all refer to the same single-period reconciliation of beginning ARR to ending ARR through component-level movements. The math is identical; the term varies by audience \u2014 SaaS finance teams say Waterfall, PE diligence teams say Bridge, auditors say Rollforward."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What components make up an ARR Waterfall?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A standards-grade ARR Waterfall has six components: Beginning ARR, New ARR (from new logos), Expansion ARR (from existing customers), Reactivation ARR (from returning churned customers), Contraction ARR (downgrades), and Churned ARR (cancellations), summing to Ending ARR. Some companies aggregate Reactivation into New ARR, leaving five."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "How do you calculate Net Revenue Retention from the ARR Waterfall?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "NRR equals (Beginning ARR plus Expansion ARR minus Contraction ARR minus Churned ARR) divided by Beginning ARR. New ARR is excluded because NRR measures the existing customer base only. Best-in-class public SaaS companies report NRR above 120%; PE benchmarks for mid-market SaaS typically target 105-115%."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What software builds an ARR Waterfall automatically?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Spreadsheet templates work for sub-$10M ARR companies. Above that, dedicated platforms generate the Waterfall directly from billing and CRM data. Pacer AI's Customer Data Cube on Microsoft Fabric is purpose-built for PE-backed SaaS, automating Waterfall, Snowball, and NRR reporting from a single source of truth."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "How often should you update the ARR Waterfall?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Monthly for operating reviews, RevOps cadence, and FP&A variance analysis; quarterly for board decks, investor reporting, and PE Operating Partner reviews; and annually for the audit footnote, LP report, and budget reconciliation."
+                  }
+            }
+      ]
+}
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div id="pacerai-post">
+<!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
+<nav>
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span style="font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+  </a>
+
+  <ul class="nav-links">
+
+    <!-- ─── OVERVIEW ─── -->
+    <li>
+      <a href="/">Overview <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/#use-cases">Use Cases</a>
+        <a href="/#solutions">Solutions overview</a>
+        <a href="/team/">Team overview</a>
+      </div>
+    </li>
+
+    <!-- ─── SOLUTIONS (mega-dropdown with SVG icons) ─── -->
+    <li>
+      <a href="/#solutions">Solutions <span class="chevron">&#9662;</span></a>
+      <div class="dropdown" style="min-width:580px">
+        <div class="dropdown-grid">
+          <div>
+            <div class="dropdown-col-label">Transaction Solutions</div>
+            <a href="/solutions/customer-data-cube/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="d-text"><span class="d-title">Customer Data Cube</span><span class="d-desc">M&amp;A grade accounts by product revenue</span></div></a>
+            <a href="/solutions/arr-snowball-board-reporting/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><div class="d-text"><span class="d-title">ARR Snowball Reporting</span><span class="d-desc">Board-ready waterfall dashboards</span></div></a>
+            <a href="/solutions/transaction-readiness/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="d-text"><span class="d-title">Transaction Readiness</span><span class="d-desc">QoR, QoE &mdash; diligence-ready in 4 quarters</span></div></a>
+          </div>
+          <div>
+            <div class="dropdown-col-label">Transformation Solutions</div>
+            <a href="/solutions/revops-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg></div><div class="d-text"><span class="d-title">RevOps Transformation</span><span class="d-desc">Segmentation to revenue motions</span></div></a>
+            <a href="/solutions/gtm-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="d-text"><span class="d-title">GTM Transformation</span><span class="d-desc">Agent-powered GTM chain</span></div></a>
+            <a href="/solutions/fpanda-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="d-text"><span class="d-title">FP&amp;A Transformation</span><span class="d-desc">AI model libraries for Excel + Copilot</span></div></a>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <!-- ─── RESOURCES ─── -->
+    <li>
+      <a href="/blog/">Resources <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/blog/">Blog</a>
+        <a href="/blog/?filter=arr-snowballs">ARR Snowballs</a>
+        <a href="/blog/?filter=frameworks">Frameworks</a>
+        <a href="/blog/?filter=model-templates">Model Templates</a>
+        <a href="/blog/?filter=revops">For RevOps</a>
+        <a href="https://agentsofinsight.substack.com/" target="_blank" rel="noopener">Newsletter</a>
+        <a href="https://www.youtube.com/@PacerAI" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </li>
+
+    <!-- ─── TEAM ─── -->
+    <li>
+      <a href="/team/">Team <span class="chevron">&#9662;</span></a>
+      <div class="dropdown single-dropdown">
+        <a href="/team/#mission">Mission</a>
+        <a href="/team/#pacer-ai-platform">Pacer AI Platform</a>
+        <a href="/team/#team">Team</a>
+        <a href="/team/#partners">Partners</a>
+        <a href="/team/#agents">Agent Team</a>
+      </div>
+    </li>
+
+  </ul>
+
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
+    <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=btn.closest('nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ POST HERO ═══════════════════════════════════════ -->
+<div class="post-hero">
+  <div class="post-breadcrumb">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <a href="/blog/">Blog</a>
+    <span class="sep">/</span>
+    <span>What Is ARR Waterfall</span>
+  </div>
+  <div class="post-category-badge">ARR Snowballs</div>
+  <h1>What Is an ARR Waterfall? Definition, Components, and How to Build One</h1>
+  <div class="post-meta">
+    <span class="author">Pacer AI</span>
+    <span>May 29, 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ CONTENT ═══════════════════════════════════════ -->
+<div class="post-content">
+<p><strong>An ARR Waterfall is a single-period decomposition of annual recurring revenue that bridges beginning ARR to ending ARR by separating the four movement types: new ARR, expansion ARR, contraction ARR, and churned ARR.</strong> The model is also called an <strong>ARR bridge</strong>, an <strong>ARR rollforward</strong>, a <strong>recurring revenue rollforward</strong>, or an <strong>ARR walk</strong>; when applied to monthly recurring revenue it becomes an <strong>MRR waterfall</strong> or <strong>SaaS revenue waterfall</strong>. Operating Partners, CFOs, and RevOps leaders use the ARR Waterfall to diagnose <em>what</em> happened to recurring revenue inside a quarter or month, while the related <a href="https://getpacerai.com/blog/what-is-an-arr-snowball/">ARR Snowball</a> tracks the longitudinal trajectory across multiple periods.</p>
+
+<h2>What Is an ARR Waterfall in SaaS?</h2>
+
+<p>An ARR Waterfall is a component-level reconciliation of recurring revenue movement. It starts with beginning-period ARR, adds the gross movements that increased ARR during the period, subtracts the gross movements that decreased ARR, and lands at ending-period ARR. The standard formula is:</p>
+
+<p><strong>Beginning ARR + New ARR + Expansion ARR + Reactivation ARR &minus; Contraction ARR &minus; Churned ARR = Ending ARR</strong></p>
+
+<p>The reason finance teams call it a "waterfall" is that the visualization &mdash; a bridge chart with floating columns &mdash; cascades from beginning ARR down through each component to ending ARR. Every dollar of recurring revenue change has to be classified into exactly one bucket, which forces precision that a single net-ARR number can hide.</p>
+
+<p>The ARR Waterfall is the operating finance counterpart to the <a href="https://getpacerai.com/blog/what-is-an-arr-snowball/">ARR Snowball</a>. The Waterfall is single-period and component-level; the Snowball is multi-period and cumulative. Both models reconcile to the same ending ARR figure, and PE-backed SaaS companies typically maintain both. For a side-by-side breakdown of when to use each, see <a href="https://getpacerai.com/blog/arr-snowball-vs-waterfall/">ARR Snowball vs. ARR Waterfall</a>.</p>
+
+<h2>What Are the Components of an ARR Waterfall?</h2>
+
+<p>A standards-grade ARR Waterfall has six movement types. Most companies aggregate to four or five, but the precise classification matters for <a href="https://getpacerai.com/blog/why-arr-waterfall-models-matter/">due diligence and board reporting</a>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Definition</th>
+      <th>Direction</th>
+      <th>Owner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Beginning ARR</strong></td>
+      <td>The contracted recurring revenue from active customers as of the first day of the period.</td>
+      <td>Starting balance</td>
+      <td>Finance / RevOps</td>
+    </tr>
+    <tr>
+      <td><strong>New ARR</strong></td>
+      <td>ARR from net-new logos that did not exist as customers in the prior period.</td>
+      <td>Add</td>
+      <td>New Business Sales</td>
+    </tr>
+    <tr>
+      <td><strong>Expansion ARR</strong></td>
+      <td>Incremental ARR from existing customers via upsell, cross-sell, additional seats, or contractual price increases.</td>
+      <td>Add</td>
+      <td>Account Management / CS</td>
+    </tr>
+    <tr>
+      <td><strong>Reactivation ARR</strong></td>
+      <td>ARR from previously churned customers who returned during the period.</td>
+      <td>Add</td>
+      <td>Customer Success / Sales</td>
+    </tr>
+    <tr>
+      <td><strong>Contraction ARR</strong></td>
+      <td>ARR lost when an active customer downgrades, removes seats, or reduces scope but remains a customer.</td>
+      <td>Subtract</td>
+      <td>Customer Success</td>
+    </tr>
+    <tr>
+      <td><strong>Churned ARR</strong></td>
+      <td>ARR lost when a customer fully terminates the contract and is no longer a customer at period end.</td>
+      <td>Subtract</td>
+      <td>Customer Success / Product</td>
+    </tr>
+    <tr>
+      <td><strong>Ending ARR</strong></td>
+      <td>Beginning ARR plus all adds minus all subtracts &mdash; the contracted recurring revenue on the last day of the period.</td>
+      <td>Ending balance</td>
+      <td>Finance / RevOps</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Two derived metrics fall directly out of the Waterfall and are the figures Operating Partners and Boards examine most closely:</p>
+
+<ul>
+  <li><strong>Gross Revenue Retention (GRR)</strong> = (Beginning ARR &minus; Contraction ARR &minus; Churned ARR) / Beginning ARR. Measures retention before any expansion. Anything below ~90% in mid-market SaaS or ~95% in enterprise SaaS is a yellow flag.</li>
+  <li><strong>Net Revenue Retention (NRR)</strong> = (Beginning ARR + Expansion ARR &minus; Contraction ARR &minus; Churned ARR) / Beginning ARR. The single most important durability metric in SaaS. <a href="https://www.bvp.com/atlas/state-of-the-cloud-2024" target="_blank" rel="noopener">Bessemer&rsquo;s State of the Cloud benchmarks</a> show that public SaaS companies with NRR above 120% trade at meaningfully higher revenue multiples than peers below 110%.</li>
+</ul>
+
+<h2>How Do You Build an ARR Waterfall? (Step-by-Step)</h2>
+
+<p>Building an ARR Waterfall takes five steps. The data lives in the billing system; the difficulty is in the classification logic and the period-over-period reconciliation.</p>
+
+<ol>
+  <li><strong>Pull contract-level data with a customer identifier.</strong> You need every contract or subscription line that was active at any point during the period, with start date, end date, ARR value, and a stable customer ID. Most billing systems (Stripe, Zuora, Chargebee, Salesforce CPQ, NetSuite ARR module) export this directly.</li>
+  <li><strong>Lock movement definitions before you compute.</strong> Decide once: a customer who downgrades in Q1 and re-upgrades in Q2 &mdash; is that contraction-then-expansion, or net expansion? A customer who churns in February and signs a new logo in March &mdash; churn-then-new, or reactivation? Without these rules, two analysts produce two different waterfalls from the same data. <a href="https://www.thesaascfo.com/saas-revenue-waterfall-chart/" target="_blank" rel="noopener">The SaaS CFO&rsquo;s movement framework</a> is a widely-used reference for these definitions.</li>
+  <li><strong>Compute period-over-period deltas per customer.</strong> For each customer ID, compare ARR at period-end to ARR at period-start. The delta classifies into exactly one bucket: new (no prior ARR), expansion (prior ARR &gt; 0, ending &gt; prior), contraction (ending &lt; prior, ending &gt; 0), churn (ending = 0, prior &gt; 0), or reactivation (prior = 0 but customer existed previously).</li>
+  <li><strong>Aggregate and reconcile.</strong> Sum each bucket. Verify that <em>Beginning ARR + New + Expansion + Reactivation &minus; Contraction &minus; Churn = Ending ARR</em> exactly. If it does not, a contract was double-counted, a date boundary was crossed, or a customer ID changed mid-period.</li>
+  <li><strong>Visualize as a bridge chart.</strong> Plot Beginning ARR on the left, each component as a floating column, and Ending ARR on the right. Color adds in green, subtracts in red. The chart is the artifact you put in the board deck and the QBR.</li>
+</ol>
+
+<p>For PE-grade reporting, the Waterfall must reconcile both upward to the <a href="https://getpacerai.com/blog/what-is-an-arr-snowball/">ARR Snowball</a> for trajectory analysis and downward to GAAP recognized revenue for audit defensibility. <a href="https://www.mostlymetrics.com/p/how-to-build-an-arr-waterfall" target="_blank" rel="noopener">CJ Gustafson&rsquo;s ARR Waterfall guide on Mostly Metrics</a> is a useful operator-level walkthrough of the reconciliation step.</p>
+
+<h2>What Does an ARR Waterfall Look Like? (Example)</h2>
+
+<p>A worked example for a hypothetical $50M ARR PE-backed SaaS company over a single quarter:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Amount ($M)</th>
+      <th>Direction</th>
+      <th>Running Total ($M)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Beginning ARR (Q1 start)</td><td>50.0</td><td>Start</td><td>50.0</td></tr>
+    <tr><td>+ New ARR</td><td>4.5</td><td>Add</td><td>54.5</td></tr>
+    <tr><td>+ Expansion ARR</td><td>3.2</td><td>Add</td><td>57.7</td></tr>
+    <tr><td>+ Reactivation ARR</td><td>0.3</td><td>Add</td><td>58.0</td></tr>
+    <tr><td>&minus; Contraction ARR</td><td>(1.4)</td><td>Subtract</td><td>56.6</td></tr>
+    <tr><td>&minus; Churned ARR</td><td>(2.1)</td><td>Subtract</td><td>54.5</td></tr>
+    <tr><td><strong>Ending ARR (Q1 end)</strong></td><td><strong>54.5</strong></td><td><strong>End</strong></td><td><strong>54.5</strong></td></tr>
+  </tbody>
+</table>
+
+<p>From this single-period waterfall, the derived metrics are:</p>
+
+<ul>
+  <li><strong>Net New ARR:</strong> $4.5M (ending minus beginning)</li>
+  <li><strong>Gross Revenue Retention:</strong> ($50.0 &minus; $1.4 &minus; $2.1) / $50.0 = <strong>93.0%</strong></li>
+  <li><strong>Net Revenue Retention:</strong> ($50.0 + $3.2 &minus; $1.4 &minus; $2.1) / $50.0 = <strong>99.4%</strong></li>
+  <li><strong>Quarterly ARR growth:</strong> 9.0%</li>
+</ul>
+
+<p>This is a business that looks fine on a net-ARR view but is actually treading water on the existing base &mdash; the headline 9% quarterly growth is almost entirely new logo acquisition, with NRR under 100%. That diagnosis is invisible without the Waterfall.</p>
+
+<h2>Why Does the ARR Waterfall Matter for PE-Backed SaaS?</h2>
+
+<p>For PE Operating Partners and CFOs, the ARR Waterfall is the single most important operating finance artifact. Four reasons:</p>
+
+<ol>
+  <li><strong>Diagnostic clarity.</strong> A net ARR figure tells you the score; the Waterfall tells you which inning had the runs. Boards make different decisions when a $5M net-new ARR quarter came from $7M in adds offset by $2M in churn versus $5.5M in adds offset by $0.5M in churn.</li>
+  <li><strong>Cross-functional accountability.</strong> Each Waterfall component has a different owner: New ARR is sales, Expansion is account management, Churn and Contraction are CS and product. Splitting the model by component turns it into a shared operating dashboard rather than a finance artifact.</li>
+  <li><strong>Due diligence defensibility.</strong> Quality-of-earnings teams reconstruct the Waterfall from raw billing data during diligence. If your reported figures do not reconcile, the diligence team produces theirs &mdash; and the gap becomes a discount on the deal value. <a href="https://www.saas-capital.com/research/" target="_blank" rel="noopener">SaaS Capital&rsquo;s benchmarks</a> show that gross churn above 12% annually is a category-level red flag in any diligence process.</li>
+  <li><strong>Forecast credibility.</strong> A forecast built on Waterfall components &mdash; with separate assumptions for new logo velocity, expansion rate, and churn &mdash; is debuggable. A forecast built on a single net-ARR growth rate is not.</li>
+</ol>
+
+<h2>ARR Waterfall vs. ARR Bridge vs. ARR Rollforward &mdash; Are They the Same?</h2>
+
+<p>Yes, with minor regional and audience preferences. All three terms describe the same single-period reconciliation of beginning ARR to ending ARR through component-level movements. <strong>ARR Waterfall</strong> is the most common term in SaaS finance and operating partner circles and refers specifically to the bridge-chart visualization. <strong>ARR Bridge</strong> is the term most commonly used by investment banks and PE diligence teams; it is identical in math. <strong>ARR Rollforward</strong> is the formal accounting term and is most often used in audit and 10-Q/10-K disclosure work. <strong>Recurring revenue rollforward</strong> and <strong>ARR walk</strong> are alternate phrasings that appear in private equity LP reporting and quarterly board materials.</p>
+
+<p>When the same model is built on monthly rather than annual recurring revenue, it is called an <strong>MRR Waterfall</strong> or <strong>MRR Bridge</strong>. The math is identical; only the time unit changes.</p>
+
+<h2>What Are the Most Common Mistakes When Building an ARR Waterfall?</h2>
+
+<ol>
+  <li><strong>Using net deltas instead of gross movements.</strong> A customer who expands by $50K and contracts by $30K in the same period should appear as $50K expansion and $30K contraction, not $20K net expansion. Netting hides churn signal.</li>
+  <li><strong>Ambiguous downgrade vs. churn classification.</strong> A customer who reduces ARR by 90% but keeps a $10K floor is contraction, not churn. A customer who drops to zero is churn. Companies that flip these classifications mid-year produce reports that are not comparable across quarters.</li>
+  <li><strong>Mid-period contract modifications.</strong> A contract amended on day 47 of a 90-day period needs to be apportioned, not snapped to the boundary. Snapping introduces 1-2 points of noise that aggregate into systematic misstatement.</li>
+  <li><strong>Cross-product double-counts.</strong> When a customer expands one product and contracts another in the same quarter, both movements are real. Aggregating to the customer-level expansion-or-contraction (not both) hides which product line is driving health.</li>
+  <li><strong>Manual spreadsheets without reconciliation.</strong> Once the model lives in three Excel files maintained by three people, the Waterfall stops reconciling to the Snowball, the Snowball stops reconciling to GL recognized revenue, and the board deck contradicts the operating review. This is the single most common reason PE-backed companies move ARR reporting to a purpose-built platform.</li>
+</ol>
+
+<h2>How Often Should You Update the ARR Waterfall?</h2>
+
+<p>Three cadences cover most PE-backed SaaS use cases:</p>
+
+<ul>
+  <li><strong>Monthly</strong> for operating reviews, RevOps cadence, and FP&amp;A variance analysis. This is where teams catch issues before they compound.</li>
+  <li><strong>Quarterly</strong> for board decks, investor reporting, and PE Operating Partner reviews. The quarterly Waterfall is the artifact that becomes the basis for the Snowball.</li>
+  <li><strong>Annually</strong> for the audit footnote, the LP report, and the budget reconciliation. The annual Waterfall reconciles the trailing twelve months to the GL.</li>
+</ul>
+
+<h2>Key Takeaways</h2>
+
+<ul>
+  <li>An ARR Waterfall &mdash; also called an ARR bridge, ARR rollforward, recurring revenue rollforward, or ARR walk &mdash; is a single-period decomposition of recurring revenue change into new, expansion, reactivation, contraction, and churn.</li>
+  <li>The formula is <em>Beginning ARR + New + Expansion + Reactivation &minus; Contraction &minus; Churn = Ending ARR</em>, and every customer movement classifies into exactly one bucket.</li>
+  <li>The two metrics that fall directly out of the Waterfall &mdash; Gross Revenue Retention and Net Revenue Retention &mdash; are the durability metrics PE firms scrutinize most.</li>
+  <li>The Waterfall is the operating-finance complement to the <a href="https://getpacerai.com/blog/what-is-an-arr-snowball/">ARR Snowball</a>: the Waterfall diagnoses a single period; the Snowball tracks trajectory across periods.</li>
+  <li>Building a defensible Waterfall requires locked movement definitions, clean contract-level data, gross-not-net aggregation, and reconciliation to both the Snowball and to GAAP revenue.</li>
+  <li>Most PE-backed SaaS companies eventually move from spreadsheet Waterfalls to a unified <a href="https://getpacerai.com/solutions/customer-data-cube/">Customer Data Cube</a> because the reconciliation across Snowball, Waterfall, and GL revenue breaks under spreadsheet maintenance.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+
+<h3>What is an ARR Waterfall in simple terms?</h3>
+<p>An ARR Waterfall is a chart that shows how your annual recurring revenue changed during a period by separating the additions (new customers, expansion) from the subtractions (downgrades, churn) so you can see exactly what drove the net change. It is also called an ARR bridge or ARR rollforward.</p>
+
+<h3>What is the difference between an ARR Waterfall and an ARR Snowball?</h3>
+<p>An ARR Waterfall decomposes a single period&rsquo;s ARR change into its components (new, expansion, contraction, churn). An ARR Snowball compounds multiple periods&rsquo; ending ARR forward to show trajectory over time. The Waterfall answers <em>what happened this quarter</em>; the Snowball answers <em>where is the business heading</em>. See <a href="https://getpacerai.com/blog/arr-snowball-vs-waterfall/">ARR Snowball vs. ARR Waterfall</a> for the full comparison.</p>
+
+<h3>Is an ARR Waterfall the same as an ARR Bridge?</h3>
+<p>Yes. ARR Waterfall, ARR Bridge, ARR Rollforward, recurring revenue rollforward, and ARR walk all refer to the same single-period reconciliation of beginning ARR to ending ARR through component-level movements. The math is identical; the term varies by audience &mdash; SaaS finance teams say "Waterfall," PE diligence teams say "Bridge," auditors say "Rollforward."</p>
+
+<h3>What components make up an ARR Waterfall?</h3>
+<p>A standards-grade ARR Waterfall has six components: Beginning ARR, New ARR (from new logos), Expansion ARR (from existing customers), Reactivation ARR (from returning churned customers), Contraction ARR (downgrades), and Churned ARR (cancellations), summing to Ending ARR. Some companies aggregate Reactivation into New ARR, leaving five.</p>
+
+<h3>How do you calculate Net Revenue Retention from the ARR Waterfall?</h3>
+<p>NRR = (Beginning ARR + Expansion ARR &minus; Contraction ARR &minus; Churned ARR) / Beginning ARR. New ARR is excluded because NRR measures the existing customer base only. Best-in-class public SaaS companies report NRR above 120%; PE benchmarks for mid-market SaaS typically target 105-115%.</p>
+
+<h3>What software builds an ARR Waterfall automatically?</h3>
+<p>Spreadsheet templates from <a href="https://www.thesaascfo.com/downloads/arr-revenue-forecast-model-with-waterfall/" target="_blank" rel="noopener">The SaaS CFO</a>, <a href="https://www.mosaic.tech/waterfall-chart/saas-revenue-arr" target="_blank" rel="noopener">Mosaic</a>, and <a href="https://www.hibob.com/financial-tools/saas-revenue-arr/" target="_blank" rel="noopener">HiBob</a> work for sub-$10M ARR companies. Above that, dedicated platforms generate the Waterfall directly from billing and CRM data; <a href="https://getpacerai.com/solutions/customer-data-cube/">Pacer AI&rsquo;s Customer Data Cube</a> on Microsoft Fabric is purpose-built for PE-backed SaaS, automating Waterfall, Snowball, and NRR reporting from a single source of truth.</p>
+
+<h3>How does Pacer AI build the ARR Waterfall?</h3>
+<p>Pacer AI&rsquo;s <a href="https://getpacerai.com/solutions/customer-data-cube/">Customer Data Cube</a> ingests contract, billing, and CRM data, applies locked movement definitions, computes per-customer period deltas, and renders the Waterfall, Snowball, and GRR/NRR metrics in Power BI. Reconciliation between models is automatic, definitions are governed centrally, and outputs are board-ready without spreadsheet maintenance &mdash; which is why PE-backed SaaS finance teams adopt it for portfolio standardization.</p>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTerm",
+  "name": "ARR Waterfall",
+  "alternateName": ["ARR Bridge", "ARR Rollforward", "Recurring Revenue Rollforward", "ARR Walk", "MRR Waterfall", "SaaS Revenue Waterfall"],
+  "description": "A single-period decomposition of annual recurring revenue that bridges beginning ARR to ending ARR by separating the four movement types: new ARR, expansion ARR, contraction ARR, and churned ARR.",
+  "inDefinedTermSet": {
+    "@type": "DefinedTermSet",
+    "name": "Pacer AI SaaS Metrics Glossary",
+    "url": "https://getpacerai.com/glossary/"
+  },
+  "url": "https://getpacerai.com/blog/what-is-an-arr-waterfall/"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://getpacerai.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://getpacerai.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "What Is an ARR Waterfall?", "item": "https://getpacerai.com/blog/what-is-an-arr-waterfall/" }
+  ]
+}
+</script>
+</div>
+
+<!-- ═══════════════════════════════════════ CTA ═══════════════════════════════════════ -->
+<div class="post-cta">
+  <div class="post-cta-inner">
+    <h2>See Your ARR Snowball. Live.</h2>
+    <p>Get a personalized demo showing how Pacer AI transforms your revenue data into board-ready ARR intelligence.</p>
+    <a href="https://calendly.com/pacerai" class="btn-teal">Request a Live Demo</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+<footer>
+<div class="footer-top">
+<div class="footer-brand">
+<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+<svg width="28" height="24" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M2 2 L11 14 L2 26" stroke="#4A7FA8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+<span style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+</a>
+<p class="footer-tagline">M&amp;A-grade ARR intelligence for PE-backed SaaS companies. Built on Microsoft Fabric, Power BI, and AI.</p>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Use Cases</div>
+<ul>
+<li><a href="/#arr-growth" data-scroll-to="arr-growth">Revenue Acceleration</a></li>
+<li><a href="/#expansion-drivers" data-scroll-to="expansion-drivers">Expansion Drivers</a></li>
+<li><a href="/#cohort-intelligence" data-scroll-to="cohort-intelligence">Cohort Intelligence</a></li>
+<li><a href="/#gross-retention" data-scroll-to="gross-retention">Gross Retention</a></li>
+<li><a href="/#net-retention" data-scroll-to="net-retention">Net Retention</a></li>
+<li><a href="/#whitespace" data-scroll-to="whitespace">Whitespace</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Solutions</div>
+<ul>
+<li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
+<li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li>
+<li><a href="/solutions/transaction-readiness/">Transaction Readiness</a></li>
+<li><a href="/solutions/revops-transformation-pkg/">RevOps Transformation</a></li>
+<li><a href="/solutions/gtm-transformation-pkg/">GTM Transformation</a></li>
+<li><a href="/solutions/fpanda-transformation-pkg/">FP&amp;A Transformation</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Team</div>
+<ul>
+<li><a href="/team/#mission">Mission</a></li>
+<li><a href="/platform/overview/">Pacer AI Platform</a></li>
+<li><a href="/team/#team">Team</a></li>
+<li><a href="/team/#partners">Partners</a></li>
+<li><a href="/team/contact/">Contact</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Connect</div>
+<ul>
+<li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+<li><a href="https://calendly.com/pacerai">Schedule a Call</a></li>
+<li><a href="/blog/">Blog</a></li>
+<li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+<div class="legal">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+<a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a>
+</div>
+</div>
+</footer>
+
+<script>
+(function(){
+  if(window.innerWidth>768) return;
+  document.querySelectorAll('#pacerai-post .nav-links > li > a').forEach(function(a){
+    var li=a.parentElement;
+    if(!li.querySelector('.dropdown')) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      li.classList.toggle('mobile-expanded');
+    });
+  });
+})();
+</script>
+</div>
+<!-- /wp:html -->

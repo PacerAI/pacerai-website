@@ -1,0 +1,225 @@
+<p><strong>An ARR Waterfall is a single-period decomposition of annual recurring revenue that bridges beginning ARR to ending ARR by separating the four movement types: new ARR, expansion ARR, contraction ARR, and churned ARR.</strong> The model is also called an <strong>ARR bridge</strong>, an <strong>ARR rollforward</strong>, a <strong>recurring revenue rollforward</strong>, or an <strong>ARR walk</strong>; when applied to monthly recurring revenue it becomes an <strong>MRR waterfall</strong> or <strong>SaaS revenue waterfall</strong>. Operating Partners, CFOs, and RevOps leaders use the ARR Waterfall to diagnose <em>what</em> happened to recurring revenue inside a quarter or month, while the related <a href="https://getpacerai.com/blog/what-is-an-arr-snowball/">ARR Snowball</a> tracks the longitudinal trajectory across multiple periods.</p>
+
+<h2>What Is an ARR Waterfall in SaaS?</h2>
+
+<p>An ARR Waterfall is a component-level reconciliation of recurring revenue movement. It starts with beginning-period ARR, adds the gross movements that increased ARR during the period, subtracts the gross movements that decreased ARR, and lands at ending-period ARR. The standard formula is:</p>
+
+<p><strong>Beginning ARR + New ARR + Expansion ARR + Reactivation ARR &minus; Contraction ARR &minus; Churned ARR = Ending ARR</strong></p>
+
+<p>The reason finance teams call it a "waterfall" is that the visualization &mdash; a bridge chart with floating columns &mdash; cascades from beginning ARR down through each component to ending ARR. Every dollar of recurring revenue change has to be classified into exactly one bucket, which forces precision that a single net-ARR number can hide.</p>
+
+<p>The ARR Waterfall is the operating finance counterpart to the <a href="https://getpacerai.com/blog/what-is-an-arr-snowball/">ARR Snowball</a>. The Waterfall is single-period and component-level; the Snowball is multi-period and cumulative. Both models reconcile to the same ending ARR figure, and PE-backed SaaS companies typically maintain both. For a side-by-side breakdown of when to use each, see <a href="https://getpacerai.com/blog/arr-snowball-vs-waterfall/">ARR Snowball vs. ARR Waterfall</a>.</p>
+
+<h2>What Are the Components of an ARR Waterfall?</h2>
+
+<p>A standards-grade ARR Waterfall has six movement types. Most companies aggregate to four or five, but the precise classification matters for <a href="https://getpacerai.com/blog/why-arr-waterfall-models-matter/">due diligence and board reporting</a>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Definition</th>
+      <th>Direction</th>
+      <th>Owner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Beginning ARR</strong></td>
+      <td>The contracted recurring revenue from active customers as of the first day of the period.</td>
+      <td>Starting balance</td>
+      <td>Finance / RevOps</td>
+    </tr>
+    <tr>
+      <td><strong>New ARR</strong></td>
+      <td>ARR from net-new logos that did not exist as customers in the prior period.</td>
+      <td>Add</td>
+      <td>New Business Sales</td>
+    </tr>
+    <tr>
+      <td><strong>Expansion ARR</strong></td>
+      <td>Incremental ARR from existing customers via upsell, cross-sell, additional seats, or contractual price increases.</td>
+      <td>Add</td>
+      <td>Account Management / CS</td>
+    </tr>
+    <tr>
+      <td><strong>Reactivation ARR</strong></td>
+      <td>ARR from previously churned customers who returned during the period.</td>
+      <td>Add</td>
+      <td>Customer Success / Sales</td>
+    </tr>
+    <tr>
+      <td><strong>Contraction ARR</strong></td>
+      <td>ARR lost when an active customer downgrades, removes seats, or reduces scope but remains a customer.</td>
+      <td>Subtract</td>
+      <td>Customer Success</td>
+    </tr>
+    <tr>
+      <td><strong>Churned ARR</strong></td>
+      <td>ARR lost when a customer fully terminates the contract and is no longer a customer at period end.</td>
+      <td>Subtract</td>
+      <td>Customer Success / Product</td>
+    </tr>
+    <tr>
+      <td><strong>Ending ARR</strong></td>
+      <td>Beginning ARR plus all adds minus all subtracts &mdash; the contracted recurring revenue on the last day of the period.</td>
+      <td>Ending balance</td>
+      <td>Finance / RevOps</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Two derived metrics fall directly out of the Waterfall and are the figures Operating Partners and Boards examine most closely:</p>
+
+<ul>
+  <li><strong>Gross Revenue Retention (GRR)</strong> = (Beginning ARR &minus; Contraction ARR &minus; Churned ARR) / Beginning ARR. Measures retention before any expansion. Anything below ~90% in mid-market SaaS or ~95% in enterprise SaaS is a yellow flag.</li>
+  <li><strong>Net Revenue Retention (NRR)</strong> = (Beginning ARR + Expansion ARR &minus; Contraction ARR &minus; Churned ARR) / Beginning ARR. The single most important durability metric in SaaS. <a href="https://www.bvp.com/atlas/state-of-the-cloud-2024" target="_blank" rel="noopener">Bessemer&rsquo;s State of the Cloud benchmarks</a> show that public SaaS companies with NRR above 120% trade at meaningfully higher revenue multiples than peers below 110%.</li>
+</ul>
+
+<h2>How Do You Build an ARR Waterfall? (Step-by-Step)</h2>
+
+<p>Building an ARR Waterfall takes five steps. The data lives in the billing system; the difficulty is in the classification logic and the period-over-period reconciliation.</p>
+
+<ol>
+  <li><strong>Pull contract-level data with a customer identifier.</strong> You need every contract or subscription line that was active at any point during the period, with start date, end date, ARR value, and a stable customer ID. Most billing systems (Stripe, Zuora, Chargebee, Salesforce CPQ, NetSuite ARR module) export this directly.</li>
+  <li><strong>Lock movement definitions before you compute.</strong> Decide once: a customer who downgrades in Q1 and re-upgrades in Q2 &mdash; is that contraction-then-expansion, or net expansion? A customer who churns in February and signs a new logo in March &mdash; churn-then-new, or reactivation? Without these rules, two analysts produce two different waterfalls from the same data. <a href="https://www.thesaascfo.com/saas-revenue-waterfall-chart/" target="_blank" rel="noopener">The SaaS CFO&rsquo;s movement framework</a> is a widely-used reference for these definitions.</li>
+  <li><strong>Compute period-over-period deltas per customer.</strong> For each customer ID, compare ARR at period-end to ARR at period-start. The delta classifies into exactly one bucket: new (no prior ARR), expansion (prior ARR &gt; 0, ending &gt; prior), contraction (ending &lt; prior, ending &gt; 0), churn (ending = 0, prior &gt; 0), or reactivation (prior = 0 but customer existed previously).</li>
+  <li><strong>Aggregate and reconcile.</strong> Sum each bucket. Verify that <em>Beginning ARR + New + Expansion + Reactivation &minus; Contraction &minus; Churn = Ending ARR</em> exactly. If it does not, a contract was double-counted, a date boundary was crossed, or a customer ID changed mid-period.</li>
+  <li><strong>Visualize as a bridge chart.</strong> Plot Beginning ARR on the left, each component as a floating column, and Ending ARR on the right. Color adds in green, subtracts in red. The chart is the artifact you put in the board deck and the QBR.</li>
+</ol>
+
+<p>For PE-grade reporting, the Waterfall must reconcile both upward to the <a href="https://getpacerai.com/blog/what-is-an-arr-snowball/">ARR Snowball</a> for trajectory analysis and downward to GAAP recognized revenue for audit defensibility. <a href="https://www.mostlymetrics.com/p/how-to-build-an-arr-waterfall" target="_blank" rel="noopener">CJ Gustafson&rsquo;s ARR Waterfall guide on Mostly Metrics</a> is a useful operator-level walkthrough of the reconciliation step.</p>
+
+<h2>What Does an ARR Waterfall Look Like? (Example)</h2>
+
+<p>A worked example for a hypothetical $50M ARR PE-backed SaaS company over a single quarter:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Amount ($M)</th>
+      <th>Direction</th>
+      <th>Running Total ($M)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Beginning ARR (Q1 start)</td><td>50.0</td><td>Start</td><td>50.0</td></tr>
+    <tr><td>+ New ARR</td><td>4.5</td><td>Add</td><td>54.5</td></tr>
+    <tr><td>+ Expansion ARR</td><td>3.2</td><td>Add</td><td>57.7</td></tr>
+    <tr><td>+ Reactivation ARR</td><td>0.3</td><td>Add</td><td>58.0</td></tr>
+    <tr><td>&minus; Contraction ARR</td><td>(1.4)</td><td>Subtract</td><td>56.6</td></tr>
+    <tr><td>&minus; Churned ARR</td><td>(2.1)</td><td>Subtract</td><td>54.5</td></tr>
+    <tr><td><strong>Ending ARR (Q1 end)</strong></td><td><strong>54.5</strong></td><td><strong>End</strong></td><td><strong>54.5</strong></td></tr>
+  </tbody>
+</table>
+
+<p>From this single-period waterfall, the derived metrics are:</p>
+
+<ul>
+  <li><strong>Net New ARR:</strong> $4.5M (ending minus beginning)</li>
+  <li><strong>Gross Revenue Retention:</strong> ($50.0 &minus; $1.4 &minus; $2.1) / $50.0 = <strong>93.0%</strong></li>
+  <li><strong>Net Revenue Retention:</strong> ($50.0 + $3.2 &minus; $1.4 &minus; $2.1) / $50.0 = <strong>99.4%</strong></li>
+  <li><strong>Quarterly ARR growth:</strong> 9.0%</li>
+</ul>
+
+<p>This is a business that looks fine on a net-ARR view but is actually treading water on the existing base &mdash; the headline 9% quarterly growth is almost entirely new logo acquisition, with NRR under 100%. That diagnosis is invisible without the Waterfall.</p>
+
+<h2>Why Does the ARR Waterfall Matter for PE-Backed SaaS?</h2>
+
+<p>For PE Operating Partners and CFOs, the ARR Waterfall is the single most important operating finance artifact. Four reasons:</p>
+
+<ol>
+  <li><strong>Diagnostic clarity.</strong> A net ARR figure tells you the score; the Waterfall tells you which inning had the runs. Boards make different decisions when a $5M net-new ARR quarter came from $7M in adds offset by $2M in churn versus $5.5M in adds offset by $0.5M in churn.</li>
+  <li><strong>Cross-functional accountability.</strong> Each Waterfall component has a different owner: New ARR is sales, Expansion is account management, Churn and Contraction are CS and product. Splitting the model by component turns it into a shared operating dashboard rather than a finance artifact.</li>
+  <li><strong>Due diligence defensibility.</strong> Quality-of-earnings teams reconstruct the Waterfall from raw billing data during diligence. If your reported figures do not reconcile, the diligence team produces theirs &mdash; and the gap becomes a discount on the deal value. <a href="https://www.saas-capital.com/research/" target="_blank" rel="noopener">SaaS Capital&rsquo;s benchmarks</a> show that gross churn above 12% annually is a category-level red flag in any diligence process.</li>
+  <li><strong>Forecast credibility.</strong> A forecast built on Waterfall components &mdash; with separate assumptions for new logo velocity, expansion rate, and churn &mdash; is debuggable. A forecast built on a single net-ARR growth rate is not.</li>
+</ol>
+
+<h2>ARR Waterfall vs. ARR Bridge vs. ARR Rollforward &mdash; Are They the Same?</h2>
+
+<p>Yes, with minor regional and audience preferences. All three terms describe the same single-period reconciliation of beginning ARR to ending ARR through component-level movements. <strong>ARR Waterfall</strong> is the most common term in SaaS finance and operating partner circles and refers specifically to the bridge-chart visualization. <strong>ARR Bridge</strong> is the term most commonly used by investment banks and PE diligence teams; it is identical in math. <strong>ARR Rollforward</strong> is the formal accounting term and is most often used in audit and 10-Q/10-K disclosure work. <strong>Recurring revenue rollforward</strong> and <strong>ARR walk</strong> are alternate phrasings that appear in private equity LP reporting and quarterly board materials.</p>
+
+<p>When the same model is built on monthly rather than annual recurring revenue, it is called an <strong>MRR Waterfall</strong> or <strong>MRR Bridge</strong>. The math is identical; only the time unit changes.</p>
+
+<h2>What Are the Most Common Mistakes When Building an ARR Waterfall?</h2>
+
+<ol>
+  <li><strong>Using net deltas instead of gross movements.</strong> A customer who expands by $50K and contracts by $30K in the same period should appear as $50K expansion and $30K contraction, not $20K net expansion. Netting hides churn signal.</li>
+  <li><strong>Ambiguous downgrade vs. churn classification.</strong> A customer who reduces ARR by 90% but keeps a $10K floor is contraction, not churn. A customer who drops to zero is churn. Companies that flip these classifications mid-year produce reports that are not comparable across quarters.</li>
+  <li><strong>Mid-period contract modifications.</strong> A contract amended on day 47 of a 90-day period needs to be apportioned, not snapped to the boundary. Snapping introduces 1-2 points of noise that aggregate into systematic misstatement.</li>
+  <li><strong>Cross-product double-counts.</strong> When a customer expands one product and contracts another in the same quarter, both movements are real. Aggregating to the customer-level expansion-or-contraction (not both) hides which product line is driving health.</li>
+  <li><strong>Manual spreadsheets without reconciliation.</strong> Once the model lives in three Excel files maintained by three people, the Waterfall stops reconciling to the Snowball, the Snowball stops reconciling to GL recognized revenue, and the board deck contradicts the operating review. This is the single most common reason PE-backed companies move ARR reporting to a purpose-built platform.</li>
+</ol>
+
+<h2>How Often Should You Update the ARR Waterfall?</h2>
+
+<p>Three cadences cover most PE-backed SaaS use cases:</p>
+
+<ul>
+  <li><strong>Monthly</strong> for operating reviews, RevOps cadence, and FP&amp;A variance analysis. This is where teams catch issues before they compound.</li>
+  <li><strong>Quarterly</strong> for board decks, investor reporting, and PE Operating Partner reviews. The quarterly Waterfall is the artifact that becomes the basis for the Snowball.</li>
+  <li><strong>Annually</strong> for the audit footnote, the LP report, and the budget reconciliation. The annual Waterfall reconciles the trailing twelve months to the GL.</li>
+</ul>
+
+<h2>Key Takeaways</h2>
+
+<ul>
+  <li>An ARR Waterfall &mdash; also called an ARR bridge, ARR rollforward, recurring revenue rollforward, or ARR walk &mdash; is a single-period decomposition of recurring revenue change into new, expansion, reactivation, contraction, and churn.</li>
+  <li>The formula is <em>Beginning ARR + New + Expansion + Reactivation &minus; Contraction &minus; Churn = Ending ARR</em>, and every customer movement classifies into exactly one bucket.</li>
+  <li>The two metrics that fall directly out of the Waterfall &mdash; Gross Revenue Retention and Net Revenue Retention &mdash; are the durability metrics PE firms scrutinize most.</li>
+  <li>The Waterfall is the operating-finance complement to the <a href="https://getpacerai.com/blog/what-is-an-arr-snowball/">ARR Snowball</a>: the Waterfall diagnoses a single period; the Snowball tracks trajectory across periods.</li>
+  <li>Building a defensible Waterfall requires locked movement definitions, clean contract-level data, gross-not-net aggregation, and reconciliation to both the Snowball and to GAAP revenue.</li>
+  <li>Most PE-backed SaaS companies eventually move from spreadsheet Waterfalls to a unified <a href="https://getpacerai.com/solutions/customer-data-cube/">Customer Data Cube</a> because the reconciliation across Snowball, Waterfall, and GL revenue breaks under spreadsheet maintenance.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+
+<h3>What is an ARR Waterfall in simple terms?</h3>
+<p>An ARR Waterfall is a chart that shows how your annual recurring revenue changed during a period by separating the additions (new customers, expansion) from the subtractions (downgrades, churn) so you can see exactly what drove the net change. It is also called an ARR bridge or ARR rollforward.</p>
+
+<h3>What is the difference between an ARR Waterfall and an ARR Snowball?</h3>
+<p>An ARR Waterfall decomposes a single period&rsquo;s ARR change into its components (new, expansion, contraction, churn). An ARR Snowball compounds multiple periods&rsquo; ending ARR forward to show trajectory over time. The Waterfall answers <em>what happened this quarter</em>; the Snowball answers <em>where is the business heading</em>. See <a href="https://getpacerai.com/blog/arr-snowball-vs-waterfall/">ARR Snowball vs. ARR Waterfall</a> for the full comparison.</p>
+
+<h3>Is an ARR Waterfall the same as an ARR Bridge?</h3>
+<p>Yes. ARR Waterfall, ARR Bridge, ARR Rollforward, recurring revenue rollforward, and ARR walk all refer to the same single-period reconciliation of beginning ARR to ending ARR through component-level movements. The math is identical; the term varies by audience &mdash; SaaS finance teams say "Waterfall," PE diligence teams say "Bridge," auditors say "Rollforward."</p>
+
+<h3>What components make up an ARR Waterfall?</h3>
+<p>A standards-grade ARR Waterfall has six components: Beginning ARR, New ARR (from new logos), Expansion ARR (from existing customers), Reactivation ARR (from returning churned customers), Contraction ARR (downgrades), and Churned ARR (cancellations), summing to Ending ARR. Some companies aggregate Reactivation into New ARR, leaving five.</p>
+
+<h3>How do you calculate Net Revenue Retention from the ARR Waterfall?</h3>
+<p>NRR = (Beginning ARR + Expansion ARR &minus; Contraction ARR &minus; Churned ARR) / Beginning ARR. New ARR is excluded because NRR measures the existing customer base only. Best-in-class public SaaS companies report NRR above 120%; PE benchmarks for mid-market SaaS typically target 105-115%.</p>
+
+<h3>What software builds an ARR Waterfall automatically?</h3>
+<p>Spreadsheet templates from <a href="https://www.thesaascfo.com/downloads/arr-revenue-forecast-model-with-waterfall/" target="_blank" rel="noopener">The SaaS CFO</a>, <a href="https://www.mosaic.tech/waterfall-chart/saas-revenue-arr" target="_blank" rel="noopener">Mosaic</a>, and <a href="https://www.hibob.com/financial-tools/saas-revenue-arr/" target="_blank" rel="noopener">HiBob</a> work for sub-$10M ARR companies. Above that, dedicated platforms generate the Waterfall directly from billing and CRM data; <a href="https://getpacerai.com/solutions/customer-data-cube/">Pacer AI&rsquo;s Customer Data Cube</a> on Microsoft Fabric is purpose-built for PE-backed SaaS, automating Waterfall, Snowball, and NRR reporting from a single source of truth.</p>
+
+<h3>How does Pacer AI build the ARR Waterfall?</h3>
+<p>Pacer AI&rsquo;s <a href="https://getpacerai.com/solutions/customer-data-cube/">Customer Data Cube</a> ingests contract, billing, and CRM data, applies locked movement definitions, computes per-customer period deltas, and renders the Waterfall, Snowball, and GRR/NRR metrics in Power BI. Reconciliation between models is automatic, definitions are governed centrally, and outputs are board-ready without spreadsheet maintenance &mdash; which is why PE-backed SaaS finance teams adopt it for portfolio standardization.</p>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTerm",
+  "name": "ARR Waterfall",
+  "alternateName": ["ARR Bridge", "ARR Rollforward", "Recurring Revenue Rollforward", "ARR Walk", "MRR Waterfall", "SaaS Revenue Waterfall"],
+  "description": "A single-period decomposition of annual recurring revenue that bridges beginning ARR to ending ARR by separating the four movement types: new ARR, expansion ARR, contraction ARR, and churned ARR.",
+  "inDefinedTermSet": {
+    "@type": "DefinedTermSet",
+    "name": "Pacer AI SaaS Metrics Glossary",
+    "url": "https://getpacerai.com/glossary/"
+  },
+  "url": "https://getpacerai.com/blog/what-is-an-arr-waterfall/"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://getpacerai.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://getpacerai.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "What Is an ARR Waterfall?", "item": "https://getpacerai.com/blog/what-is-an-arr-waterfall/" }
+  ]
+}
+</script>

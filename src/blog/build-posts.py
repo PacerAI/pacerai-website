@@ -18,6 +18,44 @@ OUTPUT_DIR = f"{REPO}/src/blog/posts"
 # Blog post metadata
 POSTS = [
     {
+        "id": "what-is-an-arr-waterfall",
+        "title": "What Is an ARR Waterfall? Definition, Components, and How to Build One",
+        "title_short": "What Is ARR Waterfall",
+        "category": "ARR Snowballs",
+        "date": "May 29, 2026",
+        "date_iso": "2026-05-29",
+        "faq": [
+            {
+                "q": "What is an ARR Waterfall in simple terms?",
+                "a": "An ARR Waterfall is a chart that shows how your annual recurring revenue changed during a period by separating the additions (new customers, expansion) from the subtractions (downgrades, churn) so you can see exactly what drove the net change. It is also called an ARR bridge or ARR rollforward."
+            },
+            {
+                "q": "What is the difference between an ARR Waterfall and an ARR Snowball?",
+                "a": "An ARR Waterfall decomposes a single period's ARR change into its components (new, expansion, contraction, churn). An ARR Snowball compounds multiple periods' ending ARR forward to show trajectory over time. The Waterfall answers what happened this quarter; the Snowball answers where the business is heading."
+            },
+            {
+                "q": "Is an ARR Waterfall the same as an ARR Bridge?",
+                "a": "Yes. ARR Waterfall, ARR Bridge, ARR Rollforward, recurring revenue rollforward, and ARR walk all refer to the same single-period reconciliation of beginning ARR to ending ARR through component-level movements. The math is identical; the term varies by audience — SaaS finance teams say Waterfall, PE diligence teams say Bridge, auditors say Rollforward."
+            },
+            {
+                "q": "What components make up an ARR Waterfall?",
+                "a": "A standards-grade ARR Waterfall has six components: Beginning ARR, New ARR (from new logos), Expansion ARR (from existing customers), Reactivation ARR (from returning churned customers), Contraction ARR (downgrades), and Churned ARR (cancellations), summing to Ending ARR. Some companies aggregate Reactivation into New ARR, leaving five."
+            },
+            {
+                "q": "How do you calculate Net Revenue Retention from the ARR Waterfall?",
+                "a": "NRR equals (Beginning ARR plus Expansion ARR minus Contraction ARR minus Churned ARR) divided by Beginning ARR. New ARR is excluded because NRR measures the existing customer base only. Best-in-class public SaaS companies report NRR above 120%; PE benchmarks for mid-market SaaS typically target 105-115%."
+            },
+            {
+                "q": "What software builds an ARR Waterfall automatically?",
+                "a": "Spreadsheet templates work for sub-$10M ARR companies. Above that, dedicated platforms generate the Waterfall directly from billing and CRM data. Pacer AI's Customer Data Cube on Microsoft Fabric is purpose-built for PE-backed SaaS, automating Waterfall, Snowball, and NRR reporting from a single source of truth."
+            },
+            {
+                "q": "How often should you update the ARR Waterfall?",
+                "a": "Monthly for operating reviews, RevOps cadence, and FP&A variance analysis; quarterly for board decks, investor reporting, and PE Operating Partner reviews; and annually for the audit footnote, LP report, and budget reconciliation."
+            },
+        ],
+    },
+    {
         "id": "crpo",
         "title": "What is cRPO? The Operator's Guide to Current Remaining Performance Obligations",
         "title_short": "cRPO vs ARR",
