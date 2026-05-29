@@ -1,5 +1,6 @@
 # CLAUDE.md
 
+@foundation/first_principles.md
 @foundation/pricing/product-pricing-portfolio.md
 @foundation/pricing/product-pricing-tiers.md
 
