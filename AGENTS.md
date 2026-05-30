@@ -165,6 +165,20 @@ Follow this sequence for every change:
 - Wrap content: `<!-- wp:html -->{html}<!-- /wp:html -->`
 - After deploy: verify live URL returns 200, confirm content renders correctly
 
+## SEO & AEO Keyword Tracker
+
+<!-- SOURCE: foundation/strategy/aeo_seo_keywords.yml -->
+
+Wincher-tracked keywords for getpacerai.com live in [`foundation/strategy/aeo_seo_keywords.yml`](foundation/strategy/aeo_seo_keywords.yml). Read this file before:
+
+- Creating or editing any page that targets a tracked keyword (currently: arr snowball, arr waterfall, customer data cube, upsell and cross-sell, whitespace opportunity)
+- Setting Yoast focus keyphrase, slug, or meta description on a page
+- Adding a new SEO target page to the registry above
+
+Tracked keywords carry an `aeo_prompt_id` linking to `foundation/strategy/content-pillars.yml` `aeo_target_prompts` — that's the answer brief + must-include terms for the page's primary content. Yoast tags must match the tracked keyword exactly (not a paraphrase).
+
+Canonical source: `pacerai-foundation/strategy/aeo_seo_keywords.yml` — edit there, not here.
+
 ## Brand Constraints
 
 - **Fonts:** DM Sans (body), Cormorant Garamond (headings) — approved by Will
