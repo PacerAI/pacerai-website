@@ -4,6 +4,19 @@ status: active
 owner: magnet + aeo-writer subagents (in pacerai-gtm) → Will (review gate)
 created: 2026-05-21
 depends_on: []
+targets:
+  - id: rank-checks
+    label: AEO rank-checks (5 topics x 5 engines)
+    per_week: 25
+  - id: off-domain-seeds
+    label: Off-domain seeded mentions (2-4/topic x 5 topics)
+    per_month: [10, 20]
+  - id: content-publish
+    label: AEO content publish (gap-driven)
+    open_ended: true
+  - id: schema-update
+    label: AEO schema updates (as-needed)
+    open_ended: true
 ---
 
 # GOAL: AEO #1 ranking for the five anchor topics
