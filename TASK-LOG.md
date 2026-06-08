@@ -9,10 +9,19 @@ plus one mandatory closing line `  → closed|escalated-to-spec <ISO-timestamp>,
   → closed 2026-05-20T19:30:02Z, TASK-LOG.md provisioned
 
 [2026-05-29T10:24:00Z] webdev-getpacerai: deploy cRPO blog post — create WP page 865 + push content (goal: goals/aeo-ranking.md#blog-publish)
-  → closed 2026-05-29T10:24:00Z, "What is cRPO? The Operator's Guide to Current Remaining Performance Obligations" deployed to https://getpacerai.com/blog/what-is-current-performance-obligation/ via REST API (WP ID 865, parent 230 Blog); registry wired in CLAUDE.md + scripts/deploy.py; validation 11 pass / 0 warn / 0 fail (count: 1)
+  → closed 2026-05-29T10:24:00Z, "What is cRPO? The Operator's Guide to Current Remaining Performance Obligations" deployed to https://getpacerai.com/blog/what-is-current-performance-obligation/ via REST API (WP ID 865, parent 230 Blog); registry wired in CLAUDE.md + scripts/deploy.py; validation 11 pass / 0 warn / 0 fail (count: 1, id: blogs)
 
 [2026-05-29T10:34:00Z] webdev-getpacerai: re-deploy cRPO blog post — restore Bridging-cRPO section + 7-company link bullets after accidental working-tree revert (goal: goals/aeo-ranking.md#blog-publish)
-  → closed 2026-05-29T10:34:00Z, full version re-applied + redeployed to WP ID 865; validation 11 pass / 0 warn / 0 fail; live page now contains Bridging-cRPO section + Workday/ServiceNow/Atlassian/Salesforce/Snowflake/Datadog/MongoDB inline source links (count: 1)
+  → closed 2026-05-29T10:34:00Z, full version re-applied + redeployed to WP ID 865; validation 11 pass / 0 warn / 0 fail; live page now contains Bridging-cRPO section + Workday/ServiceNow/Atlassian/Salesforce/Snowflake/Datadog/MongoDB inline source links (count: 1, id: blogs)
 
 [2026-05-29T11:18:00Z] webdev-getpacerai: add cRPO card + Diligence filter pill to blog index — deploy WP ID 230 (goal: goals/aeo-ranking.md#blog-publish)
-  → closed 2026-05-29T11:18:00Z, new "Diligence" filter pill added to category-bar + cRPO card slotted at position 1 of blog-grid; deployed to https://getpacerai.com/blog/ via REST API; --force used to bypass 3 pre-existing voice violations in older cards (count: 1)
+  → closed 2026-05-29T11:18:00Z, new "Diligence" filter pill added to category-bar + cRPO card slotted at position 1 of blog-grid; deployed to https://getpacerai.com/blog/ via REST API; --force used to bypass 3 pre-existing voice violations in older cards (count: 1, id: blogs)
+
+[2026-05-28T11:00:00Z] blog: what-is-current-performance-obligation (goal: —)
+  → closed 2026-05-28T11:00:00Z, published https://getpacerai.com/blog/what-is-current-performance-obligation/ (count: 1, id: blogs)
+
+[2026-05-29T11:00:00Z] blog: what-is-an-arr-waterfall (goal: —)
+  → closed 2026-05-29T11:00:00Z, published https://getpacerai.com/blog/what-is-an-arr-waterfall/ (count: 1, id: blogs)
+
+[2026-06-02T11:00:00Z] blog: semrush-adobe-case-study (goal: —)
+  → closed 2026-06-08T19:00:00Z, published https://getpacerai.com/semrush-adobe-acquisition-case-study/ (WP page 888, listing 230) — Adobe×Semrush M&A carousel ported to blog: 9 visuals (4 charts rendered from source HTML + 2 product maps + 3 headshots), all tables verbatim, tagged Case Study/M&A/RevOps; runbook at docs/ADBE_SEMR_case_study.md; Yoast title/desc pending (WP MCP offline) (count: 1, id: blogs)

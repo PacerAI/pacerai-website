@@ -18,6 +18,30 @@ OUTPUT_DIR = f"{REPO}/src/blog/posts"
 # Blog post metadata
 POSTS = [
     {
+        # Locally-authored (content-semrush-adobe-case-study.html) → keeps slug id.
+        # Live WP page id: 888 · slug: semrush-adobe-acquisition-case-study · listing page 230
+        "id": "semrush-adobe-case-study",
+        "title": "How Semrush Got Acquired by Adobe for a Premium Despite Declining Growth",
+        "title_short": "Semrush × Adobe",
+        "category": "M&A Case Study",
+        "date": "June 2, 2026",
+        "date_iso": "2026-06-02",
+        "faq": [
+            {
+                "q": "Why did Adobe acquire Semrush?",
+                "a": "Adobe acquired Semrush for $1.9B to add a multi-product sales-execution engine spanning the digital ranking value chain — 55+ products across 7 hubs on one platform, including traditional SEO and AI-visibility tooling. Semrush had transformed from a self-serve product-led-growth model into a multi-threaded RevOps engine that doubled ARR per customer, which is what attracted Adobe despite Semrush's decelerating growth rate."
+            },
+            {
+                "q": "How much did Adobe pay for Semrush and was it a premium?",
+                "a": "Adobe paid $12.00 per share, or about $1.9B — a 77% premium to Semrush's November 18 close of $6.76. At ~3.8x NTM revenue, the price was roughly 52% above the selected public-company comp median of 2.5x, and above the top of Centerview's revenue and EBITDA comp ranges in 2 of 3 fairness-opinion methodologies."
+            },
+            {
+                "q": "How did Semrush get acquired at a premium despite declining growth?",
+                "a": "By transforming its operating model: structuring pricing and packaging for expansion, building a cross-sell and up-sell motion that grows ARR per customer by cohort, and letting gross margin and free cash flow follow. ARR per customer rose from $2,123 (FY2020) to $4,369 (FY2025), gross margin expanded 700bps, S&M fell 12 points as a share of revenue, and FCF recovered from $5M to $58M."
+            },
+        ],
+    },
+    {
         "id": "what-is-an-arr-waterfall",
         "title": "What Is an ARR Waterfall? Definition, Components, and How to Build One",
         "title_short": "What Is ARR Waterfall",

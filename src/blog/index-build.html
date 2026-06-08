@@ -644,6 +644,8 @@ html, body, .wp-site-blocks {
 <!-- ═══════════════════════════════════════ CATEGORIES ═══════════════════════════════════════ -->
 <div class="category-bar">
   <span class="cat-pill active" data-filter="all">All Posts</span>
+  <span class="cat-pill" data-filter="case-study">Case Study</span>
+  <span class="cat-pill" data-filter="manda">M&amp;A</span>
   <span class="cat-pill" data-filter="diligence">Diligence</span>
   <span class="cat-pill" data-filter="arr-snowballs">ARR Snowballs</span>
   <span class="cat-pill" data-filter="frameworks">Frameworks</span>
@@ -655,6 +657,19 @@ html, body, .wp-site-blocks {
 
 <!-- ═══════════════════════════════════════ BLOG GRID ═══════════════════════════════════════ -->
 <div class="blog-grid">
+
+  <!-- Semrush x Adobe M&A Case Study -->
+  <a href="/semrush-adobe-acquisition-case-study/" class="blog-card" data-category="case-study manda revops">
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-category">M&amp;A Case Study</span>
+        <span class="card-date">June 2, 2026</span>
+      </div>
+      <h2>How Semrush Got Acquired by Adobe for a Premium Despite Declining Growth</h2>
+      <p class="card-excerpt">Adobe paid $1.9B for Semrush &mdash; ~3.8x NTM revenue, a 77% premium, and above the top of the comp range &mdash; despite years of decelerating growth. The playbook: structure pricing for expansion, build a cross-sell motion that doubles ARR per customer by cohort, and let gross margin and free cash flow follow. Reconstructed from SEC filings.</p>
+      <span class="card-link">Read Article &rarr;</span>
+    </div>
+  </a>
 
   <!-- What is cRPO (Diligence canonical) -->
   <a href="/blog/what-is-current-performance-obligation/" class="blog-card" data-category="diligence">
@@ -916,7 +931,7 @@ html, body, .wp-site-blocks {
       var filter=pill.getAttribute('data-filter');
       var visible=0;
       cards.forEach(function(card){
-        if(filter==='all'||card.getAttribute('data-category')===filter){
+        if(filter==='all'||(card.getAttribute('data-category')||'').split(/\s+/).indexOf(filter)>-1){
           card.style.display='';
           card.style.opacity='1';
           card.style.transform='';
