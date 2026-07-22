@@ -24,28 +24,24 @@ links to `/resources/…` everywhere; this runbook is the WordPress side.
 WordPress core auto-creates a redirect for the **changed slug itself** (`/blog/` → `/resources/`
 via `wp_old_slug_redirect`). It does **not** auto-redirect the child paths — do Step 2 for those.
 
-## Step 2 — 301 redirects (catch the old post URLs)
+## Step 2 — 301 redirect the old index (`/blog/`)
 
-Use the **Redirection** plugin (Tools → Redirection) — or Yoast Premium → Redirects, or Safe
-Redirect Manager. Add a **regex** rule so every old post URL maps to the new one:
+**Verified live 2026-07-22 after the slug change:** the child **posts already 301 automatically**
+(`/blog/<slug>/` → `/resources/<slug>/` via WP core's canonical redirect — confirmed with curl).
+The **only** gap is the index itself: `/blog/` returns **404**. So you only need ONE redirect.
 
-| Source (regex) | Target | Type |
+Use the **Redirection** plugin (Tools → Redirection) — or Yoast Premium → Redirects:
+
+| Source URL | Target URL | Type |
 |---|---|---|
-| `^/blog/(.*)$` | `/resources/$1` | 301 |
+| `/blog/` | `/resources/` | 301 |
 
-(Enable "Regex" on the rule. This covers `/blog/` → `/resources/` **and** every
-`/blog/<slug>/` → `/resources/<slug>/` in one line.)
+Optional belt-and-suspenders (also future-proofs any `/blog/...` path): add a second rule with
+**Regex** enabled — Source `^/blog/(.*)$` → Target `/resources/$1`.
 
-If you can't use regex, add explicit 301s for each post:
-`/blog/semrush-adobe-acquisition-case-study/` → `/resources/semrush-adobe-acquisition-case-study/`,
-`/blog/what-is-current-performance-obligation/` → `/resources/what-is-current-performance-obligation/`,
-`/blog/grow-nrr-101-to-105-case-study/` → `/resources/grow-nrr-101-to-105-case-study/`,
-`/blog/build-customer-data-cube-in-house-or-hire/` → `/resources/…`,
-`/blog/what-most-companies-build-vs-what-boards-need/` → `/resources/…`, … (one per post).
-
-> WordPress.com note: granular path redirects need the **Business/Commerce** plan (plugins
-> enabled — you already run WPCode, so this should be fine). The whole-site "Site Redirect"
-> feature is domain-level and is NOT what you want here.
+> WordPress.com note: the Redirection plugin needs the **Business/Commerce** plan (plugins
+> enabled — you already run WPCode, so this is fine). The whole-site "Site Redirect" upgrade is
+> domain-level and is NOT what you want here.
 
 ## Step 3 — Deploy the updated source
 
