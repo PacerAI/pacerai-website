@@ -28,6 +28,11 @@ Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.c
 
 All pages are deployed as WordPress Pages via REST API. Each page's HTML source file is the source of truth.
 
+> **v3.0.0 (2026-07-21):** the 6 `/solutions/*` pages are **retired from nav + homepage and
+> 301-redirected to the homepage** (source files kept for archive/rollback; do not redeploy their
+> content). Legacy `/pricing/` (111) **301-redirects to `/#pricing`** (the homepage pricing anchor).
+> Homepage nav is flat/centered (Revenue Modeling Agent · Use Cases · Pricing · Team · Resources).
+
 | Page | WP ID | Slug | Parent | Source File |
 |------|-------|------|--------|-------------|
 | **Home** | 25 | `no-title` | — | `src/homepage/index-build.html` |
@@ -46,7 +51,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | **Contact** | 375 | `contact` | 366 | `src/team/contact.html` |
 | **Build vs Hire Blog** | 491 | `build-customer-data-cube-in-house-or-hire` | 230 | `src/blog/posts/491-build.html` |
 | **cRPO Blog** | 865 | `what-is-current-performance-obligation` | 230 | `src/blog/posts/crpo-build.html` |
-| Pricing | 111 | `pricing` | — | *(legacy — not managed by this repo)* |
+| Pricing | 111 | `pricing` | — | *(legacy — v3: 301 → `/#pricing`)* |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
 **Live URLs:**
@@ -250,16 +255,18 @@ Every page follows the same pattern:
 **Key CSS overrides for WordPress TT4:**
 - Hide theme header/footer: `.wp-site-blocks > header, .wp-site-blocks > footer { display: none }`
 - Hide WP page title: `.wp-block-post-title, .wp-block-spacer { display: none }`
-- Force dark background: `html, body, .wp-site-blocks { background: #080E1C }`
+- Force background: v3 bone homepage → `html, body, .wp-site-blocks { background: #F5F4EF }`; legacy dark pages → `#080E1C`
 - Remove container constraints: `.is-layout-constrained, .has-global-padding { max-width: none; padding: 0 }`
 
 ## Brand Constraints
 
 <!-- SOURCE: pacerai-foundation/brand/ and pacerai-foundation/commercial/cta-language.yml -->
 
-- **Fonts:** DM Sans (body), Cormorant Garamond (headings) — approved by Will
-- **Background:** Dark navy (#080E1C)
-- **Primary accent:** Teal (#27899A), Teal Light (#70C49C)
+- **Fonts:** DM Sans (body), Cormorant Garamond (legacy headings). The v3 bone homepage uses DM Sans (weight 800) for headings per the approved demo design.
+- **Background (v3.0.0+, "Claude-bone"):** bone `#F5F4EF` (surface `#FAFAF7`). The homepage is the reference. **Inner pages (platform/team/about/contact) + the blog are still on the legacy dark theme** pending their v3.0.x bone conversion — don't assume a page is bone until converted.
+- **Legacy dark background (pre-v3, unconverted pages):** Dark navy (#080E1C)
+- **Primary accent:** Teal — bone: `#2E7D74` / `#70C49C`; legacy dark: `#27899A` / `#70C49C`
+- **v3 bone tokens:** `--bone:#F5F4EF --surface:#FAFAF7 --navy:#1F3864 --teal:#2E7D74 --ink:#20242B --muted:#5F5A50 --line:#E6E1D6`
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents. No playful illustrations or rounded pill buttons.
 - **CTA language:** "Request a Demo", "See a Live ARR Demo", "Talk to a RevOps Expert" — never "Get Started Free"
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."

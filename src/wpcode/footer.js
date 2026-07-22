@@ -22,8 +22,14 @@
  *   5. Research waitlist form handler (.research-waitlist-form)
  *      - POSTs to same Worker with asset_slug 'research-waitlist'
  *      - No download; confirms signup only
+ *   6. v3 bone homepage — hero rotor word swap (#pacerai-homepage .rotor)
+ *   7. v3 bone homepage — logo marquee duplication (#pacerai-homepage .track)
+ *   8. v3 bone homepage — pipeline number stream (#pacerai-homepage .how .pipe-nums)
+ *      (#1 typed-line stays for legacy pages; it exits if .typed-line is absent)
  *
  * HISTORY:
+ *   2026-07-21  v3.0.0 Claude-bone redesign: added hero rotor, logo marquee,
+ *               and bone pipeline number-stream (sections 6-8)
  *   2026-04-17  Added white paper CTA form handler (Phase 3 deploy)
  *               Added pipeline animation + mobile nav (moved from inline)
  *   Prior       Homepage typed-line animation (original WPCode install)
@@ -239,4 +245,52 @@
       button.textContent = origText;
     });
   });
+})();
+
+/* --- 6. v3 bone homepage — hero rotor word swap --- */
+(function() {
+  var rotor = document.querySelector('#pacerai-homepage .rotor');
+  if (!rotor) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var phrases = ['Sales Targets', 'ARR Waterfalls', 'ARR Reporting', 'Go-To-Market Plans',
+    'Sales-Led Growth', 'Product-Led Growth', 'Capacity Modeling', 'Coverage Modeling',
+    'Headcount Planning', 'Expansion Whitespace', 'Forecasting', 'Performance Tracking'];
+  var i = 0;
+  setInterval(function() {
+    i = (i + 1) % phrases.length;
+    rotor.style.opacity = '0';
+    setTimeout(function() {
+      rotor.textContent = phrases[i];
+      rotor.style.transition = 'opacity .35s ease';
+      rotor.style.opacity = '1';
+    }, 200);
+  }, 2400);
+})();
+
+/* --- 7. v3 bone homepage — logo marquee duplication (seamless loop) --- */
+(function() {
+  var track = document.querySelector('#pacerai-homepage .marquee .track');
+  if (!track || track.getAttribute('data-doubled')) return;
+  track.innerHTML += track.innerHTML;
+  track.setAttribute('data-doubled', '1');
+})();
+
+/* --- 8. v3 bone homepage — pipeline number stream --- */
+(function() {
+  var c = document.querySelector('#pacerai-homepage .how .pipe-nums');
+  if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var nums = ['$24,035', '$81,115', '$88,980', '$118,795', 'NRR 101.3%', 'GRR 91.3%',
+    '$197,545', '$510,470', '106.7%', '29.4%', '$302,695', 'NRR 108.1%'];
+  function spawn() {
+    var el = document.createElement('span');
+    el.className = 'pipe-num-particle';
+    el.textContent = nums[Math.floor(Math.random() * nums.length)];
+    el.style.top = (Math.random() * 300) + 'px';
+    el.style.animationDuration = (8 + Math.random() * 6) + 's';
+    el.style.fontSize = (9 + Math.random() * 4) + 'px';
+    c.appendChild(el);
+    el.addEventListener('animationend', function() { el.remove(); });
+  }
+  for (var i = 0; i < 6; i++) setTimeout(spawn, i * 1500);
+  setInterval(spawn, 2000);
 })();

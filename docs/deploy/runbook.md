@@ -34,12 +34,43 @@ These were discovered during the April 3, 2026 deployment. Violating any of thes
 
 ### WPCode CSS Delivery (Homepage)
 
-The homepage CSS is too large (~37K chars) to fit inline alongside content. It is delivered via the **WPCode Header & Footer** plugin:
+> **v3.0.0 change:** the bone homepage CSS is **inline** (~16K, in the page `<style>`), so the
+> homepage no longer uses the WPCode **Header** CSS snippet. At v3 deploy, **blank** that Header
+> snippet (its old ~37K dark CSS must not linger). The note below describes the pre-v3 mechanism,
+> retained for the still-dark inner pages / rollback.
+
+The (legacy dark) homepage CSS was too large (~37K chars) to fit inline alongside content. It was delivered via the **WPCode Header & Footer** plugin:
 
 1. **Source file:** `src/homepage/wpcode-homepage-css.css` (also synced to `src/homepage/homepage-v2.css`)
 2. **WPCode location:** Header injection → wraps in `<style>` tags → loads in `<head>` before page content
 3. **WordPress behavior:** WPCode injects into `<head>` BEFORE the content block is processed, so the CSS is available when the HTML renders. This bypasses the `<link rel="stylesheet">` limitation.
 4. **When to update:** After any CSS changes, update both the source file AND the WPCode snippet in WP Admin → WPCode → Header & Footer
+
+### v3.0.0 Claude-bone deploy (special steps)
+
+Do these once, in order, before/with the homepage (WP 25) deploy. The launch gate is the demo
+iframe rendering live.
+
+1. **Blank the WPCode Header CSS snippet** (WP Admin → WPCode → Header & Footer). The bone CSS is
+   inline in `src/homepage/index-build.html` now; the old dark 37K CSS must be removed.
+2. **Paste the updated `src/wpcode/footer.js`** into the WPCode **Footer** snippet (adds the hero
+   rotor, logo marquee, and bone pipeline number-stream; keeps the Research-waitlist handler). Use
+   the non-minified file as-is — WordPress breaks minified JS mid-token.
+3. **Host the demo HTML off-WP and wire the iframe.** `demo-video-by-claude.html` (~160K) exceeds
+   the WP page limit, so host it on Cloudflare Pages/Worker (or similar) and replace the
+   `https://demo.getpacerai.com/` placeholder `src` in the homepage showcase iframe with the real URL.
+4. **Upload `tahoe-bg.jpg`** to the WP media library and relink the showcase `background` URL
+   (`.../wp-content/uploads/2026/07/tahoe-bg.jpg`).
+5. **301 redirects** (WP Admin / Yoast): the 6 `/solutions/*` → homepage; legacy `/pricing/` (WP 111)
+   → `/#pricing`; audit + redirect any other orphans.
+6. **Deploy + verify:** `python3 scripts/deploy.py 25` → confirm 200 + the demo iframe renders +
+   bone background (no dark gutters) + centered nav.
+7. **After PR merge:** apply the annotated tag — `git tag -a v3.0.0 -m "v3.0.0 Claude-bone homepage"`.
+
+**v3.0.0 rollback.** Re-POST `docs/review/pre-deploy-backup-25-*.json` (`content.raw`) to restore
+the old homepage instantly; paste `docs/design/homepage/archive/wpcode-homepage-css_dark_2026-07-21.css`
+back into the WPCode Header snippet; remove the solutions + `/pricing/` redirects. The archived dark
+homepage source is `docs/design/homepage/archive/index-build-dark-navy_2026-07-21.html`.
 
 ### Pre-Deploy Size Check
 
