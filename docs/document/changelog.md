@@ -60,6 +60,12 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
     homepage case-study card) and the blog filter pills are deep-links (`/resources#case-study`).
     This is a slug/permalink change — **flagged for Will**; do the slug change + redirects at deploy.
 - **Deploy (after prep):** `deploy.py 25` → verify 200 + demo iframe renders (launch gate).
+- **v3.0.x done (2026-07-22, cont.):** Team page + all **14 blog post pages** converted to bone
+  (token remap + bone nav/footer + `/resources/` links); homepage r2/r3 (Calendly CTAs, trimmed
+  Security, hero rotor inline + new phrases, "On-Pace to Plan"); blog **/resources rename**
+  (see `docs/deploy/blog-to-resources-rename.md` for the WP slug + 301 steps). **Blog posts pass
+  all structural checks but have pre-existing article-body voice-lint hits** — need Will's voice
+  pass (or `--force`) before deploy; the bone conversion itself is complete.
 - **v3.0.x done (2026-07-22):** blog (WP 230) restyled to bone (token remap + bone nav/footer,
   matches the homepage); homepage review round 1 (centered How-It-Works, 3-line hero, nav reorder
   + Free Diagnostic CTA, new #case-studies/#integrations/#security/#value sections); demo hosting

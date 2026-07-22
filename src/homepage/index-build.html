@@ -221,7 +221,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 <section class="hero" data-section="top">
   <div class="kick">Revenue Modeling Agent</div>
   <h1>Pacer AI helps Sales Leaders<br>build financial models <span class="for-rotor">for <span class="rotor">Forecasting</span></span></h1>
-  <p class="hero-sub">Reconciled to Finance, Built for Operations, Tracked to Plan.</p>
+  <p class="hero-sub">Reconciled to Finance, Built for Operations, On-Pace to Plan.</p>
 </section>
 
 <section class="proof">
@@ -314,18 +314,28 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 
 <section class="band" data-section="use-cases">
   <div class="eyebrow">Use Cases</div>
-  <h2>Two models Sales Leaders live in</h2>
-  <p class="lede">Both start from your real ARR and reconcile to Finance &mdash; the difference is the question you&rsquo;re answering.</p>
+  <h2>What CROs and RevOps leaders hire us to fix</h2>
+  <p class="lede">We read 30 CRO and VP RevOps job descriptions at B2B SaaS companies, posted January&ndash;July 2026. Four mandates came up again and again &mdash; in the companies&rsquo; own words.</p>
   <div class="usecases">
-    <div class="uc" data-section="gtm-financial-modeling">
-      <h3>GTM Financial Modeling</h3>
-      <p>Turn a top-down number into a bottoms-up operating model: pipeline, coverage, capacity, and headcount sized to the target.</p>
-      <ul><li>Sales targets &rarr; coverage &amp; capacity</li><li>Headcount and ramp planning</li><li>Sales-led and product-led motions</li></ul>
+    <div class="uc" data-section="revenue-forecasting-model">
+      <h3>The forecast lives in one person&rsquo;s spreadsheet</h3>
+      <p><b>23 of 30 postings.</b> When the forecast is rebuilt by hand each cycle, accuracy depends on who holds the file. Pacer AI builds coverage, capacity, and pace-to-plan from your real pipeline &mdash; the same numbers every run.</p>
+      <ul><li>Coverage and capacity sized to the target</li><li>Pace-to-plan tracking by segment</li><li>A forecast that reconciles to Finance</li></ul>
     </div>
-    <div class="uc" data-section="arr-waterfall-modeling">
-      <h3>ARR Waterfall Modeling</h3>
-      <p>New, expansion, contraction, and churn at the account-product grain &mdash; a movement bridge that ties to reported ARR to the dollar.</p>
-      <ul><li>ARR reporting &amp; board bridges</li><li>Expansion whitespace &amp; retention</li><li>Forecasting and pace-to-plan tracking</li></ul>
+    <div class="uc" data-section="revenue-data-governance">
+      <h3>Two reports, two ARR numbers, no tiebreak</h3>
+      <p><b>16 of 30 postings.</b> With no governed source of truth for revenue data, the CRM number and the finance number disagree and nobody can settle it. Pacer AI defines one KPI set with documented lineage.</p>
+      <ul><li>One governed KPI dictionary</li><li>CRM-to-finance tie-out</li><li>Definitions that survive a sponsor review</li></ul>
+    </div>
+    <div class="uc" data-section="quota-territory-capacity">
+      <h3>Quota and territory are modeled by hand</h3>
+      <p><b>16 of 30 postings.</b> Comp design, quota setting, and territory capacity run through one analyst&rsquo;s workbook, so every plan change becomes a project. Pacer AI models capacity, attainment, and comp accrual against booked revenue.</p>
+      <ul><li>Capacity and territory design</li><li>Quota attainment and rep ramp</li><li>Comp accrual tied to bookings</li></ul>
+    </div>
+    <div class="uc" data-section="gtm-stack-reconciliation">
+      <h3>The GTM stack is stitched together by hand</h3>
+      <p><b>14 of 30 postings.</b> Salesforce plus a ring of point tools, integrated by one owner. The seam that breaks is CRM to finance. Pacer AI closes it with a data cube that reconciles pipeline to reported ARR.</p>
+      <ul><li>Salesforce as the system of record</li><li>Pipeline-to-ARR reconciliation</li><li>Schema drift and freshness monitoring</li></ul>
     </div>
   </div>
 </section>
@@ -403,8 +413,24 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     <details><summary>How is this different from FP&amp;A tools like Vena or Planful?</summary><p>FP&amp;A tools start with the GL. We start with transactional customer data to build M&amp;A-grade ARR decomposition, cohort retention, and expansion analytics that FP&amp;A tools cannot produce.</p></details>
     <details><summary>What does pricing look like?</summary><p>Pacer AI uses an alignment-based pricing model to align Pacer AI with its clients&rsquo; goals.</p></details>
     <details><summary>Do you work with PE funds directly?</summary><p>Yes. We work with operating partners and deal teams on both pre-close diligence and post-close value creation across the portfolio.</p></details>
+    <details><summary>Who should own revenue forecasting &mdash; RevOps or Finance?</summary><p>Ownership sits with RevOps; the definitions sit with Finance. The common failure is a forecast owned by RevOps that never reconciles to the ARR Finance reports, so the two functions bring different numbers to the same board meeting. Pacer AI builds the forecast off the same governed data the finance number comes from, so there is one set of definitions and one answer.</p></details>
+    <details><summary>Why don&rsquo;t our CRM and finance ARR numbers match?</summary><p>Because they are measuring different events. The CRM records bookings when a deal closes; Finance records revenue when it is recognized, net of contraction, churn, and timing. Without a defined bridge between them, both numbers are defensible and neither is reconcilable. Pacer AI builds that bridge at the account-product grain so pipeline ties to reported ARR to the dollar.</p></details>
+    <details><summary>What does a VP of Revenue Operations actually own?</summary><p>In the 30 B2B SaaS job descriptions we analyzed in 2026, the role owns four things: the forecast and pipeline cadence, the governed revenue KPI set, quota and territory capacity, and the GTM tech stack. The common thread is that all four are owned by a person, not produced by a system &mdash; which is why the role turns over.</p></details>
   </div>
 </section>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What size companies do you work with?","acceptedAnswer":{"@type":"Answer","text":"We work with PE-backed B2B SaaS companies from $10M to $1B+ ARR. Our platform and advisory services scale from mid-market portfolio companies to enterprise."}},
+{"@type":"Question","name":"How long does the initial setup take?","acceptedAnswer":{"@type":"Answer","text":"Most engagements go from kickoff to board-ready output in days, not months. The data cube build typically takes 2-4 weeks depending on source system complexity."}},
+{"@type":"Question","name":"What systems do you connect to?","acceptedAnswer":{"@type":"Answer","text":"CRM (Salesforce, HubSpot), billing (Stripe, Zuora, Chargebee), ERP (NetSuite, Sage Intacct), and data warehouses (Snowflake, Databricks, BigQuery)."}},
+{"@type":"Question","name":"How is this different from FP&A tools like Vena or Planful?","acceptedAnswer":{"@type":"Answer","text":"FP&A tools start with the GL. We start with transactional customer data to build M&A-grade ARR decomposition, cohort retention, and expansion analytics that FP&A tools cannot produce."}},
+{"@type":"Question","name":"Do you work with PE funds directly?","acceptedAnswer":{"@type":"Answer","text":"Yes. We work with operating partners and deal teams on both pre-close diligence and post-close value creation across the portfolio."}},
+{"@type":"Question","name":"Who should own revenue forecasting - RevOps or Finance?","acceptedAnswer":{"@type":"Answer","text":"Ownership sits with RevOps; the definitions sit with Finance. The common failure is a forecast owned by RevOps that never reconciles to the ARR Finance reports, so the two functions bring different numbers to the same board meeting. Pacer AI builds the forecast off the same governed data the finance number comes from, so there is one set of definitions and one answer."}},
+{"@type":"Question","name":"Why don't our CRM and finance ARR numbers match?","acceptedAnswer":{"@type":"Answer","text":"Because they are measuring different events. The CRM records bookings when a deal closes; Finance records revenue when it is recognized, net of contraction, churn, and timing. Without a defined bridge between them, both numbers are defensible and neither is reconcilable. Pacer AI builds that bridge at the account-product grain so pipeline ties to reported ARR to the dollar."}},
+{"@type":"Question","name":"What does a VP of Revenue Operations actually own?","acceptedAnswer":{"@type":"Answer","text":"In the 30 B2B SaaS job descriptions we analyzed in 2026, the role owns four things: the forecast and pipeline cadence, the governed revenue KPI set, quota and territory capacity, and the GTM tech stack. The common thread is that all four are owned by a person, not produced by a system - which is why the role turns over."}}
+]}
+</script>
 
 <section class="cta" data-section="pace-cta">
   <div class="eyebrow">Get Started</div>
