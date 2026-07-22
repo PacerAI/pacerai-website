@@ -12,3 +12,4 @@ infra/*/.wrangler/
 .env
 .env.local
 .env.*.local
+docs/design/homepage/_*.html
