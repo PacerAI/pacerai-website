@@ -13,3 +13,4 @@ infra/*/.wrangler/
 .env.local
 .env.*.local
 docs/design/homepage/_*.html
+docs/design/homepage/bone_v3-*.html
