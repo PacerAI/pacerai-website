@@ -54,6 +54,11 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
   - Paste the updated `src/wpcode/footer.js` into the WPCode Footer snippet.
   - **301 redirects:** 6 `/solutions/*` → homepage; legacy `/pricing/` (WP 111) → `/#pricing`;
     audit + redirect any other orphans.
+  - **⚠ Blog → Resources rename (round 3):** change WP page 230 slug `blog` → `resources`, then
+    301 `/blog/` → `/resources/` **and** each `/blog/<slug>/` → `/resources/<slug>/` (posts move
+    with the parent). Source now links to `/resources/…` everywhere (nav, footer, article links,
+    homepage case-study card) and the blog filter pills are deep-links (`/resources#case-study`).
+    This is a slug/permalink change — **flagged for Will**; do the slug change + redirects at deploy.
 - **Deploy (after prep):** `deploy.py 25` → verify 200 + demo iframe renders (launch gate).
 - **v3.0.x done (2026-07-22):** blog (WP 230) restyled to bone (token remap + bone nav/footer,
   matches the homepage); homepage review round 1 (centered How-It-Works, 3-line hero, nav reorder

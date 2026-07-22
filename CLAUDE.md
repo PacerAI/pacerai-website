@@ -31,7 +31,9 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 > **v3.0.0 (2026-07-21):** the 6 `/solutions/*` pages are **retired from nav + homepage and
 > 301-redirected to the homepage** (source files kept for archive/rollback; do not redeploy their
 > content). Legacy `/pricing/` (111) **301-redirects to `/#pricing`** (the homepage pricing anchor).
-> Homepage nav is flat/centered (Revenue Modeling Agent · Use Cases · Pricing · Team · Resources).
+> Homepage nav is flat/centered (Revenue Modeling Agent · Use Cases · Team · Pricing · Resources).
+> **Round 3:** the Blog (230) is being renamed to **/resources** — change its slug `blog`→`resources`
+> and 301 `/blog/` + every `/blog/<slug>/` → `/resources/…` at deploy. "Resources" nav → `/resources/`.
 
 | Page | WP ID | Slug | Parent | Source File |
 |------|-------|------|--------|-------------|

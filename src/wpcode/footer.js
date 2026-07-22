@@ -252,9 +252,7 @@
   var rotor = document.querySelector('#pacerai-homepage .rotor');
   if (!rotor) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var phrases = ['Sales Targets', 'ARR Waterfalls', 'ARR Reporting', 'Go-To-Market Plans',
-    'Sales-Led Growth', 'Product-Led Growth', 'Capacity Modeling', 'Coverage Modeling',
-    'Headcount Planning', 'Expansion Whitespace', 'Forecasting', 'Performance Tracking'];
+  var phrases = ['Forecasting', 'Sales Planning', 'ARR Waterfall', 'ARR Reporting'];
   var i = 0;
   setInterval(function() {
     i = (i + 1) % phrases.length;
