@@ -56,9 +56,11 @@ iframe rendering live.
 2. **Paste the updated `src/wpcode/footer.js`** into the WPCode **Footer** snippet (adds the hero
    rotor, logo marquee, and bone pipeline number-stream; keeps the Research-waitlist handler). Use
    the non-minified file as-is — WordPress breaks minified JS mid-token.
-3. **Host the demo HTML off-WP and wire the iframe.** `demo-video-by-claude.html` (~160K) exceeds
-   the WP page limit, so host it on Cloudflare Pages/Worker (or similar) and replace the
-   `https://demo.getpacerai.com/` placeholder `src` in the homepage showcase iframe with the real URL.
+3. **Deploy the demo Worker** (serves the ~160K demo the WP page can't hold). The iframe already
+   points at it — you just need to deploy it once:
+   `cd pacerai-gtm/infra/pacer-demo-worker && npm install && npx wrangler login && npm run deploy`
+   → `https://pacer-demo-worker.will-078.workers.dev/`. (Optional nicer URL `demo.getpacerai.com`
+   in that worker's README — needs the getpacerai.com zone on Cloudflare DNS.)
 4. **Upload `tahoe-bg.jpg`** to the WP media library and relink the showcase `background` URL
    (`.../wp-content/uploads/2026/07/tahoe-bg.jpg`).
 5. **301 redirects** (WP Admin / Yoast): the 6 `/solutions/*` → homepage; legacy `/pricing/` (WP 111)
