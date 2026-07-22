@@ -20,13 +20,22 @@ demo-less page. That's expected — use the preview instead.
 # 2. rebuild the preview (wraps the source into a full doc, inlines the JS, uses local assets)
 python3 scripts/build_preview.py
 
-# 3a. open in VS Code Live Server:
-#     docs/design/homepage/index-build-bone_v3_2026-07-22.html
-#     (right-click -> Open with Live Server)
+# 3a. open in VS Code Live Server (files in docs/design/homepage/):
+#     index-build-bone_v3_2026-07-22.html   (homepage)
+#     _blog.html                            (blog)
+#     _team.html                            (team)
 # --- or ---
-# 3b. serve it directly and open the printed URL:
-python3 scripts/build_preview.py --serve            # http://127.0.0.1:5599/index-build-bone_v3_2026-07-22.html
+# 3b. serve all previews and open the homepage in Chrome:
+python3 scripts/build_preview.py --open             # or --serve to just serve
 ```
+
+Preview URLs when served (port 5599):
+- homepage — `http://127.0.0.1:5599/index-build-bone_v3_2026-07-22.html`
+- blog — `http://127.0.0.1:5599/_blog.html`
+- team — `http://127.0.0.1:5599/_team.html`
+
+(The blog/team previews render their own inline JS; the homepage inlines the WPCode footer JS
+and uses local demo/Tahoe assets. All three match the deployed look.)
 
 The build copies the demo (`demo-video-by-claude.html`) and `tahoe-bg.jpg` next to the preview
 (git-ignored) so it renders exactly like the deployed page — animated pipeline, rotor headline,
