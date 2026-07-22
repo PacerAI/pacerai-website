@@ -55,9 +55,13 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
   - **301 redirects:** 6 `/solutions/*` → homepage; legacy `/pricing/` (WP 111) → `/#pricing`;
     audit + redirect any other orphans.
 - **Deploy (after prep):** `deploy.py 25` → verify 200 + demo iframe renders (launch gate).
-- **v3.0.x follow-ups (tracked, not in this ship):** bone restyle of the blog (WP 230); full bone
-  conversion + new-nav adoption for platform/team/about/contact; hero/tiles/use-case copy voice
-  pass; positioning review ("Revenue Modeling Agent" framing).
+- **v3.0.x done (2026-07-22):** blog (WP 230) restyled to bone (token remap + bone nav/footer,
+  matches the homepage); homepage review round 1 (centered How-It-Works, 3-line hero, nav reorder
+  + Free Diagnostic CTA, new #case-studies/#integrations/#security/#value sections); demo hosting
+  Worker (`infra/pacer-demo-worker/`); repeatable preview loop (`scripts/build_preview.py`).
+- **v3.0.x follow-ups (still tracked):** full bone conversion + new-nav adoption for
+  platform/team/about/contact; voice/content pass on the 4 draft homepage sections; positioning
+  review ("Revenue Modeling Agent" framing); delete orphan scratch `src/homepage/demo/`.
 - **Backup:** `deploy.py` writes `docs/review/pre-deploy-backup-25-*.json` at deploy time.
 
 ---
