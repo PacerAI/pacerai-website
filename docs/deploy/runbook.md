@@ -46,6 +46,16 @@ The (legacy dark) homepage CSS was too large (~37K chars) to fit inline alongsid
 3. **WordPress behavior:** WPCode injects into `<head>` BEFORE the content block is processed, so the CSS is available when the HTML renders. This bypasses the `<link rel="stylesheet">` limitation.
 4. **When to update:** After any CSS changes, update both the source file AND the WPCode snippet in WP Admin → WPCode → Header & Footer
 
+### Previewing before deploy
+
+The homepage source is a WP fragment (no `<html>`, JS in WPCode, prod asset URLs) so it won't
+render correctly opened raw. Use the preview builder instead — see
+`docs/design/homepage/PREVIEW.md`:
+```bash
+python3 scripts/build_preview.py --serve   # http://127.0.0.1:5599/index-build-bone_v3_2026-07-22.html
+```
+Edit the SOURCE OF TRUTH `src/homepage/index-build.html`; the preview is generated from it.
+
 ### v3.0.0 Claude-bone deploy (special steps)
 
 Do these once, in order, before/with the homepage (WP 25) deploy. The launch gate is the demo
