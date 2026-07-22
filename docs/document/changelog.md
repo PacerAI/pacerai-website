@@ -42,11 +42,11 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
   - **Archived** the dark homepage/nav/footer + the 37K WPCode dark CSS under
     `docs/design/homepage/archive/` + `docs/design/nav_headers/archive/` (README supersession note).
 - **Demo hosting (built 2026-07-22):** the ~160K demo can't be a WP page, so it's served by a
-  Cloudflare Worker — **`pacerai-gtm/infra/pacer-demo-worker/`** — at
+  Cloudflare Worker in this repo — **`infra/pacer-demo-worker/`** — at
   `https://pacer-demo-worker.will-078.workers.dev/`. The homepage showcase iframe points there
-  (no longer a placeholder). One-time deploy: `cd pacerai-gtm/infra/pacer-demo-worker && npm
-  install && npx wrangler login && npm run deploy`. Optional custom domain `demo.getpacerai.com`
-  documented in that worker's README (needs the zone on Cloudflare DNS).
+  (no longer a placeholder). One-time deploy: `cd infra/pacer-demo-worker && npm install && npx
+  wrangler login && npm run deploy`. Optional custom domain `demo.getpacerai.com` documented in
+  that worker's README (needs the zone on Cloudflare DNS).
 - **Manual WordPress prep required before deploy (Will-gated):**
   - Deploy `pacer-demo-worker` (above) so the showcase iframe resolves.
   - Upload `tahoe-bg.jpg` to WP media; relink the showcase background.

@@ -56,9 +56,9 @@ iframe rendering live.
 2. **Paste the updated `src/wpcode/footer.js`** into the WPCode **Footer** snippet (adds the hero
    rotor, logo marquee, and bone pipeline number-stream; keeps the Research-waitlist handler). Use
    the non-minified file as-is — WordPress breaks minified JS mid-token.
-3. **Deploy the demo Worker** (serves the ~160K demo the WP page can't hold). The iframe already
-   points at it — you just need to deploy it once:
-   `cd pacerai-gtm/infra/pacer-demo-worker && npm install && npx wrangler login && npm run deploy`
+3. **Deploy the demo Worker** (`infra/pacer-demo-worker/` in this repo; serves the ~160K demo the
+   WP page can't hold). The iframe already points at it — you just need to deploy it once:
+   `cd infra/pacer-demo-worker && npm install && npx wrangler login && npm run deploy`
    → `https://pacer-demo-worker.will-078.workers.dev/`. (Optional nicer URL `demo.getpacerai.com`
    in that worker's README — needs the getpacerai.com zone on Cloudflare DNS.)
 4. **Upload `tahoe-bg.jpg`** to the WP media library and relink the showcase `background` URL

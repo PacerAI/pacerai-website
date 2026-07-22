@@ -21,7 +21,7 @@ Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.c
 - **CMS:** WordPress.com (hosted, no SSH/WP-CLI access)
 - **Theme:** Twenty Twenty-Four (WordPress default — fully overridden by inline CSS)
 - **Deploy method:** WordPress REST API + Application Password (Python `requests` library)
-- **No build tools** — no npm, no bundler, no framework. Pure HTML/CSS, vanilla JS for mobile nav only.
+- **No build tools** for the pages — no npm, no bundler, no framework. Pure HTML/CSS, vanilla JS for mobile nav only. *(Exception: `infra/pacer-demo-worker/` is a self-contained Cloudflare Worker — its own npm + wrangler — that serves the v3 homepage's demo-video iframe. It is website infra, isolated from page authoring; see its README.)*
 - **Font loading:** Google Fonts loaded by WordPress — no `<link>` tags needed in page HTML.
 
 ## WordPress Page Registry

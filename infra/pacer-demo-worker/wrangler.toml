@@ -1,0 +1,23 @@
+name = "pacer-demo-worker"
+main = "src/index.ts"
+compatibility_date = "2025-04-01"
+
+# Serves at https://pacer-demo-worker.will-078.workers.dev
+# (this is the URL the getpacerai.com homepage showcase iframe points at).
+workers_dev = true
+
+# Bundle the demo HTML as a text module so `import demoHtml from "./demo.html"` works.
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = false
+
+[observability]
+enabled = true
+
+# OPTIONAL custom-domain upgrade (nicer URL: https://demo.getpacerai.com).
+# Requires the getpacerai.com zone to be on Cloudflare DNS. If so, uncomment,
+# set workers_dev = false above, redeploy, then update the homepage iframe src.
+# [[routes]]
+# pattern = "demo.getpacerai.com"
+# custom_domain = true
