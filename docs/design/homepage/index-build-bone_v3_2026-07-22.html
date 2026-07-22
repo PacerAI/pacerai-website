@@ -1,0 +1,692 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pacer AI — v3 Claude-bone homepage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head><body>
+<style>
+.wp-site-blocks > header, .wp-site-blocks > footer, header.wp-block-template-part, footer.wp-block-template-part, .wp-block-template-part:first-child { display: none !important; }
+.wp-block-post-title, .wp-block-spacer { display: none !important; }
+html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: #F5F4EF !important; }
+.wp-site-blocks, .wp-site-blocks > main, .wp-site-blocks > main > .wp-block-group, .wp-site-blocks .is-layout-constrained, .wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)), .has-global-padding, .entry-content { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
+
+:root{
+  --bone:#F5F4EF; --surface:#FAFAF7; --card:#F1EFE8; --line:#E6E1D6;
+  --navy:#1F3864; --navy-dark:#16294a; --navy-light:#2B4A7A; --teal:#2E7D74; --teal-light:#70C49C;
+  --ink:#20242B; --ink-mid:#3A372F; --muted:#5F5A50; --kick:#9A8F78;
+  --font-body:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;
+  --maxw:1180px;
+}
+#pacerai-homepage *{margin:0;padding:0;box-sizing:border-box}
+#pacerai-homepage{width:100%;max-width:100vw;overflow-x:hidden;font-family:var(--font-body);background:var(--bone);color:var(--ink);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+#pacerai-homepage a{color:inherit;text-decoration:none}
+#pacerai-homepage img{max-width:100%}
+
+#pacerai-homepage nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:0 32px;height:64px;background:rgba(245,244,239,.86);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+#pacerai-homepage .nav-logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;letter-spacing:-.2px;color:var(--ink);justify-self:start}
+#pacerai-homepage .nav-logo .chev{height:15px;width:auto;fill:none;stroke:var(--navy);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#pacerai-homepage .nav-logo span{color:var(--teal)}
+#pacerai-homepage .nav-links{display:flex;align-items:center;gap:4px;list-style:none;justify-self:center}
+#pacerai-homepage .nav-links a{display:inline-block;padding:9px 13px;border-radius:8px;font-size:14.5px;font-weight:600;color:#494540;white-space:nowrap;cursor:pointer}
+#pacerai-homepage .nav-links a:hover{background:#ebe8df;color:var(--ink)}
+#pacerai-homepage .nav-right{display:flex;align-items:center;gap:10px;justify-self:end}
+#pacerai-homepage .btn-login{padding:9px 16px;border-radius:9px;font-weight:700;font-size:14px;color:#fff;background:var(--navy)}
+#pacerai-homepage .btn-login:hover{background:var(--navy-dark)}
+#pacerai-homepage .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+#pacerai-homepage .mobile-menu-btn span{display:block;width:22px;height:2px;background:var(--ink-mid);border-radius:2px}
+
+#pacerai-homepage .hero{text-align:left;padding:120px 24px 24px;max-width:var(--maxw);margin:0 auto}
+#pacerai-homepage .kick{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--kick);font-weight:700}
+#pacerai-homepage .hero h1{font-size:clamp(32px,5.4vw,46px);line-height:1.16;margin:16px 0 0;font-weight:800;letter-spacing:-.6px;color:var(--ink);max-width:940px}
+#pacerai-homepage .rotor{display:inline-block;color:var(--teal)}
+#pacerai-homepage .hero-sub{font-size:17px;color:var(--muted);max-width:640px;margin:22px 0 0;line-height:1.55}
+
+#pacerai-homepage .proof{max-width:var(--maxw);margin:34px auto 0;padding:0 24px}
+#pacerai-homepage .stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-bottom:22px}
+#pacerai-homepage .stat{text-align:center}
+#pacerai-homepage .stat b{display:block;font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.3px}
+#pacerai-homepage .stat span{font-size:12.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--kick);font-weight:700}
+#pacerai-homepage .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+#pacerai-homepage .track{display:flex;gap:52px;width:max-content;align-items:center;animation:paceScroll 34s linear infinite}
+#pacerai-homepage .track:hover{animation-play-state:paused}
+@keyframes paceScroll{to{transform:translateX(-50%)}}
+#pacerai-homepage .track img{height:38px;width:auto;object-fit:contain;opacity:.72;filter:grayscale(1)}
+
+#pacerai-homepage .showcase-wrap{padding:40px 24px 30px}
+#pacerai-homepage .showcase{max-width:var(--maxw);margin:0 auto;border-radius:22px;overflow:hidden;padding:16px;background:#274a72 url('https://getpacerai.com/wp-content/uploads/2026/07/tahoe-bg.jpg') center 40%/cover no-repeat;box-shadow:0 34px 100px rgba(10,20,45,.34)}
+#pacerai-homepage .showcase iframe{display:block;width:100%;height:620px;border:0;background:transparent}
+
+#pacerai-homepage .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+#pacerai-homepage .steps{margin:40px auto 30px;text-align:center;color:var(--muted);font-size:15px}
+#pacerai-homepage .steps b{color:var(--navy)}
+#pacerai-homepage .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:0 auto 20px}
+#pacerai-homepage .tile{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--surface)}
+#pacerai-homepage .tile h3{margin:0 0 6px;font-size:16px;color:var(--navy)}
+#pacerai-homepage .tile p{margin:0;color:#5a5648;font-size:14px;line-height:1.5}
+
+#pacerai-homepage .band{max-width:var(--maxw);margin:0 auto;padding:64px 24px 8px}
+#pacerai-homepage .band .eyebrow{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--kick);font-weight:700}
+#pacerai-homepage .band h2{font-size:clamp(26px,3.6vw,30px);font-weight:800;letter-spacing:-.4px;margin:8px 0 8px;color:var(--ink)}
+#pacerai-homepage .band .lede{font-size:16px;color:var(--muted);max-width:640px;line-height:1.55;margin:0}
+#pacerai-homepage .usecases{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+#pacerai-homepage .uc{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:26px}
+#pacerai-homepage .uc h3{margin:0 0 8px;font-size:19px;color:var(--navy)}
+#pacerai-homepage .uc p{margin:0;color:#5a5648;font-size:14.5px;line-height:1.55}
+#pacerai-homepage .uc ul{margin:14px 0 0;padding-left:18px;color:#5a5648;font-size:14px;line-height:1.7}
+#pacerai-homepage .band .cta-inline{display:inline-block;margin-top:20px;background:var(--navy);color:#fff;font-weight:700;padding:13px 26px;border-radius:11px;font-size:15px}
+#pacerai-homepage .band .cta-inline:hover{background:var(--navy-dark)}
+#pacerai-homepage .team-note{font-size:17px;color:var(--ink-mid);max-width:720px;line-height:1.6;margin:18px 0 0}
+#pacerai-homepage .team-note b{color:var(--navy)}
+#pacerai-homepage .team-link{display:inline-block;margin-top:18px;font-weight:700;font-size:15px;color:var(--teal)}
+
+#pacerai-homepage .faq-list{max-width:760px;margin:22px auto 0}
+#pacerai-homepage .faq-list details{border-bottom:1px solid var(--line);padding:16px 0}
+#pacerai-homepage .faq-list summary{cursor:pointer;font-size:15.5px;font-weight:700;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+#pacerai-homepage .faq-list summary::-webkit-details-marker{display:none}
+#pacerai-homepage .faq-list summary::after{content:"+";font-size:20px;color:var(--teal)}
+#pacerai-homepage .faq-list details[open] summary::after{content:"\2212"}
+#pacerai-homepage .faq-list details p{padding:12px 0 4px;font-size:15.5px;color:var(--muted);line-height:1.7}
+
+#pacerai-homepage .cta{text-align:center;padding:66px 24px 40px;max-width:var(--maxw);margin:0 auto}
+#pacerai-homepage .cta .eyebrow{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--kick);font-weight:700}
+#pacerai-homepage .cta h2{font-size:clamp(26px,3.6vw,30px);font-weight:800;color:var(--ink);margin:10px 0 6px;letter-spacing:-.3px}
+#pacerai-homepage .cta p{color:var(--muted);font-size:16px;margin:0 auto 22px;max-width:520px}
+#pacerai-homepage .cta-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+#pacerai-homepage .btn-primary{display:inline-block;background:var(--navy);color:#fff;font-weight:700;padding:15px 30px;border-radius:11px;font-size:16px}
+#pacerai-homepage .btn-primary:hover{background:var(--navy-dark)}
+#pacerai-homepage .btn-outline{display:inline-block;background:transparent;color:var(--navy);border:1px solid var(--navy);font-weight:700;padding:14px 28px;border-radius:11px;font-size:16px}
+#pacerai-homepage .btn-outline:hover{background:rgba(31,56,100,.06)}
+
+#pacerai-homepage footer{border-top:1px solid var(--line);background:var(--surface);padding:64px 24px 32px}
+#pacerai-homepage .footer-top{display:grid;grid-template-columns:260px repeat(4,1fr);gap:40px;max-width:var(--maxw);margin:0 auto;padding-bottom:40px;border-bottom:1px solid var(--line)}
+#pacerai-homepage .footer-brand p{font-size:13px;color:var(--muted);line-height:1.7;margin-top:14px}
+#pacerai-homepage .footer-col-head{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:18px}
+#pacerai-homepage .footer-col ul{list-style:none}
+#pacerai-homepage .footer-col li{margin-bottom:10px}
+#pacerai-homepage .footer-col a{font-size:13px;color:var(--muted)}
+#pacerai-homepage .footer-col a:hover{color:var(--teal)}
+#pacerai-homepage .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;max-width:var(--maxw);margin:24px auto 0}
+#pacerai-homepage .footer-bottom .copy{font-size:12px;color:var(--kick)}
+#pacerai-homepage .footer-bottom .legal{display:flex;gap:22px}
+#pacerai-homepage .footer-bottom .legal a{font-size:12px;color:var(--kick)}
+
+.how{--bone:#F5F4EF;--surface:#FAFAF7;--border:#E6E1D6;--ink:#20242B;--muted:#5F5A50;--kick:#9A8F78;--navy:#1F3864;--teal:#2E7D74;font-family:var(--font-body);background:var(--bone);color:var(--ink);font-size:15px;line-height:1.7;padding:24px 24px 56px}
+.how *,.how *::before,.how *::after{box-sizing:border-box;margin:0;padding:0}
+@keyframes pipeBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes pipeFlow{0%{offset-distance:0%;opacity:0}10%{opacity:1}90%{opacity:1}100%{offset-distance:100%;opacity:0}}
+@keyframes pipeGlow{0%,100%{box-shadow:0 8px 30px rgba(31,56,100,.08)}50%{box-shadow:0 12px 44px rgba(31,56,100,.15)}}
+@keyframes pipeNumFloat{0%{transform:translateX(-60px);opacity:0}15%{opacity:.08}85%{opacity:.08}100%{transform:translateX(1100px);opacity:0}}
+.how .pipe-wrap{max-width:1100px;margin:0 auto}
+.how .pipe-eyebrow{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--kick);font-weight:700;margin-bottom:12px;text-align:center}
+.how h2{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.5px;color:var(--ink);line-height:1.16;text-align:center}
+.how h2 em{font-style:normal;color:var(--teal)}
+.how .pipe-lead{font-size:17px;color:var(--muted);max-width:640px;line-height:1.55;text-align:center;margin:18px auto 0}
+.how .pipe-visual{position:relative;margin-top:60px;height:340px;background:var(--bone)}
+.how .pipe-sources{position:absolute;left:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;gap:12px;width:130px;z-index:2}
+.how .pipe-src-box{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--navy);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 8px;animation:pipeBounce 3s ease-in-out infinite}
+.how .pipe-src-box:nth-child(2){animation-delay:.5s}.how .pipe-src-box:nth-child(3){animation-delay:1s}.how .pipe-src-box:nth-child(4){animation-delay:1.5s}
+.how .pipe-src-label{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.how .pipe-svg{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.how .pipe-flow-path{fill:none;stroke:var(--border);stroke-width:1.5;stroke-dasharray:6 4}
+.how .pipe-dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--navy);box-shadow:0 0 10px rgba(31,56,100,.5);offset-distance:0%;animation:pipeFlow 3s linear infinite;z-index:3}
+.how .pipe-dot.pd2{animation-delay:.4s}.how .pipe-dot.pd3{animation-delay:.8s}.how .pipe-dot.pd4{animation-delay:1.2s}
+.how .pipe-dot.po1{animation-delay:.2s;background:var(--teal)}.how .pipe-dot.po2{animation-delay:.6s;background:var(--teal)}.how .pipe-dot.po3{animation-delay:1s;background:var(--teal)}
+.how .pipe-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:190px;height:190px;border-radius:50%;background:#fff;border:2px solid var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:4;animation:pipeGlow 4s ease-in-out infinite}
+.how .pipe-center-name{font-size:20px;font-weight:800;letter-spacing:-.3px;color:var(--ink);margin-top:6px}
+.how .pipe-center-name span{color:var(--navy)}
+.how .pipe-center-sub{font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);font-weight:600}
+.how .pipe-outputs{position:absolute;right:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;gap:12px;width:280px;z-index:2;align-items:flex-end}
+.how .pipe-out-row{display:flex;align-items:center;gap:8px}
+.how .pipe-out-plus{color:var(--navy);font-size:16px;font-weight:800}
+.how .pipe-out-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--teal);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;width:120px;height:90px;text-align:center}
+.how .pipe-out-label{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.how .pipe-out-box.pob-navy{background:rgba(31,56,100,.9);border-color:rgba(31,56,100,.52);color:#fff}
+.how .pipe-out-box.pob-navy .pipe-out-label{color:rgba(255,255,255,.9)}
+.how .pipe-out-box.pob-green{background:rgba(33,115,70,.88);border-color:rgba(33,115,70,.5);color:#fff}
+.how .pipe-out-box.pob-green .pipe-out-label{color:rgba(255,255,255,.9)}
+.how .pipe-out-box.pob-orange{background:rgba(217,119,87,.92);border-color:rgba(217,119,87,.52);color:#fff}
+.how .pipe-out-box.pob-orange .pipe-out-label{color:rgba(255,255,255,.9)}
+.how .pipe-nums{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.how .pipe-num-particle{position:absolute;font-family:var(--font-body);font-size:11px;font-weight:700;color:var(--navy);opacity:0;animation:pipeNumFloat 10s linear forwards;white-space:nowrap}
+
+@media(max-width:900px){
+  #pacerai-homepage nav{grid-template-columns:1fr auto;padding:0 16px}
+  #pacerai-homepage .nav-links{display:none}
+  #pacerai-homepage .mobile-menu-btn{display:flex}
+  #pacerai-homepage .hero h1{font-size:32px}
+  #pacerai-homepage .tiles,#pacerai-homepage .usecases{grid-template-columns:1fr}
+  #pacerai-homepage .showcase iframe{height:520px}
+  #pacerai-homepage .footer-top{grid-template-columns:1fr 1fr;gap:28px}
+  #pacerai-homepage .footer-brand{grid-column:1/-1}
+}
+@media(max-width:768px){
+  .how .pipe-visual{height:auto;display:flex;flex-direction:column;gap:32px;padding:20px 0}
+  .how .pipe-sources,.how .pipe-outputs{position:static;width:100%;flex-direction:row;flex-wrap:wrap;justify-content:center}
+  .how .pipe-center{position:static;transform:none;width:150px;height:150px;margin:0 auto}
+  .how .pipe-svg,.how .pipe-dot,.how .pipe-nums{display:none}
+}
+@media(prefers-reduced-motion:reduce){#pacerai-homepage *,.how *{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
+</style>
+
+<div id="pacerai-homepage">
+<img src="//0" alt="" style="display:none" onerror="window._s=function(e,n){if(e&amp;&amp;e.preventDefault)e.preventDefault();var t=document.querySelector('[data-section=&quot;'+n+'&quot;]');if(t){window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-72,behavior:'smooth'});if(e)history.pushState(null,'','#'+n)}};if(location.hash){var h=location.hash.slice(1);setTimeout(function(){window._s(null,h)},300)}this.remove()">
+
+<nav>
+  <a href="/" class="nav-logo">Pacer <span>AI</span>
+    <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#revenue-modeling-agent" data-scroll-to="revenue-modeling-agent" onclick="_s(event,'revenue-modeling-agent')">Revenue Modeling Agent</a></li>
+    <li><a href="/#use-cases" data-scroll-to="use-cases" onclick="_s(event,'use-cases')">Use Cases</a></li>
+    <li><a href="/#pricing" data-scroll-to="pricing" onclick="_s(event,'pricing')">Pricing</a></li>
+    <li><a href="/#team" data-scroll-to="team" onclick="_s(event,'team')">Team</a></li>
+    <li><a href="/blog/">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="location.hash='#pace-cta'"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="hero" data-section="top">
+  <div class="kick">Revenue Modeling Agent</div>
+  <h1>Pacer AI helps revenue leaders build financial models for <span class="rotor">Sales Targets</span></h1>
+  <p class="hero-sub">Reconciled to Finance, built for buy-in, tracked to plan.</p>
+</section>
+
+<section class="proof">
+  <div class="stats">
+    <div class="stat"><b>$25 Bn+</b><span>M&amp;A Diligence</span></div>
+    <div class="stat"><b>$2 Bn+</b><span>Revenue Analyzed</span></div>
+    <div class="stat"><b>40+</b><span>Customer Data Cubes</span></div>
+  </div>
+  <div class="marquee">
+    <div class="track">
+      <img src="https://getpacerai.com/wp-content/uploads/2026/03/Brandwatch.jpg" alt="Brandwatch">
+      <img src="https://getpacerai.com/wp-content/uploads/2026/03/Fortis-Life-Science-purple-logo.jpeg" alt="Fortis Life Science">
+      <img src="https://getpacerai.com/wp-content/uploads/2026/04/platinum-equity-dark-bg.png" alt="Platinum Equity">
+      <img src="https://getpacerai.com/wp-content/uploads/2026/03/Semrush-Logo.png" alt="Semrush">
+      <img src="https://getpacerai.com/wp-content/uploads/2026/03/SUMMIT-Partners-Logo.png" alt="Summit Partners">
+    </div>
+  </div>
+</section>
+
+<section class="showcase-wrap" data-section="revenue-modeling-agent">
+  <div class="showcase">
+    <iframe src="https://pacer-demo-worker.will-078.workers.dev/" title="Pacer AI running in Claude" loading="lazy" referrerpolicy="no-referrer"></iframe>
+  </div>
+</section>
+
+<div class="wrap">
+  <p class="steps"><b>Target Setting</b> &nbsp;&rarr;&nbsp; <b>Bottoms-up Modeling</b> &nbsp;&rarr;&nbsp; <b>Scenario Planning</b> &nbsp;&rarr;&nbsp; <b>On-Pace Execution</b></p>
+</div>
+
+<section class="how" data-section="how-it-works">
+  <div class="pipe-wrap">
+    <div class="pipe-eyebrow">How It Works</div>
+    <h2>Operational data in. <em>Revenue intelligence out.</em></h2>
+    <p class="pipe-lead">Connect your systems. Pacer AI does the rest &mdash; on Microsoft&rsquo;s enterprise stack, so your data never leaves your control.</p>
+    <div class="pipe-visual">
+      <div class="pipe-nums"></div>
+      <div class="pipe-sources">
+        <div class="pipe-src-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="pipe-src-label">CRM</span></div>
+        <div class="pipe-src-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg><span class="pipe-src-label">Billing</span></div>
+        <div class="pipe-src-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span class="pipe-src-label">ERP</span></div>
+        <div class="pipe-src-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg><span class="pipe-src-label">HRIS</span></div>
+      </div>
+      <svg class="pipe-svg" viewBox="0 0 1080 340" preserveAspectRatio="none">
+        <path class="pipe-flow-path" d="M150,55 C300,55 360,170 460,170"/>
+        <path class="pipe-flow-path" d="M150,125 C290,125 360,170 460,170"/>
+        <path class="pipe-flow-path" d="M150,215 C290,215 360,170 460,170"/>
+        <path class="pipe-flow-path" d="M150,285 C300,285 360,170 460,170"/>
+        <path class="pipe-flow-path" d="M620,145 C720,145 770,85 930,85"/>
+        <path class="pipe-flow-path" d="M620,170 C720,170 770,170 930,170"/>
+        <path class="pipe-flow-path" d="M620,195 C720,195 770,255 930,255"/>
+      </svg>
+      <div class="pipe-dot" style="offset-path:path('M150,55 C300,55 360,170 460,170')"></div>
+      <div class="pipe-dot pd2" style="offset-path:path('M150,125 C290,125 360,170 460,170')"></div>
+      <div class="pipe-dot pd3" style="offset-path:path('M150,215 C290,215 360,170 460,170')"></div>
+      <div class="pipe-dot pd4" style="offset-path:path('M150,285 C300,285 360,170 460,170')"></div>
+      <div class="pipe-dot po1" style="offset-path:path('M620,145 C720,145 770,85 930,85')"></div>
+      <div class="pipe-dot po2" style="offset-path:path('M620,170 C720,170 770,170 930,170')"></div>
+      <div class="pipe-dot po3" style="offset-path:path('M620,195 C720,195 770,255 930,255')"></div>
+      <div class="pipe-center">
+        <svg width="44" height="36" viewBox="0 0 32 28" fill="none" aria-hidden="true"><path d="M2 2 L11 14 L2 26" stroke="#1F3864" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 2 L20 14 L11 26" stroke="#2E7D74" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="pipe-center-name">Pacer <span>AI</span></div>
+        <div class="pipe-center-sub">Microsoft Fabric</div>
+      </div>
+      <div class="pipe-outputs">
+        <div class="pipe-out-row">
+          <div class="pipe-out-box pob-navy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span class="pipe-out-label">Dashboards</span></div>
+          <span class="pipe-out-plus">+</span>
+          <div class="pipe-out-box pob-navy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span class="pipe-out-label">Analyst Agent</span></div>
+        </div>
+        <div class="pipe-out-row">
+          <div class="pipe-out-box pob-green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg><span class="pipe-out-label">Excel (Embedded)</span></div>
+          <span class="pipe-out-plus">+</span>
+          <div class="pipe-out-box pob-green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8V4H8"/><rect x="8" y="8" width="8" height="8" rx="2"/><path d="M4 12H2"/><path d="M22 12h-2"/></svg><span class="pipe-out-label">Claude in Excel</span></div>
+        </div>
+        <div class="pipe-out-row" style="justify-content:center;width:100%">
+          <div class="pipe-out-box pob-orange"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="9.5" x2="12" y2="3"/><line x1="13.25" y1="9.83" x2="16.5" y2="4.2"/><line x1="14.17" y1="10.75" x2="19.8" y2="7.5"/><line x1="14.5" y1="12" x2="21" y2="12"/><line x1="14.17" y1="13.25" x2="19.8" y2="16.5"/><line x1="13.25" y1="14.17" x2="16.5" y2="19.8"/><line x1="12" y1="14.5" x2="12" y2="21"/><line x1="10.75" y1="14.17" x2="7.5" y2="19.8"/><line x1="9.83" y1="13.25" x2="4.2" y2="16.5"/><line x1="9.5" y1="12" x2="3" y2="12"/><line x1="9.83" y1="10.75" x2="4.2" y2="7.5"/><line x1="10.75" y1="9.83" x2="7.5" y2="4.2"/></svg><span class="pipe-out-label">Claude via MCP</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="tiles">
+    <div class="tile"><h3>Deterministic</h3><p>Not a slide &mdash; a model. Same numbers every run, generated by the Pacer engine, never improvised.</p></div>
+    <div class="tile"><h3>Reconciled to the dollar</h3><p>ARR, retention, and the waterfall tie to the source financials &mdash; diligence-grade, not directional.</p></div>
+    <div class="tile"><h3>Board-grade, in Claude</h3><p>Target plan, account waterfall, and by-market build render inline; the full workbook is one click away.</p></div>
+  </section>
+</div>
+
+<section class="band" data-section="use-cases">
+  <div class="eyebrow">Use Cases</div>
+  <h2>Two models revenue leaders live in</h2>
+  <p class="lede">Both start from your real ARR and reconcile to Finance &mdash; the difference is the question you&rsquo;re answering.</p>
+  <div class="usecases">
+    <div class="uc" data-section="gtm-financial-modeling">
+      <h3>GTM Financial Modeling</h3>
+      <p>Turn a top-down number into a bottoms-up operating model: pipeline, coverage, capacity, and headcount sized to the target.</p>
+      <ul><li>Sales targets &rarr; coverage &amp; capacity</li><li>Headcount and ramp planning</li><li>Sales-led and product-led motions</li></ul>
+    </div>
+    <div class="uc" data-section="arr-waterfall-modeling">
+      <h3>ARR Waterfall Modeling</h3>
+      <p>New, expansion, contraction, and churn at the account-product grain &mdash; a movement bridge that ties to reported ARR to the dollar.</p>
+      <ul><li>ARR reporting &amp; board bridges</li><li>Expansion whitespace &amp; retention</li><li>Forecasting and pace-to-plan tracking</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="band" data-section="team">
+  <div class="eyebrow">Team</div>
+  <h2>Team</h2>
+  <p class="team-note">Founded by an operator turned M&amp;A advisor &mdash; <b>Will Sullivan</b>, a former PwC M&amp;A advisor, search fund operator, and West Point graduate.</p>
+  <a class="team-link" href="/team/">Meet the full team &amp; advisory network &rarr;</a>
+</section>
+
+<section class="band" data-section="pricing">
+  <div class="eyebrow">Pricing</div>
+  <h2>Pricing Model</h2>
+  <p class="lede">Pacer AI uses an <b>alignment-based pricing</b> model to align Pacer AI with its clients&rsquo; goals.</p>
+  <a class="cta-inline" href="mailto:will@getpacerai.com?subject=Pacer%20AI%20Pricing">Discuss Pricing</a>
+</section>
+
+<section class="band" data-section="faq">
+  <div class="eyebrow">FAQ</div>
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-list">
+    <details><summary>What size companies do you work with?</summary><p>We work with PE-backed B2B SaaS companies from $10M to $1B+ ARR. Our platform and advisory services scale from mid-market portfolio companies to enterprise.</p></details>
+    <details><summary>How long does the initial setup take?</summary><p>Most engagements go from kickoff to board-ready output in days, not months. The data cube build typically takes 2&ndash;4 weeks depending on source system complexity.</p></details>
+    <details><summary>What systems do you connect to?</summary><p>CRM (Salesforce, HubSpot), billing (Stripe, Zuora, Chargebee), ERP (NetSuite, Sage Intacct), and data warehouses (Snowflake, Databricks, BigQuery).</p></details>
+    <details><summary>How is this different from FP&amp;A tools like Vena or Planful?</summary><p>FP&amp;A tools start with the GL. We start with transactional customer data to build M&amp;A-grade ARR decomposition, cohort retention, and expansion analytics that FP&amp;A tools cannot produce.</p></details>
+    <details><summary>What does pricing look like?</summary><p>Pacer AI uses an alignment-based pricing model to align Pacer AI with its clients&rsquo; goals.</p></details>
+    <details><summary>Do you work with PE funds directly?</summary><p>Yes. We work with operating partners and deal teams on both pre-close diligence and post-close value creation across the portfolio.</p></details>
+  </div>
+</section>
+
+<section class="cta" data-section="pace-cta">
+  <div class="eyebrow">Get Started</div>
+  <h2>See Pacer AI run on your own ARR</h2>
+  <p>A reconciled model and a pace-to-plan read in one session &mdash; built on your real numbers.</p>
+  <div class="cta-buttons">
+    <a class="btn-primary" href="mailto:will@getpacerai.com?subject=Pacer%20AI%20Live%20ARR%20Demo">Request a Live ARR Demo</a>
+    <a class="btn-outline" href="/team/contact/">Talk to a RevOps Expert</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="font-size:17px">Pacer <span style="color:var(--teal)">AI</span>
+        <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+      </a>
+      <p>The Revenue Modeling Agent for revenue leaders. Reconciled to Finance, built on Microsoft Fabric.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Use Cases</div>
+      <ul>
+        <li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
+        <li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Company</div>
+      <ul>
+        <li><a href="/team/">Team</a></li>
+        <li><a href="/team/#partners">Partners</a></li>
+        <li><a href="/platform/overview/">Platform</a></li>
+        <li><a href="/team/contact/">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Resources</div>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/research/">Research</a></li>
+        <li><a href="https://agentsofinsight.substack.com/" target="_blank" rel="noopener">Newsletter</a></li>
+        <li><a href="https://www.youtube.com/@PacerAI" target="_blank" rel="noopener">YouTube</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Connect</div>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="mailto:will@getpacerai.com">Email</a></li>
+        <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+    <div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+/* ================================================================
+ * WPCode Footer Script — getpacerai.com
+ * ================================================================
+ * This is the CANONICAL SOURCE for what's installed in:
+ *   WP Admin → WPCode → Header & Footer → Footer
+ *
+ * If you change this file, paste the updated contents into WPCode.
+ * WordPress strips inline <script> tags from page HTML, so all
+ * site-wide JS must live here (see website-PacerAI/CLAUDE.md pitfalls).
+ *
+ * Each IIFE guards itself — it checks for a page-specific DOM
+ * element and exits silently if not found. Safe to run site-wide.
+ *
+ * SECTIONS:
+ *   1. Homepage hero typed-line animation (.typed-line, .type-cursor)
+ *   2. White paper CTA form handler (.wp-cta-form)
+ *      - POSTs to Cloudflare Worker → Apollo contact + sequence + Slack
+ *      - Worker: https://whitepaper-worker.will-078.workers.dev
+ *      - Docs:   04_GTM/GTME/plays/website-visitor/docs/
+ *   3. Pipeline number stream animation (#num-stream-lt)
+ *   4. Mobile nav accordion (viewport <= 768px)
+ *   5. Research waitlist form handler (.research-waitlist-form)
+ *      - POSTs to same Worker with asset_slug 'research-waitlist'
+ *      - No download; confirms signup only
+ *   6. v3 bone homepage — hero rotor word swap (#pacerai-homepage .rotor)
+ *   7. v3 bone homepage — logo marquee duplication (#pacerai-homepage .track)
+ *   8. v3 bone homepage — pipeline number stream (#pacerai-homepage .how .pipe-nums)
+ *      (#1 typed-line stays for legacy pages; it exits if .typed-line is absent)
+ *
+ * HISTORY:
+ *   2026-07-21  v3.0.0 Claude-bone redesign: added hero rotor, logo marquee,
+ *               and bone pipeline number-stream (sections 6-8)
+ *   2026-04-17  Added white paper CTA form handler (Phase 3 deploy)
+ *               Added pipeline animation + mobile nav (moved from inline)
+ *   Prior       Homepage typed-line animation (original WPCode install)
+ * ================================================================ */
+
+/* --- 1. Homepage hero typed-line animation --- */
+(function(){
+  var el = document.querySelector('#pacerai-homepage .typed-line');
+  var cur = document.querySelector('#pacerai-homepage .type-cursor');
+  if (!el || !cur) return;
+  var ph = ['Board Reporting.', 'Operational Cadence.', 'Sales Strategy.',
+    'Due Diligence.'];
+  var pi = 0;
+  var ci = 0;
+  var del = false;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = ph[0];
+    cur.style.display = 'none';
+    return;
+  }
+  function tick() {
+    var w = ph[pi];
+    if (!del) {
+      el.textContent = w.substring(0, ci + 1);
+      ci++;
+      if (ci === w.length) {
+        del = true;
+        setTimeout(tick, 2000);
+        return;
+      }
+      setTimeout(tick, 60);
+    } else {
+      el.textContent = w.substring(0, ci - 1);
+      ci--;
+      if (ci === 0) {
+        del = false;
+        pi = (pi + 1) % ph.length;
+        setTimeout(tick, 400);
+        return;
+      }
+      setTimeout(tick, 35);
+    }
+  }
+  setTimeout(tick, 800);
+})();
+
+/* --- 2. White paper CTA form handler --- */
+/* --- 3. Pipeline number stream animation --- */
+/* --- 4. Mobile nav accordion --- */
+(function() {
+  /* 2. Form handler */
+  var form = document.querySelector('.wp-cta-form');
+  if (form) {
+    var WORKER_URL = 'https://whitepaper-worker.will-078.workers.dev';
+
+    var input = form.querySelector('input[type="email"]');
+    var button = form.querySelector('button');
+    var origText = button.textContent;
+
+    var msgEl = document.createElement('p');
+    msgEl.style.cssText = 'font-size:12px;margin-top:8px;text-align:center;min-height:18px;';
+    form.parentNode.insertBefore(msgEl, form.nextSibling);
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      msgEl.textContent = '';
+      msgEl.style.color = '#B03A3A';
+
+      var email = (input.value || '').trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        msgEl.textContent = 'Please enter a valid work email.';
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Preparing download\u2026';
+
+      var params = new URLSearchParams(window.location.search);
+      var body = JSON.stringify({
+        email: email,
+        asset_slug: 'board-quality-arr-snowballs',
+        page_url: window.location.href,
+        utm_source: params.get('utm_source'),
+        utm_medium: params.get('utm_medium'),
+        utm_campaign: params.get('utm_campaign')
+      });
+
+      fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: body
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data.success && data.download_url) {
+          button.textContent = 'Downloading\u2026';
+          msgEl.style.color = '#15803D';
+          msgEl.textContent = 'Check your inbox \u2014 we\u2019ll send you a copy too.';
+          window.open(data.download_url, '_blank');
+        } else {
+          msgEl.textContent = 'Something went wrong. Please try again.';
+          button.disabled = false;
+          button.textContent = origText;
+        }
+      })
+      .catch(function() {
+        msgEl.textContent = 'Network error. Please try again.';
+        button.disabled = false;
+        button.textContent = origText;
+      });
+    });
+  }
+
+  /* 3. Pipeline number stream animation */
+  var c = document.getElementById('num-stream-lt');
+  if (c && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var nums = ['$24,035','$81,115','$88,980','$118,795','106.7%','NRR 101.3%','GRR 91.3%','$197,545','$510,470','29.4%'];
+    function spawn() {
+      var el = document.createElement('span');
+      el.className = 'num-particle-lt';
+      el.textContent = nums[Math.floor(Math.random() * nums.length)];
+      el.style.top = (Math.random() * 280) + 'px';
+      el.style.animationDuration = (8 + Math.random() * 6) + 's';
+      el.style.fontSize = (9 + Math.random() * 4) + 'px';
+      c.appendChild(el);
+      el.addEventListener('animationend', function() { el.remove(); });
+    }
+    for (var i = 0; i < 6; i++) setTimeout(spawn, i * 1500);
+    setInterval(spawn, 2000);
+  }
+
+  /* 4. Mobile nav accordion */
+  if (window.innerWidth <= 768) {
+    document.querySelectorAll('#pacerai-homepage .nav-links > li > a').forEach(function(a) {
+      var li = a.parentElement;
+      if (!li.querySelector('.dropdown')) return;
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        li.classList.toggle('mobile-expanded');
+      });
+    });
+  }
+})();
+
+/* --- 5. Research waitlist form handler (/research) --- */
+/* POSTs to the same Cloudflare Worker as the white-paper form, but with
+ * asset_slug 'research-waitlist'. No download is returned — on success it
+ * just confirms the signup. Worker must accept this asset_slug and respond
+ * { success: true } (Apollo tag + Slack ping). Safe site-wide: exits if the
+ * form isn't on the page. */
+(function() {
+  var form = document.querySelector('.research-waitlist-form');
+  if (!form) return;
+
+  var WORKER_URL = 'https://whitepaper-worker.will-078.workers.dev';
+
+  var input = form.querySelector('input[type="email"]');
+  var button = form.querySelector('button');
+  var origText = button.textContent;
+
+  var msgEl = form.parentNode.querySelector('.waitlist-msg');
+  if (!msgEl) {
+    msgEl = document.createElement('p');
+    msgEl.className = 'waitlist-msg';
+    form.parentNode.insertBefore(msgEl, form.nextSibling);
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    msgEl.textContent = '';
+    msgEl.style.color = '#C94C4C';
+
+    var email = (input.value || '').trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      msgEl.textContent = 'Please enter a valid work email.';
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Joining…';
+
+    var params = new URLSearchParams(window.location.search);
+    var body = JSON.stringify({
+      email: email,
+      asset_slug: 'research-waitlist',
+      page_url: window.location.href,
+      utm_source: params.get('utm_source'),
+      utm_medium: params.get('utm_medium'),
+      utm_campaign: params.get('utm_campaign')
+    });
+
+    fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: body
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data && data.success) {
+        button.textContent = 'You’re on the list';
+        msgEl.style.color = '#2DB87A';
+        msgEl.textContent = 'You’re on the list — we’ll email you the day we launch.';
+        input.disabled = true;
+      } else {
+        msgEl.textContent = 'Something went wrong. Please try again.';
+        button.disabled = false;
+        button.textContent = origText;
+      }
+    })
+    .catch(function() {
+      msgEl.textContent = 'Network error. Please try again.';
+      button.disabled = false;
+      button.textContent = origText;
+    });
+  });
+})();
+
+/* --- 6. v3 bone homepage — hero rotor word swap --- */
+(function() {
+  var rotor = document.querySelector('#pacerai-homepage .rotor');
+  if (!rotor) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var phrases = ['Sales Targets', 'ARR Waterfalls', 'ARR Reporting', 'Go-To-Market Plans',
+    'Sales-Led Growth', 'Product-Led Growth', 'Capacity Modeling', 'Coverage Modeling',
+    'Headcount Planning', 'Expansion Whitespace', 'Forecasting', 'Performance Tracking'];
+  var i = 0;
+  setInterval(function() {
+    i = (i + 1) % phrases.length;
+    rotor.style.opacity = '0';
+    setTimeout(function() {
+      rotor.textContent = phrases[i];
+      rotor.style.transition = 'opacity .35s ease';
+      rotor.style.opacity = '1';
+    }, 200);
+  }, 2400);
+})();
+
+/* --- 7. v3 bone homepage — logo marquee duplication (seamless loop) --- */
+(function() {
+  var track = document.querySelector('#pacerai-homepage .marquee .track');
+  if (!track || track.getAttribute('data-doubled')) return;
+  track.innerHTML += track.innerHTML;
+  track.setAttribute('data-doubled', '1');
+})();
+
+/* --- 8. v3 bone homepage — pipeline number stream --- */
+(function() {
+  var c = document.querySelector('#pacerai-homepage .how .pipe-nums');
+  if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var nums = ['$24,035', '$81,115', '$88,980', '$118,795', 'NRR 101.3%', 'GRR 91.3%',
+    '$197,545', '$510,470', '106.7%', '29.4%', '$302,695', 'NRR 108.1%'];
+  function spawn() {
+    var el = document.createElement('span');
+    el.className = 'pipe-num-particle';
+    el.textContent = nums[Math.floor(Math.random() * nums.length)];
+    el.style.top = (Math.random() * 300) + 'px';
+    el.style.animationDuration = (8 + Math.random() * 6) + 's';
+    el.style.fontSize = (9 + Math.random() * 4) + 'px';
+    c.appendChild(el);
+    el.addEventListener('animationend', function() { el.remove(); });
+  }
+  for (var i = 0; i < 6; i++) setTimeout(spawn, i * 1500);
+  setInterval(spawn, 2000);
+})();
+
+</script>
+</body></html>

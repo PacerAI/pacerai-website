@@ -228,7 +228,7 @@ These are silent failures — WordPress won't error, but your styles/scripts won
 | Minified JS in WPCode footer gets line breaks inserted | WordPress inserts line breaks mid-token (e.g. `set\nTimeout`, `el.tex\ntContent`), breaking minified code silently | Use non-minified JS with proper line breaks in WPCode Header & Footer; WordPress won't break properly formatted code |
 | Homepage CSS too large for inline `<style>` | Homepage CSS is ~37K chars — inline would push page over 68K limit | CSS externalized to WPCode Header injection. Source: `src/homepage/wpcode-homepage-css.css`. Update WPCode snippet in WP Admin when CSS changes. |
 
-**Design reference:** `docs/design/index-build-long_page_2026_04_03.html` — always diff live CSS against this file when styles don't match.
+**Design reference (v3 bone homepage):** `docs/design/homepage/index-build-bone_v3_2026-07-22.html` — self-contained, browser-openable copy of the v3 homepage (page CSS/HTML + inlined WPCode JS). Diff live CSS against it. *(Legacy dark reference archived at `docs/design/homepage/archive/`.)*
 **AEO Row spec:** `docs/design/AEO-Row-Text-and-Image.md` — copy-paste-ready CSS for text+image sections.
 
 ## Page Architecture
