@@ -8,6 +8,13 @@
  * WordPress strips inline <script> tags from page HTML, so all
  * site-wide JS must live here (see website-PacerAI/CLAUDE.md pitfalls).
  *
+ * WPCode injects the Footer field VERBATIM. This file is pure JS (no script
+ *   tags), so when pasting into the Header/Footer "Footer" field you MUST wrap
+ *   it in an opening + closing script tag, or it renders as plain text and never
+ *   executes. (Alternatively use a WPCode "JavaScript Snippet" — it auto-wraps,
+ *   so leave the tags off.) Do NOT put a literal closing script tag anywhere in
+ *   this file — inside a wrapping script tag it would close the block early.
+ *
  * Each IIFE guards itself — it checks for a page-specific DOM
  * element and exits silently if not found. Safe to run site-wide.
  *
