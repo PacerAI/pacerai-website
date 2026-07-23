@@ -67,7 +67,7 @@ DATA = [
  # ---- ARTICLES ----
  row("Articles","What Is an ARR Waterfall?","/resources/what-is-an-arr-waterfall/","850","fix",
      "What Is an ARR Waterfall? Definition, Components, and How to Build One - Get Pacer AI","",
-     "ARR Waterfall Model: Definition & How to Build One | Pacer AI",
+     "ARR Waterfall: Definition & How to Build One | Pacer AI",
      "An ARR waterfall decomposes recurring revenue into new, expansion, contraction, and churn. Components, formula, a worked example, and how to build one.",
      "Add meta; fix brand+length; root dupe 873 redirects here"),
  row("Articles","What Is cRPO?","/resources/what-is-current-performance-obligation/","865","fix",
