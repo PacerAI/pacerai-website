@@ -27,7 +27,7 @@ See the **SEO Messaging Table** artifact (current → recommended for every page
   "alternateName": ["Revenue Modeling Agent", "ARR Modeling Agent"],
   "url": "https://getpacerai.com/",
   "description": "Pacer AI is the GTM Financial Modeling Agent for CROs and Sales Leaders — it builds and reconciles your ARR waterfall and revenue model inside Claude.",
-  "foundingDate": "2025",
+  "foundingDate": "2023-05",
   "logo": {
     "@type": "ImageObject",
     "url": "https://getpacerai.com/wp-content/uploads/2025/04/PacerAI_Logo_Horizontal_Full-Color-scaled.webp"
@@ -54,7 +54,7 @@ See the **SEO Messaging Table** artifact (current → recommended for every page
 </script>
 ```
 
-Notes: `contactPoint` uses `will@getpacerai.com` / type `sales` — change if you'd rather list a support alias or add a phone. `foundingDate` is a placeholder year — set the real month/year. Validate after saving at **search.google.com/test/rich-results** (paste the homepage URL) — you should see one Organization with `founder` + `sameAs`, no duplicate-Organization warning.
+Notes: `contactPoint` uses `will@getpacerai.com` / type `sales` — change if you'd rather list a support alias or add a phone. `foundingDate` is **2023-05** (Pacer AI founded May 2023). Validate after saving at **search.google.com/test/rich-results** (paste the homepage URL) — you should see one Organization with `founder` + `sameAs`, no duplicate-Organization warning.
 
 ---
 
