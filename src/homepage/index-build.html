@@ -179,6 +179,13 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 @media(max-width:900px){
   #pacerai-homepage nav{grid-template-columns:1fr auto;padding:0 16px}
   #pacerai-homepage .nav-links{display:none}
+  #pacerai-homepage nav.nav-open .nav-links{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--bone);border-bottom:1px solid var(--line);box-shadow:0 14px 34px rgba(15,25,45,.10);padding:10px 16px 16px;gap:0;z-index:130}
+  #pacerai-homepage nav.nav-open .nav-links li{width:100%}
+  #pacerai-homepage nav.nav-open .nav-links a{display:block;width:100%;padding:14px 6px;font-size:16px;border-bottom:1px solid var(--line);border-radius:0}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(2){opacity:0}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  #pacerai-homepage .mobile-menu-btn span{transition:transform .2s,opacity .2s}
   #pacerai-homepage .mobile-menu-btn{display:flex}
   #pacerai-homepage .btn-login{display:none}
   #pacerai-homepage .hero h1{font-size:30px}
@@ -206,6 +213,8 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 
 /* --- component-income-vs-arr-6-movements (bone theme), scoped --- */
 #pacerai-homepage .a2o-pair{display:grid;grid-template-columns:1fr 1.08fr;gap:22px;margin:26px 0 0;align-items:start}
+#pacerai-homepage .a2o-mob-label{display:none}
+#pacerai-homepage .why-need-mob{display:none}
 #pacerai-homepage .a2o-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:34px 32px 28px;box-shadow:0 20px 60px rgba(15,25,45,.06)}
 #pacerai-homepage .a2o-head{font-size:20px;font-weight:800;letter-spacing:-.3px;color:var(--navy);line-height:1.18;min-height:47px;display:flex;align-items:flex-end}
 #pacerai-homepage .a2o-emoji{font-size:22px;margin-left:8px}
@@ -282,11 +291,17 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   #pacerai-homepage .a2o-pair{grid-template-columns:1fr;gap:18px}
   #pacerai-homepage .a2o-col-arr .a2o-row{grid-template-columns:24px 1fr auto 130px}
   #pacerai-homepage .a2o-note{font-size:11px}
+  #pacerai-homepage .why-split{display:none}
+  #pacerai-homepage .a2o-mob-label{display:block;font-weight:800;color:var(--navy);font-size:16px;margin:0 0 14px}
+  #pacerai-homepage .why-need-mob{display:block;font-size:16px;font-weight:600;color:var(--ink-mid);max-width:660px;line-height:1.5;margin:22px 0 0}
+}
+@media(max-width:600px){
+  #pacerai-homepage .ucx{grid-template-columns:1fr}
 }
 </style>
 
 <div id="pacerai-homepage">
-<img src="//0" alt="" style="display:none" onerror="window._s=function(e,n){if(e&amp;&amp;e.preventDefault)e.preventDefault();var t=document.querySelector('[data-section=&quot;'+n+'&quot;]');if(t){window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-72,behavior:'smooth'});if(e)history.pushState(null,'','#'+n)}};if(location.hash){var h=location.hash.slice(1);setTimeout(function(){window._s(null,h)},300)}window.addEventListener('hashchange',function(){var hh=location.hash.slice(1);if(hh)window._s(null,hh)});this.remove()">
+<img src="//0" alt="" style="display:none" onerror="window._s=function(e,n){if(e&amp;&amp;e.preventDefault)e.preventDefault();var t=document.querySelector('[data-section=&quot;'+n+'&quot;]');if(t){window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-72,behavior:'smooth'});if(e)history.pushState(null,'','#'+n)}var nv=document.querySelector('#pacerai-homepage nav');if(nv)nv.classList.remove('nav-open')};if(location.hash){var h=location.hash.slice(1);setTimeout(function(){window._s(null,h)},300)}window.addEventListener('hashchange',function(){var hh=location.hash.slice(1);if(hh)window._s(null,hh);var nv=document.querySelector('#pacerai-homepage nav');if(nv)nv.classList.remove('nav-open')});this.remove()">
 
 <nav>
   <a href="/" class="nav-logo">Pacer <span>AI</span>
@@ -302,7 +317,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   <div class="nav-right">
     <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
     <a href="https://calendly.com/pacerai/diagnostic" class="btn-cta">Free Diagnostic</a>
-    <button class="mobile-menu-btn" aria-label="Menu" onclick="location.hash='#pace-cta'"><span></span><span></span><span></span></button>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="this.closest('nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
@@ -345,6 +360,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   <div class="a2o-pair">
 
     <div class="a2o-card a2o-col-is">
+        <div class="a2o-mob-label">Finance teams report Revenue.</div>
         <div class="a2o-head">6 Bullet Income Statement <span class="a2o-emoji">&#127822;</span></div>
         <div class="a2o-rule"></div>
         <div class="a2o-ledger">
@@ -363,6 +379,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     </div>
 
     <div class="a2o-card a2o-col-arr">
+        <div class="a2o-mob-label">Sales teams generate Revenue.</div>
         <div class="a2o-head">6 Annual Recurring Revenue (ARR) movements <span class="a2o-emoji">&#127818;</span></div>
         <div class="a2o-rule"></div>
         <div class="a2o-ledger">
@@ -383,6 +400,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     </div>
 
   </div>
+  <p class="why-need-mob"><b>Sales needs a model that shows how revenue is generated.</b></p>
   <p class="ao-note">Modeling how revenue is generated in the company &mdash; by market and by segment &mdash; removes capital allocation guesswork and creates alignment.</p>
 </section>
 
@@ -584,7 +602,6 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   <p>Model, Plan, Track Pace to Target.</p>
   <div class="cta-buttons">
     <a class="btn-primary" href="https://calendly.com/pacerai/diagnostic">Book a Free Diagnostic</a>
-    <a class="btn-outline" href="/team/contact/">Talk to a RevOps Expert</a>
   </div>
 </section>
 
@@ -623,10 +640,6 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
         <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
       </ul>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
-    <div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></div>
   </div>
 </footer>
 
