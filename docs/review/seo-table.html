@@ -1,0 +1,228 @@
+<style>
+:root{--bg:#F5F4EF;--surface:#FAFAF7;--surface-2:#EFEDE5;--ink:#20242B;--muted:#5F5A50;--faint:#8A8377;--line:#E6E1D6;--navy:#1F3864;--teal:#2E7D74;--fix:#B26B12;--fix-bg:#F6ECD9;--good:#2E7D74;--good-bg:#E1EFE9;--redir:#7A7468;--redir-bg:#EAE7DE;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+@media (prefers-color-scheme:dark){:root{--bg:#16181C;--surface:#1E2127;--surface-2:#262A31;--ink:#F1EFE9;--muted:#A79F91;--faint:#7E7869;--line:#31353D;--navy:#9CBAE8;--teal:#74C6A3;--fix:#E0A75A;--fix-bg:#3A2F1C;--good:#74C6A3;--good-bg:#1D2E27;--redir:#9A9384;--redir-bg:#2A2820;}}
+:root[data-theme="light"]{--bg:#F5F4EF;--surface:#FAFAF7;--surface-2:#EFEDE5;--ink:#20242B;--muted:#5F5A50;--faint:#8A8377;--line:#E6E1D6;--navy:#1F3864;--teal:#2E7D74;--fix:#B26B12;--fix-bg:#F6ECD9;--good:#2E7D74;--good-bg:#E1EFE9;--redir:#7A7468;--redir-bg:#EAE7DE;}
+:root[data-theme="dark"]{--bg:#16181C;--surface:#1E2127;--surface-2:#262A31;--ink:#F1EFE9;--muted:#A79F91;--faint:#7E7869;--line:#31353D;--navy:#9CBAE8;--teal:#74C6A3;--fix:#E0A75A;--fix-bg:#3A2F1C;--good:#74C6A3;--good-bg:#1D2E27;--redir:#9A9384;--redir-bg:#2A2820;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;font-size:15px;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px;}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:700;margin:0 0 10px;}
+h1{font-size:clamp(26px,4vw,36px);line-height:1.1;margin:0 0 10px;letter-spacing:-.02em;text-wrap:balance;font-weight:800;}
+.lede{color:var(--muted);max-width:66ch;margin:0 0 22px;font-size:15.5px;}
+.northstar{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:0 0 8px;}
+.northstar h2{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 12px;font-weight:700;}
+.rules{display:flex;flex-wrap:wrap;gap:8px;}
+.rule{font-size:13px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--ink);}
+.rule b{color:var(--navy);}
+.rule.drop{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--fix);text-decoration-thickness:1.5px;}
+section{margin-top:36px;}
+.sec-h{display:flex;align-items:baseline;gap:12px;margin:0 0 6px;}
+.sec-h h2{font-size:19px;margin:0;font-weight:800;letter-spacing:-.01em;}
+.sec-h .count{font-family:var(--mono);font-size:12px;color:var(--faint);}
+.sec-sub{color:var(--muted);font-size:13.5px;margin:0 0 16px;}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface);}
+table{border-collapse:collapse;width:100%;min-width:760px;}
+thead th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700;padding:12px 16px;border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0;background:var(--surface);}
+tbody td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:var(--surface-2);}
+.page{font-weight:700;color:var(--ink);font-size:14.5px;}
+.slug{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:3px;word-break:break-all;}
+.wpid{font-family:var(--mono);font-size:11px;color:var(--faint);}
+.cell-label{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:700;margin:0 0 3px;}
+.txt{font-size:13.5px;color:var(--ink);}
+.txt.cur{color:var(--muted);}
+.rec .txt{color:var(--ink);}
+.meta{font-size:12.5px;color:var(--muted);margin-top:7px;}
+.rec .meta{color:var(--ink);}
+.len{font-family:var(--mono);font-size:10.5px;color:var(--faint);font-variant-numeric:tabular-nums;}
+.len.over{color:var(--fix);font-weight:700;}
+.len.miss{color:var(--fix);font-weight:700;}
+.rec{background:linear-gradient(0deg,var(--good-bg),transparent 140%);}
+.done td{background:linear-gradient(0deg,var(--good-bg),transparent 120%);}
+.chip{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap;}
+.chip.fix{background:var(--fix-bg);color:var(--fix);}
+.chip.minor,.chip.ok{background:var(--good-bg);color:var(--good);}
+.chip.redir{background:var(--redir-bg);color:var(--redir);}
+.chip.live{background:var(--good);color:#fff;}
+col.c-page{width:20%} col.c-cur{width:34%} col.c-rec{width:38%} col.c-act{width:8%}
+.redir-row td{color:var(--muted);}
+.arrow{color:var(--teal);font-weight:700;}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:12.5px;}
+code{font-family:var(--mono);font-size:.92em;background:var(--surface-2);padding:1px 5px;border-radius:4px;}
+@media (max-width:640px){.wrap{padding:28px 14px 60px}}
+</style>
+<div class="wrap">
+<header>
+  <p class="eyebrow">getpacerai.com · SEO / metadata · v1 · 0/21 implemented</p>
+  <h1>Title &amp; Meta — Current vs. Recommended</h1>
+  <p class="lede">Every indexed page, its live Yoast title and meta description, and a recommended rewrite aligned to one message. Edit in <b>WP Admin → page → Yoast</b> (not REST-writable). Generated from <code>docs/review/seo-table.csv</code>. Titles ≤60 chars, metas ≤155.</p>
+  <div class="northstar">
+    <h2>The one message everything should ladder up to</h2>
+    <div class="rules">
+      <span class="rule"><b>GTM Financial Modeling Agent</b> — the canonical category</span>
+      <span class="rule">Built for <b>CROs</b> &amp; Sales Leaders (CFOs secondary)</span>
+      <span class="rule">Build &amp; reconcile your <b>ARR / revenue model inside Claude</b></span>
+      <span class="rule">Brand suffix: <b>| Pacer AI</b></span>
+      <span class="rule drop">RevOps intelligence</span>
+      <span class="rule drop">ARR Intelligence</span>
+      <span class="rule drop">AI-native consulting firm</span>
+      <span class="rule drop">PE-backed SaaS <em>as the lead</em></span>
+    </div>
+  </div>
+</header>
+<section><div class="sec-h"><h2>Core pages</h2><span class="count">6 pages</span></div><p class="sec-sub">The pages that carry the positioning. Highest priority.</p><div class="tablewrap"><table>
+<colgroup><col class="c-page"><col class="c-cur"><col class="c-rec"><col class="c-act"></colgroup>
+<thead><tr><th>Page</th><th>Current (live)</th><th>Recommended</th><th>Action</th></tr></thead>
+<tbody>
+<tr>
+  <td><div class="page">Home</div><div class="slug">/</div><div class="wpid">WP 25</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len">58</span></div><div class="txt cur">Pacer AI — GTM Financial Modeling Agent for PE-backed SaaS</div><div class="meta">Pacer AI is the GTM Financial Modeling Agent for Sales Leaders and CFOs — build and reconcile your ARR waterfall and revenue model inside Claude, in days. <span class="len">154</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">52</span></div><div class="txt">Pacer AI — The GTM Financial Modeling Agent for CROs</div><div class="meta">Pacer AI is the GTM Financial Modeling Agent for CROs and Sales Leaders — build and reconcile your ARR waterfall and revenue model inside Claude, in days. <span class="len">154</span></div></td>
+  <td><span class="chip minor">Minor</span></td>
+</tr>
+<tr>
+  <td><div class="page">Resources hub</div><div class="slug">/resources/</div><div class="wpid">WP 230</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len">57</span></div><div class="txt cur">Resources — Pacer AI | ARR Intelligence &amp; RevOps Insights</div><div class="meta">Insights on ARR intelligence, revenue operations, and SaaS growth strategies for PE-backed operators and CFOs. <span class="len">110</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">58</span></div><div class="txt">Resources — GTM Financial Modeling &amp; ARR Guides | Pacer AI</div><div class="meta">Guides on GTM financial modeling, ARR waterfalls, and revenue models for CROs and finance leaders — from the team behind the GTM Financial Modeling Agent. <span class="len">154</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">Team</div><div class="slug">/team/</div><div class="wpid">WP 366</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len">18</span></div><div class="txt cur">Company — Pacer AI</div><div class="meta">Learn about Pacer AI — our mission, team, and approach to solving the ARR reporting gap for PE-backed SaaS companies. <span class="len">117</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">47</span></div><div class="txt">Team — Pacer AI | The Operator Behind the Agent</div><div class="meta">Pacer AI is founder-led by Will Sullivan — a former PwC M&amp;A advisor and West Point graduate. Meet the operator behind the GTM Financial Modeling Agent. <span class="len">151</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">About</div><div class="slug">/team/about/</div><div class="wpid">WP 374</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len">16</span></div><div class="txt cur">About — Pacer AI</div><div class="meta">Pacer AI was founded to solve the ARR reporting gap for PE-backed SaaS companies. Learn about our mission, values, and the team behind the platform. <span class="len">148</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">41</span></div><div class="txt">About Pacer AI — Built by an M&amp;A Operator</div><div class="meta">Why Pacer AI exists: a GTM Financial Modeling Agent built by an ex-PwC M&amp;A advisor to give CROs a revenue model that reconciles to Finance. <span class="len">139</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">Contact</div><div class="slug">/team/contact/</div><div class="wpid">WP 375</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len">18</span></div><div class="txt cur">Contact — Pacer AI</div><div class="meta">Get in touch with Pacer AI. Request a live demo, schedule a call, or reach out about partnerships for PE-backed SaaS revenue intelligence. <span class="len">138</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">31</span></div><div class="txt">Contact Pacer AI — Talk to Will</div><div class="meta">Book a diagnostic or reach founder Will Sullivan directly about GTM financial modeling — build and reconcile your revenue model inside Claude. <span class="len">142</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">Platform / How it works</div><div class="slug">/platform/overview/</div><div class="wpid">WP 371</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len">28</span></div><div class="txt cur">Platform Overview — Pacer AI</div><div class="meta">Pacer AI platform overview — how we unify CRM, billing, and ERP data into automated ARR snowball reports, waterfall analyses, and board-ready decks. <span class="len">148</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">54</span></div><div class="txt">How It Works — GTM Financial Modeling Agent | Pacer AI</div><div class="meta">How Pacer AI turns CRM, billing, and ERP data into a reconciled GTM financial model — ARR waterfalls, snowballs, and board-ready output, inside Claude. <span class="len">151</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+</tbody></table></div></section>
+<section><div class="sec-h"><h2>Resources &amp; articles</h2><span class="count">12 pages</span></div><p class="sec-sub">Keep the keyword titles; fix <code>- Get Pacer AI</code> → <code>| Pacer AI</code>, add the missing metas, trim titles over ~60.</p><div class="tablewrap"><table>
+<colgroup><col class="c-page"><col class="c-cur"><col class="c-rec"><col class="c-act"></colgroup>
+<thead><tr><th>Page</th><th>Current (live)</th><th>Recommended</th><th>Action</th></tr></thead>
+<tbody>
+<tr>
+  <td><div class="page">What Is an ARR Waterfall?</div><div class="slug">/resources/what-is-an-arr-waterfall/</div><div class="wpid">WP 850</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">85</span></div><div class="txt cur">What Is an ARR Waterfall? Definition, Components, and How to Build One - Get Pacer AI</div><div class="meta"> <span class="len miss">meta missing</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len over">61</span></div><div class="txt">ARR Waterfall Model: Definition &amp; How to Build One | Pacer AI</div><div class="meta">An ARR waterfall decomposes recurring revenue into new, expansion, contraction, and churn. Components, formula, a worked example, and how to build one. <span class="len">151</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">What Is cRPO?</div><div class="slug">/resources/what-is-current-performance-obligation/</div><div class="wpid">WP 865</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">94</span></div><div class="txt cur">What is cRPO? The Operator&#x27;s Guide to Current Remaining Performance Obligations - Get Pacer AI</div><div class="meta"> <span class="len miss">meta missing</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">59</span></div><div class="txt">What Is cRPO? An Operator&#x27;s Guide to Current RPO | Pacer AI</div><div class="meta">cRPO (current remaining performance obligations) explained for operators — what it is, how it differs from ARR, and why acquirers and boards care. <span class="len">146</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">Build Data Cube In-House or Hire</div><div class="slug">/resources/build-customer-data-cube-in-house-or-hire/</div><div class="wpid">WP 491</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">76</span></div><div class="txt cur">Should I Build a Customer Data Cube In-House or Hire Someone? - Get Pacer AI</div><div class="meta"> <span class="len miss">meta missing</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">55</span></div><div class="txt">Build a Customer Data Cube In-House or Hire? | Pacer AI</div><div class="meta">Build your customer data cube in-house or hire it out? The real cost, timeline, and maintenance trade-offs — plus the done-for-you alternative. <span class="len">143</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">Board-Quality ARR Snowballs</div><div class="slug">/resources/board-quality-arr-snowballs/</div><div class="wpid">WP 781</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">103</span></div><div class="txt cur">Board Quality ARR Snowballs: Understand Your ARR Growth Drivers Before Your Acquirers Do - Get Pacer AI</div><div class="meta"> <span class="len miss">meta missing</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">57</span></div><div class="txt">Board-Quality ARR Snowballs: Know Your Drivers | Pacer AI</div><div class="meta">Build board- and diligence-grade ARR snowballs that reveal your real growth drivers — before your acquirers&#x27; QoR does. An M&amp;A operator&#x27;s approach. <span class="len">146</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">What Companies Build vs Boards Need</div><div class="slug">/resources/what-most-companies-build-vs-what-boards-need/</div><div class="wpid">WP 591</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">70</span></div><div class="txt cur">What Most Companies Build vs. What Boards Actually Need - Get Pacer AI</div><div class="meta"> <span class="len miss">meta missing</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">52</span></div><div class="txt">What Companies Build vs. What Boards Need | Pacer AI</div><div class="meta">Most SaaS reporting answers the wrong question. What boards and sponsors actually need from your ARR model — and how to close the gap. <span class="len">134</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">Semrush x Adobe case study</div><div class="slug">/semrush-adobe-acquisition-case-study/</div><div class="wpid">WP 888</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">86</span></div><div class="txt cur">Case Study: How Semrush got a premium valuation &amp; purchase price from Adobe | Pacer AI</div><div class="meta">How Semrush got acquired by Adobe for $1.9B (3.8x NTM rev, 77% premium) despite slowing growth—the RevOps playbook, from SEC filings. <span class="len">133</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">57</span></div><div class="txt">Semrush × Adobe: An M&amp;A Read on a Premium Exit | Pacer AI</div><div class="meta">How Semrush was acquired by Adobe for $1.9B (3.8x NTM, 77% premium) despite slowing growth — the ARR-quality read, from SEC filings. <span class="len">132</span></div></td>
+  <td><span class="chip minor">Minor</span></td>
+</tr>
+<tr>
+  <td><div class="page">Why LLMs Can&#x27;t Build Your Snowball</div><div class="slug">/resources/why-llms-cant-build-your-arr-snowball-from-operational-data/</div><div class="wpid">WP 441</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">71</span></div><div class="txt cur">Why LLMs Can&#x27;t Build Your ARR Snowball from Operational Data — Pacer AI</div><div class="meta">LLMs cannot reliably build ARR snowballs from CRM, billing, or ERP data. Learn why rule-based calculations and expert judgment are required — not chat agents. <span class="len over">158</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">49</span></div><div class="txt">Why LLMs Can&#x27;t Build Your ARR Snowball | Pacer AI</div><div class="meta">Keep current meta. </div></td>
+  <td><span class="chip minor">Minor</span></td>
+</tr>
+<tr>
+  <td><div class="page">What Is an ARR Snowball?</div><div class="slug">/resources/what-is-an-arr-snowball-understanding-revenue-growth/</div><div class="wpid">WP 378</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">64</span></div><div class="txt cur">What Is an ARR Snowball? Understanding Revenue Growth — Pacer AI</div><div class="meta">An ARR snowball tracks how Annual Recurring Revenue grows or shrinks by decomposing changes into new business, expansion, contraction, and churn over time. <span class="len">155</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">54</span></div><div class="txt">What Is an ARR Snowball? Definition &amp; Guide | Pacer AI</div><div class="meta">Keep current meta. </div></td>
+  <td><span class="chip minor">Minor</span></td>
+</tr>
+<tr>
+  <td><div class="page">Prevent Churn in High-Value Accounts</div><div class="slug">/resources/prevent-churn-in-high-value-accounts-with-arr-snowball/</div><div class="wpid">WP 376</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">65</span></div><div class="txt cur">Prevent Churn in High-Value Accounts with ARR Snowball — Pacer AI</div><div class="meta">Prevent churn in high-value SaaS accounts by monitoring leading indicators and using ARR snowball analysis to surface at-risk customers before renewal dates. <span class="len over">157</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">47</span></div><div class="txt">Prevent Churn in High-Value Accounts | Pacer AI</div><div class="meta">Keep current meta. </div></td>
+  <td><span class="chip minor">Minor</span></td>
+</tr>
+<tr>
+  <td><div class="page">ARR Snowball Analysis: Expansion Drivers</div><div class="slug">/resources/arr-snowball-analysis-find-your-expansion-drivers/</div><div class="wpid">WP 368</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">61</span></div><div class="txt cur">ARR Snowball Analysis: Find Your Expansion Drivers — Pacer AI</div><div class="meta">Use ARR snowball analysis to identify which expansion levers drive the most growth — upsell patterns, cross-sell opportunities, and net revenue retention by cohort. <span class="len over">164</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">56</span></div><div class="txt">ARR Snowball Analysis: Find Expansion Drivers | Pacer AI</div><div class="meta">Use ARR snowball analysis to find your biggest expansion levers — upsell and cross-sell patterns and net revenue retention by cohort. <span class="len">133</span></div></td>
+  <td><span class="chip minor">Minor</span></td>
+</tr>
+<tr>
+  <td><div class="page">Why ARR Waterfall Models Matter</div><div class="slug">/resources/why-arr-waterfall-models-matter-for-saas-growth/</div><div class="wpid">WP 358</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len">58</span></div><div class="txt cur">Why ARR Waterfall Models Matter for SaaS Growth — Pacer AI</div><div class="meta">ARR waterfall models break down period-over-period revenue changes into new, expansion, contraction, and churn — revealing the drivers behind SaaS growth. <span class="len">154</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">58</span></div><div class="txt">Why ARR Waterfall Models Matter for SaaS Growth | Pacer AI</div><div class="meta">Keep current meta. </div></td>
+  <td><span class="chip ok">Ok</span></td>
+</tr>
+<tr>
+  <td><div class="page">AI for RevOps</div><div class="slug">/resources/using-ai-to-enable-revops-without-breaking-your-gtm/</div><div class="wpid">WP 360</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">64</span></div><div class="txt cur">Using AI to Enable RevOps (Without Breaking Your GTM) — Pacer AI</div><div class="meta">How to deploy AI in revenue operations without breaking your GTM workflows. Practical guidance for PE-backed SaaS operators on data unification, anomaly detection, and predictive analytics. <span class="len over">189</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">52</span></div><div class="txt">AI for RevOps — Without Breaking Your GTM | Pacer AI</div><div class="meta">How to deploy AI in revenue operations without breaking your GTM — data unification, anomaly detection, and where an always-on agent fits. <span class="len">138</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+</tbody></table></div></section>
+<section><div class="sec-h"><h2>Keep &amp; add meta</h2><span class="count">3 pages</span></div><p class="sec-sub">Glossary / comparison pages to keep (DefinedTerm targets) — just add a meta description.</p><div class="tablewrap"><table>
+<colgroup><col class="c-page"><col class="c-cur"><col class="c-rec"><col class="c-act"></colgroup>
+<thead><tr><th>Page</th><th>Current (live)</th><th>Recommended</th><th>Action</th></tr></thead>
+<tbody>
+<tr>
+  <td><div class="page">SaaS Metrics Glossary</div><div class="slug">/glossary/</div><div class="wpid">WP 0</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len">36</span></div><div class="txt cur">SaaS Metrics Glossary - Get Pacer AI</div><div class="meta"> <span class="len miss">meta missing</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">32</span></div><div class="txt">SaaS Metrics Glossary | Pacer AI</div><div class="meta">A plain-English glossary of SaaS revenue metrics — ARR, NRR/GRR, ARR waterfall, cRPO, and more — for operators and finance leaders. <span class="len">131</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">ARR Waterfall (glossary)</div><div class="slug">/glossary/arr-waterfall/</div><div class="wpid">WP 0</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len">28</span></div><div class="txt cur">ARR Waterfall - Get Pacer AI</div><div class="meta"> <span class="len miss">meta missing</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">37</span></div><div class="txt">ARR Waterfall — Definition | Pacer AI</div><div class="meta">ARR waterfall: the period-over-period decomposition of recurring revenue into new, expansion, contraction, and churn. Definition and how it&#x27;s used. <span class="len">147</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+<tr>
+  <td><div class="page">ARR Snowball vs ARR Waterfall</div><div class="slug">/resources/arr-snowball-vs-waterfall/</div><div class="wpid">WP 0</div></td>
+  <td class="cur"><div class="cell-label">Title <span class="len over">74</span></div><div class="txt cur">ARR Snowball vs. ARR Waterfall: Which Model Should You Use? - Get Pacer AI</div><div class="meta"> <span class="len miss">meta missing</span></div></td>
+  <td class="rec"><div class="cell-label">Title <span class="len">55</span></div><div class="txt">ARR Snowball vs. ARR Waterfall: Which to Use | Pacer AI</div><div class="meta">ARR snowball vs ARR waterfall — what each model shows, when to use which, and how they fit together for board and diligence reporting. <span class="len">134</span></div></td>
+  <td><span class="chip fix">Fix</span></td>
+</tr>
+</tbody></table></div></section>
+<section><div class="sec-h"><h2>Legacy &amp; redirect</h2><span class="count">9 URLs</span></div><p class="sec-sub">Don't optimize — <b>301</b> these (Redirection plugin / Yoast Premium).</p>
+<div class="tablewrap"><table><thead><tr><th>URL</th><th>Action</th></tr></thead><tbody>
+<tr class="redir-row"><td><div class="slug">/pricing/</div><div class="wpid">WP 111</div></td><td><span class="arrow">301 →</span> <code>/#pricing (stale: live meta still says $2,000/mo)</code></td></tr>
+<tr class="redir-row"><td><div class="slug">/what-is-an-arr-waterfall/</div><div class="wpid">WP 873</div></td><td><span class="arrow">301 →</span> <code>/resources/what-is-an-arr-waterfall/</code></td></tr>
+<tr class="redir-row"><td><div class="slug">/crpo-vs-arr/</div><div class="wpid">WP 0</div></td><td><span class="arrow">301 →</span> <code>/resources/what-is-current-performance-obligation/</code></td></tr>
+<tr class="redir-row"><td><div class="slug">/solutions/arr-snowball-board-reporting/</div><div class="wpid">WP 372</div></td><td><span class="arrow">301 →</span> <code>/</code></td></tr>
+<tr class="redir-row"><td><div class="slug">/solutions/customer-data-cube/</div><div class="wpid">WP 373</div></td><td><span class="arrow">301 →</span> <code>/</code></td></tr>
+<tr class="redir-row"><td><div class="slug">/solutions/transaction-readiness/</div><div class="wpid">WP 554</div></td><td><span class="arrow">301 →</span> <code>/</code></td></tr>
+<tr class="redir-row"><td><div class="slug">/solutions/revops-transformation-pkg/</div><div class="wpid">WP 651</div></td><td><span class="arrow">301 →</span> <code>/</code></td></tr>
+<tr class="redir-row"><td><div class="slug">/solutions/gtm-transformation-pkg/</div><div class="wpid">WP 650</div></td><td><span class="arrow">301 →</span> <code>/</code></td></tr>
+<tr class="redir-row"><td><div class="slug">/solutions/fpanda-transformation-pkg/</div><div class="wpid">WP 652</div></td><td><span class="arrow">301 →</span> <code>/</code></td></tr>
+</tbody></table></div></section>
+<footer>Generated from <code>docs/review/seo-table.csv</code> by <code>scripts/build_seo_table.py</code> · char counts flag title&gt;60 / meta&gt;155 / missing meta · mark rows <code>implemented=yes</code> as WP-Admin edits land and re-run for v2.</footer>
+</div>
