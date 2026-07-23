@@ -25,8 +25,9 @@
 
 ## The plan — 6 moves, applied across all five (schema first)
 
-### Move 1 — Add `Article` + `FAQPage` schema to all five *(fastest, highest AEO ROI)*
-Copy the JSON-LD pattern from `what-is-an-arr-waterfall-build.html` (which already has `Article` + `FAQPage` + `BreadcrumbList`). For each: `Article` with `headline`, `author` (Person = Will Sullivan, w/ ex-PwC M&A credential), `datePublished`, `dateModified`, `publisher`, `image`; `FAQPage` mirroring the **exact** visible Q&A text. 227 (definitional) should also get `DefinedTerm` for "ARR Snowball." *Effort: ~15 min/article. No copy rewrite needed.*
+### Move 1 — `Article` + `FAQPage` schema *(✅ DONE 2026-07-23 — deployed live)*
+**Correction to the diagnosis:** the five *did* have a JSON-LD block, but it was **broken**: the `FAQPage` listed only **2 Q&As that didn't even match the 6 visible questions** (schema said "What is an ARR snowball?" while the page asked "What is a *good* ARR snowball effect…") — a mismatch Google ignores or flags, worse than none — and the `author` was an Organization, not a Person.
+**Fixed + deployed:** regenerated each graph programmatically — `FAQPage` now mirrors **all** visible Q&As exactly (6/6/6/6 and 4 for 264), `Article` now has `author` = **Person** (Will Sullivan, ex-PwC M&A / West Point + LinkedIn), real `datePublished`/`dateModified`, 1200×630 `image`, and `mainEntityOfPage`; added `BreadcrumbList` to all five and `DefinedTerm` ("ARR Snowball") to 227. Verified valid + live on all five.
 
 ### Move 2 — Answer-first block under each H1 *(AEO extraction)*
 Add the site's `aeo-snippet` bolded 40–80-word direct answer immediately under the H1 (as 491/comparison already do), then expand. Each H2 section should open with a self-contained 2–3 sentence answer so any section is independently quotable by an answer engine.
