@@ -38,10 +38,12 @@ deliberately does **not** send `X-Frame-Options` (which would block the embed). 
 
 ```bash
 cd pacerai-website/infra/pacer-demo-worker
-npm install                 # installs wrangler locally
-npx wrangler login          # interactive, opens browser (Will's Cloudflare account)
-npm run deploy              # -> https://pacer-demo-worker.will-078.workers.dev
+npx wrangler@4 login        # interactive OAuth (your Cloudflare account)
+npx wrangler@4 deploy       # bundles + deploys -> https://pacer-demo-worker.will-078.workers.dev
 ```
+No `npm install` needed — `npx` fetches wrangler and bundles the TS + HTML directly. (`npm install`
+also works now that the deps are pinned to compatible versions; if it ever errors on peer deps, use
+`npm install --legacy-peer-deps` or just the `npx` path above.)
 
 Verify: open `https://pacer-demo-worker.will-078.workers.dev/` (the Claude window renders on a
 transparent background — the Tahoe backdrop comes from the homepage), then load getpacerai.com and
