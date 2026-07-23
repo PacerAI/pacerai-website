@@ -10,8 +10,10 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ## v3.0.0 — 2026-07-21 — Claude-bone homepage redesign (initial ship)
 
-- **Status:** built on branch `feat/bone-redesign-v3`; **NOT yet deployed** — gated on Will's
-  approval + voice/visual pass + manual WordPress prep (below).
+- **Status:** built on branch `feat/bone-redesign-v3` (**PR #20**); **NOT yet deployed** — gated on
+  Will's approval + voice/visual pass + manual WordPress prep (below).
+- **Go-live runbook:** `docs/deploy/v3-golive-plan.md` (the deploy sequence). **Chosen design:**
+  `docs/design/homepage/bone_v3-simple.html` (selected from the `bone_v3-*` concept explorations).
 - **Approved by:** Will Sullivan (plan approval 2026-07-21)
 - **Deployed by:** _(pending)_
 - **Semver:** first semver-tagged release. Added top-level `VERSION` = `3.0.0`; tag `v3.0.0` to

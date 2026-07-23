@@ -28,12 +28,15 @@ Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.c
 
 All pages are deployed as WordPress Pages via REST API. Each page's HTML source file is the source of truth.
 
-> **v3.0.0 (2026-07-21):** the 6 `/solutions/*` pages are **retired from nav + homepage and
+> **v3.0.0 (2026-07-21/22):** the 6 `/solutions/*` pages are **retired from nav + homepage and
 > 301-redirected to the homepage** (source files kept for archive/rollback; do not redeploy their
 > content). Legacy `/pricing/` (111) **301-redirects to `/#pricing`** (the homepage pricing anchor).
 > Homepage nav is flat/centered (Revenue Modeling Agent · Use Cases · Team · Pricing · Resources).
-> **Round 3:** the Blog (230) is being renamed to **/resources** — change its slug `blog`→`resources`
-> and 301 `/blog/` + every `/blog/<slug>/` → `/resources/…` at deploy. "Resources" nav → `/resources/`.
+> The Blog (230) slug is now **`resources`** (renamed 2026-07-22, live; posts auto-301, `/blog/` → `/resources/`
+> redirect added; runbook `docs/deploy/blog-to-resources-rename.md`). "Resources" nav → `/resources/`.
+> **Deploy state:** the v3 bone rebuild (homepage/blog/team/14 posts) is built on branch
+> `feat/bone-redesign-v3` (**PR #20**) but **NOT yet live** — gated on Will's approval; deploy sequence
+> in **`docs/deploy/v3-golive-plan.md`**.
 
 | Page | WP ID | Slug | Parent | Source File |
 |------|-------|------|--------|-------------|

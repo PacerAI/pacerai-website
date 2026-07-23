@@ -24,7 +24,7 @@ If you're opening this repo for the first time: read `AGENTS.md` (OS-pointer blo
 
 Note: `goals/` is now provisioned (`goals/aeo-ranking.md`; `foundation/goals/drift-checks.md`). `TASK-LOG.md` is added when the first goal-tracked dispatch lands.
 
-**Homepage design:** as of **v3.0.0** the homepage is on the light **"Claude-bone"** palette (bone `#F5F4EF`); inner pages + the blog remain on the legacy dark theme pending their v3.0.x bone conversion.
+**Homepage design:** as of **v3.0.0** the homepage is on the light **"Claude-bone"** palette (bone `#F5F4EF`); inner pages + the blog remain on the legacy dark theme pending their v3.0.x bone conversion. **Deploy state:** the v3 bone rebuild (homepage/blog/team/14 posts) is built on branch `feat/bone-redesign-v3` (**PR #20**) but **not yet live** — gated on Will's approval; go-live sequence in [`docs/deploy/v3-golive-plan.md`](docs/deploy/v3-golive-plan.md).
 
 ---
 

@@ -144,7 +144,7 @@ Follow this sequence for every change:
 - Each page is a standalone HTML file with inline `<style>` — no external CSS
 - **Nav headers: ALWAYS use `src/nav-headers.html` as the canonical nav source.** This is the single source of truth for navigation across all pages. When updating nav links, edit `src/nav-headers.html` first, then propagate to all `src/` page files. The design reference lives at `docs/design/nav_headers/nav-headers.html`.
   - Sub-pages use direct URLs (e.g., `/#use-cases`); homepage uses `data-scroll-to` + `onclick="_s(event,'...')"` for in-page scroll
-  - **v3.0.0:** nav is now flat + centered — Revenue Modeling Agent · Use Cases · Pricing · Team · Resources (+ Log In). The Solutions mega-dropdown was removed; the 6 `/solutions/*` pages are 301-redirected to the homepage, and legacy `/pricing/` → `/#pricing`.
+  - **v3.0.0:** nav is now flat + centered — Revenue Modeling Agent · Use Cases · Pricing · Team · Resources (+ Log In). The Solutions mega-dropdown was removed; the 6 `/solutions/*` pages are 301-redirected to the homepage, and legacy `/pricing/` → `/#pricing`. The v3 "Claude-bone" rebuild (homepage/blog/team/14 posts) is built on branch `feat/bone-redesign-v3` (**PR #20**) but **NOT yet deployed** — gated on Will's approval; deploy sequence in `docs/deploy/v3-golive-plan.md`.
 - Shared elements (nav, footer, base CSS, TT4 overrides) are copied into each file
 - All CSS scoped under `#pacerai-homepage` wrapper
 - No `<html>`, `<head>`, or `<body>` tags — WordPress manages the document shell
