@@ -55,7 +55,7 @@ Instructions for Claude Code operating in this repository.
 
 ## Identity & Mission
 
-You are a senior WordPress developer and web strategist working on the Pacer AI marketing website (getpacerai.com). Your job is to build, deploy, and maintain a multi-page marketing site that converts PE/VC operating professionals into demo requests.
+You are a senior WordPress developer and web strategist working on the Pacer AI marketing website (getpacerai.com). Your job is to build, deploy, and maintain a multi-page marketing site that converts revenue leaders into demo requests. Pacer AI's canonical category is the **GTM Financial Modeling Agent** (built for CROs / Sales Leaders; CFOs secondary; "Revenue Modeling Agent" is a nav-label synonym only). The market is recurring-revenue companies ($10M–$1B, often PE/sponsor-backed, incl. non-tech: payroll, healthcare, services) — the prior "PE-backed SaaS" framing was removed site-wide in v3.0.x.
 
 ## Environment
 
@@ -122,7 +122,9 @@ These were discovered during the April 2026 homepage rebuild. Violating any of t
 
 7. **Company/Team source files are at `src/team/` not `src/company/`.** About = `src/team/about.html` (WP ID 374), Contact = `src/team/contact.html` (WP ID 375).
 
-8. **Blog posts deploy as WordPress Pages, not Posts.** WP Posts strip `<style>` tags. Use the blog build system at `src/blog/build-posts.py` and deploy as Pages with parent=230 (Blog).
+8. **Blog posts deploy as WordPress Pages, not Posts.** WP Posts strip `<style>` tags. Use the blog build system at `src/blog/build-posts.py` and deploy as Pages with parent=230 (Resources). All 12 articles deploy with `--force` (pre-existing prose voice-debt trips `validate.py`).
+
+9. **Yoast title/meta are NOT REST-writable on WordPress.com** — set them in WP Admin (browser); worklist at `docs/deploy/yoast-worklist.md`. And the **WPCode Footer snippet is fragile** (a malformed tag once broke all footer JS) — homepage animations (hero rotor / logo marquee / pipeline numbers) now run from the inline `<img onerror>` injector in `src/homepage/index-build.html`, guarded by `window.__paRotor` / `window.__paPipe`.
 
 ## PDBRDD Workflow
 
@@ -144,7 +146,7 @@ Follow this sequence for every change:
 - Each page is a standalone HTML file with inline `<style>` — no external CSS
 - **Nav headers: ALWAYS use `src/nav-headers.html` as the canonical nav source.** This is the single source of truth for navigation across all pages. When updating nav links, edit `src/nav-headers.html` first, then propagate to all `src/` page files. The design reference lives at `docs/design/nav_headers/nav-headers.html`.
   - Sub-pages use direct URLs (e.g., `/#use-cases`); homepage uses `data-scroll-to` + `onclick="_s(event,'...')"` for in-page scroll
-  - **v3.0.0:** nav is now flat + centered — Revenue Modeling Agent · Use Cases · Pricing · Team · Resources (+ Log In). The Solutions mega-dropdown was removed; the 6 `/solutions/*` pages are 301-redirected to the homepage, and legacy `/pricing/` → `/#pricing`. The v3 "Claude-bone" rebuild (homepage/blog/team/14 posts) is built on branch `feat/bone-redesign-v3` (**PR #20**) but **NOT yet deployed** — gated on Will's approval; deploy sequence in `docs/deploy/v3-golive-plan.md`.
+  - **v3.0.x (LIVE):** nav is flat + centered — Revenue Modeling Agent · Use Cases · Pricing · Team · Resources (+ Log In). The Solutions mega-dropdown was removed; the 6 `/solutions/*` pages are 301-redirected to the homepage, and legacy `/pricing/` → `/#pricing`. PR #20 is **merged and v3.0.0 tagged** — the "Claude-bone" (`#F5F4EF`) rebuild is deployed: homepage (25), Resources hub (230), all 12 blog articles, Team (366), and Contact (375, now top-level `/contact/`) are **all bone**. Only legacy/redirected URLs remain non-bone. Additional 301s live: `/team/about/` → `/#about`, `/platform/overview/` → `/#how-it-works`, `/team/contact/` → `/contact/`, `/what-is-an-arr-waterfall/` → `/resources/what-is-an-arr-waterfall/` (+ `/about/`, `/overview/`).
 - Shared elements (nav, footer, base CSS, TT4 overrides) are copied into each file
 - All CSS scoped under `#pacerai-homepage` wrapper
 - No `<html>`, `<head>`, or `<body>` tags — WordPress manages the document shell
@@ -180,8 +182,9 @@ Canonical source: `pacerai-foundation/strategy/aeo_seo_keywords.yml` — edit th
 
 ## Brand Constraints
 
-- **Fonts:** DM Sans (body); Cormorant Garamond (legacy headings). v3 bone homepage uses DM Sans headings.
-- **Background:** v3 homepage → bone `#F5F4EF`; legacy dark pages → `#080E1C` (inner pages/blog until v3.0.x conversion)
+- **Category term (canonical):** GTM Financial Modeling Agent (CROs / Sales Leaders; CFOs secondary). "Revenue Modeling Agent" = nav-label synonym only; "ARR Modeling Agent" = schema `alternateName`. No "PE-backed SaaS" framing.
+- **Fonts:** DM Sans (body); Cormorant Garamond (legacy headings). v3 bone pages use DM Sans headings.
+- **Background:** **all pages are now bone `#F5F4EF`** (homepage, Resources hub, 12 blog articles, Team, Contact); dark `#080E1C` survives only on legacy/redirected URLs.
 - **Primary accent:** Teal — bone `#2E7D74`/`#70C49C`; legacy dark `#27899A`/`#70C49C`
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents.
 - **No:** playful illustrations, rounded pill buttons

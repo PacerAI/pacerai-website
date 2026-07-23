@@ -8,6 +8,54 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## v3.0.x — 2026-07-23 — GTM Financial Modeling Agent rebrand + full-site bone go-live
+
+- **Status:** LIVE. PR #20 merged; `v3.0.0` tagged. The Claude-bone (`#F5F4EF`) rebuild is deployed end to end.
+- **Deployed by:** Claude Code + Will Sullivan (WP Admin steps)
+- **Positioning rebrand:** canonical category term is now **"GTM Financial Modeling Agent"** (built for
+  CROs / Sales Leaders; CFOs secondary). "Revenue Modeling Agent" retained only as a nav-label synonym.
+  The **"PE-backed SaaS" framing was removed site-wide** and broadened to recurring-revenue companies
+  ($10M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services).
+- **All pages now bone:** homepage (25), Resources hub (230), all **12 blog articles**, Team (366), and
+  Contact (375). Only legacy/redirected URLs remain non-bone.
+- **Contact page:** rebuilt as a lean bone page and **moved to top-level `/contact/`** (WP 375, parent
+  now 0; was `/team/contact/` under parent 366). Email updated to **will@getpacerai.com** (was
+  contact@getpacerai.com). Source: `src/team/contact.html`.
+- **12 blog articles bone + live:** WP IDs now in `scripts/deploy.py` PAGE_REGISTRY; deploy with `--force`
+  (pre-existing prose voice-debt trips `validate.py`). Mapping: 491=build-vs-hire · 378=what-is-an-arr-snowball ·
+  376=prevent-churn-in-high-value-accounts · 368=arr-snowball-analysis · 360=using-ai-to-enable-revops ·
+  358=why-arr-waterfall-models-matter · 441=why-llms-cant-build-your-arr-snowball · 781=board-quality-arr-snowballs ·
+  591=what-most-companies-build-vs-what-boards-need · 888=semrush-adobe-acquisition-case-study (root URL) ·
+  850=what-is-an-arr-waterfall (canonical `/resources/`; root dupe 873 301→ it) · 865=what-is-current-performance-obligation (cRPO).
+  The Jan-2026 batch (227/236/244/288/264 = WP 378/376/368/358/360) got fixed+completed FAQPage +
+  Article(+Person author=Will Sullivan) schema.
+- **Resources hub (WP 230):** WP page title renamed "Blog" → "Resources" (slug already `resources`); bone.
+- **SEO / Yoast (21/21 indexed pages):** Yoast SEO title + meta rebranded across all 21 indexed pages to the
+  "GTM Financial Modeling Agent for CROs" message. **Yoast title/meta are NOT writable via the WordPress.com
+  REST API** — set via WP Admin / browser (record as a known limitation). Homepage `og:title` corrected to
+  "Pacer AI — The GTM Financial Modeling Agent for CROs". Organization + Person schema added via a WPCode
+  JSON-LD snippet: founder Will Sullivan, foundingDate 2023-05, sameAs (linkedin.com/company/getpacerai,
+  linkedin.com/in/will-sullivan98, youtube.com/@PacerAI), alternateName ["Revenue Modeling Agent","ARR Modeling Agent"].
+- **301 redirects (Redirection plugin):** `/team/about/` → `/#about`; `/platform/overview/` → `/#how-it-works`;
+  `/team/contact/` → `/contact/`; `/what-is-an-arr-waterfall/` → `/resources/what-is-an-arr-waterfall/`;
+  plus `/about/` and `/overview/`; plus the earlier `/solutions/*` → `/` and `/pricing/` → `/#pricing`.
+- **Homepage animations moved to the inline injector:** the WPCode Footer is fragile (a malformed closing tag
+  once broke all footer JS), so the hero rotor (13 phrases), logo marquee, and pipeline number-streams now run
+  from the inline `<img onerror>` injector in `src/homepage/index-build.html` (bypasses WP script-stripping),
+  guarded by `window.__paRotor` / `window.__paPipe` so they never double-run if the WPCode footer is later fixed.
+- **Homepage (WP 25) additions:** founder-direct CTA ("Talk to Will" → calendly.com/pacerai/strategy-session +
+  "Connect with Will on LinkedIn" → in/will-sullivan98) in Get Started; a "Working With Us — an
+  agent-and-human-in-the-loop approach" band (office hours / Slack / advisor); Value heading now "Plan buy-in.
+  Hit the number. Own the story."; a `#about` anchor on "Why Pacer AI Exists"; a Contact link in the footer.
+  FAQ cleaned (removed PE-backed, the "30 B2B SaaS job descriptions" phrasing, the "Service-as-a-Software" line).
+- **New tooling & docs:** `scripts/build_seo_table.py` (holds the SEO data; emits `docs/review/seo-table.csv`
+  + `docs/review/seo-table.html`); `docs/deploy/wp-admin-actions.md` (Organization/Person WPCode schema snippet
+  + redirect runbook); `docs/deploy/yoast-worklist.md` (per-page Yoast title/meta worklist);
+  `docs/review/jan2026-batch-aeo-seo-plan.md` (AEO/SEO plan for the 5 weak posts);
+  `docs/review/website_bone_v3_recommendations.md` (full site review).
+
+---
+
 ## v3.0.0 — 2026-07-21 — Claude-bone homepage redesign (initial ship)
 
 - **Status:** built on branch `feat/bone-redesign-v3` (**PR #20**); **NOT yet deployed** — gated on

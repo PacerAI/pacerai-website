@@ -1,6 +1,6 @@
 # pacerai-website
 
-**Goal:** Pacer AI's public marketing surface — answers "what does Pacer AI sell and to whom?" for prospective Operating Partners, CFOs, RevOps leaders, and PE Portfolio Ops at $50M–$1B ARR SaaS companies. Authored as standalone HTML files with inline CSS, published as WordPress.com Pages via the REST API (no local dev server, no framework). Operator role is `repo-operator`; four named on-dispatch agents (`blog-post`, `ui-ux-pro-max`, `webdev-getpacerai`, `website-char-count`) own authoring, UX review, deploy, and SEO-character-bounds checks. Upstream seam: `pacerai-foundation` (brand, voice, ICP, pricing — auto-loaded into `CLAUDE.md` via four `@`-imports of `foundation/pricing/*.md` per spec #17). Downstream seam: WordPress REST API at `getpacerai.com` — every page lands as a WP Page with a tracked ID. Both lifecycles can coexist — domain content work in this repo runs under PDBRDD locally; cross-repo work follows SPIDRDD.
+**Goal:** Pacer AI's public marketing surface — answers "what does Pacer AI sell and to whom?" Pacer AI is positioned as the **GTM Financial Modeling Agent** (built for CROs / Sales Leaders, CFOs secondary; "Revenue Modeling Agent" is a nav-label synonym) for recurring-revenue companies ($10M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services). Authored as standalone HTML files with inline CSS, published as WordPress.com Pages via the REST API (no local dev server, no framework). Operator role is `repo-operator`; four named on-dispatch agents (`blog-post`, `ui-ux-pro-max`, `webdev-getpacerai`, `website-char-count`) own authoring, UX review, deploy, and SEO-character-bounds checks. Upstream seam: `pacerai-foundation` (brand, voice, ICP, pricing — auto-loaded into `CLAUDE.md` via four `@`-imports of `foundation/pricing/*.md` per spec #17). Downstream seam: WordPress REST API at `getpacerai.com` — every page lands as a WP Page with a tracked ID. Both lifecycles can coexist — domain content work in this repo runs under PDBRDD locally; cross-repo work follows SPIDRDD.
 
 If you're opening this repo for the first time: read `AGENTS.md` (OS-pointer block points back to `pacerai-os/POLICY.md` for the work-mode gate), then `STATUS.md` for current state. Before deploying anything to WordPress, read `docs/deploy/runbook.md` and confirm `WP_BASE_URL`, `WP_USER`, `WP_APP_PASSWORD` are sourced via `source ~/.zshrc`.
 
@@ -24,7 +24,7 @@ If you're opening this repo for the first time: read `AGENTS.md` (OS-pointer blo
 
 Note: `goals/` is now provisioned (`goals/aeo-ranking.md`; `foundation/goals/drift-checks.md`). `TASK-LOG.md` is added when the first goal-tracked dispatch lands.
 
-**Homepage design:** as of **v3.0.0** the homepage is on the light **"Claude-bone"** palette (bone `#F5F4EF`); inner pages + the blog remain on the legacy dark theme pending their v3.0.x bone conversion. **Deploy state:** the v3 bone rebuild (homepage/blog/team/14 posts) is built on branch `feat/bone-redesign-v3` (**PR #20**) but **not yet live** — gated on Will's approval; go-live sequence in [`docs/deploy/v3-golive-plan.md`](docs/deploy/v3-golive-plan.md).
+**Palette:** as of **v3.0.x (LIVE)** the site is on the light **"Claude-bone"** palette (bone `#F5F4EF`) end to end — homepage, Resources hub, all 12 blog articles, Team, and Contact are all bone. Only legacy/redirected URLs remain on the retired dark theme. **Deploy state:** PR #20 is **merged and v3.0.0 tagged**; the go-live runbook is preserved at [`docs/deploy/v3-golive-plan.md`](docs/deploy/v3-golive-plan.md), post-deploy WP Admin steps (schema snippet + redirects) at [`docs/deploy/wp-admin-actions.md`](docs/deploy/wp-admin-actions.md).
 
 ---
 
@@ -86,7 +86,7 @@ pacerai-website/
 │   ├── footer/                            # Shared footer fragments
 │   ├── nav-headers.html                   # Shared nav fragment
 │   └── wpcode/                            # Externalized CSS injected via WPCode plugin
-├── scripts/                               # preview.py + validate.py + deploy.py (Python; WP REST API)
+├── scripts/                               # preview.py + validate.py + deploy.py + build_seo_table.py (Python; WP REST API)
 ├── docs/                                  # PDBRDD documentation
 │   ├── plan/                              # PRD, site tree, build prompts
 │   ├── design/                            # HTML mockups
@@ -137,18 +137,17 @@ Authoring flow (PDBRDD lifecycle, domain-local)
 | Page | URL | WP ID | Source File |
 |---|---|---|---|
 | Home | https://getpacerai.com/ | 25 | `src/homepage/index-build.html` |
-| Blog | https://getpacerai.com/blog/ | 230 | `src/blog/index-build.html` |
-| Platform Overview | https://getpacerai.com/platform/overview/ | 371 | `src/platform/overview.html` |
+| Resources (hub, was "Blog") | https://getpacerai.com/resources/ | 230 | `src/blog/index-build.html` |
 | ARR Snowball | https://getpacerai.com/solutions/arr-snowball-board-reporting/ | 372 | `src/solutions/arr-snowball.html` |
 | Customer Data Cube | https://getpacerai.com/solutions/customer-data-cube/ | 373 | `src/solutions/customer-data-cube.html` |
 | Exit Readiness | https://getpacerai.com/solutions/transaction-readiness/ | 554 | `src/solutions/transaction-readiness.html` |
 | RevOps Transformation | https://getpacerai.com/solutions/revops-transformation-pkg/ | 651 | `src/solutions/revops-transformation-pkg.html` |
 | GTM Transformation | https://getpacerai.com/solutions/gtm-transformation-pkg/ | 650 | `src/solutions/gtm-transformation-pkg.html` |
 | FP&A Transformation | https://getpacerai.com/solutions/fpanda-transformation-pkg/ | 652 | `src/solutions/fpanda-transformation-pkg.html` |
-| About | https://getpacerai.com/team/about/ | 374 | `src/team/about.html` |
-| Contact | https://getpacerai.com/team/contact/ | 375 | `src/team/contact.html` |
+| Team | https://getpacerai.com/team/ | 366 | `src/team/team-page.html` |
+| Contact | https://getpacerai.com/contact/ | 375 | `src/team/contact.html` |
 
-Canonical registry (with slugs, parents, and placeholder pages) is in [`CLAUDE.md`](CLAUDE.md#wordpress-page-registry). Edit there on new-page creation, then mirror summary here.
+All 12 blog articles (bone + live under `/resources/`) plus slugs, parents, and placeholder/legacy pages live in the canonical registry in [`CLAUDE.md`](CLAUDE.md#wordpress-page-registry). Edit there on new-page creation, then mirror summary here. *(Platform Overview 371 and About 374 are now legacy — 301-redirected to homepage anchors.)*
 
 ---
 
@@ -205,7 +204,7 @@ Source of truth: `pacerai-os/contracts/data-fleet-registry.md`.
 | Risk | Severity | Mitigation |
 |---|---|---|
 | `CLAUDE.md` is 328 lines — exceeds the 200-line guideline flagged by the architecture audit; carries the full WP page registry, deploy patterns, WordPress.com pitfalls, brand constraints, and operator rules in one file | Medium | Pre-existing risk tracked separately (out of spec #22 scope per Plan §10.4 / §11.11 watch-fors); a future Seed splits the page registry + WordPress pitfalls into sub-docs and leaves `CLAUDE.md` as the session brief proper |
-| Yoast meta descriptions cannot be set via WP REST API on WordPress.com — must be set manually in WP Admin per page; four pages still missing Yoast meta (Transaction Readiness 554, RevOps 651, GTM 650, FP&A 652 per `webpages-metadata.md` 2026-04-20 audit) | Medium | Excerpts set as fallback; manual WP Admin pass queued; `webpages-metadata.md` carries the per-page audit so the gap is visible at session-open |
+| Yoast title + meta descriptions cannot be set via the WP REST API on WordPress.com — must be set manually in WP Admin per page | Medium | v3.0.x: all 21 indexed pages rebranded to the "GTM Financial Modeling Agent for CROs" message in WP Admin; per-page worklist at `docs/deploy/yoast-worklist.md`; Organization + Person schema added via a WPCode JSON-LD snippet (`docs/deploy/wp-admin-actions.md`). Excerpts remain a meta-desc fallback |
 | Foundation submodule version pinning — `foundation/` was bumped on 2026-05-19 (ad hoc fleet wiring fix) and again on 2026-05-20 (spec #17 pricing-doctrine wire); a future foundation canonical edit landing without a coordinated submodule bump here could resolve the four `@`-imports against stale doctrine | Low | `foundation-waterfall audit` (in `pacerai-foundation`) detects drift across consumers; `pacerai-os/bin/check-foundation-wiring.sh` (registry-driven, spec #14) gates the wiring at the OS harness layer |
 | WordPress.com silent-failure surface — `#pacerai-homepage *` margin/padding resets, inline `<script>` strip, theme-CSS overrides, WPCode footer line-break insertion into minified JS; failures are not erroring, just visually wrong post-deploy (documented in `CLAUDE.md` ## WordPress.com CSS/JS Pitfalls) | Low | Always verify computed styles via DevTools after deploy; non-minified JS in WPCode; deploy runbook (`docs/deploy/runbook.md`) carries verification step; `validate.py --strict` Pre-Publish gate catches some classes pre-merge |
 | Homepage slug is `no-title` — pre-spec legacy, affects permalink; needs Will's review before change | Low | Tracked in `CLAUDE.md` ## Known Issues; no functional impact until a slug change is attempted |
@@ -228,7 +227,7 @@ Source of truth: `pacerai-os/contracts/data-fleet-registry.md`.
 
 | Other repos depend on this | For |
 |---|---|
-| End prospects via getpacerai.com | The live marketing surface itself (Operating Partners, CFOs, RevOps leaders at $50M–$1B ARR SaaS) |
+| End prospects via getpacerai.com | The live marketing surface itself (CROs, Sales Leaders, RevOps, CFOs, PE Portfolio Ops at recurring-revenue companies $10M–$1B, often PE/sponsor-backed) |
 | (none in fleet) | Website is downstream of doctrine and authoring; no fleet repo reads `src/` HTML programmatically |
 
 Per `CADENCE.md` `outputs:`: `src/` (page source HTML) and the WordPress REST API at `getpacerai.com` are the two declared output surfaces.

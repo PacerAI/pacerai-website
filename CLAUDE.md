@@ -14,7 +14,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.com hosted site deployed via the WordPress REST API. No local dev server — content is authored as standalone HTML files and pushed to WordPress as Pages.
 
-**Target:** PE-backed SaaS operators (Operating Partners, CFOs, RevOps leaders at $50M-$1B ARR companies).
+**Category (canonical):** Pacer AI is the **GTM Financial Modeling Agent** — built for CROs / Sales Leaders (CFOs secondary). "Revenue Modeling Agent" is retained only as a nav-label synonym.
+
+**Target:** recurring-revenue companies ($10M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services). Buyer personas: CROs, Sales Leaders, RevOps, CFOs, and PE Portfolio Ops. *(The prior "PE-backed SaaS" framing was removed site-wide in v3.0.x.)*
 
 ## Stack
 
@@ -28,22 +30,25 @@ Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.c
 
 All pages are deployed as WordPress Pages via REST API. Each page's HTML source file is the source of truth.
 
-> **v3.0.0 (2026-07-21/22):** the 6 `/solutions/*` pages are **retired from nav + homepage and
-> 301-redirected to the homepage** (source files kept for archive/rollback; do not redeploy their
-> content). Legacy `/pricing/` (111) **301-redirects to `/#pricing`** (the homepage pricing anchor).
-> Homepage nav is flat/centered (Revenue Modeling Agent · Use Cases · Team · Pricing · Resources).
-> The Blog (230) slug is now **`resources`** (renamed 2026-07-22, live; posts auto-301, `/blog/` → `/resources/`
-> redirect added; runbook `docs/deploy/blog-to-resources-rename.md`). "Resources" nav → `/resources/`.
-> **Deploy state:** the v3 bone rebuild (homepage/blog/team/14 posts) is built on branch
-> `feat/bone-redesign-v3` (**PR #20**) but **NOT yet live** — gated on Will's approval; deploy sequence
-> in **`docs/deploy/v3-golive-plan.md`**.
+> **v3.0.x (2026-07-23) — LIVE.** PR #20 merged; **v3.0.0 tagged**. The bone rebuild is deployed:
+> homepage (25), Resources hub (230), all **12 blog articles**, Team (366), and Contact (375) are all
+> **bone (`#F5F4EF`)**. Only legacy/redirected URLs remain non-bone.
+> The 6 `/solutions/*` pages are **retired from nav + homepage and 301-redirected to the homepage**
+> (source files kept for archive/rollback; do not redeploy their content). Legacy `/pricing/` (111)
+> **301-redirects to `/#pricing`**. Homepage nav is flat/centered (Revenue Modeling Agent · Use Cases ·
+> Team · Pricing · Resources). The Blog (230) WP page title is renamed **"Blog" → "Resources"** (slug
+> already `resources`; posts auto-301, `/blog/` → `/resources/` redirect live; runbook
+> `docs/deploy/blog-to-resources-rename.md`). "Resources" nav → `/resources/`.
+> **Redirects (301, Redirection plugin):** `/team/about/` → `/#about`, `/platform/overview/` → `/#how-it-works`,
+> `/team/contact/` → `/contact/`, `/what-is-an-arr-waterfall/` → `/resources/what-is-an-arr-waterfall/`,
+> plus `/about/` and `/overview/`; earlier `/solutions/*` → `/` and `/pricing/` → `/#pricing`.
 
 | Page | WP ID | Slug | Parent | Source File |
 |------|-------|------|--------|-------------|
 | **Home** | 25 | `no-title` | — | `src/homepage/index-build.html` |
-| **Blog** | 230 | `blog` | — | `src/blog/index-build.html` |
+| **Resources** (hub, was "Blog") | 230 | `resources` | — | `src/blog/index-build.html` |
 | Platform (parent) | 362 | `platform` | — | *(placeholder — no content)* |
-| **Platform Overview** | 371 | `overview` | 362 | `src/platform/overview.html` |
+| **Platform Overview** | 371 | `overview` | 362 | `src/platform/overview.html` *(legacy — 301 → `/#how-it-works`)* |
 | Solutions (parent) | 364 | `solutions` | — | *(placeholder — no content)* |
 | **ARR Snowball** | 372 | `arr-snowball-board-reporting` | 364 | `src/solutions/arr-snowball.html` |
 | **Customer Data Cube** | 373 | `customer-data-cube` | 364 | `src/solutions/customer-data-cube.html` |
@@ -52,23 +57,40 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | **GTM Transformation** | 650 | `gtm-transformation-pkg` | 364 | `src/solutions/gtm-transformation-pkg.html` |
 | **FP&A Transformation** | 652 | `fpanda-transformation-pkg` | 364 | `src/solutions/fpanda-transformation-pkg.html` |
 | **Team** (parent) | 366 | `team` | — | `src/team/team-page.html` |
-| **About** | 374 | `about` | 366 | `src/team/about.html` |
-| **Contact** | 375 | `contact` | 366 | `src/team/contact.html` |
-| **Build vs Hire Blog** | 491 | `build-customer-data-cube-in-house-or-hire` | 230 | `src/blog/posts/491-build.html` |
-| **cRPO Blog** | 865 | `what-is-current-performance-obligation` | 230 | `src/blog/posts/crpo-build.html` |
+| **About** | 374 | `about` | 366 | `src/team/about.html` *(legacy — 301 → `/#about`)* |
+| **Contact** | 375 | `contact` | — | `src/team/contact.html` *(bone; moved to top-level `/contact/`; was parent 366)* |
 | Pricing | 111 | `pricing` | — | *(legacy — v3: 301 → `/#pricing`)* |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
+**Blog articles (all 12 bone + live, parent 230; deploy with `--force` — pre-existing prose voice-debt trips `validate.py`):**
+
+| Page | WP ID | Slug | Source File |
+|------|-------|------|-------------|
+| Build vs Hire | 491 | `build-customer-data-cube-in-house-or-hire` | `src/blog/posts/491-build.html` |
+| What is an ARR Snowball | 378 | `what-is-an-arr-snowball-understanding-revenue-growth` | `src/blog/posts/227-build.html` |
+| Prevent Churn in High-Value Accounts | 376 | `prevent-churn-in-high-value-accounts-with-arr-snowball` | `src/blog/posts/236-build.html` |
+| ARR Snowball Analysis | 368 | `arr-snowball-analysis-find-your-expansion-drivers` | `src/blog/posts/244-build.html` |
+| Using AI to Enable RevOps | 360 | `using-ai-to-enable-revops-without-breaking-your-gtm` | `src/blog/posts/264-build.html` |
+| Why ARR Waterfall Models Matter | 358 | `why-arr-waterfall-models-matter-for-saas-growth` | `src/blog/posts/288-build.html` |
+| Why LLMs Can't Build Your ARR Snowball | 441 | `why-llms-cant-build-your-arr-snowball-from-operational-data` | `src/blog/posts/441-build.html` |
+| Board-Quality ARR Snowballs | 781 | `board-quality-arr-snowballs` | `src/blog/posts/board-quality-arr-snowballs-build.html` |
+| What Companies Build vs What Boards Need | 591 | `what-most-companies-build-vs-what-boards-need` | `src/blog/posts/comparison-build-vs-need.html` |
+| Semrush-Adobe Case Study | 888 | `semrush-adobe-acquisition-case-study` *(root URL)* | `src/blog/posts/semrush-adobe-case-study-build.html` |
+| What is an ARR Waterfall | 850 | `what-is-an-arr-waterfall` *(canonical `/resources/`; root dupe 873 301→ this)* | `src/blog/posts/what-is-an-arr-waterfall-build.html` |
+| What is cRPO (Current Performance Obligation) | 865 | `what-is-current-performance-obligation` | `src/blog/posts/crpo-build.html` |
+
+*(The Jan-2026 batch — 227/236/244/288/264 = WP 378/376/368/358/360 — got fixed+completed FAQPage + Article(+Person author=Will Sullivan) schema.)*
+
 **Live URLs:**
 - https://getpacerai.com/
-- https://getpacerai.com/blog/
-- https://getpacerai.com/blog/what-is-current-performance-obligation/
-- https://getpacerai.com/platform/overview/
+- https://getpacerai.com/resources/
+- https://getpacerai.com/resources/what-is-an-arr-waterfall/
+- https://getpacerai.com/resources/what-is-current-performance-obligation/
+- https://getpacerai.com/semrush-adobe-acquisition-case-study/
 - https://getpacerai.com/solutions/arr-snowball-board-reporting/
 - https://getpacerai.com/solutions/customer-data-cube/
 - https://getpacerai.com/team/
-- https://getpacerai.com/team/about/
-- https://getpacerai.com/team/contact/
+- https://getpacerai.com/contact/
 
 ## Environment Variables (Required for REST API deploys)
 
@@ -112,12 +134,17 @@ docs/
 ├── review/
 │   ├── checklist.md                    # QA checklist
 │   ├── Issues.md                       # Known issues
+│   ├── seo-table.csv + seo-table.html  # SEO data emitted by scripts/build_seo_table.py
+│   ├── jan2026-batch-aeo-seo-plan.md   # AEO/SEO plan for the 5 weak Jan-2026 posts
+│   ├── website_bone_v3_recommendations.md  # Full site review
 │   └── pre-deploy-backup-*.json        # Backups before each deploy
 ├── document/
 │   ├── changelog.md                    # Deploy log
 │   └── Internal_Documentation.md       # Messaging, positioning, site tree, SEO strategy
 └── deploy/
-    └── runbook.md                      # Deploy instructions
+    ├── runbook.md                      # Deploy instructions
+    ├── wp-admin-actions.md             # Organization/Person WPCode schema snippet + redirect runbook
+    └── yoast-worklist.md               # Per-page Yoast title/meta worklist (WP Admin only)
 
 pacerai-context/
 ├── pacerai.md                          # Canonical company context (products, personas, differentiation)
@@ -138,7 +165,10 @@ python3 scripts/validate.py src/homepage/index-build.html  # Single file
 python3 scripts/deploy.py 25                  # Deploy homepage
 python3 scripts/deploy.py all                 # Deploy all pages
 python3 scripts/deploy.py 25 --dry-run        # Preview what would happen
-python3 scripts/deploy.py 25 --force          # Skip validation
+python3 scripts/deploy.py 25 --force          # Skip validation (used for the 12 blog articles — prose voice-debt)
+
+# Regenerate the SEO data tables (holds the per-page Yoast SEO data)
+python3 scripts/build_seo_table.py            # Emits docs/review/seo-table.csv + docs/review/seo-table.html
 ```
 
 ## Key Workflows
@@ -232,6 +262,8 @@ These are silent failures — WordPress won't error, but your styles/scripts won
 | Blog post deployed as WP Post | `<style>` tags stripped by WordPress Posts | Deploy blog posts as Pages (parent=230) using build system |
 | Minified JS in WPCode footer gets line breaks inserted | WordPress inserts line breaks mid-token (e.g. `set\nTimeout`, `el.tex\ntContent`), breaking minified code silently | Use non-minified JS with proper line breaks in WPCode Header & Footer; WordPress won't break properly formatted code |
 | Homepage CSS too large for inline `<style>` | Homepage CSS is ~37K chars — inline would push page over 68K limit | CSS externalized to WPCode Header injection. Source: `src/homepage/wpcode-homepage-css.css`. Update WPCode snippet in WP Admin when CSS changes. |
+| Yoast SEO title + meta description NOT REST-writable on WordPress.com | REST API silently ignores `yoast_head` / Yoast title/meta fields — no error, no change | Set Yoast title/meta **in WP Admin** (browser). Per-page worklist: `docs/deploy/yoast-worklist.md`. Excerpts remain a fallback for meta desc only. |
+| WPCode Footer snippet is fragile — a malformed closing tag once broke ALL footer JS | Every footer-injected script (rotor, marquee, pipeline) dies silently site-wide | Homepage animations (hero rotor w/ 13 phrases, logo marquee, pipeline numbers) moved to the inline `<img onerror>` injector in `src/homepage/index-build.html` (bypasses WP script-stripping), guarded by `window.__paRotor` / `window.__paPipe` so they never double-run if the WPCode footer is later fixed. |
 
 **Design reference (v3 bone homepage):** `docs/design/homepage/index-build-bone_v3_2026-07-22.html` — self-contained, browser-openable copy of the v3 homepage (page CSS/HTML + inlined WPCode JS). Diff live CSS against it. *(Legacy dark reference archived at `docs/design/homepage/archive/`.)*
 **AEO Row spec:** `docs/design/AEO-Row-Text-and-Image.md` — copy-paste-ready CSS for text+image sections.
@@ -267,9 +299,10 @@ Every page follows the same pattern:
 
 <!-- SOURCE: pacerai-foundation/brand/ and pacerai-foundation/commercial/cta-language.yml -->
 
+- **Category term (canonical):** **GTM Financial Modeling Agent** (built for CROs / Sales Leaders; CFOs secondary). "Revenue Modeling Agent" survives only as a nav-label synonym; "ARR Modeling Agent" is a schema `alternateName`. The "PE-backed SaaS" framing was removed site-wide — the market is recurring-revenue companies ($10M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services).
 - **Fonts:** DM Sans (body), Cormorant Garamond (legacy headings). The v3 bone homepage uses DM Sans (weight 800) for headings per the approved demo design.
-- **Background (v3.0.0+, "Claude-bone"):** bone `#F5F4EF` (surface `#FAFAF7`). The homepage is the reference. **Inner pages (platform/team/about/contact) + the blog are still on the legacy dark theme** pending their v3.0.x bone conversion — don't assume a page is bone until converted.
-- **Legacy dark background (pre-v3, unconverted pages):** Dark navy (#080E1C)
+- **Background (v3.0.x, "Claude-bone"):** bone `#F5F4EF` (surface `#FAFAF7`). **ALL pages are now bone** — homepage, Resources hub, all 12 blog articles, Team, and Contact. Only legacy/redirected URLs remain non-bone.
+- **Legacy dark background (retired — only on redirected legacy URLs):** Dark navy (#080E1C)
 - **Primary accent:** Teal — bone: `#2E7D74` / `#70C49C`; legacy dark: `#27899A` / `#70C49C`
 - **v3 bone tokens:** `--bone:#F5F4EF --surface:#FAFAF7 --navy:#1F3864 --teal:#2E7D74 --ink:#20242B --muted:#5F5A50 --line:#E6E1D6`
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents. No playful illustrations or rounded pill buttons.
@@ -281,8 +314,7 @@ Every page follows the same pattern:
 ## Known Issues
 
 - **Homepage slug is `no-title`** — needs Will's review before changing (affects permalink)
-- **Yoast meta descriptions** — Cannot be set via REST API on WordPress.com. Must be set in WP Admin per page. Excerpts have been set as fallback. Pages needing Yoast meta: Transaction Readiness (554), RevOps (651), GTM (650), FP&A (652). Homepage (25), ARR Snowball (372), Customer Data Cube (373), Team (366) already have Yoast descriptions.
-- **Yoast page title** — should be "Pacer AI — ARR Intelligence for PE-Backed SaaS" (already set for homepage)
+- **Yoast title + meta descriptions** — NOT writable via the WordPress.com REST API; set in WP Admin (browser) per page. v3.0.x: Yoast title + meta rebranded across **all 21 indexed pages** to the "GTM Financial Modeling Agent for CROs" message; per-page worklist at `docs/deploy/yoast-worklist.md`. Homepage `og:title` corrected to "Pacer AI — The GTM Financial Modeling Agent for CROs". Organization + Person schema added via a WPCode JSON-LD snippet (founder Will Sullivan, foundingDate 2023-05, sameAs linkedin.com/company/getpacerai + linkedin.com/in/will-sullivan98 + youtube.com/@PacerAI, alternateName ["Revenue Modeling Agent","ARR Modeling Agent"]) — see `docs/deploy/wp-admin-actions.md`.
 
 ## Resolved Issues (April 2026)
 
