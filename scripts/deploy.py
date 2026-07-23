@@ -37,6 +37,18 @@ PAGE_REGISTRY = {
     374: "src/team/about.html",
     375: "src/team/contact.html",
     865: "src/blog/posts/crpo-build.html",
+    # --- v3 bone blog posts (voice-debt in original prose → deploy with --force until a voice pass) ---
+    491: "src/blog/posts/491-build.html",
+    378: "src/blog/posts/227-build.html",
+    376: "src/blog/posts/236-build.html",
+    368: "src/blog/posts/244-build.html",
+    360: "src/blog/posts/264-build.html",
+    358: "src/blog/posts/288-build.html",
+    441: "src/blog/posts/441-build.html",
+    781: "src/blog/posts/board-quality-arr-snowballs-build.html",
+    591: "src/blog/posts/comparison-build-vs-need.html",
+    888: "src/blog/posts/semrush-adobe-case-study-build.html",
+    850: "src/blog/posts/what-is-an-arr-waterfall-build.html",
 }
 
 PAGE_NAMES = {
@@ -45,6 +57,10 @@ PAGE_NAMES = {
     651: "RevOps Transformation", 650: "GTM Transformation", 652: "FP&A Transformation",
     366: "Team Page", 374: "About", 375: "Contact",
     865: "cRPO Blog",
+    491: "Blog: Build vs Hire", 378: "Blog: What is ARR Snowball", 376: "Blog: Prevent Churn",
+    368: "Blog: ARR Snowball Analysis", 360: "Blog: AI for RevOps", 358: "Blog: Why ARR Waterfalls Matter",
+    441: "Blog: Why LLMs Can't Build Snowball", 781: "Blog: Board-Quality Snowballs",
+    591: "Blog: Build vs Boards Need", 888: "Blog: Semrush-Adobe", 850: "Blog: What is ARR Waterfall",
 }
 
 
