@@ -258,6 +258,7 @@
 (function() {
   var rotor = document.querySelector('#pacerai-homepage .rotor');
   if (!rotor) return;
+  if (window.__paRotor) return; window.__paRotor = 1; /* guard: page injector may own this */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var phrases = ['Forecasting', 'Sales Planning', 'ARR Waterfall', 'ARR Reporting'];
   var i = 0;
@@ -284,6 +285,7 @@
 (function() {
   var c = document.querySelector('#pacerai-homepage .how .pipe-nums');
   if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.__paPipe) return; window.__paPipe = 1; /* guard: page injector may own this */
   var nums = ['$24,035', '$81,115', '$88,980', '$118,795', 'NRR 101.3%', 'GRR 91.3%',
     '$197,545', '$510,470', '106.7%', '29.4%', '$302,695', 'NRR 108.1%'];
   function spawn() {
