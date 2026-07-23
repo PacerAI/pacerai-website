@@ -87,4 +87,12 @@ All **301 (permanent)**.
 
 After adding redirects, the dupes drop out of the Yoast sitemap automatically; then also remove them from `llms.txt`.
 
+**Page retirements (2026-07-23) — 301 to homepage anchors / new URL:**
+
+| From (source) | → To (301) |
+|---|---|
+| `/team/about/` | `/#about` (points at the homepage "Why Pacer AI Exists" section; anchor added) |
+| `/platform/overview/` | `/#how-it-works` (homepage "How It Works" section) |
+| `/team/contact/` | `/contact/` (contact page moved to top-level; now bone, email → will@getpacerai.com) |
+
 **Keep (do NOT redirect), just add a meta description:** `/glossary/`, `/glossary/arr-waterfall/` (they're the `DefinedTerm` targets), `/resources/arr-snowball-vs-waterfall/`.

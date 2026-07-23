@@ -611,7 +611,7 @@ html, body, .wp-site-blocks {
                   "name": "What software builds an ARR Waterfall automatically?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Spreadsheet templates work for sub-$10M ARR companies. Above that, dedicated platforms generate the Waterfall directly from billing and CRM data. Pacer AI's Customer Data Cube on Microsoft Fabric is purpose-built for PE-backed SaaS, automating Waterfall, Snowball, and NRR reporting from a single source of truth."
+                        "text": "Spreadsheet templates work for sub-$10M ARR companies. Above that, dedicated platforms generate the Waterfall directly from billing and CRM data. Pacer AI's Customer Data Cube on Microsoft Fabric is purpose-built for recurring-revenue companies, automating Waterfall, Snowball, and NRR reporting from a single source of truth."
                   }
             },
             {
@@ -678,7 +678,7 @@ html, body, .wp-site-blocks {
 
 <p>The reason finance teams call it a "waterfall" is that the visualization &mdash; a bridge chart with floating columns &mdash; cascades from beginning ARR down through each component to ending ARR. Every dollar of recurring revenue change has to be classified into exactly one bucket, which forces precision that a single net-ARR number can hide.</p>
 
-<p>The ARR Waterfall is the operating finance counterpart to the <a href="https://getpacerai.com/resources/what-is-an-arr-snowball/">ARR Snowball</a>. The Waterfall is single-period and component-level; the Snowball is multi-period and cumulative. Both models reconcile to the same ending ARR figure, and PE-backed SaaS companies typically maintain both. For a side-by-side breakdown of when to use each, see <a href="https://getpacerai.com/resources/arr-snowball-vs-waterfall/">ARR Snowball vs. ARR Waterfall</a>.</p>
+<p>The ARR Waterfall is the operating finance counterpart to the <a href="https://getpacerai.com/resources/what-is-an-arr-snowball/">ARR Snowball</a>. The Waterfall is single-period and component-level; the Snowball is multi-period and cumulative. Both models reconcile to the same ending ARR figure, and recurring-revenue companies typically maintain both. For a side-by-side breakdown of when to use each, see <a href="https://getpacerai.com/resources/arr-snowball-vs-waterfall/">ARR Snowball vs. ARR Waterfall</a>.</p>
 
 <h2>What Are the Components of an ARR Waterfall?</h2>
 
@@ -762,7 +762,7 @@ html, body, .wp-site-blocks {
 
 <h2>What Does an ARR Waterfall Look Like? (Example)</h2>
 
-<p>A worked example for a hypothetical $50M ARR PE-backed SaaS company over a single quarter:</p>
+<p>A worked example for a hypothetical $50M ARR recurring-revenue companies company over a single quarter:</p>
 
 <table>
   <thead>
@@ -795,7 +795,7 @@ html, body, .wp-site-blocks {
 
 <p>This is a business that looks fine on a net-ARR view but is actually treading water on the existing base &mdash; the headline 9% quarterly growth is almost entirely new logo acquisition, with NRR under 100%. That diagnosis is invisible without the Waterfall.</p>
 
-<h2>Why Does the ARR Waterfall Matter for PE-Backed SaaS?</h2>
+<h2>Why Does the ARR Waterfall Matter for recurring-revenue companies?</h2>
 
 <p>For PE Operating Partners and CFOs, the ARR Waterfall is the single most important operating finance artifact. Four reasons:</p>
 
@@ -819,12 +819,12 @@ html, body, .wp-site-blocks {
   <li><strong>Ambiguous downgrade vs. churn classification.</strong> A customer who reduces ARR by 90% but keeps a $10K floor is contraction, not churn. A customer who drops to zero is churn. Companies that flip these classifications mid-year produce reports that are not comparable across quarters.</li>
   <li><strong>Mid-period contract modifications.</strong> A contract amended on day 47 of a 90-day period needs to be apportioned, not snapped to the boundary. Snapping introduces 1-2 points of noise that aggregate into systematic misstatement.</li>
   <li><strong>Cross-product double-counts.</strong> When a customer expands one product and contracts another in the same quarter, both movements are real. Aggregating to the customer-level expansion-or-contraction (not both) hides which product line is driving health.</li>
-  <li><strong>Manual spreadsheets without reconciliation.</strong> Once the model lives in three Excel files maintained by three people, the Waterfall stops reconciling to the Snowball, the Snowball stops reconciling to GL recognized revenue, and the board deck contradicts the operating review. This is the single most common reason PE-backed companies move ARR reporting to a purpose-built platform.</li>
+  <li><strong>Manual spreadsheets without reconciliation.</strong> Once the model lives in three Excel files maintained by three people, the Waterfall stops reconciling to the Snowball, the Snowball stops reconciling to GL recognized revenue, and the board deck contradicts the operating review. This is the single most common reason recurring-revenue companies move ARR reporting to a purpose-built platform.</li>
 </ol>
 
 <h2>How Often Should You Update the ARR Waterfall?</h2>
 
-<p>Three cadences cover most PE-backed SaaS use cases:</p>
+<p>Three cadences cover most recurring-revenue companies use cases:</p>
 
 <ul>
   <li><strong>Monthly</strong> for operating reviews, RevOps cadence, and FP&amp;A variance analysis. This is where teams catch issues before they compound.</li>
@@ -840,7 +840,7 @@ html, body, .wp-site-blocks {
   <li>The two metrics that fall directly out of the Waterfall &mdash; Gross Revenue Retention and Net Revenue Retention &mdash; are the durability metrics PE firms scrutinize most.</li>
   <li>The Waterfall is the operating-finance complement to the <a href="https://getpacerai.com/resources/what-is-an-arr-snowball/">ARR Snowball</a>: the Waterfall diagnoses a single period; the Snowball tracks trajectory across periods.</li>
   <li>Building a defensible Waterfall requires locked movement definitions, clean contract-level data, gross-not-net aggregation, and reconciliation to both the Snowball and to GAAP revenue.</li>
-  <li>Most PE-backed SaaS companies eventually move from spreadsheet Waterfalls to a unified <a href="https://getpacerai.com/resources/build-customer-data-cube-in-house-or-hire/">Customer Data Cube</a> because the reconciliation across Snowball, Waterfall, and GL revenue breaks under spreadsheet maintenance.</li>
+  <li>Most recurring-revenue companies eventually move from spreadsheet Waterfalls to a unified <a href="https://getpacerai.com/resources/build-customer-data-cube-in-house-or-hire/">Customer Data Cube</a> because the reconciliation across Snowball, Waterfall, and GL revenue breaks under spreadsheet maintenance.</li>
 </ul>
 
 <h2>Frequently Asked Questions</h2>
@@ -861,10 +861,10 @@ html, body, .wp-site-blocks {
 <p>NRR = (Beginning ARR + Expansion ARR &minus; Contraction ARR &minus; Churned ARR) / Beginning ARR. New ARR is excluded because NRR measures the existing customer base only. Best-in-class public SaaS companies report NRR above 120%; PE benchmarks for mid-market SaaS typically target 105-115%.</p>
 
 <h3>What software builds an ARR Waterfall automatically?</h3>
-<p>Spreadsheet templates from <a href="https://www.thesaascfo.com/downloads/arr-revenue-forecast-model-with-waterfall/" target="_blank" rel="noopener">The SaaS CFO</a>, <a href="https://www.mosaic.tech/waterfall-chart/saas-revenue-arr" target="_blank" rel="noopener">Mosaic</a>, and <a href="https://www.hibob.com/financial-tools/saas-revenue-arr/" target="_blank" rel="noopener">HiBob</a> work for sub-$10M ARR companies. Above that, dedicated platforms generate the Waterfall directly from billing and CRM data; <a href="https://getpacerai.com/resources/build-customer-data-cube-in-house-or-hire/">Pacer AI&rsquo;s Customer Data Cube</a> on Microsoft Fabric is purpose-built for PE-backed SaaS, automating Waterfall, Snowball, and NRR reporting from a single source of truth.</p>
+<p>Spreadsheet templates from <a href="https://www.thesaascfo.com/downloads/arr-revenue-forecast-model-with-waterfall/" target="_blank" rel="noopener">The SaaS CFO</a>, <a href="https://www.mosaic.tech/waterfall-chart/saas-revenue-arr" target="_blank" rel="noopener">Mosaic</a>, and <a href="https://www.hibob.com/financial-tools/saas-revenue-arr/" target="_blank" rel="noopener">HiBob</a> work for sub-$10M ARR companies. Above that, dedicated platforms generate the Waterfall directly from billing and CRM data; <a href="https://getpacerai.com/resources/build-customer-data-cube-in-house-or-hire/">Pacer AI&rsquo;s Customer Data Cube</a> on Microsoft Fabric is purpose-built for recurring-revenue companies, automating Waterfall, Snowball, and NRR reporting from a single source of truth.</p>
 
 <h3>How does Pacer AI build the ARR Waterfall?</h3>
-<p>Pacer AI&rsquo;s <a href="https://getpacerai.com/resources/build-customer-data-cube-in-house-or-hire/">Customer Data Cube</a> ingests contract, billing, and CRM data, applies locked movement definitions, computes per-customer period deltas, and renders the Waterfall, Snowball, and GRR/NRR metrics in Power BI. Reconciliation between models is automatic, definitions are governed centrally, and outputs are board-ready without spreadsheet maintenance &mdash; which is why PE-backed SaaS finance teams adopt it for portfolio standardization.</p>
+<p>Pacer AI&rsquo;s <a href="https://getpacerai.com/resources/build-customer-data-cube-in-house-or-hire/">Customer Data Cube</a> ingests contract, billing, and CRM data, applies locked movement definitions, computes per-customer period deltas, and renders the Waterfall, Snowball, and GRR/NRR metrics in Power BI. Reconciliation between models is automatic, definitions are governed centrally, and outputs are board-ready without spreadsheet maintenance &mdash; which is why SaaS finance teams adopt it for portfolio standardization.</p>
 
 <script type="application/ld+json">
 {
