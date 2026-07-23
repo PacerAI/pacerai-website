@@ -260,7 +260,10 @@
   if (!rotor) return;
   if (window.__paRotor) return; window.__paRotor = 1; /* guard: page injector may own this */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var phrases = ['Forecasting', 'Sales Planning', 'ARR Waterfall', 'ARR Reporting'];
+  var phrases = ['Sales Targets', 'ARR Waterfalls', 'ARR Reporting', 'GTM Plans',
+    'Sales-Led Growth', 'Product-Led Growth', 'Enterprise Sales', 'Capacity Modeling',
+    'Coverage Modeling', 'Headcount Planning', 'Expansion Whitespace', 'Forecasting',
+    'Performance Tracking'];
   var i = 0;
   setInterval(function() {
     i = (i + 1) % phrases.length;
