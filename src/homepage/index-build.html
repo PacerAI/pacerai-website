@@ -195,6 +195,93 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   .how .pipe-svg,.how .pipe-dot,.how .pipe-nums{display:none}
 }
 @media(prefers-reduced-motion:reduce){#pacerai-homepage *,.how *{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
+
+
+/* ===== v3 redesign additions ===== */
+/* ---- v3 redesign components (scoped) ---- */
+#pacerai-homepage{--sub:#A79E8C;--red:#C0392B}
+#pacerai-homepage .why-split{font-size:20px;color:var(--ink);line-height:1.5;margin:18px 0 0;font-weight:600;max-width:760px}
+#pacerai-homepage .why-split b{color:var(--navy)}
+#pacerai-homepage .why-need{display:inline-block;margin-top:6px;color:var(--teal)}
+#pacerai-homepage .ao-note{font-size:16.5px;color:var(--ink-mid);max-width:760px;line-height:1.55;margin:22px 0 30px;font-weight:600}
+
+/* --- component-income-vs-arr-6-movements (bone theme), scoped --- */
+#pacerai-homepage .a2o-pair{display:grid;grid-template-columns:1fr 1.08fr;gap:22px;margin:26px 0 0;align-items:start}
+#pacerai-homepage .a2o-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:34px 32px 28px;box-shadow:0 20px 60px rgba(15,25,45,.06)}
+#pacerai-homepage .a2o-head{font-size:20px;font-weight:800;letter-spacing:-.3px;color:var(--navy);line-height:1.18;min-height:47px;display:flex;align-items:flex-end}
+#pacerai-homepage .a2o-emoji{font-size:22px;margin-left:8px}
+#pacerai-homepage .a2o-rule{height:3px;background:var(--navy);border-radius:2px;margin:12px 0 22px}
+#pacerai-homepage .a2o-ledger{display:grid;row-gap:2px}
+#pacerai-homepage .a2o-row{display:grid;align-items:baseline;grid-template-columns:24px 1fr auto;column-gap:10px;padding:3px 0;font-variant-numeric:tabular-nums}
+#pacerai-homepage .a2o-col-arr .a2o-row{grid-template-columns:24px 1fr auto 160px}
+#pacerai-homepage .a2o-num{font-size:13px;font-weight:600;color:var(--muted);text-align:left}
+#pacerai-homepage .a2o-label{font-size:15px;color:var(--ink)}
+#pacerai-homepage .a2o-val{font-size:15px;font-weight:600;color:var(--ink);text-align:right;letter-spacing:-.2px}
+#pacerai-homepage .a2o-ledger .a2o-val.neg{color:var(--red)}
+#pacerai-homepage .a2o-note{font-size:12px;color:var(--muted);text-align:right;font-weight:500}
+#pacerai-homepage .is-bold .a2o-label,#pacerai-homepage .is-bold .a2o-val{font-weight:800;color:var(--ink)}
+#pacerai-homepage .is-italic .a2o-label,#pacerai-homepage .is-italic .a2o-val{font-style:italic}
+#pacerai-homepage .is-sub .a2o-label,#pacerai-homepage .is-sub .a2o-val{color:var(--sub);font-size:14px}
+#pacerai-homepage .is-sub .a2o-label{padding-left:14px}
+#pacerai-homepage .is-total{border-top:1.5px solid var(--ink);padding-top:5px;margin-top:1px}
+#pacerai-homepage .is-accent .a2o-note{color:var(--teal);font-weight:600}
+#pacerai-homepage .is-spacer{height:14px}
+#pacerai-homepage .turn{font-size:17px;color:var(--ink);max-width:720px;line-height:1.55;margin:22px 0 0;font-weight:600}
+
+#pacerai-homepage .method{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}
+#pacerai-homepage .mstep{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:22px;position:relative}
+#pacerai-homepage .mstep .mn{font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--kick);font-weight:700}
+#pacerai-homepage .mstep h3{margin:6px 0 8px;font-size:20px;color:var(--navy);letter-spacing:-.3px}
+#pacerai-homepage .mstep p{margin:0;font-size:14px;color:#5a5648;line-height:1.55}
+#pacerai-homepage .mstep ul{margin:12px 0 0;padding-left:16px;font-size:13.5px;color:#5a5648;line-height:1.75}
+
+#pacerai-homepage .qstrip{border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:16px;background:var(--surface);padding:28px;margin-top:26px}
+#pacerai-homepage .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px;margin:0 0 20px}
+#pacerai-homepage .qgrid div{font-size:15.5px;color:var(--ink);line-height:1.5;padding-left:20px;position:relative}
+#pacerai-homepage .qgrid div:before{content:"?";position:absolute;left:0;color:var(--teal);font-weight:800}
+#pacerai-homepage .qnote{font-size:15px;color:var(--muted);line-height:1.6;margin:0}
+#pacerai-homepage .qnote b{color:var(--ink)}
+#pacerai-homepage .ally{margin:16px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:14.5px;color:var(--muted);font-style:italic}
+
+#pacerai-homepage .pains{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:26px}
+#pacerai-homepage .pain{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:20px;font-size:15px;color:var(--ink);line-height:1.45;font-weight:600}
+
+#pacerai-homepage .ucx{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr;gap:16px;margin-top:26px}
+#pacerai-homepage .ucard{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:22px}
+#pacerai-homepage .ucard h3{margin:0;font-size:17px;color:var(--navy);letter-spacing:-.2px}
+#pacerai-homepage .ucard ul{margin:11px 0 0;padding-left:16px;color:#5a5648;font-size:13.5px;line-height:1.7}
+#pacerai-homepage .founder{display:flex;gap:28px;align-items:center;margin-top:24px;border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:28px 32px;max-width:860px;box-shadow:0 20px 60px rgba(15,25,45,.05)}
+#pacerai-homepage .founder-photo{width:116px;height:116px;border-radius:14px;object-fit:cover;flex:none;border:1px solid var(--line)}
+#pacerai-homepage .founder-name{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.2px}
+#pacerai-homepage .founder-name span{color:var(--kick);font-weight:700;font-size:14px}
+#pacerai-homepage .founder-bio{margin:8px 0 0;font-size:14.5px;color:#5a5648;line-height:1.6;max-width:580px}
+#pacerai-homepage .founder-links{display:flex;align-items:center;gap:16px;margin-top:16px;flex-wrap:wrap}
+#pacerai-homepage .founder-li{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--navy);border:1px solid var(--line);border-radius:9px;padding:8px 13px}
+#pacerai-homepage .founder-li:hover{border-color:var(--navy)}
+#pacerai-homepage .founder-li svg{width:15px;height:15px;fill:#0A66C2}
+#pacerai-homepage .founder-teamlink{display:inline-block;margin-top:20px;font-weight:700;color:var(--teal)}
+/* center the Security band */
+#pacerai-homepage [data-section="security"]{text-align:center}
+#pacerai-homepage [data-section="security"] .lede{margin:0 auto}
+#pacerai-homepage [data-section="security"] .sec-list{margin:24px auto 0;justify-items:center}
+#pacerai-homepage [data-section="security"] .sec-item{text-align:left;max-width:400px}
+#pacerai-homepage .models6{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+#pacerai-homepage .mcard{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:22px}
+#pacerai-homepage .mcard h3{margin:0 0 6px;font-size:17px;color:var(--navy)}
+#pacerai-homepage .mcard p{margin:0;font-size:13.5px;color:#5a5648;line-height:1.5}
+#pacerai-homepage .interconnect{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:26px;margin-top:18px}
+#pacerai-homepage .interconnect p{margin:0;font-size:16px;color:var(--ink);line-height:1.6}
+
+@media(max-width:900px){
+  #pacerai-homepage .method,#pacerai-homepage .qgrid,#pacerai-homepage .pains,#pacerai-homepage .models6{grid-template-columns:1fr}
+  #pacerai-homepage .ucx{grid-template-columns:1fr 1fr;grid-auto-rows:auto}
+  #pacerai-homepage .founder{flex-direction:column;text-align:center;align-items:center;padding:28px 22px}
+  #pacerai-homepage .founder-links{justify-content:center}
+  #pacerai-homepage .a2o-card{padding:26px 22px 20px}
+  #pacerai-homepage .a2o-pair{grid-template-columns:1fr;gap:18px}
+  #pacerai-homepage .a2o-col-arr .a2o-row{grid-template-columns:24px 1fr auto 130px}
+  #pacerai-homepage .a2o-note{font-size:11px}
+}
 </style>
 
 <div id="pacerai-homepage">
@@ -228,7 +315,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   <div class="stats">
     <div class="stat"><b>$25 Bn+</b><span>M&amp;A Diligence</span></div>
     <div class="stat"><b>$2 Bn+</b><span>Revenue Analyzed</span></div>
-    <div class="stat"><b>40+</b><span>Customer Data Cubes</span></div>
+    <div class="stat"><b>50+</b><span>ARR Waterfalls</span></div>
   </div>
   <div class="marquee">
     <div class="track">
@@ -250,6 +337,54 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 <div class="wrap">
   <p class="steps"><b>Target Setting</b> &nbsp;&rarr;&nbsp; <b>Bottoms-up Modeling</b> &nbsp;&rarr;&nbsp; <b>Scenario Planning</b> &nbsp;&rarr;&nbsp; <b>On-Pace Execution</b></p>
 </div>
+
+<section class="band" data-section="why-pacer-ai-exists">
+  <div class="eyebrow">Why Pacer AI Exists</div>
+  <h2>Pacer AI exists to take the guesswork out of making investments to grow revenue.</h2>
+  <p class="why-split"><b>Finance teams report Revenue. Sales teams generate Revenue.</b><br><span class="why-need">Sales needs a model that shows how revenue is generated.</span></p>
+  <div class="a2o-pair">
+
+    <div class="a2o-card a2o-col-is">
+        <div class="a2o-head">6 Bullet Income Statement <span class="a2o-emoji">&#127822;</span></div>
+        <div class="a2o-rule"></div>
+        <div class="a2o-ledger">
+          <div class="a2o-row is-bold"><span class="a2o-num">1</span><span class="a2o-label">Revenue</span><span class="a2o-val">100%</span></div>
+          <div class="a2o-row"><span class="a2o-num">2</span><span class="a2o-label">COGS</span><span class="a2o-val neg">-20%</span></div>
+          <div class="a2o-row is-italic is-total"><span class="a2o-num">3</span><span class="a2o-label">Gross Margin</span><span class="a2o-val">80%</span></div>
+          <div class="a2o-row"><span class="a2o-num">4</span><span class="a2o-label">OpEx</span><span class="a2o-val neg">-65%</span></div>
+          <div class="a2o-row is-sub"><span class="a2o-num"></span><span class="a2o-label">S&amp;M</span><span class="a2o-val neg">-40%</span></div>
+          <div class="a2o-row is-sub"><span class="a2o-num"></span><span class="a2o-label">R&amp;D</span><span class="a2o-val neg">-15%</span></div>
+          <div class="a2o-row is-sub"><span class="a2o-num"></span><span class="a2o-label">G&amp;A</span><span class="a2o-val neg">-10%</span></div>
+          <div class="a2o-row is-bold is-total"><span class="a2o-num">5</span><span class="a2o-label">Net Income</span><span class="a2o-val">15%</span></div>
+          <div class="a2o-row is-spacer"></div>
+          <div class="a2o-row"><span class="a2o-num"></span><span class="a2o-label">Add backs</span><span class="a2o-val">3%</span></div>
+          <div class="a2o-row is-bold is-total"><span class="a2o-num">6</span><span class="a2o-label">Adj. EBITDA</span><span class="a2o-val">18%</span></div>
+        </div>
+    </div>
+
+    <div class="a2o-card a2o-col-arr">
+        <div class="a2o-head">6 Annual Recurring Revenue (ARR) movements <span class="a2o-emoji">&#127818;</span></div>
+        <div class="a2o-rule"></div>
+        <div class="a2o-ledger">
+          <div class="a2o-row is-bold"><span class="a2o-num"></span><span class="a2o-label">Beginning ARR</span><span class="a2o-val">100%</span><span class="a2o-note">A</span></div>
+          <div class="a2o-row"><span class="a2o-num">1</span><span class="a2o-label">Churn</span><span class="a2o-val neg">-5%</span><span class="a2o-note">B</span></div>
+          <div class="a2o-row"><span class="a2o-num">2</span><span class="a2o-label">Product Churn</span><span class="a2o-val neg">-1%</span><span class="a2o-note">C</span></div>
+          <div class="a2o-row"><span class="a2o-num">3</span><span class="a2o-label">Downsell</span><span class="a2o-val neg">-1%</span><span class="a2o-note">D</span></div>
+          <div class="a2o-row"><span class="a2o-num">4</span><span class="a2o-label">Upsell</span><span class="a2o-val">5%</span><span class="a2o-note">E</span></div>
+          <div class="a2o-row"><span class="a2o-num">5</span><span class="a2o-label">Product Cross-sell</span><span class="a2o-val">3%</span><span class="a2o-note">F</span></div>
+          <div class="a2o-row"><span class="a2o-num">6</span><span class="a2o-label">New</span><span class="a2o-val">14%</span><span class="a2o-note"></span></div>
+          <div class="a2o-row is-bold is-total"><span class="a2o-num"></span><span class="a2o-label">Ending ARR</span><span class="a2o-val">115%</span><span class="a2o-note"></span></div>
+          <div class="a2o-row is-spacer"></div>
+          <div class="a2o-row is-total"><span class="a2o-num"></span><span class="a2o-label">Net New ARR</span><span class="a2o-val">15%</span><span class="a2o-note"></span></div>
+          <div class="a2o-row is-spacer"></div>
+          <div class="a2o-row is-accent"><span class="a2o-num"></span><span class="a2o-label">Gross Retention %</span><span class="a2o-val">93%</span><span class="a2o-note">(A+B+C+D) / A</span></div>
+          <div class="a2o-row is-accent"><span class="a2o-num"></span><span class="a2o-label">Net Retention %</span><span class="a2o-val">101%</span><span class="a2o-note">(A+B+C+D+E+F) / A</span></div>
+        </div>
+    </div>
+
+  </div>
+  <p class="ao-note">Modeling how revenue is generated in the company &mdash; by market and by segment &mdash; removes capital allocation guesswork and creates alignment.</p>
+</section>
 
 <section class="how" data-section="how-it-works">
   <div class="pipe-wrap">
@@ -314,29 +449,57 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 
 <section class="band" data-section="use-cases">
   <div class="eyebrow">Use Cases</div>
-  <h2>What CROs and RevOps leaders hire us to fix</h2>
-  <p class="lede">We read 30 CRO and VP RevOps job descriptions at B2B SaaS companies, posted January&ndash;July 2026. Four mandates came up again and again &mdash; in the companies&rsquo; own words.</p>
-  <div class="usecases">
-    <div class="uc" data-section="revenue-forecasting-model">
-      <h3>The forecast lives in one person&rsquo;s spreadsheet</h3>
-      <p><b>23 of 30 postings.</b> When the forecast is rebuilt by hand each cycle, accuracy depends on who holds the file. Pacer AI builds coverage, capacity, and pace-to-plan from your real pipeline &mdash; the same numbers every run.</p>
-      <ul><li>Coverage and capacity sized to the target</li><li>Pace-to-plan tracking by segment</li><li>A forecast that reconciles to Finance</li></ul>
+  <h2>Revenue Models built for Sales Activity, Behaviors and Context</h2>
+  <div class="ucx">
+    <div class="ucard" data-section="revenue-mix-modeling">
+      <h3>Revenue Mix Modeling</h3>
+      <ul><li>Variable Revenue (Professional Services)</li><li>Recurring Revenue</li><li>Transaction Revenue (Fintech)</li><li>Usage-based Revenue (AI)</li></ul>
     </div>
-    <div class="uc" data-section="revenue-data-governance">
-      <h3>Two reports, two ARR numbers, no tiebreak</h3>
-      <p><b>16 of 30 postings.</b> With no governed source of truth for revenue data, the CRM number and the finance number disagree and nobody can settle it. Pacer AI defines one KPI set with documented lineage.</p>
-      <ul><li>One governed KPI dictionary</li><li>CRM-to-finance tie-out</li><li>Definitions that survive a sponsor review</li></ul>
+    <div class="ucard" data-section="arr-waterfall-modeling">
+      <h3>ARR Waterfall Modeling</h3>
+      <ul><li>Churn, Product Churn, Downsell</li><li>New, Upsell, Product Cross-sell</li><li>Net New ARR, Gross &amp; Net Retention</li></ul>
     </div>
-    <div class="uc" data-section="quota-territory-capacity">
-      <h3>Quota and territory are modeled by hand</h3>
-      <p><b>16 of 30 postings.</b> Comp design, quota setting, and territory capacity run through one analyst&rsquo;s workbook, so every plan change becomes a project. Pacer AI models capacity, attainment, and comp accrual against booked revenue.</p>
-      <ul><li>Capacity and territory design</li><li>Quota attainment and rep ramp</li><li>Comp accrual tied to bookings</li></ul>
+    <div class="ucard" data-section="gtm-planning">
+      <h3>GTM Planning</h3>
+      <ul><li>by Revenue Mix</li><li>by Sales Motions</li><li>by Market</li><li>by Segment</li></ul>
     </div>
-    <div class="uc" data-section="gtm-stack-reconciliation">
-      <h3>The GTM stack is stitched together by hand</h3>
-      <p><b>14 of 30 postings.</b> Salesforce plus a ring of point tools, integrated by one owner. The seam that breaks is CRM to finance. Pacer AI closes it with a data cube that reconciles pipeline to reported ARR.</p>
-      <ul><li>Salesforce as the system of record</li><li>Pipeline-to-ARR reconciliation</li><li>Schema drift and freshness monitoring</li></ul>
+    <div class="ucard" data-section="sales-led-growth">
+      <h3>Sales-Led Growth</h3>
+      <ul><li>Audience or Prospects</li><li>Lead</li><li>Opportunities</li><li>Sales Cycles</li><li>Close Rates</li></ul>
     </div>
+    <div class="ucard" data-section="product-led-growth">
+      <h3>Product-Led Growth</h3>
+      <ul><li>Acquisition</li><li>Activation</li><li>Monetization</li></ul>
+    </div>
+    <div class="ucard" data-section="capacity-modeling">
+      <h3>Capacity Modeling</h3>
+      <ul><li>Headcount plan to target</li><li>Rep ramp and productivity</li><li>Attrition and backfill</li></ul>
+    </div>
+    <div class="ucard" data-section="coverage-modeling">
+      <h3>Coverage Modeling</h3>
+      <ul><li>Territory design</li><li>Pipeline coverage ratio</li><li>Account and segment coverage</li></ul>
+    </div>
+    <div class="ucard" data-section="compensation-quota-modeling">
+      <h3>Compensation &amp; Quota Modeling</h3>
+      <ul><li>Quota setting</li><li>Territory and comp design</li><li>Commission and payout</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="band" data-section="questions">
+  <div class="eyebrow">Buy-In</div>
+  <h2>Master the financial narrative of the revenue growth plan</h2>
+  <div class="qstrip">
+    <div class="qgrid">
+      <div>Where does the $25M of ARR growth come from this year?</div>
+      <div>We&rsquo;re halfway through and $3M behind &mdash; where do we make it up?</div>
+      <div>How does this tie to finance&rsquo;s plan?</div>
+      <div>Where is revenue accelerating? Which cohort is the most profitable?</div>
+      <div>How can we accelerate revenue growth? Where? Why? How soon?</div>
+      <div>Do we need more leads? If so, where?</div>
+    </div>
+    <p class="qnote">Direct questions require deterministic skills with canonical definitions. <b>Pacer AI builds a semantic model, with defined calculations</b> &mdash; so you get the same answer for the same question every time.</p>
+    <p class="ally">Revenue financial modeling requires a mix of data engineering, RevOps expertise, strategic finance experience, and sales strategy.</p>
   </div>
 </section>
 
@@ -381,18 +544,27 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 
 <section class="band" data-section="team">
   <div class="eyebrow">Team</div>
-  <h2>Team</h2>
-  <p class="team-note">Founded by an operator turned M&amp;A advisor &mdash; <b>Will Sullivan</b>, a former PwC M&amp;A advisor, search fund operator, and West Point graduate.</p>
-  <a class="team-link" href="/team/">Meet the full team &amp; advisory network &rarr;</a>
+  <h2>Built by an operator who has sat in the diligence seat</h2>
+  <div class="founder">
+    <img class="founder-photo" src="https://getpacerai.com/wp-content/uploads/2026/04/will-sullivan-headshot.jpeg" alt="Will Sullivan, founder of Pacer AI">
+    <div class="founder-body">
+      <div class="founder-name">Will Sullivan <span>&middot; Founder</span></div>
+      <p class="founder-bio">Former PwC M&amp;A advisor, search-fund operator, and West Point graduate. $25Bn+ of technology M&amp;A diligence and 50+ ARR waterfalls built for SaaS operators and their sponsors &mdash; the same models Pacer AI now builds in days.</p>
+      <div class="founder-links">
+        <a class="founder-li" href="https://www.linkedin.com/in/will-sullivan98/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.02 8.25H4.9V24H.02V8.25zM8.34 8.25h4.67v2.15h.07c.65-1.23 2.24-2.53 4.61-2.53 4.93 0 5.84 3.24 5.84 7.46V24h-4.87v-6.98c0-1.66-.03-3.8-2.32-3.8-2.32 0-2.68 1.81-2.68 3.68V24H8.34V8.25z"/></svg>LinkedIn</a>
+      </div>
+    </div>
+  </div>
+  <a class="team-link founder-teamlink" href="/team/">Meet the full team &amp; advisory network &rarr;</a>
 </section>
 
 <section class="band" data-section="value">
   <div class="eyebrow">Value</div>
-  <h2>Lower cost. Faster answers. Real return.<span class="draft">draft</span></h2>
+  <h2>Fund the plan. Hit the number. Own the story.<span class="draft">draft</span></h2>
   <div class="value-tiles">
-    <div class="vtile"><div class="vk">Total Cost of Ownership</div><h3>One engagement, not a team</h3><p>Replaces a standing data team, a stack of BI tools, and Big 4 diligence fees with a single, lower-cost engagement.</p></div>
-    <div class="vtile"><div class="vk">Return on Investment</div><h3>Board-grade, at a fraction</h3><p>Diligence-grade ARR intelligence at a fraction of the cost of building and maintaining it in-house.</p></div>
-    <div class="vtile"><div class="vk">Time</div><h3>Days, not months</h3><p>From kickoff to a reconciled model in days &mdash; not a 6&ndash;12 month internal build that is stale on arrival.</p></div>
+    <div class="vtile"><div class="vk">Buy-In</div><h3>A plan the room signs off on</h3><p>Every model reconciles to Finance, so your growth plan survives the CFO, the board, and the sponsor &mdash; instead of being rewritten by someone else.</p></div>
+    <div class="vtile"><div class="vk">Speed</div><h3>Days, not months</h3><p>From kickoff to a reconciled model in days &mdash; not a 6&ndash;12 month internal build that is stale on arrival.</p></div>
+    <div class="vtile"><div class="vk">Capacity</div><h3>Senior modeling, on demand</h3><p>Diligence-grade revenue modeling the week you need it &mdash; without hiring a data team or standing up a BI stack to keep it running.</p></div>
   </div>
 </section>
 
@@ -407,35 +579,35 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   <div class="eyebrow">FAQ</div>
   <h2>Frequently Asked Questions</h2>
   <div class="faq-list">
-    <details><summary>What size companies do you work with?</summary><p>We work with PE-backed B2B SaaS companies from $10M to $1B+ ARR. Our platform and advisory services scale from mid-market portfolio companies to enterprise.</p></details>
+    <details><summary>What size companies do you work with?</summary><p>Pacer AI works with companies that have at least $10M in recurring or contracted revenue &mdash; including non-tech companies. Alongside B2B SaaS, we work with payroll providers, commercial and residential service companies, and healthcare companies.</p></details>
     <details><summary>How long does the initial setup take?</summary><p>Most engagements go from kickoff to board-ready output in days, not months. The data cube build typically takes 2&ndash;4 weeks depending on source system complexity.</p></details>
     <details><summary>What systems do you connect to?</summary><p>CRM (Salesforce, HubSpot), billing (Stripe, Zuora, Chargebee), ERP (NetSuite, Sage Intacct), and data warehouses (Snowflake, Databricks, BigQuery).</p></details>
-    <details><summary>How is this different from FP&amp;A tools like Vena or Planful?</summary><p>FP&amp;A tools start with the GL. We start with transactional customer data to build M&amp;A-grade ARR decomposition, cohort retention, and expansion analytics that FP&amp;A tools cannot produce.</p></details>
+    <details><summary>How is this different from FP&amp;A tools?</summary><p>FP&amp;A tools start with the GL. We start with transactional customer data to build M&amp;A-grade ARR decomposition, cohort retention, and expansion analytics that FP&amp;A tools cannot produce.</p></details>
     <details><summary>What does pricing look like?</summary><p>Pacer AI uses an alignment-based pricing model to align Pacer AI with its clients&rsquo; goals.</p></details>
     <details><summary>Do you work with PE funds directly?</summary><p>Yes. We work with operating partners and deal teams on both pre-close diligence and post-close value creation across the portfolio.</p></details>
-    <details><summary>Who should own revenue forecasting &mdash; RevOps or Finance?</summary><p>Ownership sits with RevOps; the definitions sit with Finance. The common failure is a forecast owned by RevOps that never reconciles to the ARR Finance reports, so the two functions bring different numbers to the same board meeting. Pacer AI builds the forecast off the same governed data the finance number comes from, so there is one set of definitions and one answer.</p></details>
-    <details><summary>Why don&rsquo;t our CRM and finance ARR numbers match?</summary><p>Because they are measuring different events. The CRM records bookings when a deal closes; Finance records revenue when it is recognized, net of contraction, churn, and timing. Without a defined bridge between them, both numbers are defensible and neither is reconcilable. Pacer AI builds that bridge at the account-product grain so pipeline ties to reported ARR to the dollar.</p></details>
-    <details><summary>What does a VP of Revenue Operations actually own?</summary><p>In the 30 B2B SaaS job descriptions we analyzed in 2026, the role owns four things: the forecast and pipeline cadence, the governed revenue KPI set, quota and territory capacity, and the GTM tech stack. The common thread is that all four are owned by a person, not produced by a system &mdash; which is why the role turns over.</p></details>
+    <details><summary>Who should own revenue forecasting &mdash; RevOps or Finance?</summary><p>Ownership sits with RevOps; the definitions sit with Finance. The common failure is a forecast owned by RevOps that never reconciles to Finance&rsquo;s reported ARR. Pacer AI recommends building the forecast off the same governed data the finance number comes from, so there is one set of definitions and one answer.</p></details>
+    <details><summary>Why don&rsquo;t our CRM and finance ARR numbers match?</summary><p>CRM and finance ARR numbers don&rsquo;t match because they measure two different events: the CRM records bookings when a deal closes, while Finance records revenue as it is recognized &mdash; net of contraction, churn, and timing. Without a defined bridge between bookings and recognized revenue, both numbers are correct and neither reconciles. Pacer AI builds that bridge at the account-product grain, so pipeline ties to reported ARR to the dollar.</p></details>
+    <details><summary>What does a VP of Revenue Operations actually own?</summary><p>A VP of Revenue Operations owns four things: the revenue forecast and pipeline cadence, the governed revenue KPI set, quota and territory capacity, and the GTM tech stack. Across the 30 B2B SaaS job descriptions Pacer AI analyzed in 2026, all four were owned by a person, not produced by a system &mdash; which is why the role turns over.</p></details>
   </div>
 </section>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"What size companies do you work with?","acceptedAnswer":{"@type":"Answer","text":"We work with PE-backed B2B SaaS companies from $10M to $1B+ ARR. Our platform and advisory services scale from mid-market portfolio companies to enterprise."}},
+{"@type":"Question","name":"What size companies do you work with?","acceptedAnswer":{"@type":"Answer","text":"Pacer AI works with companies that have at least $10M in recurring or contracted revenue, including non-tech companies. Alongside B2B SaaS, we work with payroll providers, commercial and residential service companies, and healthcare companies."}},
 {"@type":"Question","name":"How long does the initial setup take?","acceptedAnswer":{"@type":"Answer","text":"Most engagements go from kickoff to board-ready output in days, not months. The data cube build typically takes 2-4 weeks depending on source system complexity."}},
 {"@type":"Question","name":"What systems do you connect to?","acceptedAnswer":{"@type":"Answer","text":"CRM (Salesforce, HubSpot), billing (Stripe, Zuora, Chargebee), ERP (NetSuite, Sage Intacct), and data warehouses (Snowflake, Databricks, BigQuery)."}},
-{"@type":"Question","name":"How is this different from FP&A tools like Vena or Planful?","acceptedAnswer":{"@type":"Answer","text":"FP&A tools start with the GL. We start with transactional customer data to build M&A-grade ARR decomposition, cohort retention, and expansion analytics that FP&A tools cannot produce."}},
+{"@type":"Question","name":"How is this different from FP&A tools?","acceptedAnswer":{"@type":"Answer","text":"FP&A tools start with the GL. We start with transactional customer data to build M&A-grade ARR decomposition, cohort retention, and expansion analytics that FP&A tools cannot produce."}},
 {"@type":"Question","name":"Do you work with PE funds directly?","acceptedAnswer":{"@type":"Answer","text":"Yes. We work with operating partners and deal teams on both pre-close diligence and post-close value creation across the portfolio."}},
-{"@type":"Question","name":"Who should own revenue forecasting - RevOps or Finance?","acceptedAnswer":{"@type":"Answer","text":"Ownership sits with RevOps; the definitions sit with Finance. The common failure is a forecast owned by RevOps that never reconciles to the ARR Finance reports, so the two functions bring different numbers to the same board meeting. Pacer AI builds the forecast off the same governed data the finance number comes from, so there is one set of definitions and one answer."}},
-{"@type":"Question","name":"Why don't our CRM and finance ARR numbers match?","acceptedAnswer":{"@type":"Answer","text":"Because they are measuring different events. The CRM records bookings when a deal closes; Finance records revenue when it is recognized, net of contraction, churn, and timing. Without a defined bridge between them, both numbers are defensible and neither is reconcilable. Pacer AI builds that bridge at the account-product grain so pipeline ties to reported ARR to the dollar."}},
-{"@type":"Question","name":"What does a VP of Revenue Operations actually own?","acceptedAnswer":{"@type":"Answer","text":"In the 30 B2B SaaS job descriptions we analyzed in 2026, the role owns four things: the forecast and pipeline cadence, the governed revenue KPI set, quota and territory capacity, and the GTM tech stack. The common thread is that all four are owned by a person, not produced by a system - which is why the role turns over."}}
+{"@type":"Question","name":"Who should own revenue forecasting - RevOps or Finance?","acceptedAnswer":{"@type":"Answer","text":"Ownership sits with RevOps; the definitions sit with Finance. The common failure is a forecast owned by RevOps that never reconciles to Finance's reported ARR. Pacer AI recommends building the forecast off the same governed data the finance number comes from, so there is one set of definitions and one answer."}},
+{"@type":"Question","name":"Why don't our CRM and finance ARR numbers match?","acceptedAnswer":{"@type":"Answer","text":"CRM and finance ARR numbers don't match because they measure two different events: the CRM records bookings when a deal closes, while Finance records revenue as it is recognized - net of contraction, churn, and timing. Without a defined bridge between bookings and recognized revenue, both numbers are correct and neither reconciles. Pacer AI builds that bridge at the account-product grain, so pipeline ties to reported ARR to the dollar."}},
+{"@type":"Question","name":"What does a VP of Revenue Operations actually own?","acceptedAnswer":{"@type":"Answer","text":"A VP of Revenue Operations owns four things: the revenue forecast and pipeline cadence, the governed revenue KPI set, quota and territory capacity, and the GTM tech stack. Across the 30 B2B SaaS job descriptions Pacer AI analyzed in 2026, all four were owned by a person, not produced by a system - which is why the role turns over."}}
 ]}
 </script>
 
 <section class="cta" data-section="pace-cta">
   <div class="eyebrow">Get Started</div>
-  <h2>See Pacer AI run on your own ARR</h2>
-  <p>A reconciled model and a pace-to-plan read in one session &mdash; built on your real numbers.</p>
+  <h2>Schedule a diagnostic review</h2>
+  <p>Model, Plan, Track Pace to Target.</p>
   <div class="cta-buttons">
     <a class="btn-primary" href="https://calendly.com/pacerai/diagnostic">Book a Free Diagnostic</a>
     <a class="btn-outline" href="/team/contact/">Talk to a RevOps Expert</a>
