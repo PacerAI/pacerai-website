@@ -172,6 +172,9 @@ IMPLEMENTED = {
     "/resources/prevent-churn-in-high-value-accounts-with-arr-snowball/",
     "/resources/why-arr-waterfall-models-matter-for-saas-growth/",
     "/resources/using-ai-to-enable-revops-without-breaking-your-gtm/",
+    # Keep & add meta batch — verified live 2026-07-23
+    "/glossary/", "/glossary/arr-waterfall/", "/resources/arr-snowball-vs-waterfall/",
+    # NOTE: /resources/what-is-an-arr-waterfall/ (850) still PENDING — extension keeps editing the 873 dupe.
 }
 for _r in DATA:
     if _r["slug"] in IMPLEMENTED:
