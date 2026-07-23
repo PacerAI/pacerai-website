@@ -160,6 +160,18 @@ DATA = [
 IMPLEMENTED = {
     # Core batch — verified live 2026-07-23
     "/", "/resources/", "/team/", "/team/about/", "/team/contact/", "/platform/overview/",
+    # Resources & articles batch — verified live 2026-07-23 (waterfall pending: extension edited the root dupe)
+    "/resources/what-is-current-performance-obligation/",
+    "/resources/build-customer-data-cube-in-house-or-hire/",
+    "/resources/board-quality-arr-snowballs/",
+    "/resources/what-most-companies-build-vs-what-boards-need/",
+    "/semrush-adobe-acquisition-case-study/",
+    "/resources/arr-snowball-analysis-find-your-expansion-drivers/",
+    "/resources/why-llms-cant-build-your-arr-snowball-from-operational-data/",
+    "/resources/what-is-an-arr-snowball-understanding-revenue-growth/",
+    "/resources/prevent-churn-in-high-value-accounts-with-arr-snowball/",
+    "/resources/why-arr-waterfall-models-matter-for-saas-growth/",
+    "/resources/using-ai-to-enable-revops-without-breaking-your-gtm/",
 }
 for _r in DATA:
     if _r["slug"] in IMPLEMENTED:
