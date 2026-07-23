@@ -25,3 +25,6 @@ plus one mandatory closing line `  → closed|escalated-to-spec <ISO-timestamp>,
 
 [2026-06-02T11:00:00Z] blog: semrush-adobe-case-study (goal: —)
   → closed 2026-06-08T19:00:00Z, published https://getpacerai.com/semrush-adobe-acquisition-case-study/ (WP page 888, listing 230) — Adobe×Semrush M&A carousel ported to blog: 9 visuals (4 charts rendered from source HTML + 2 product maps + 3 headshots), all tables verbatim, tagged Case Study/M&A/RevOps; runbook at docs/ADBE_SEMR_case_study.md; Yoast title/desc pending (WP MCP offline) (count: 1, id: blogs)
+
+[2026-07-22T18:00:00Z] webdev-getpacerai: build v3.0.0 "Claude-bone" light redesign of getpacerai.com — full bone port of homepage (WP 25) from the demo-site design + blog (WP 230) + team (WP 366) + all 14 blog post pages converted to bone; Cloudflare Worker demo host (infra/pacer-demo-worker/); /blog → /resources slug rename (live) + redirect; go-live plan (goal: goals/aeo-ranking.md#blog-publish)
+  → open 2026-07-22T18:00:00Z, built on feat/bone-redesign-v3 / PR #20; deploy gated on Will (see docs/deploy/v3-golive-plan.md)

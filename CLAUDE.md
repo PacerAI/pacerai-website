@@ -21,12 +21,22 @@ Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.c
 - **CMS:** WordPress.com (hosted, no SSH/WP-CLI access)
 - **Theme:** Twenty Twenty-Four (WordPress default — fully overridden by inline CSS)
 - **Deploy method:** WordPress REST API + Application Password (Python `requests` library)
-- **No build tools** — no npm, no bundler, no framework. Pure HTML/CSS, vanilla JS for mobile nav only.
+- **No build tools** for the pages — no npm, no bundler, no framework. Pure HTML/CSS, vanilla JS for mobile nav only. *(Exception: `infra/pacer-demo-worker/` is a self-contained Cloudflare Worker — its own npm + wrangler — that serves the v3 homepage's demo-video iframe. It is website infra, isolated from page authoring; see its README.)*
 - **Font loading:** Google Fonts loaded by WordPress — no `<link>` tags needed in page HTML.
 
 ## WordPress Page Registry
 
 All pages are deployed as WordPress Pages via REST API. Each page's HTML source file is the source of truth.
+
+> **v3.0.0 (2026-07-21/22):** the 6 `/solutions/*` pages are **retired from nav + homepage and
+> 301-redirected to the homepage** (source files kept for archive/rollback; do not redeploy their
+> content). Legacy `/pricing/` (111) **301-redirects to `/#pricing`** (the homepage pricing anchor).
+> Homepage nav is flat/centered (Revenue Modeling Agent · Use Cases · Team · Pricing · Resources).
+> The Blog (230) slug is now **`resources`** (renamed 2026-07-22, live; posts auto-301, `/blog/` → `/resources/`
+> redirect added; runbook `docs/deploy/blog-to-resources-rename.md`). "Resources" nav → `/resources/`.
+> **Deploy state:** the v3 bone rebuild (homepage/blog/team/14 posts) is built on branch
+> `feat/bone-redesign-v3` (**PR #20**) but **NOT yet live** — gated on Will's approval; deploy sequence
+> in **`docs/deploy/v3-golive-plan.md`**.
 
 | Page | WP ID | Slug | Parent | Source File |
 |------|-------|------|--------|-------------|
@@ -46,7 +56,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | **Contact** | 375 | `contact` | 366 | `src/team/contact.html` |
 | **Build vs Hire Blog** | 491 | `build-customer-data-cube-in-house-or-hire` | 230 | `src/blog/posts/491-build.html` |
 | **cRPO Blog** | 865 | `what-is-current-performance-obligation` | 230 | `src/blog/posts/crpo-build.html` |
-| Pricing | 111 | `pricing` | — | *(legacy — not managed by this repo)* |
+| Pricing | 111 | `pricing` | — | *(legacy — v3: 301 → `/#pricing`)* |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
 **Live URLs:**
@@ -223,7 +233,7 @@ These are silent failures — WordPress won't error, but your styles/scripts won
 | Minified JS in WPCode footer gets line breaks inserted | WordPress inserts line breaks mid-token (e.g. `set\nTimeout`, `el.tex\ntContent`), breaking minified code silently | Use non-minified JS with proper line breaks in WPCode Header & Footer; WordPress won't break properly formatted code |
 | Homepage CSS too large for inline `<style>` | Homepage CSS is ~37K chars — inline would push page over 68K limit | CSS externalized to WPCode Header injection. Source: `src/homepage/wpcode-homepage-css.css`. Update WPCode snippet in WP Admin when CSS changes. |
 
-**Design reference:** `docs/design/index-build-long_page_2026_04_03.html` — always diff live CSS against this file when styles don't match.
+**Design reference (v3 bone homepage):** `docs/design/homepage/index-build-bone_v3_2026-07-22.html` — self-contained, browser-openable copy of the v3 homepage (page CSS/HTML + inlined WPCode JS). Diff live CSS against it. *(Legacy dark reference archived at `docs/design/homepage/archive/`.)*
 **AEO Row spec:** `docs/design/AEO-Row-Text-and-Image.md` — copy-paste-ready CSS for text+image sections.
 
 ## Page Architecture
@@ -250,16 +260,18 @@ Every page follows the same pattern:
 **Key CSS overrides for WordPress TT4:**
 - Hide theme header/footer: `.wp-site-blocks > header, .wp-site-blocks > footer { display: none }`
 - Hide WP page title: `.wp-block-post-title, .wp-block-spacer { display: none }`
-- Force dark background: `html, body, .wp-site-blocks { background: #080E1C }`
+- Force background: v3 bone homepage → `html, body, .wp-site-blocks { background: #F5F4EF }`; legacy dark pages → `#080E1C`
 - Remove container constraints: `.is-layout-constrained, .has-global-padding { max-width: none; padding: 0 }`
 
 ## Brand Constraints
 
 <!-- SOURCE: pacerai-foundation/brand/ and pacerai-foundation/commercial/cta-language.yml -->
 
-- **Fonts:** DM Sans (body), Cormorant Garamond (headings) — approved by Will
-- **Background:** Dark navy (#080E1C)
-- **Primary accent:** Teal (#27899A), Teal Light (#70C49C)
+- **Fonts:** DM Sans (body), Cormorant Garamond (legacy headings). The v3 bone homepage uses DM Sans (weight 800) for headings per the approved demo design.
+- **Background (v3.0.0+, "Claude-bone"):** bone `#F5F4EF` (surface `#FAFAF7`). The homepage is the reference. **Inner pages (platform/team/about/contact) + the blog are still on the legacy dark theme** pending their v3.0.x bone conversion — don't assume a page is bone until converted.
+- **Legacy dark background (pre-v3, unconverted pages):** Dark navy (#080E1C)
+- **Primary accent:** Teal — bone: `#2E7D74` / `#70C49C`; legacy dark: `#27899A` / `#70C49C`
+- **v3 bone tokens:** `--bone:#F5F4EF --surface:#FAFAF7 --navy:#1F3864 --teal:#2E7D74 --ink:#20242B --muted:#5F5A50 --line:#E6E1D6`
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents. No playful illustrations or rounded pill buttons.
 - **CTA language:** "Request a Demo", "See a Live ARR Demo", "Talk to a RevOps Expert" — never "Get Started Free"
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."

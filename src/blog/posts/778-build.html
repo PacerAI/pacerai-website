@@ -16,8 +16,8 @@ h1.wp-block-post-title,
 .page-header { display: none !important; }
 
 html, body, .wp-site-blocks {
-  background: #080E1C !important;
-  background-color: #080E1C !important;
+  background: #F5F4EF !important;
+  background-color: #F5F4EF !important;
 }
 
 #pacerai-post {
@@ -42,22 +42,11 @@ html, body, .wp-site-blocks {
 }
 
   :root {
-    --navy: #080E1C;
-    --navy-mid: #0F1929;
-    --navy-light: #162038;
-    --navy-border: #1E2D4A;
-    --brand: #1C3560;
-    --brand-blue: #2B7DC8;
-    --teal: #27899A;
-    --teal-light: #70C49C;
-    --teal-pale: #D6F0E8;
-    --cream: #F7F3EC;
-    --white: #FFFFFF;
-    --muted: #8A95A8;
-    --text-light: #CDD5E0;
-    --text-mid: #94A3B8;
-    --green: #2DB87A;
-    --red-subtle: #C94C4C;
+    --navy: #F5F4EF; --navy-mid: #FAFAF7; --navy-light: #F1EFE8; --navy-border: #E6E1D6;
+    --brand: #1F3864; --brand-blue: #2B4A7A; --teal: #2E7D74; --teal-light: #70C49C;
+    --teal-pale: #D6F0E8; --cream: #FAFAF7; --white: #20242B; --muted: #9A8F78;
+    --text-light: #3A372F; --text-mid: #5F5A50; --green: #21823F; --red-subtle: #C0492F;
+    --ink: #20242B; --navy-accent: #1F3864;
   }
 
   #pacerai-post * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -77,7 +66,7 @@ html, body, .wp-site-blocks {
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 48px;
     height: 68px;
-    background: rgba(8,14,28,0.92);
+    background: rgba(245,244,239,0.92);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(28,53,96,0.6);
   }
@@ -459,14 +448,14 @@ html, body, .wp-site-blocks {
       height: 56px;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
-      background: #080E1C;
+      background: #F5F4EF;
       overflow: visible;
     }
     #pacerai-post .nav-links {
       display: none !important;
       position: fixed;
       top: 56px; left: 0; right: 0; bottom: 0;
-      background: #080E1C;
+      background: #F5F4EF;
       flex-direction: column;
       align-items: stretch;
       padding: 16px 20px;
@@ -612,82 +601,19 @@ html, body, .wp-site-blocks {
 <div id="pacerai-post">
 <!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
 <nav>
-  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-    <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </svg>
-    <span style="font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:800;letter-spacing:-.2px;color:#20242B;">Pacer&nbsp;<span style="color:#2E7D74;">AI</span>
+    <svg viewBox="0 0 40 18" width="26" height="12" fill="none" style="stroke:#1F3864;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
   </a>
-
   <ul class="nav-links">
-
-    <!-- ─── OVERVIEW ─── -->
-    <li>
-      <a href="/">Overview <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/#use-cases">Use Cases</a>
-        <a href="/#solutions">Solutions overview</a>
-        <a href="/team/">Team overview</a>
-      </div>
-    </li>
-
-    <!-- ─── SOLUTIONS (mega-dropdown with SVG icons) ─── -->
-    <li>
-      <a href="/#solutions">Solutions <span class="chevron">&#9662;</span></a>
-      <div class="dropdown" style="min-width:580px">
-        <div class="dropdown-grid">
-          <div>
-            <div class="dropdown-col-label">Transaction Solutions</div>
-            <a href="/solutions/customer-data-cube/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="d-text"><span class="d-title">Customer Data Cube</span><span class="d-desc">M&amp;A grade accounts by product revenue</span></div></a>
-            <a href="/solutions/arr-snowball-board-reporting/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><div class="d-text"><span class="d-title">ARR Snowball Reporting</span><span class="d-desc">Board-ready waterfall dashboards</span></div></a>
-            <a href="/solutions/transaction-readiness/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="d-text"><span class="d-title">Transaction Readiness</span><span class="d-desc">QoR, QoE &mdash; diligence-ready in 4 quarters</span></div></a>
-          </div>
-          <div>
-            <div class="dropdown-col-label">Transformation Solutions</div>
-            <a href="/solutions/revops-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg></div><div class="d-text"><span class="d-title">RevOps Transformation</span><span class="d-desc">Segmentation to revenue motions</span></div></a>
-            <a href="/solutions/gtm-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="d-text"><span class="d-title">GTM Transformation</span><span class="d-desc">Agent-powered GTM chain</span></div></a>
-            <a href="/solutions/fpanda-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="d-text"><span class="d-title">FP&amp;A Transformation</span><span class="d-desc">AI model libraries for Excel + Copilot</span></div></a>
-          </div>
-        </div>
-      </div>
-    </li>
-
-    <!-- ─── RESOURCES ─── -->
-    <li>
-      <a href="/blog/">Resources <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/blog/">Blog</a>
-        <a href="/blog/?filter=arr-snowballs">ARR Snowballs</a>
-        <a href="/blog/?filter=frameworks">Frameworks</a>
-        <a href="/blog/?filter=model-templates">Model Templates</a>
-        <a href="/blog/?filter=revops">For RevOps</a>
-        <a href="https://agentsofinsight.substack.com/" target="_blank" rel="noopener">Newsletter</a>
-        <a href="https://www.youtube.com/@PacerAI" target="_blank" rel="noopener">YouTube</a>
-      </div>
-    </li>
-
-    <!-- ─── TEAM ─── -->
-    <li>
-      <a href="/team/">Team <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/team/#mission">Mission</a>
-        <a href="/team/#pacer-ai-platform">Pacer AI Platform</a>
-        <a href="/team/#team">Team</a>
-        <a href="/team/#partners">Partners</a>
-        <a href="/team/#agents">Agent Team</a>
-      </div>
-    </li>
-
+    <li><a href="/#revenue-modeling-agent">Revenue Modeling Agent</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/resources/">Resources</a></li>
   </ul>
-
   <div class="nav-right">
     <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
-    <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
-    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=btn.closest('nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="https://calendly.com/pacerai/diagnostic" class="btn-teal">Free Diagnostic</a>
   </div>
 </nav>
 
@@ -696,7 +622,7 @@ html, body, .wp-site-blocks {
   <div class="post-breadcrumb">
     <a href="/">Home</a>
     <span class="sep">/</span>
-    <a href="/blog/">Blog</a>
+    <a href="/resources/">Blog</a>
     <span class="sep">/</span>
     <span>NRR Case Study</span>
   </div>
@@ -750,7 +676,7 @@ html, body, .wp-site-blocks {
 
 <p>Less is more. By removing the products that were causing frustration, the company stopped the product churn &rarr; logo churn cascade. The short-term ARR hit from sunsetting was more than offset by the reduction in downstream churn.</p>
 
-<p>This is a pattern <a href="https://openviewpartners.com/blog/saas-benchmarks/" target="_blank" rel="noopener">OpenView Partners has documented</a> across high-performing SaaS companies: product portfolio rationalization often improves retention metrics more than product expansion.</p>
+<p>This is a pattern <a href="https://openviewpartners.com/resources/saas-benchmarks/" target="_blank" rel="noopener">OpenView Partners has documented</a> across high-performing SaaS companies: product portfolio rationalization often improves retention metrics more than product expansion.</p>
 
 <h2>1% from Aligning the Data Story with the Growth Story</h2>
 
@@ -799,65 +725,35 @@ html, body, .wp-site-blocks {
 <footer>
 <div class="footer-top">
 <div class="footer-brand">
-<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-<svg width="28" height="24" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-<path d="M2 2 L11 14 L2 26" stroke="#4A7FA8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-<path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-<path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-</svg>
-<span style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:800;color:#20242B;">Pacer&nbsp;<span style="color:#2E7D74;">AI</span>
+<svg viewBox="0 0 40 18" width="24" height="11" fill="none" style="stroke:#1F3864;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
 </a>
-<p class="footer-tagline">M&amp;A-grade ARR intelligence for PE-backed SaaS companies. Built on Microsoft Fabric, Power BI, and AI.</p>
+<p class="footer-tagline">The Revenue Modeling Agent for Sales Leaders. Reconciled to Finance, built on Microsoft Fabric.</p>
 </div>
-<div class="footer-col">
-<div class="footer-col-head">Use Cases</div>
-<ul>
-<li><a href="/#arr-growth" data-scroll-to="arr-growth">Revenue Acceleration</a></li>
-<li><a href="/#expansion-drivers" data-scroll-to="expansion-drivers">Expansion Drivers</a></li>
-<li><a href="/#cohort-intelligence" data-scroll-to="cohort-intelligence">Cohort Intelligence</a></li>
-<li><a href="/#gross-retention" data-scroll-to="gross-retention">Gross Retention</a></li>
-<li><a href="/#net-retention" data-scroll-to="net-retention">Net Retention</a></li>
-<li><a href="/#whitespace" data-scroll-to="whitespace">Whitespace</a></li>
-</ul>
-</div>
-<div class="footer-col">
-<div class="footer-col-head">Solutions</div>
-<ul>
-<li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
-<li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li>
-<li><a href="/solutions/transaction-readiness/">Transaction Readiness</a></li>
-<li><a href="/solutions/revops-transformation-pkg/">RevOps Transformation</a></li>
-<li><a href="/solutions/gtm-transformation-pkg/">GTM Transformation</a></li>
-<li><a href="/solutions/fpanda-transformation-pkg/">FP&amp;A Transformation</a></li>
-</ul>
-</div>
-<div class="footer-col">
-<div class="footer-col-head">Team</div>
-<ul>
-<li><a href="/team/#mission">Mission</a></li>
-<li><a href="/platform/overview/">Pacer AI Platform</a></li>
-<li><a href="/team/#team">Team</a></li>
+<div class="footer-col"><div class="footer-col-head">Product</div><ul>
+<li><a href="/#revenue-modeling-agent">Revenue Modeling Agent</a></li>
+<li><a href="/#how-it-works">How It Works</a></li>
+<li><a href="/#integrations">Integrations</a></li>
+<li><a href="/#security">Security</a></li></ul></div>
+<div class="footer-col"><div class="footer-col-head">Use Cases</div><ul>
+<li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
+<li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
+<li><a href="/#case-studies">Case Studies</a></li>
+<li><a href="/#pricing">Pricing</a></li></ul></div>
+<div class="footer-col"><div class="footer-col-head">Company</div><ul>
+<li><a href="/team/">Team</a></li>
 <li><a href="/team/#partners">Partners</a></li>
-<li><a href="/team/contact/">Contact</a></li>
-</ul>
-</div>
-<div class="footer-col">
-<div class="footer-col-head">Connect</div>
-<ul>
+<li><a href="/platform/overview/">Platform</a></li>
+<li><a href="/team/contact/">Contact</a></li></ul></div>
+<div class="footer-col"><div class="footer-col-head">Resources</div><ul>
+<li><a href="/resources/">Blog</a></li>
+<li><a href="/research/">Research</a></li>
 <li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
-<li><a href="https://calendly.com/pacerai">Schedule a Call</a></li>
-<li><a href="/blog/">Blog</a></li>
-<li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
-</ul>
-</div>
+<li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li></ul></div>
 </div>
 <div class="footer-bottom">
 <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
-<div class="legal">
-<a href="#">Privacy Policy</a>
-<a href="#">Terms of Service</a>
-<a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a>
-</div>
+<div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></div>
 </div>
 </footer>
 

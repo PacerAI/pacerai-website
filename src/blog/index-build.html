@@ -9,8 +9,8 @@ footer.wp-block-template-part,
 .wp-block-post-title, .wp-block-spacer { display: none !important; }
 
 html, body, .wp-site-blocks {
-  background: #080E1C !important;
-  background-color: #080E1C !important;
+  background: #F5F4EF !important;
+  background-color: #F5F4EF !important;
 }
 
 #pacerai-blog {
@@ -35,22 +35,25 @@ html, body, .wp-site-blocks {
 }
 
   :root {
-    --navy: #080E1C;
-    --navy-mid: #0F1929;
-    --navy-light: #162038;
-    --navy-border: #1E2D4A;
-    --brand: #1C3560;
-    --brand-blue: #2B7DC8;
-    --teal: #27899A;
+    /* v3 Claude-bone: token NAMES kept, VALUES flipped to the bone palette. */
+    --navy: #F5F4EF;        /* page ground (bone) */
+    --navy-mid: #FAFAF7;    /* card surface */
+    --navy-light: #F1EFE8;  /* card alt / hover */
+    --navy-border: #E6E1D6; /* hairline */
+    --brand: #1F3864;       /* navy accent */
+    --brand-blue: #2B4A7A;
+    --teal: #2E7D74;
     --teal-light: #70C49C;
     --teal-pale: #D6F0E8;
-    --cream: #F7F3EC;
-    --white: #FFFFFF;
-    --muted: #8A95A8;
-    --text-light: #CDD5E0;
-    --text-mid: #94A3B8;
-    --green: #2DB87A;
-    --red-subtle: #C94C4C;
+    --cream: #FAFAF7;
+    --white: #20242B;       /* was heading text on dark; now dark ink on bone */
+    --muted: #9A8F78;
+    --text-light: #3A372F;  /* body text */
+    --text-mid: #5F5A50;    /* secondary text */
+    --green: #21823F;
+    --red-subtle: #C0492F;
+    --ink: #20242B;
+    --navy-accent: #1F3864; /* real navy for accents/buttons on bone */
   }
 
   #pacerai-blog * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -68,11 +71,11 @@ html, body, .wp-site-blocks {
   #pacerai-blog nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 48px;
-    height: 68px;
-    background: rgba(8,14,28,0.92);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(28,53,96,0.6);
+    padding: 0 32px;
+    height: 64px;
+    background: rgba(245,244,239,.86);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--navy-border);
   }
 
   #pacerai-blog .nav-links {
@@ -414,14 +417,14 @@ html, body, .wp-site-blocks {
       height: 56px;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
-      background: #080E1C;
+      background: #F5F4EF;
       overflow: visible;
     }
     #pacerai-blog .nav-links {
       display: none !important;
       position: fixed;
       top: 56px; left: 0; right: 0; bottom: 0;
-      background: #080E1C;
+      background: #F5F4EF;
       flex-direction: column;
       align-items: stretch;
       padding: 16px 20px;
@@ -500,7 +503,7 @@ html, body, .wp-site-blocks {
       "@type": "CollectionPage",
       "name": "Blog — Pacer AI",
       "description": "Insights on ARR intelligence, revenue operations, and SaaS growth for PE-backed operators.",
-      "url": "https://getpacerai.com/blog/",
+      "url": "https://getpacerai.com/resources/",
       "publisher": {
         "@type": "Organization",
         "name": "Pacer AI",
@@ -555,80 +558,20 @@ html, body, .wp-site-blocks {
 <div id="pacerai-blog">
 <!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
 <nav>
-  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-    <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </svg>
-    <span style="font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:800;letter-spacing:-.2px;color:#20242B;">Pacer&nbsp;<span style="color:#2E7D74;">AI</span>
+    <svg viewBox="0 0 40 18" width="26" height="12" fill="none" style="stroke:#1F3864;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
   </a>
-
   <ul class="nav-links">
-
-    <!-- ─── OVERVIEW ─── -->
-    <li>
-      <a href="/">Overview <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/#use-cases">Use Cases</a>
-        <a href="/#solutions">Solutions overview</a>
-        <a href="/team/">Team overview</a>
-      </div>
-    </li>
-
-    <!-- ─── SOLUTIONS (mega-dropdown with SVG icons) ─── -->
-    <li>
-      <a href="/#solutions">Solutions <span class="chevron">&#9662;</span></a>
-      <div class="dropdown" style="min-width:580px">
-        <div class="dropdown-grid">
-          <div>
-            <div class="dropdown-col-label">Transaction Solutions</div>
-            <a href="/solutions/customer-data-cube/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="d-text"><span class="d-title">Customer Data Cube</span><span class="d-desc">M&amp;A grade accounts by product revenue</span></div></a>
-            <a href="/solutions/arr-snowball-board-reporting/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><div class="d-text"><span class="d-title">ARR Snowball Reporting</span><span class="d-desc">Board-ready waterfall dashboards</span></div></a>
-            <a href="/solutions/transaction-readiness/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="d-text"><span class="d-title">Transaction Readiness</span><span class="d-desc">QoR, QoE &mdash; diligence-ready in 4 quarters</span></div></a>
-          </div>
-          <div>
-            <div class="dropdown-col-label">Transformation Solutions</div>
-            <a href="/solutions/revops-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg></div><div class="d-text"><span class="d-title">RevOps Transformation</span><span class="d-desc">Segmentation to revenue motions</span></div></a>
-            <a href="/solutions/gtm-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="d-text"><span class="d-title">GTM Transformation</span><span class="d-desc">Agent-powered GTM chain</span></div></a>
-            <a href="/solutions/fpanda-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="d-text"><span class="d-title">FP&amp;A Transformation</span><span class="d-desc">AI model libraries for Excel + Copilot</span></div></a>
-          </div>
-        </div>
-      </div>
-    </li>
-
-    <!-- ─── RESOURCES ─── -->
-    <li>
-      <a href="/blog/">Resources <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/blog/">Blog</a>
-        <a href="/blog/?filter=arr-snowballs">ARR Snowballs</a>
-        <a href="/blog/?filter=frameworks">Frameworks</a>
-        <a href="/blog/?filter=model-templates">Model Templates</a>
-        <a href="/blog/?filter=revops">For RevOps</a>
-        <a href="https://agentsofinsight.substack.com/" target="_blank" rel="noopener">Newsletter</a>
-        <a href="https://www.youtube.com/@PacerAI" target="_blank" rel="noopener">YouTube</a>
-      </div>
-    </li>
-
-    <!-- ─── TEAM ─── -->
-    <li>
-      <a href="/team/">Team <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/team/#mission">Mission</a>
-        <a href="/team/#pacer-ai-platform">Pacer AI Platform</a>
-        <a href="/team/#team">Team</a>
-        <a href="/team/#partners">Partners</a>
-        <a href="/team/#agents">Agent Team</a>
-      </div>
-    </li>
-
+    <li><a href="/#revenue-modeling-agent">Revenue Modeling Agent</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/resources/">Resources</a></li>
   </ul>
-
   <div class="nav-right">
     <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
-    <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
-    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=btn.closest('nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
+    <a href="https://calendly.com/pacerai/diagnostic" class="btn-teal">Free Diagnostic</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var links=btn.closest('nav').querySelector('.nav-links');btn.classList.toggle('open');links.classList.toggle('mobile-open')})(this)">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -643,23 +586,23 @@ html, body, .wp-site-blocks {
 
 <!-- ═══════════════════════════════════════ CATEGORIES ═══════════════════════════════════════ -->
 <div class="category-bar">
-  <span class="cat-pill active" data-filter="all">All Posts</span>
-  <span class="cat-pill" data-filter="case-study">Case Study</span>
-  <span class="cat-pill" data-filter="manda">M&amp;A</span>
-  <span class="cat-pill" data-filter="diligence">Diligence</span>
-  <span class="cat-pill" data-filter="arr-snowballs">ARR Snowballs</span>
-  <span class="cat-pill" data-filter="frameworks">Frameworks</span>
-  <span class="cat-pill" data-filter="model-templates">Model Templates</span>
-  <span class="cat-pill" data-filter="revops">RevOps</span>
-  <span class="cat-pill" data-filter="ai-agents">AI &amp; Agents</span>
-  <span class="cat-pill" data-filter="white-paper">White Papers</span>
+  <a href="/resources#all" class="cat-pill active" data-filter="all">All Posts</a>
+  <a href="/resources#case-study" class="cat-pill" data-filter="case-study">Case Study</a>
+  <a href="/resources#manda" class="cat-pill" data-filter="manda">M&amp;A</a>
+  <a href="/resources#diligence" class="cat-pill" data-filter="diligence">Diligence</a>
+  <a href="/resources#arr-snowballs" class="cat-pill" data-filter="arr-snowballs">ARR Snowballs</a>
+  <a href="/resources#frameworks" class="cat-pill" data-filter="frameworks">Frameworks</a>
+  <a href="/resources#model-templates" class="cat-pill" data-filter="model-templates">Model Templates</a>
+  <a href="/resources#revops" class="cat-pill" data-filter="revops">RevOps</a>
+  <a href="/resources#ai-agents" class="cat-pill" data-filter="ai-agents">AI &amp; Agents</a>
+  <a href="/resources#white-paper" class="cat-pill" data-filter="white-paper">White Papers</a>
 </div>
 
 <!-- ═══════════════════════════════════════ BLOG GRID ═══════════════════════════════════════ -->
 <div class="blog-grid">
 
   <!-- Semrush x Adobe M&A Case Study -->
-  <a href="/semrush-adobe-acquisition-case-study/" class="blog-card" data-category="case-study manda revops">
+  <a href="/resources/semrush-adobe-acquisition-case-study/" class="blog-card" data-category="case-study manda revops">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">M&amp;A Case Study</span>
@@ -672,7 +615,7 @@ html, body, .wp-site-blocks {
   </a>
 
   <!-- What is cRPO (Diligence canonical) -->
-  <a href="/blog/what-is-current-performance-obligation/" class="blog-card" data-category="diligence">
+  <a href="/resources/what-is-current-performance-obligation/" class="blog-card" data-category="diligence">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">Diligence</span>
@@ -685,7 +628,7 @@ html, body, .wp-site-blocks {
   </a>
 
   <!-- What Is an ARR Waterfall (AEO canonical) -->
-  <a href="/what-is-an-arr-waterfall/" class="blog-card" data-category="arr-snowballs">
+  <a href="/resources/what-is-an-arr-waterfall/" class="blog-card" data-category="arr-snowballs">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">ARR Snowballs</span>
@@ -698,7 +641,7 @@ html, body, .wp-site-blocks {
   </a>
 
   <!-- Board Quality ARR Snowballs White Paper -->
-  <a href="/board-quality-arr-snowballs/" class="blog-card" data-category="white-paper">
+  <a href="/resources/board-quality-arr-snowballs/" class="blog-card" data-category="white-paper">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">White Paper</span>
@@ -711,7 +654,7 @@ html, body, .wp-site-blocks {
   </a>
 
   <!-- NRR Case Study -->
-  <a href="/blog/grow-nrr-101-to-105-case-study/" class="blog-card" data-category="arr-snowballs">
+  <a href="/resources/grow-nrr-101-to-105-case-study/" class="blog-card" data-category="arr-snowballs">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">ARR Snowballs</span>
@@ -724,7 +667,7 @@ html, body, .wp-site-blocks {
   </a>
 
   <!-- Featured Post -->
-  <a href="/blog/build-customer-data-cube-in-house-or-hire/" class="blog-card featured" data-category="arr-snowballs">
+  <a href="/resources/build-customer-data-cube-in-house-or-hire/" class="blog-card featured" data-category="arr-snowballs">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">ARR Snowballs</span>
@@ -736,7 +679,7 @@ html, body, .wp-site-blocks {
     </div>
   </a>
 
-  <a href="/blog/what-most-companies-build-vs-what-boards-need/" class="blog-card" data-category="board-reporting">
+  <a href="/resources/what-most-companies-build-vs-what-boards-need/" class="blog-card" data-category="board-reporting">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">Board Reporting</span>
@@ -748,7 +691,7 @@ html, body, .wp-site-blocks {
     </div>
   </a>
 
-  <a href="/why-llms-cant-build-your-arr-snowball-from-operational-data/" class="blog-card" data-category="arr-snowballs">
+  <a href="/resources/why-llms-cant-build-your-arr-snowball-from-operational-data/" class="blog-card" data-category="arr-snowballs">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">ARR Snowballs</span>
@@ -761,7 +704,7 @@ html, body, .wp-site-blocks {
   </a>
 
   <!-- Post 3 -->
-  <a href="/why-arr-waterfall-models-matter-for-saas-growth/" class="blog-card" data-category="arr-snowballs">
+  <a href="/resources/why-arr-waterfall-models-matter-for-saas-growth/" class="blog-card" data-category="arr-snowballs">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">ARR Snowballs</span>
@@ -774,7 +717,7 @@ html, body, .wp-site-blocks {
   </a>
 
   <!-- Post 3 -->
-  <a href="/using-ai-to-enable-revops-without-breaking-your-gtm/" class="blog-card" data-category="revops">
+  <a href="/resources/using-ai-to-enable-revops-without-breaking-your-gtm/" class="blog-card" data-category="revops">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">RevOps</span>
@@ -787,20 +730,20 @@ html, body, .wp-site-blocks {
   </a>
 
   <!-- Post 3 -->
-  <a href="/arr-snowball-analysis-find-your-expansion-drivers/" class="blog-card" data-category="arr-snowballs">
+  <a href="/resources/arr-snowball-analysis-find-your-expansion-drivers/" class="blog-card" data-category="arr-snowballs">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">ARR Snowballs</span>
         <span class="card-date">January 12, 2026</span>
       </div>
       <h2>ARR Snowball Analysis: Find Your Expansion Drivers</h2>
-      <p class="card-excerpt">Most companies track Annual Recurring Revenue changes at an aggregate level, which often misses the granular patterns that truly drive growth. Understanding these dynamics requires a deeper dive into the ARR Snowball framework.</p>
+      <p class="card-excerpt">Most companies track Annual Recurring Revenue changes at an aggregate level, which misses the granular patterns that truly drive growth. Understanding these dynamics takes a closer look at the ARR Snowball method.</p>
       <span class="card-link">Read Article →</span>
     </div>
   </a>
 
   <!-- Post 4 -->
-  <a href="/prevent-churn-in-high-value-accounts-with-arr-snowball/" class="blog-card" data-category="arr-snowballs">
+  <a href="/resources/prevent-churn-in-high-value-accounts-with-arr-snowball/" class="blog-card" data-category="arr-snowballs">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">ARR Snowballs</span>
@@ -813,7 +756,7 @@ html, body, .wp-site-blocks {
   </a>
 
   <!-- Post 5 -->
-  <a href="/what-is-an-arr-snowball-understanding-revenue-growth/" class="blog-card" data-category="arr-snowballs">
+  <a href="/resources/what-is-an-arr-snowball-understanding-revenue-growth/" class="blog-card" data-category="arr-snowballs">
     <div class="card-body">
       <div class="card-meta">
         <span class="card-category">ARR Snowballs</span>
@@ -827,10 +770,10 @@ html, body, .wp-site-blocks {
 
 </div>
 
-<div id="blog-empty-state" style="display:none;text-align:center;padding:80px 48px;max-width:640px;margin:0 auto;">
+<div data-empty-state style="display:none;text-align:center;padding:80px 48px;max-width:640px;margin:0 auto;">
   <div style="font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;">Coming soon</div>
   <h3 style="color:var(--white);font-size:24px;margin:0 0 12px;font-family:var(--font-heading);">New posts on the way</h3>
-  <p style="color:var(--text-mid);font-size:15px;line-height:1.6;margin:0;">We're building out this category. In the meantime, explore our <a href="/blog/" style="color:var(--teal);text-decoration:underline;">full blog</a> or <a href="https://agentsofinsight.substack.com/" target="_blank" style="color:var(--teal);text-decoration:underline;">subscribe to the newsletter</a> for updates.</p>
+  <p style="color:var(--text-mid);font-size:15px;line-height:1.6;margin:0;">We're building out this category. In the meantime, explore our <a href="/resources/" style="color:var(--teal);text-decoration:underline;">full blog</a> or <a href="https://agentsofinsight.substack.com/" target="_blank" style="color:var(--teal);text-decoration:underline;">subscribe to the newsletter</a> for updates.</p>
 </div>
 
 <!-- ═══════════════════════════════════════ NEWSLETTER ═══════════════════════════════════════ -->
@@ -844,54 +787,44 @@ html, body, .wp-site-blocks {
 <footer>
 <div class="footer-top">
 <div class="footer-brand">
-<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-<svg width="28" height="24" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-<path d="M2 2 L11 14 L2 26" stroke="#4A7FA8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-<path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-<path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-</svg>
-<span style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:800;color:#20242B;">Pacer&nbsp;<span style="color:#2E7D74;">AI</span>
+<svg viewBox="0 0 40 18" width="24" height="11" fill="none" style="stroke:#1F3864;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
 </a>
-<p class="footer-tagline">M&amp;A-grade ARR intelligence for PE-backed SaaS companies. Built on Microsoft Fabric, Power BI, and AI.</p>
+<p class="footer-tagline">The Revenue Modeling Agent for Sales Leaders. Reconciled to Finance, built on Microsoft Fabric.</p>
+</div>
+<div class="footer-col">
+<div class="footer-col-head">Product</div>
+<ul>
+<li><a href="/#revenue-modeling-agent">Revenue Modeling Agent</a></li>
+<li><a href="/#how-it-works">How It Works</a></li>
+<li><a href="/#integrations">Integrations</a></li>
+<li><a href="/#security">Security</a></li>
+</ul>
 </div>
 <div class="footer-col">
 <div class="footer-col-head">Use Cases</div>
 <ul>
-<li><a href="/#arr-growth" data-scroll-to="arr-growth">Revenue Acceleration</a></li>
-<li><a href="/#expansion-drivers" data-scroll-to="expansion-drivers">Expansion Drivers</a></li>
-<li><a href="/#cohort-intelligence" data-scroll-to="cohort-intelligence">Cohort Intelligence</a></li>
-<li><a href="/#gross-retention" data-scroll-to="gross-retention">Gross Retention</a></li>
-<li><a href="/#net-retention" data-scroll-to="net-retention">Net Retention</a></li>
-<li><a href="/#whitespace" data-scroll-to="whitespace">Whitespace</a></li>
+<li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
+<li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
+<li><a href="/#case-studies">Case Studies</a></li>
+<li><a href="/#pricing">Pricing</a></li>
 </ul>
 </div>
 <div class="footer-col">
-<div class="footer-col-head">Solutions</div>
+<div class="footer-col-head">Company</div>
 <ul>
-<li><a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
-<li><a href="/solutions/arr-snowball-board-reporting/">ARR Snowball Reporting</a></li>
-<li><a href="/solutions/transaction-readiness/">Transaction Readiness</a></li>
-<li><a href="/solutions/revops-transformation-pkg/">RevOps Transformation</a></li>
-<li><a href="/solutions/gtm-transformation-pkg/">GTM Transformation</a></li>
-<li><a href="/solutions/fpanda-transformation-pkg/">FP&amp;A Transformation</a></li>
-</ul>
-</div>
-<div class="footer-col">
-<div class="footer-col-head">Team</div>
-<ul>
-<li><a href="/team/#mission">Mission</a></li>
-<li><a href="/platform/overview/">Pacer AI Platform</a></li>
-<li><a href="/team/#team">Team</a></li>
+<li><a href="/team/">Team</a></li>
 <li><a href="/team/#partners">Partners</a></li>
+<li><a href="/platform/overview/">Platform</a></li>
 <li><a href="/team/contact/">Contact</a></li>
 </ul>
 </div>
 <div class="footer-col">
-<div class="footer-col-head">Connect</div>
+<div class="footer-col-head">Resources</div>
 <ul>
+<li><a href="/resources/">Blog</a></li>
+<li><a href="/research/">Research</a></li>
 <li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
-<li><a href="https://calendly.com/pacerai">Schedule a Call</a></li>
-<li><a href="/blog/">Blog</a></li>
 <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
 </ul>
 </div>
@@ -899,8 +832,7 @@ html, body, .wp-site-blocks {
 <div class="footer-bottom">
 <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
 <div class="legal">
-<a href="#">Privacy Policy</a>
-<a href="#">Terms of Service</a>
+<a href="/team/">About</a>
 <a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a>
 </div>
 </div>
@@ -920,36 +852,43 @@ html, body, .wp-site-blocks {
     });
   }
 
-  // Category filter
+  // Category filter — deep-linkable via /resources#<filter>
   var pills=document.querySelectorAll('#pacerai-blog .cat-pill');
   var cards=document.querySelectorAll('#pacerai-blog .blog-card');
-  var emptyState=document.getElementById('blog-empty-state');
+  var emptyState=document.querySelector('[data-empty-state]');
+  function applyFilter(filter){
+    if(!filter)filter='all';
+    var matched=null,visible=0;
+    pills.forEach(function(p){
+      var on=p.getAttribute('data-filter')===filter;
+      p.classList.toggle('active',on);
+      if(on)matched=p;
+    });
+    if(!matched){ // unknown hash -> fall back to All
+      filter='all';
+      pills.forEach(function(p){p.classList.toggle('active',p.getAttribute('data-filter')==='all');});
+    }
+    cards.forEach(function(card){
+      if(filter==='all'||(card.getAttribute('data-category')||'').split(/\s+/).indexOf(filter)>-1){
+        card.style.display='';card.style.opacity='1';card.style.transform='';visible++;
+      } else { card.style.display='none'; }
+    });
+    if(emptyState)emptyState.style.display=(visible===0&&filter!=='all')?'block':'none';
+  }
   pills.forEach(function(pill){
-    pill.addEventListener('click',function(){
-      pills.forEach(function(p){p.classList.remove('active');});
-      pill.classList.add('active');
+    pill.addEventListener('click',function(e){
+      e.preventDefault();
       var filter=pill.getAttribute('data-filter');
-      var visible=0;
-      cards.forEach(function(card){
-        if(filter==='all'||(card.getAttribute('data-category')||'').split(/\s+/).indexOf(filter)>-1){
-          card.style.display='';
-          card.style.opacity='1';
-          card.style.transform='';
-          visible++;
-        } else {
-          card.style.display='none';
-        }
-      });
-      if(emptyState)emptyState.style.display=(visible===0&&filter!=='all')?'block':'none';
+      // update the URL hash (shareable) without a full reload, then filter
+      if(history.replaceState)history.replaceState(null,'','#'+filter); else location.hash=filter;
+      applyFilter(filter);
     });
   });
-  // Auto-select filter from ?filter= query param
-  var params=new URLSearchParams(window.location.search);
-  var f=params.get('filter');
-  if(f){
-    var p=document.querySelector('#pacerai-blog .cat-pill[data-filter="'+f+'"]');
-    if(p)p.click();
-  }
+  window.addEventListener('hashchange',function(){applyFilter((location.hash||'').replace(/^#/,''));});
+  // Initial filter: #hash wins, then legacy ?filter= query param
+  var initial=(location.hash||'').replace(/^#/,'');
+  if(!initial){var params=new URLSearchParams(location.search);initial=params.get('filter')||'';}
+  if(initial)applyFilter(initial);
 })();
 </script>
 

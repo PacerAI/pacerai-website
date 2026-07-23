@@ -8,6 +8,13 @@
  * WordPress strips inline <script> tags from page HTML, so all
  * site-wide JS must live here (see website-PacerAI/CLAUDE.md pitfalls).
  *
+ * WPCode injects the Footer field VERBATIM. This file is pure JS (no script
+ *   tags), so when pasting into the Header/Footer "Footer" field you MUST wrap
+ *   it in an opening + closing script tag, or it renders as plain text and never
+ *   executes. (Alternatively use a WPCode "JavaScript Snippet" — it auto-wraps,
+ *   so leave the tags off.) Do NOT put a literal closing script tag anywhere in
+ *   this file — inside a wrapping script tag it would close the block early.
+ *
  * Each IIFE guards itself — it checks for a page-specific DOM
  * element and exits silently if not found. Safe to run site-wide.
  *
@@ -19,8 +26,17 @@
  *      - Docs:   04_GTM/GTME/plays/website-visitor/docs/
  *   3. Pipeline number stream animation (#num-stream-lt)
  *   4. Mobile nav accordion (viewport <= 768px)
+ *   5. Research waitlist form handler (.research-waitlist-form)
+ *      - POSTs to same Worker with asset_slug 'research-waitlist'
+ *      - No download; confirms signup only
+ *   6. v3 bone homepage — hero rotor word swap (#pacerai-homepage .rotor)
+ *   7. v3 bone homepage — logo marquee duplication (#pacerai-homepage .track)
+ *   8. v3 bone homepage — pipeline number stream (#pacerai-homepage .how .pipe-nums)
+ *      (#1 typed-line stays for legacy pages; it exits if .typed-line is absent)
  *
  * HISTORY:
+ *   2026-07-21  v3.0.0 Claude-bone redesign: added hero rotor, logo marquee,
+ *               and bone pipeline number-stream (sections 6-8)
  *   2026-04-17  Added white paper CTA form handler (Phase 3 deploy)
  *               Added pipeline animation + mobile nav (moved from inline)
  *   Prior       Homepage typed-line animation (original WPCode install)
@@ -163,4 +179,123 @@
       });
     });
   }
+})();
+
+/* --- 5. Research waitlist form handler (/research) --- */
+/* POSTs to the same Cloudflare Worker as the white-paper form, but with
+ * asset_slug 'research-waitlist'. No download is returned — on success it
+ * just confirms the signup. Worker must accept this asset_slug and respond
+ * { success: true } (Apollo tag + Slack ping). Safe site-wide: exits if the
+ * form isn't on the page. */
+(function() {
+  var form = document.querySelector('.research-waitlist-form');
+  if (!form) return;
+
+  var WORKER_URL = 'https://whitepaper-worker.will-078.workers.dev';
+
+  var input = form.querySelector('input[type="email"]');
+  var button = form.querySelector('button');
+  var origText = button.textContent;
+
+  var msgEl = form.parentNode.querySelector('.waitlist-msg');
+  if (!msgEl) {
+    msgEl = document.createElement('p');
+    msgEl.className = 'waitlist-msg';
+    form.parentNode.insertBefore(msgEl, form.nextSibling);
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    msgEl.textContent = '';
+    msgEl.style.color = '#C94C4C';
+
+    var email = (input.value || '').trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      msgEl.textContent = 'Please enter a valid work email.';
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Joining…';
+
+    var params = new URLSearchParams(window.location.search);
+    var body = JSON.stringify({
+      email: email,
+      asset_slug: 'research-waitlist',
+      page_url: window.location.href,
+      utm_source: params.get('utm_source'),
+      utm_medium: params.get('utm_medium'),
+      utm_campaign: params.get('utm_campaign')
+    });
+
+    fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: body
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data && data.success) {
+        button.textContent = 'You’re on the list';
+        msgEl.style.color = '#2DB87A';
+        msgEl.textContent = 'You’re on the list — we’ll email you the day we launch.';
+        input.disabled = true;
+      } else {
+        msgEl.textContent = 'Something went wrong. Please try again.';
+        button.disabled = false;
+        button.textContent = origText;
+      }
+    })
+    .catch(function() {
+      msgEl.textContent = 'Network error. Please try again.';
+      button.disabled = false;
+      button.textContent = origText;
+    });
+  });
+})();
+
+/* --- 6. v3 bone homepage — hero rotor word swap --- */
+(function() {
+  var rotor = document.querySelector('#pacerai-homepage .rotor');
+  if (!rotor) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var phrases = ['Forecasting', 'Sales Planning', 'ARR Waterfall', 'ARR Reporting'];
+  var i = 0;
+  setInterval(function() {
+    i = (i + 1) % phrases.length;
+    rotor.style.opacity = '0';
+    setTimeout(function() {
+      rotor.textContent = phrases[i];
+      rotor.style.transition = 'opacity .35s ease';
+      rotor.style.opacity = '1';
+    }, 200);
+  }, 2400);
+})();
+
+/* --- 7. v3 bone homepage — logo marquee duplication (seamless loop) --- */
+(function() {
+  var track = document.querySelector('#pacerai-homepage .marquee .track');
+  if (!track || track.getAttribute('data-doubled')) return;
+  track.innerHTML += track.innerHTML;
+  track.setAttribute('data-doubled', '1');
+})();
+
+/* --- 8. v3 bone homepage — pipeline number stream --- */
+(function() {
+  var c = document.querySelector('#pacerai-homepage .how .pipe-nums');
+  if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var nums = ['$24,035', '$81,115', '$88,980', '$118,795', 'NRR 101.3%', 'GRR 91.3%',
+    '$197,545', '$510,470', '106.7%', '29.4%', '$302,695', 'NRR 108.1%'];
+  function spawn() {
+    var el = document.createElement('span');
+    el.className = 'pipe-num-particle';
+    el.textContent = nums[Math.floor(Math.random() * nums.length)];
+    el.style.top = (Math.random() * 300) + 'px';
+    el.style.animationDuration = (8 + Math.random() * 6) + 's';
+    el.style.fontSize = (9 + Math.random() * 4) + 'px';
+    c.appendChild(el);
+    el.addEventListener('animationend', function() { el.remove(); });
+  }
+  for (var i = 0; i < 6; i++) setTimeout(spawn, i * 1500);
+  setInterval(spawn, 2000);
 })();

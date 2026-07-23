@@ -3,6 +3,14 @@
 **Date:** March 2026 (updated 2026-03-10)
 **Approach:** Multi-page WordPress deployment via REST API
 
+> **v3.0.0 (2026-07-21) — Claude-bone homepage.** The homepage (WP 25) now ships on the
+> "Claude-bone" light palette (bone `#F5F4EF`, surface `#FAFAF7`, navy `#1F3864`, teal `#2E7D74`)
+> with its CSS **inline in the page** (the old WPCode Header CSS snippet is blanked). **Inner pages
+> and the blog remain on the legacy dark theme (`#080E1C`)** pending their v3.0.x bone conversion —
+> do not assume a page is bone until converted. Nav is now flat/centered (Solutions dropdown
+> removed); the 6 `/solutions/*` pages are 301-redirected to the homepage and legacy `/pricing/`
+> redirects to `/#pricing`.
+
 ---
 
 ## Deployment Architecture
@@ -94,7 +102,7 @@ header.wp-block-template-part, footer.wp-block-template-part,
 .wp-block-post-title, .wp-block-spacer { display: none !important; }
 
 /* Force dark background */
-html, body, .wp-site-blocks { background: #080E1C !important; }
+html, body, .wp-site-blocks { background: #080E1C !important; }  /* legacy dark pages; v3 bone homepage uses #F5F4EF */
 
 /* Remove content container constraints */
 .wp-site-blocks, .wp-site-blocks > main,

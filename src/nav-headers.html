@@ -1,117 +1,77 @@
 <!--
-  CANONICAL NAV HEADERS — getpacerai.com
-  ========================================
-  This is the SINGLE SOURCE OF TRUTH for navigation across all pages.
+  CANONICAL NAV HEADERS — getpacerai.com  (v3.0.0 Claude-bone)
+  ===========================================================
+  SINGLE SOURCE OF TRUTH for navigation across all pages.
 
   When updating nav links:
   1. Edit THIS FILE first
-  2. Copy the <nav>...</nav> block into every src/ page file
-  3. Batch deploy all pages
+  2. Copy the appropriate <nav>...</nav> block into every src/ page file
+  3. Batch deploy all pages (see docs/deploy/runbook.md)
 
-  Homepage version: uses data-scroll-to + onclick="_s(event,'...')" for in-page scroll
-  Sub-page version: uses direct URLs (/#section for homepage anchors, /page/ for WP pages)
+  v3 nav is FLAT (no dropdowns) and CENTERED. Exactly 5 items + Log In:
+    Revenue Modeling Agent · Use Cases · Pricing · Team · Resources   [Log In]
+  - Homepage variant: uses data-scroll-to + onclick="_s(event,'...')" for in-page scroll.
+  - Sub-page variant: plain /#section hrefs (land on homepage, hash-scroll via the
+    onload handler injected by the <img onerror> in the homepage wrapper).
+  - Resources -> /resources/ . Log In -> https://app.getpacerai.com/.auth/login/aad .
+  - Nav CSS is scoped under #pacerai-homepage (every page uses that wrapper id) and
+    depends on the bone :root tokens — a page must be on the bone palette to adopt this nav.
 
-  Site Tree (April 2026):
+  Site Tree (v3.0.0, 2026-07-21):
   getpacerai.com/
-  ├── / (Homepage/Overview)                              ✅ LIVE (Page 25)
-  ├── /solutions/
-  │   ├── /solutions/customer-data-cube/                 ✅ LIVE (Page 373)
-  │   ├── /solutions/arr-snowball-board-reporting/        ✅ LIVE (Page 372)
-  │   ├── /solutions/transaction-readiness/                     ✅ LIVE (Page 554)
-  │   ├── /solutions/revops-transformation/              🔲 PLANNED
-  │   ├── /solutions/gtm-transformation/                 🔲 PLANNED
-  │   └── /solutions/fpa-transformation/                 🔲 PLANNED
-  ├── /resources/
-  │   ├── /blog/                                         ✅ LIVE (Page 230)
-  │   └── (filter deep-links: ?filter=arr-snowballs|frameworks|model-templates|revops)
-  ├── /prompt-library/                                   🔲 PLANNED
-  ├── /team/
+  ├── / (Homepage — bone)                                ✅ LIVE (Page 25)
+  ├── /solutions/*  (6 pages)                            ↪ 301 → homepage (retired from nav)
+  ├── /pricing/  (legacy)                                ↪ 301 → /#pricing
+  ├── /resources/  (Resources)                                ✅ LIVE (Page 230)
+  ├── /research/                                         ✅ waitlist
+  ├── /team/                                             ✅ LIVE (Page 366)
   │   ├── /team/about/                                   ✅ LIVE (Page 374)
   │   └── /team/contact/                                 ✅ LIVE (Page 375)
-  └── /login/                                            ✅ LIVE (redirect to app)
+  ├── /platform/overview/                                ✅ LIVE (Page 371)
+  └── /login/                                            ✅ redirect to app
+  NOTE: inner pages (platform, team, about, contact) are still on the dark theme as of
+  v3.0.0 launch; their bone conversion + adoption of this nav is a tracked v3.0.x follow-up.
 -->
 
 <!-- ═══════════════════════════════════════
-     SUB-PAGE NAV VERSION
-     Use this version for ALL pages EXCEPT the homepage.
-     Homepage has its own version with data-scroll-to handlers.
+     HOMEPAGE NAV VARIANT  (in-page smooth scroll)
      ═══════════════════════════════════════ -->
 <nav>
-  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-    <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </svg>
-    <span style="font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:bold;color:#fff;letter-spacing:0.01em;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+  <a href="/" class="nav-logo">Pacer <span>AI</span>
+    <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
   </a>
-
   <ul class="nav-links">
-
-    <!-- ─── OVERVIEW ─── -->
-    <li>
-      <a href="/">Overview <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/#use-cases">Use Cases</a>
-        <a href="/#solutions">Solutions overview</a>
-        <a href="/team/">Team overview</a>
-      </div>
-    </li>
-
-    <!-- ─── SOLUTIONS (mega-dropdown with SVG icons) ─── -->
-    <li>
-      <a href="/#solutions">Solutions <span class="chevron">&#9662;</span></a>
-      <div class="dropdown" style="min-width:580px">
-        <div class="dropdown-grid">
-          <div>
-            <div class="dropdown-col-label">Transaction Solutions</div>
-            <a href="/solutions/customer-data-cube/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="d-text"><span class="d-title">Customer Data Cube</span><span class="d-desc">M&amp;A grade accounts by product revenue</span></div></a>
-            <a href="/solutions/arr-snowball-board-reporting/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><div class="d-text"><span class="d-title">ARR Snowball Reporting</span><span class="d-desc">Board-ready waterfall dashboards</span></div></a>
-            <a href="/solutions/transaction-readiness/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="d-text"><span class="d-title">Transaction Readiness</span><span class="d-desc">QoR, QoE &mdash; diligence-ready in 4 quarters</span></div></a>
-          </div>
-          <div>
-            <div class="dropdown-col-label">Transformation Solutions</div>
-            <a href="/solutions/revops-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg></div><div class="d-text"><span class="d-title">RevOps Transformation</span><span class="d-desc">Segmentation to revenue motions</span></div></a>
-            <a href="/solutions/gtm-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="d-text"><span class="d-title">GTM Transformation</span><span class="d-desc">Agent-powered GTM chain</span></div></a>
-            <a href="/solutions/fpanda-transformation-pkg/"><div class="d-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="d-text"><span class="d-title">FP&amp;A Transformation</span><span class="d-desc">AI model libraries for Excel + Copilot</span></div></a>
-          </div>
-        </div>
-      </div>
-    </li>
-
-    <!-- ─── RESOURCES ─── -->
-    <li>
-      <a href="/blog/">Resources <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/blog/">Blog</a>
-        <a href="/blog/?filter=arr-snowballs">ARR Snowballs</a>
-        <a href="/blog/?filter=frameworks">Frameworks</a>
-        <a href="/blog/?filter=model-templates">Model Templates</a>
-        <a href="/blog/?filter=revops">For RevOps</a>
-        <a href="https://agentsofinsight.substack.com/" target="_blank" rel="noopener">Newsletter</a>
-        <a href="https://www.youtube.com/@PacerAI" target="_blank" rel="noopener">YouTube</a>
-      </div>
-    </li>
-
-    <!-- ─── TEAM ─── -->
-    <li>
-      <a href="/team/">Team <span class="chevron">&#9662;</span></a>
-      <div class="dropdown single-dropdown">
-        <a href="/team/#mission">Mission</a>
-        <a href="/team/#pacer-ai-platform">Pacer AI Platform</a>
-        <a href="/team/#team">Team</a>
-        <a href="/team/#partners">Partners</a>
-        <a href="/team/#agents">Agent Team</a>
-      </div>
-    </li>
-
+    <li><a href="/#revenue-modeling-agent" data-scroll-to="revenue-modeling-agent" onclick="_s(event,'revenue-modeling-agent')">Revenue Modeling Agent</a></li>
+    <li><a href="/#use-cases" data-scroll-to="use-cases" onclick="_s(event,'use-cases')">Use Cases</a></li>
+    <li><a href="/#team" data-scroll-to="team" onclick="_s(event,'team')">Team</a></li>
+    <li><a href="/#pricing" data-scroll-to="pricing" onclick="_s(event,'pricing')">Pricing</a></li>
+    <li><a href="/resources/">Resources</a></li>
   </ul>
-
   <div class="nav-right">
-    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
-    <a href="https://calendly.com/pacerai" class="btn-teal">Request Demo</a>
-    <button class="mobile-menu-btn" aria-label="Menu" onclick="(function(btn){var nav=btn.closest('nav');var links=nav.querySelector('.nav-links');var isOpen=links.classList.contains('mobile-open');btn.classList.toggle('open');links.classList.toggle('mobile-open');document.body.style.overflow=isOpen?'':'hidden';document.documentElement.style.overflow=isOpen?'':'hidden'})(this)">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
+    <a href="https://calendly.com/pacerai/diagnostic" class="btn-cta">Free Diagnostic</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="location.hash='#pace-cta'"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     SUB-PAGE NAV VARIANT  (plain /#section hrefs)
+     Use on every page EXCEPT the homepage.
+     ═══════════════════════════════════════ -->
+<nav>
+  <a href="/" class="nav-logo">Pacer <span>AI</span>
+    <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#revenue-modeling-agent">Revenue Modeling Agent</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/resources/">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
+    <a href="https://calendly.com/pacerai/diagnostic" class="btn-cta">Free Diagnostic</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="location.hash='#pace-cta'"><span></span><span></span><span></span></button>
   </div>
 </nav>

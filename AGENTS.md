@@ -143,9 +143,8 @@ Follow this sequence for every change:
 ### BUILD
 - Each page is a standalone HTML file with inline `<style>` — no external CSS
 - **Nav headers: ALWAYS use `src/nav-headers.html` as the canonical nav source.** This is the single source of truth for navigation across all pages. When updating nav links, edit `src/nav-headers.html` first, then propagate to all `src/` page files. The design reference lives at `docs/design/nav_headers/nav-headers.html`.
-  - Sub-pages use direct URLs (e.g., `/solutions/transaction-readiness/`, `/#use-cases`)
-  - Homepage uses `data-scroll-to` + `onclick="_s(event,'...')"` for in-page scroll
-  - Solutions mega-dropdown is split into two columns: **Transaction Solutions** (Defend) and **Transformation Solutions** (Drive)
+  - Sub-pages use direct URLs (e.g., `/#use-cases`); homepage uses `data-scroll-to` + `onclick="_s(event,'...')"` for in-page scroll
+  - **v3.0.0:** nav is now flat + centered — Revenue Modeling Agent · Use Cases · Pricing · Team · Resources (+ Log In). The Solutions mega-dropdown was removed; the 6 `/solutions/*` pages are 301-redirected to the homepage, and legacy `/pricing/` → `/#pricing`. The v3 "Claude-bone" rebuild (homepage/blog/team/14 posts) is built on branch `feat/bone-redesign-v3` (**PR #20**) but **NOT yet deployed** — gated on Will's approval; deploy sequence in `docs/deploy/v3-golive-plan.md`.
 - Shared elements (nav, footer, base CSS, TT4 overrides) are copied into each file
 - All CSS scoped under `#pacerai-homepage` wrapper
 - No `<html>`, `<head>`, or `<body>` tags — WordPress manages the document shell
@@ -181,9 +180,9 @@ Canonical source: `pacerai-foundation/strategy/aeo_seo_keywords.yml` — edit th
 
 ## Brand Constraints
 
-- **Fonts:** DM Sans (body), Cormorant Garamond (headings) — approved by Will
-- **Background:** Dark navy (#080E1C)
-- **Primary accent:** Teal (#27899A), Teal Light (#70C49C)
+- **Fonts:** DM Sans (body); Cormorant Garamond (legacy headings). v3 bone homepage uses DM Sans headings.
+- **Background:** v3 homepage → bone `#F5F4EF`; legacy dark pages → `#080E1C` (inner pages/blog until v3.0.x conversion)
+- **Primary accent:** Teal — bone `#2E7D74`/`#70C49C`; legacy dark `#27899A`/`#70C49C`
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents.
 - **No:** playful illustrations, rounded pill buttons
 - **CTA language:** "Request a Demo", "Talk to a RevOps Expert" — never "Get Started Free"

@@ -2,6 +2,81 @@
 
 All deployments logged here in reverse chronological order.
 
+Versioning: from v3.0.0 onward, releases are semver-tagged (`vX.Y.Z`, annotated git tags +
+top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver date-headed history
+(preserved, not renumbered). One `2026-04-06` block sits out of order at the very bottom.
+
+---
+
+## v3.0.0 — 2026-07-21 — Claude-bone homepage redesign (initial ship)
+
+- **Status:** built on branch `feat/bone-redesign-v3` (**PR #20**); **NOT yet deployed** — gated on
+  Will's approval + voice/visual pass + manual WordPress prep (below).
+- **Go-live runbook:** `docs/deploy/v3-golive-plan.md` (the deploy sequence). **Chosen design:**
+  `docs/design/homepage/bone_v3-simple.html` (selected from the `bone_v3-*` concept explorations).
+- **Approved by:** Will Sullivan (plan approval 2026-07-21)
+- **Deployed by:** _(pending)_
+- **Semver:** first semver-tagged release. Added top-level `VERSION` = `3.0.0`; tag `v3.0.0` to
+  be applied on merge. MAJOR bump (full homepage redesign; continues the informal v1/v2/v3 line).
+- **Launch goal:** ship the light **Claude-bone** (`#F5F4EF`) homepage with the HTML demo-video
+  iframe (Claude-over-Tahoe) displaying. Copy/section polish + blog + inner-page conversion
+  iterate as `v3.0.x` follow-ups.
+- **Changes (in this PR):**
+  - **Homepage (WP 25) — full replacement:** ported the bone design from
+    `pacerai-platform-claude-native/demo-site/index.html`, WordPress-adapted — `#pacerai-homepage`
+    wrapper, TT4 chrome hidden with `background:#F5F4EF`, all inner `id=` → `data-section` +
+    `_s()` smooth-scroll injector, CSS inlined (~16K, no WPCode Header CSS needed), JS moved to
+    the WPCode footer. Sections: hero (rotor) → social proof → **demo showcase iframe** → How It
+    Works pipeline → value tiles → Use Cases → Team → Pricing → FAQ → CTA. Validates 12/12 clean.
+  - **Nav (flat, centered, 5 items):** Revenue Modeling Agent · Use Cases · Pricing · Team ·
+    Resources + Log In. Solutions dropdown removed. Resources → `/blog/`. Pricing → `/#pricing`.
+  - **Team section:** single line per Will — "Founded by an operator turned M&A advisor — Will
+    Sullivan, a former PwC M&A advisor, search fund operator, and West Point graduate." + link to
+    `/team/`.
+  - **FAQ pricing answer** reworded to voice-compliant alignment-based pricing (drops banned
+    "utilize"): "Pacer AI uses an alignment-based pricing model to align Pacer AI with its
+    clients' goals."
+  - **Footer:** Solutions column retired → Use Cases · Company · Resources · Connect.
+  - **WPCode footer JS** (`src/wpcode/footer.js`): added hero rotor, logo marquee duplication,
+    bone pipeline number-stream (sections 6–8). Preserves the Research-waitlist handler.
+  - **Canonical partials** `src/nav-headers.html` + `src/footer/footer.html` updated to bone.
+  - **`scripts/validate.py`** check #7 message updated for the new footer columns.
+  - **Archived** the dark homepage/nav/footer + the 37K WPCode dark CSS under
+    `docs/design/homepage/archive/` + `docs/design/nav_headers/archive/` (README supersession note).
+- **Demo hosting (built 2026-07-22):** the ~160K demo can't be a WP page, so it's served by a
+  Cloudflare Worker in this repo — **`infra/pacer-demo-worker/`** — at
+  `https://pacer-demo-worker.will-078.workers.dev/`. The homepage showcase iframe points there
+  (no longer a placeholder). One-time deploy: `cd infra/pacer-demo-worker && npm install && npx
+  wrangler login && npm run deploy`. Optional custom domain `demo.getpacerai.com` documented in
+  that worker's README (needs the zone on Cloudflare DNS).
+- **Manual WordPress prep required before deploy (Will-gated):**
+  - Deploy `pacer-demo-worker` (above) so the showcase iframe resolves.
+  - Upload `tahoe-bg.jpg` to WP media; relink the showcase background.
+  - **Blank the WPCode Header CSS snippet** (old 37K dark CSS) — the bone CSS is now inline.
+  - Paste the updated `src/wpcode/footer.js` into the WPCode Footer snippet.
+  - **301 redirects:** 6 `/solutions/*` → homepage; legacy `/pricing/` (WP 111) → `/#pricing`;
+    audit + redirect any other orphans.
+  - **⚠ Blog → Resources rename (round 3):** change WP page 230 slug `blog` → `resources`, then
+    301 `/blog/` → `/resources/` **and** each `/blog/<slug>/` → `/resources/<slug>/` (posts move
+    with the parent). Source now links to `/resources/…` everywhere (nav, footer, article links,
+    homepage case-study card) and the blog filter pills are deep-links (`/resources#case-study`).
+    This is a slug/permalink change — **flagged for Will**; do the slug change + redirects at deploy.
+- **Deploy (after prep):** `deploy.py 25` → verify 200 + demo iframe renders (launch gate).
+- **v3.0.x done (2026-07-22, cont.):** Team page + all **14 blog post pages** converted to bone
+  (token remap + bone nav/footer + `/resources/` links); homepage r2/r3 (Calendly CTAs, trimmed
+  Security, hero rotor inline + new phrases, "On-Pace to Plan"); blog **/resources rename**
+  (see `docs/deploy/blog-to-resources-rename.md` for the WP slug + 301 steps). **Blog posts pass
+  all structural checks but have pre-existing article-body voice-lint hits** — need Will's voice
+  pass (or `--force`) before deploy; the bone conversion itself is complete.
+- **v3.0.x done (2026-07-22):** blog (WP 230) restyled to bone (token remap + bone nav/footer,
+  matches the homepage); homepage review round 1 (centered How-It-Works, 3-line hero, nav reorder
+  + Free Diagnostic CTA, new #case-studies/#integrations/#security/#value sections); demo hosting
+  Worker (`infra/pacer-demo-worker/`); repeatable preview loop (`scripts/build_preview.py`).
+- **v3.0.x follow-ups (still tracked):** full bone conversion + new-nav adoption for
+  platform/team/about/contact; voice/content pass on the 4 draft homepage sections; positioning
+  review ("Revenue Modeling Agent" framing); delete orphan scratch `src/homepage/demo/`.
+- **Backup:** `deploy.py` writes `docs/review/pre-deploy-backup-25-*.json` at deploy time.
+
 ---
 
 ## 2026-04-19 — Site Cleanup: Redirects, Anchor Rename, Blog Re-parenting, Meta Descriptions
