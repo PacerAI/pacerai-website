@@ -671,7 +671,7 @@ html, body, .wp-site-blocks {
 <li>Maintain a running customer-level ARR ledger across periods</li>
 <li>Apply your company's specific ARR classification rules consistently to every record (an LLM may classify the same scenario differently on successive runs)</li>
 <li>Handle fiscal calendar logic — month-end cutoffs, mid-month starts, annual vs. monthly billing normalization</li>
-<li>Track customer identity across systems where the same customer has different IDs in CRM, billing, and ERP — a problem Pacer AI solves with a unified <a href="/solutions/customer-data-cube/">Customer Data Cube</a></li>
+<li>Track customer identity across systems where the same customer has different IDs in CRM, billing, and ERP — a problem Pacer AI solves with a unified <a href="/resources/build-customer-data-cube-in-house-or-hire/">Customer Data Cube</a></li>
 </ul>
 
 <h3>3. Every Company's Data Is Messy in Its Own Way</h3>
@@ -689,7 +689,7 @@ html, body, .wp-site-blocks {
 
 <p>When an LLM encounters a data scenario it hasn't seen in training — a negative invoice, a backdated contract amendment, a currency conversion edge case — it doesn't flag uncertainty. It produces an answer. In a narrative summary, a hallucination is an inconvenience. In an ARR snowball that goes to your board or PE sponsor, a hallucination is a material misstatement.</p>
 
-<p>The board deck problem is acute: <a href="/solutions/arr-snowball-board-reporting/">ARR snowball numbers must reconcile</a> to the general ledger, to the CRM pipeline, and to the billing system totals. LLMs cannot perform three-way reconciliation because they cannot hold all three datasets in context simultaneously, and they cannot guarantee that intermediate calculations are arithmetically correct. Research from <a href="https://arxiv.org/abs/2410.05229">Apple's GSM-NoOp study</a> demonstrated that LLMs fail on even basic math problems when irrelevant information is added — exactly the kind of noisy data present in real operational systems.</p>
+<p>The board deck problem is acute: <a href="/resources/board-quality-arr-snowballs/">ARR snowball numbers must reconcile</a> to the general ledger, to the CRM pipeline, and to the billing system totals. LLMs cannot perform three-way reconciliation because they cannot hold all three datasets in context simultaneously, and they cannot guarantee that intermediate calculations are arithmetically correct. Research from <a href="https://arxiv.org/abs/2410.05229">Apple's GSM-NoOp study</a> demonstrated that LLMs fail on even basic math problems when irrelevant information is added — exactly the kind of noisy data present in real operational systems.</p>
 
 <h2>What LLMs Can Do Well in the ARR Workflow</h2>
 
@@ -725,7 +725,7 @@ html, body, .wp-site-blocks {
 
 <h2>The Pacer AI Approach</h2>
 
-<p>Pacer AI handles ARR snowball construction with a rule-based data engine — not an LLM — that ingests operational data from CRMs, billing platforms, and ERPs, resolves customer identities across systems, applies consistent classification rules, and produces reconciled, auditable <a href="/solutions/arr-snowball-board-reporting/">ARR snowball reports</a>. The AI layer sits on top: generating narratives, surfacing anomalies, and drafting board commentary from the verified numbers. The agent is operated by an ex-PwC M&amp;A advisor, so the output is built and defended by a person &mdash; not just generated.</p>
+<p>Pacer AI handles ARR snowball construction with a rule-based data engine — not an LLM — that ingests operational data from CRMs, billing platforms, and ERPs, resolves customer identities across systems, applies consistent classification rules, and produces reconciled, auditable <a href="/resources/board-quality-arr-snowballs/">ARR snowball reports</a>. The AI layer sits on top: generating narratives, surfacing anomalies, and drafting board commentary from the verified numbers. The agent is operated by an ex-PwC M&amp;A advisor, so the output is built and defended by a person &mdash; not just generated.</p>
 
 <p>This is the critical distinction. The computation must be rule-based and auditable. The intelligence layer — explaining what the numbers mean, <a href="/prevent-churn-in-high-value-accounts-with-arr-snowball/">identifying churn risk</a>, recommending actions — is where LLMs add value. Conflating the two is where ARR analysis goes wrong.</p>
 
