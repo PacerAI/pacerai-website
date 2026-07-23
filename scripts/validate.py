@@ -216,8 +216,8 @@ def validate_file(filepath, strict=False, voice_rules=None):
     # Subtract CSS definition occurrences (look for rules not HTML)
     css_refs = len(re.findall(r'\.footer-col-head\s*\{', content))
     html_cols = footer_cols - css_refs
-    if html_cols < 4:
-        warnings.append(f"FOOTER: Only {html_cols} column headers (expected >=4; v3 bone footer: Use Cases, Company, Resources, Connect)")
+    if html_cols < 3:
+        warnings.append(f"FOOTER: Only {html_cols} column headers (expected >=3; v3 bone footer: Product, Use Cases, Resources)")
     else:
         passes.append(f"FOOTER: {html_cols} columns (OK)")
 

@@ -51,7 +51,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 #pacerai-homepage .stat b{display:block;font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.3px}
 #pacerai-homepage .stat span{font-size:12.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--kick);font-weight:700}
 #pacerai-homepage .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-#pacerai-homepage .track{display:flex;gap:52px;width:max-content;align-items:center;animation:paceScroll 34s linear infinite}
+#pacerai-homepage .track{display:flex;gap:52px;width:max-content;align-items:center;animation:paceScroll 24s linear infinite}
 #pacerai-homepage .track:hover{animation-play-state:paused}
 @keyframes paceScroll{to{transform:translateX(-50%)}}
 #pacerai-homepage .track img{height:38px;width:auto;object-fit:contain;opacity:.72;filter:grayscale(1)}
@@ -293,7 +293,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 </style>
 
 <div id="pacerai-homepage">
-<img src="//0" alt="" style="display:none" onerror="window._s=function(e,n){if(e&amp;&amp;e.preventDefault)e.preventDefault();var t=document.querySelector('[data-section=&quot;'+n+'&quot;]');if(t){window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-72,behavior:'smooth'});if(e)history.pushState(null,'','#'+n)}};if(location.hash){var h=location.hash.slice(1);setTimeout(function(){window._s(null,h)},300)}this.remove()">
+<img src="//0" alt="" style="display:none" onerror="window._s=function(e,n){if(e&amp;&amp;e.preventDefault)e.preventDefault();var t=document.querySelector('[data-section=&quot;'+n+'&quot;]');if(t){window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-72,behavior:'smooth'});if(e)history.pushState(null,'','#'+n)}};if(location.hash){var h=location.hash.slice(1);setTimeout(function(){window._s(null,h)},300)}window.addEventListener('hashchange',function(){var hh=location.hash.slice(1);if(hh)window._s(null,hh)});this.remove()">
 
 <nav>
   <a href="/" class="nav-logo">Pacer <span>AI</span>
@@ -325,7 +325,12 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     <div class="stat"><b>50+</b><span>ARR Waterfalls</span></div>
   </div>
   <div class="marquee">
-    <div class="track">
+    <div class="track" data-doubled="1">
+      <img src="https://getpacerai.com/wp-content/uploads/2026/03/Brandwatch.jpg" alt="Brandwatch">
+      <img src="https://getpacerai.com/wp-content/uploads/2026/03/Fortis-Life-Science-purple-logo.jpeg" alt="Fortis Life Science">
+      <img src="https://getpacerai.com/wp-content/uploads/2026/04/platinum-equity-dark-bg.png" alt="Platinum Equity">
+      <img src="https://getpacerai.com/wp-content/uploads/2026/03/Semrush-Logo.png" alt="Semrush">
+      <img src="https://getpacerai.com/wp-content/uploads/2026/03/SUMMIT-Partners-Logo.png" alt="Summit Partners">
       <img src="https://getpacerai.com/wp-content/uploads/2026/03/Brandwatch.jpg" alt="Brandwatch">
       <img src="https://getpacerai.com/wp-content/uploads/2026/03/Fortis-Life-Science-purple-logo.jpeg" alt="Fortis Life Science">
       <img src="https://getpacerai.com/wp-content/uploads/2026/04/platinum-equity-dark-bg.png" alt="Platinum Equity">
@@ -548,7 +553,6 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
       </div>
     </div>
   </div>
-  <a class="team-link founder-teamlink" href="/team/">Meet the full team &amp; advisory network &rarr;</a>
 </section>
 
 <section class="band" data-section="value">
@@ -611,19 +615,10 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     <div class="footer-col">
       <div class="footer-col-head">Use Cases</div>
       <ul>
-        <li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
+        <li><a href="/#gtm-planning">GTM Planning</a></li>
         <li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
         <li><a href="/#case-studies">Case Studies</a></li>
         <li><a href="/#pricing">Pricing</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-head">Company</div>
-      <ul>
-        <li><a href="/team/">Team</a></li>
-        <li><a href="/team/#partners">Partners</a></li>
-        <li><a href="/platform/overview/">Platform</a></li>
-        <li><a href="/team/contact/">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -654,6 +649,13 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
  * If you change this file, paste the updated contents into WPCode.
  * WordPress strips inline <script> tags from page HTML, so all
  * site-wide JS must live here (see website-PacerAI/CLAUDE.md pitfalls).
+ *
+ * WPCode injects the Footer field VERBATIM. This file is pure JS (no script
+ *   tags), so when pasting into the Header/Footer "Footer" field you MUST wrap
+ *   it in an opening + closing script tag, or it renders as plain text and never
+ *   executes. (Alternatively use a WPCode "JavaScript Snippet" — it auto-wraps,
+ *   so leave the tags off.) Do NOT put a literal closing script tag anywhere in
+ *   this file — inside a wrapping script tag it would close the block early.
  *
  * Each IIFE guards itself — it checks for a page-specific DOM
  * element and exits silently if not found. Safe to run site-wide.
