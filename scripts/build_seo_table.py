@@ -156,6 +156,15 @@ DATA = [
  row("Redirect","/solutions/fpanda-transformation-pkg/","/solutions/fpanda-transformation-pkg/","652","redirect","","","","","301 -> /"),
 ]
 
+# Slugs whose live Yoast title+meta have been verified to match rec_* (add as batches land).
+IMPLEMENTED = {
+    # Core batch — verified live 2026-07-23
+    "/", "/resources/", "/team/", "/team/about/", "/team/contact/", "/platform/overview/",
+}
+for _r in DATA:
+    if _r["slug"] in IMPLEMENTED:
+        _r["implemented"] = True
+
 def write_csv():
     with open(CSV_OUT,"w",newline="") as f:
         w=csv.DictWriter(f, fieldnames=FIELDS)

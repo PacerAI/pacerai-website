@@ -54,7 +54,7 @@ code{font-family:var(--mono);font-size:.92em;background:var(--surface-2);padding
 </style>
 <div class="wrap">
 <header>
-  <p class="eyebrow">getpacerai.com · SEO / metadata · v1 · 0/21 implemented</p>
+  <p class="eyebrow">getpacerai.com · SEO / metadata · v2 · 6/21 implemented</p>
   <h1>Title &amp; Meta — Current vs. Recommended</h1>
   <p class="lede">Every indexed page, its live Yoast title and meta description, and a recommended rewrite aligned to one message. Edit in <b>WP Admin → page → Yoast</b> (not REST-writable). Generated from <code>docs/review/seo-table.csv</code>. Titles ≤60 chars, metas ≤155.</p>
   <div class="northstar">
@@ -75,41 +75,41 @@ code{font-family:var(--mono);font-size:.92em;background:var(--surface-2);padding
 <colgroup><col class="c-page"><col class="c-cur"><col class="c-rec"><col class="c-act"></colgroup>
 <thead><tr><th>Page</th><th>Current (live)</th><th>Recommended</th><th>Action</th></tr></thead>
 <tbody>
-<tr>
+<tr class="done">
   <td><div class="page">Home</div><div class="slug">/</div><div class="wpid">WP 25</div></td>
-  <td class="cur"><div class="cell-label">Title <span class="len">58</span></div><div class="txt cur">Pacer AI — GTM Financial Modeling Agent for PE-backed SaaS</div><div class="meta">Pacer AI is the GTM Financial Modeling Agent for Sales Leaders and CFOs — build and reconcile your ARR waterfall and revenue model inside Claude, in days. <span class="len">154</span></div></td>
-  <td class="rec"><div class="cell-label">Title <span class="len">52</span></div><div class="txt">Pacer AI — The GTM Financial Modeling Agent for CROs</div><div class="meta">Pacer AI is the GTM Financial Modeling Agent for CROs and Sales Leaders — build and reconcile your ARR waterfall and revenue model inside Claude, in days. <span class="len">154</span></div></td>
-  <td><span class="chip minor">Minor</span></td>
+  <td class="rec"><div class="cell-label">Title (live) <span class="len">52</span></div><div class="txt">Pacer AI — The GTM Financial Modeling Agent for CROs</div><div class="meta">Pacer AI is the GTM Financial Modeling Agent for CROs and Sales Leaders — build and reconcile your ARR waterfall and revenue model inside Claude, in days. <span class="len">154</span></div></td>
+  <td><div class="cell-label">Note</div><div class="meta" style="margin-top:0">Lead with CRO; title/meta already updated 2026-07-23</div></td>
+  <td><span class="chip live">✓ Live</span></td>
 </tr>
-<tr>
+<tr class="done">
   <td><div class="page">Resources hub</div><div class="slug">/resources/</div><div class="wpid">WP 230</div></td>
-  <td class="cur"><div class="cell-label">Title <span class="len">57</span></div><div class="txt cur">Resources — Pacer AI | ARR Intelligence &amp; RevOps Insights</div><div class="meta">Insights on ARR intelligence, revenue operations, and SaaS growth strategies for PE-backed operators and CFOs. <span class="len">110</span></div></td>
-  <td class="rec"><div class="cell-label">Title <span class="len">58</span></div><div class="txt">Resources — GTM Financial Modeling &amp; ARR Guides | Pacer AI</div><div class="meta">Guides on GTM financial modeling, ARR waterfalls, and revenue models for CROs and finance leaders — from the team behind the GTM Financial Modeling Agent. <span class="len">154</span></div></td>
-  <td><span class="chip fix">Fix</span></td>
+  <td class="rec"><div class="cell-label">Title (live) <span class="len">58</span></div><div class="txt">Resources — GTM Financial Modeling &amp; ARR Guides | Pacer AI</div><div class="meta">Guides on GTM financial modeling, ARR waterfalls, and revenue models for CROs and finance leaders — from the team behind the GTM Financial Modeling Agent. <span class="len">154</span></div></td>
+  <td><div class="cell-label">Note</div><div class="meta" style="margin-top:0">Drop &#x27;ARR Intelligence &amp; RevOps Insights&#x27;</div></td>
+  <td><span class="chip live">✓ Live</span></td>
 </tr>
-<tr>
+<tr class="done">
   <td><div class="page">Team</div><div class="slug">/team/</div><div class="wpid">WP 366</div></td>
-  <td class="cur"><div class="cell-label">Title <span class="len">18</span></div><div class="txt cur">Company — Pacer AI</div><div class="meta">Learn about Pacer AI — our mission, team, and approach to solving the ARR reporting gap for PE-backed SaaS companies. <span class="len">117</span></div></td>
-  <td class="rec"><div class="cell-label">Title <span class="len">47</span></div><div class="txt">Team — Pacer AI | The Operator Behind the Agent</div><div class="meta">Pacer AI is founder-led by Will Sullivan — a former PwC M&amp;A advisor and West Point graduate. Meet the operator behind the GTM Financial Modeling Agent. <span class="len">151</span></div></td>
-  <td><span class="chip fix">Fix</span></td>
+  <td class="rec"><div class="cell-label">Title (live) <span class="len">47</span></div><div class="txt">Team — Pacer AI | The Operator Behind the Agent</div><div class="meta">Pacer AI is founder-led by Will Sullivan — a former PwC M&amp;A advisor and West Point graduate. Meet the operator behind the GTM Financial Modeling Agent. <span class="len">151</span></div></td>
+  <td><div class="cell-label">Note</div><div class="meta" style="margin-top:0">Lead founder credibility</div></td>
+  <td><span class="chip live">✓ Live</span></td>
 </tr>
-<tr>
+<tr class="done">
   <td><div class="page">About</div><div class="slug">/team/about/</div><div class="wpid">WP 374</div></td>
-  <td class="cur"><div class="cell-label">Title <span class="len">16</span></div><div class="txt cur">About — Pacer AI</div><div class="meta">Pacer AI was founded to solve the ARR reporting gap for PE-backed SaaS companies. Learn about our mission, values, and the team behind the platform. <span class="len">148</span></div></td>
-  <td class="rec"><div class="cell-label">Title <span class="len">41</span></div><div class="txt">About Pacer AI — Built by an M&amp;A Operator</div><div class="meta">Why Pacer AI exists: a GTM Financial Modeling Agent built by an ex-PwC M&amp;A advisor to give CROs a revenue model that reconciles to Finance. <span class="len">139</span></div></td>
-  <td><span class="chip fix">Fix</span></td>
+  <td class="rec"><div class="cell-label">Title (live) <span class="len">41</span></div><div class="txt">About Pacer AI — Built by an M&amp;A Operator</div><div class="meta">Why Pacer AI exists: a GTM Financial Modeling Agent built by an ex-PwC M&amp;A advisor to give CROs a revenue model that reconciles to Finance. <span class="len">139</span></div></td>
+  <td><div class="cell-label">Note</div><div class="meta" style="margin-top:0">Drop &#x27;ARR reporting gap / PE-backed SaaS&#x27; lead</div></td>
+  <td><span class="chip live">✓ Live</span></td>
 </tr>
-<tr>
+<tr class="done">
   <td><div class="page">Contact</div><div class="slug">/team/contact/</div><div class="wpid">WP 375</div></td>
-  <td class="cur"><div class="cell-label">Title <span class="len">18</span></div><div class="txt cur">Contact — Pacer AI</div><div class="meta">Get in touch with Pacer AI. Request a live demo, schedule a call, or reach out about partnerships for PE-backed SaaS revenue intelligence. <span class="len">138</span></div></td>
-  <td class="rec"><div class="cell-label">Title <span class="len">31</span></div><div class="txt">Contact Pacer AI — Talk to Will</div><div class="meta">Book a diagnostic or reach founder Will Sullivan directly about GTM financial modeling — build and reconcile your revenue model inside Claude. <span class="len">142</span></div></td>
-  <td><span class="chip fix">Fix</span></td>
+  <td class="rec"><div class="cell-label">Title (live) <span class="len">31</span></div><div class="txt">Contact Pacer AI — Talk to Will</div><div class="meta">Book a diagnostic or reach founder Will Sullivan directly about GTM financial modeling — build and reconcile your revenue model inside Claude. <span class="len">142</span></div></td>
+  <td><div class="cell-label">Note</div><div class="meta" style="margin-top:0">Drop &#x27;revenue intelligence&#x27;</div></td>
+  <td><span class="chip live">✓ Live</span></td>
 </tr>
-<tr>
+<tr class="done">
   <td><div class="page">Platform / How it works</div><div class="slug">/platform/overview/</div><div class="wpid">WP 371</div></td>
-  <td class="cur"><div class="cell-label">Title <span class="len">28</span></div><div class="txt cur">Platform Overview — Pacer AI</div><div class="meta">Pacer AI platform overview — how we unify CRM, billing, and ERP data into automated ARR snowball reports, waterfall analyses, and board-ready decks. <span class="len">148</span></div></td>
-  <td class="rec"><div class="cell-label">Title <span class="len">54</span></div><div class="txt">How It Works — GTM Financial Modeling Agent | Pacer AI</div><div class="meta">How Pacer AI turns CRM, billing, and ERP data into a reconciled GTM financial model — ARR waterfalls, snowballs, and board-ready output, inside Claude. <span class="len">151</span></div></td>
-  <td><span class="chip fix">Fix</span></td>
+  <td class="rec"><div class="cell-label">Title (live) <span class="len">54</span></div><div class="txt">How It Works — GTM Financial Modeling Agent | Pacer AI</div><div class="meta">How Pacer AI turns CRM, billing, and ERP data into a reconciled GTM financial model — ARR waterfalls, snowballs, and board-ready output, inside Claude. <span class="len">151</span></div></td>
+  <td><div class="cell-label">Note</div><div class="meta" style="margin-top:0">Off-nav; consider folding into homepage #how-it-works</div></td>
+  <td><span class="chip live">✓ Live</span></td>
 </tr>
 </tbody></table></div></section>
 <section><div class="sec-h"><h2>Resources &amp; articles</h2><span class="count">12 pages</span></div><p class="sec-sub">Keep the keyword titles; fix <code>- Get Pacer AI</code> → <code>| Pacer AI</code>, add the missing metas, trim titles over ~60.</p><div class="tablewrap"><table>
