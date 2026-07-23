@@ -7,8 +7,15 @@ WordPress writes + Cloudflare deploy are manual (Will-run) — I prepare, valida
 
 ---
 
-## Phase 0 — Port the chosen concept into the WordPress homepage source
-`bone_v3-simple.html` is a standalone preview doc; production needs a WP **fragment**.
+## Phase 0 — Port the chosen concept into the WordPress homepage source ✅ DONE (2026-07-22)
+`bone_v3-simple.html` ported into `src/homepage/index-build.html`: merged both `<style>` blocks
+(incl. the `.a2o` "why Pacer AI exists" income-statement/ARR-movements visual), kept the wrapper +
+`_s()` injector, dropped the flownote annotation, restored the demo iframe → worker URL and Tahoe
+→ WP-media URL, JS stays in the WPCode footer (the concept's inlined JS is byte-identical to
+`src/wpcode/footer.js`). **Validates 12/12 --strict** (54.8K chars, inline CSS 26.9K), verified by
+screenshot to match the concept. *Still wants Will's voice pass on the 4 draft sections.*
+
+_Original porting notes:_ `bone_v3-simple.html` is a standalone preview doc; production needs a WP **fragment**.
 
 1. **Preserve current work first:** commit the working-tree `src/homepage/index-build.html`
    (Will's in-progress edits) so nothing is lost, then port over it.
