@@ -15,6 +15,26 @@ fallthrough = false
 [observability]
 enabled = true
 
+# ── Staging: the dev half of the demo-reel pipeline ───────────────────────────
+# A SEPARATE worker (pacer-demo-worker-staging.will-078.workers.dev) that serves every
+# reel in src/variants/ at /v/{slug}, plus an index at /. New reels and new versions are
+# reviewed here before ./promote.sh copies one into src/demo.html for production.
+#
+# It overrides `main` so production's entrypoint (src/index.ts) keeps importing exactly
+# ONE html file — the production bundle never grows as the staging catalog does.
+[env.staging]
+name = "pacer-demo-worker-staging"
+main = "src/staging.ts"
+workers_dev = true
+
+[[env.staging.rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = false
+
+[env.staging.observability]
+enabled = true
+
 # OPTIONAL custom-domain upgrade (nicer URL: https://demo.getpacerai.com).
 # Requires the getpacerai.com zone to be on Cloudflare DNS. If so, uncomment,
 # set workers_dev = false above, redeploy, then update the homepage iframe src.
