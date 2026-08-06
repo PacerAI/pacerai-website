@@ -5,10 +5,14 @@
   "private": true,
   "scripts": {
     "dev": "wrangler dev",
+    "dev:staging": "wrangler dev --env staging",
     "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env staging",
     "dryrun": "wrangler deploy --dry-run --outdir dist",
+    "dryrun:staging": "wrangler deploy --env staging --dry-run --outdir dist",
     "tail": "wrangler tail",
     "sync": "./sync.sh",
+    "promote": "./promote.sh",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
