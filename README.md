@@ -1,6 +1,6 @@
 # pacerai-website
 
-**Goal:** Pacer AI's public marketing surface — answers "what does Pacer AI sell and to whom?" Pacer AI is positioned as the **GTM Financial Modeling Agent** (built for CROs / Sales Leaders, CFOs secondary; "Revenue Modeling Agent" is a nav-label synonym) for recurring-revenue companies ($10M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services). Authored as standalone HTML files with inline CSS, published as WordPress.com Pages via the REST API (no local dev server, no framework). Operator role is `repo-operator`; four named on-dispatch agents (`blog-post`, `ui-ux-pro-max`, `webdev-getpacerai`, `website-char-count`) own authoring, UX review, deploy, and SEO-character-bounds checks. Upstream seam: `pacerai-foundation` (brand, voice, ICP, pricing — auto-loaded into `CLAUDE.md` via four `@`-imports of `foundation/pricing/*.md` per spec #17). Downstream seam: WordPress REST API at `getpacerai.com` — every page lands as a WP Page with a tracked ID. Both lifecycles can coexist — domain content work in this repo runs under PDBRDD locally; cross-repo work follows SPIDRDD.
+**Goal:** Pacer AI's public marketing surface — answers "what does Pacer AI sell and to whom?" Pacer AI is positioned as the **GTM Financial Modeling Agent** (built for CROs / Sales Leaders, CFOs secondary; "Revenue Modeling Agent" is a nav-label synonym) for recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services). Authored as standalone HTML files with inline CSS, published as WordPress.com Pages via the REST API (no local dev server, no framework). Operator role is `repo-operator`; four named on-dispatch agents (`blog-post`, `ui-ux-pro-max`, `webdev-getpacerai`, `website-char-count`) own authoring, UX review, deploy, and SEO-character-bounds checks. Upstream seam: `pacerai-foundation` (brand, voice, ICP, pricing — auto-loaded into `CLAUDE.md` via four `@`-imports of `foundation/pricing/*.md` per spec #17). Downstream seam: WordPress REST API at `getpacerai.com` — every page lands as a WP Page with a tracked ID. Both lifecycles can coexist — domain content work in this repo runs under PDBRDD locally; cross-repo work follows SPIDRDD.
 
 If you're opening this repo for the first time: read `AGENTS.md` (OS-pointer block points back to `pacerai-os/POLICY.md` for the work-mode gate), then `STATUS.md` for current state. Before deploying anything to WordPress, read `docs/deploy/runbook.md` and confirm `WP_BASE_URL`, `WP_USER`, `WP_APP_PASSWORD` are sourced via `source ~/.zshrc`.
 
@@ -227,7 +227,7 @@ Source of truth: `pacerai-os/contracts/data-fleet-registry.md`.
 
 | Other repos depend on this | For |
 |---|---|
-| End prospects via getpacerai.com | The live marketing surface itself (CROs, Sales Leaders, RevOps, CFOs, PE Portfolio Ops at recurring-revenue companies $10M–$1B, often PE/sponsor-backed) |
+| End prospects via getpacerai.com | The live marketing surface itself (CROs, Sales Leaders, RevOps, CFOs, PE Portfolio Ops at recurring-revenue companies $50M–$1B, often PE/sponsor-backed) |
 | (none in fleet) | Website is downstream of doctrine and authoring; no fleet repo reads `src/` HTML programmatically |
 
 Per `CADENCE.md` `outputs:`: `src/` (page source HTML) and the WordPress REST API at `getpacerai.com` are the two declared output surfaces.

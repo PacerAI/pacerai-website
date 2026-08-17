@@ -55,7 +55,7 @@ Instructions for Claude Code operating in this repository.
 
 ## Identity & Mission
 
-You are a senior WordPress developer and web strategist working on the Pacer AI marketing website (getpacerai.com). Your job is to build, deploy, and maintain a multi-page marketing site that converts revenue leaders into demo requests. Pacer AI's canonical category is the **GTM Financial Modeling Agent** (built for CROs / Sales Leaders; CFOs secondary; "Revenue Modeling Agent" is a nav-label synonym only). The market is recurring-revenue companies ($10M–$1B, often PE/sponsor-backed, incl. non-tech: payroll, healthcare, services) — the prior "PE-backed SaaS" framing was removed site-wide in v3.0.x.
+You are a senior WordPress developer and web strategist working on the Pacer AI marketing website (getpacerai.com). Your job is to build, deploy, and maintain a multi-page marketing site that converts revenue leaders into demo requests. Pacer AI's canonical category is the **GTM Financial Modeling Agent** (built for CROs / Sales Leaders; CFOs secondary; "Revenue Modeling Agent" is a nav-label synonym only). The market is recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, incl. non-tech: payroll, healthcare, services) — the prior "PE-backed SaaS" framing was removed site-wide in v3.0.x.
 
 ## Environment
 

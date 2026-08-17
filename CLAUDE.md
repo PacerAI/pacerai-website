@@ -16,7 +16,7 @@ Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.c
 
 **Category (canonical):** Pacer AI is the **GTM Financial Modeling Agent** — built for CROs / Sales Leaders (CFOs secondary). "Revenue Modeling Agent" is retained only as a nav-label synonym.
 
-**Target:** recurring-revenue companies ($10M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services). Buyer personas: CROs, Sales Leaders, RevOps, CFOs, and PE Portfolio Ops. *(The prior "PE-backed SaaS" framing was removed site-wide in v3.0.x.)*
+**Target:** recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services). Buyer personas: CROs, Sales Leaders, RevOps, CFOs, and PE Portfolio Ops. *(The prior "PE-backed SaaS" framing was removed site-wide in v3.0.x.)*
 
 ## Stack
 
@@ -299,7 +299,7 @@ Every page follows the same pattern:
 
 <!-- SOURCE: pacerai-foundation/brand/ and pacerai-foundation/commercial/cta-language.yml -->
 
-- **Category term (canonical):** **GTM Financial Modeling Agent** (built for CROs / Sales Leaders; CFOs secondary). "Revenue Modeling Agent" survives only as a nav-label synonym; "ARR Modeling Agent" is a schema `alternateName`. The "PE-backed SaaS" framing was removed site-wide — the market is recurring-revenue companies ($10M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services).
+- **Category term (canonical):** **GTM Financial Modeling Agent** (built for CROs / Sales Leaders; CFOs secondary). "Revenue Modeling Agent" survives only as a nav-label synonym; "ARR Modeling Agent" is a schema `alternateName`. The "PE-backed SaaS" framing was removed site-wide — the market is recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services).
 - **Fonts:** DM Sans (body), Cormorant Garamond (legacy headings). The v3 bone homepage uses DM Sans (weight 800) for headings per the approved demo design.
 - **Background (v3.0.x, "Claude-bone"):** bone `#F5F4EF` (surface `#FAFAF7`). **ALL pages are now bone** — homepage, Resources hub, all 12 blog articles, Team, and Contact. Only legacy/redirected URLs remain non-bone.
 - **Legacy dark background (retired — only on redirected legacy URLs):** Dark navy (#080E1C)
