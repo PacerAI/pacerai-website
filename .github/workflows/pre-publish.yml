@@ -115,6 +115,11 @@ jobs:
             while IFS= read -r f; do
               [ -n "$f" ] && [ -f "$f" ] || continue
               case "$f" in
+                # src/homepage/demo/ holds embeddable FRAGMENTS (demo sections, chart
+                # partials), not published pages. validate.py enforces whole-page rules
+                # — NAV MISSING / FOOTER MISSING — which a fragment can never satisfy.
+                # Excluded so the gate keeps its meaning for real pages.
+                src/homepage/demo/*) ;;
                 *.html) existing+="$f " ;;
               esac
             done <<< "$src_changed"
