@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/Users/willsullivan/Documents/pacerai/pacerai-website/.codex/hooks/pre-publish-check.sh'",
+            "timeout": 30
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/Users/willsullivan/Documents/pacerai/pacerai-website/.codex/hooks/block-foundation-edits.sh'",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
