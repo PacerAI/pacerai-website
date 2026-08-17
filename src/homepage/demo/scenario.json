@@ -1,0 +1,23 @@
+{
+  "_note": "Illustrative demo scenario for the Pacer AI $100M -> $150M ARR planning demo. Fictional company. All $ in millions. Ties: 2025 ending ARR = $100.0M, 2027(f) ending ARR = $150.06M (~$150M over two years). % values are of Beginning ARR for that period.",
+  "company": "Illustrative $100M ARR SaaS",
+  "unit": "$M",
+  "annual": [
+    {"year": "2023",  "guided": false, "begin": 53.7634, "new_logo_pct": 20, "base_pct": 5, "total_pct": 25, "end": 67.2043,
+     "expansion_pct": 11, "contraction_pct": -2, "churn_pct": -4, "nrr": 105, "grr": 94},
+    {"year": "2024",  "guided": false, "begin": 67.2043, "new_logo_pct": 19, "base_pct": 5, "total_pct": 24, "end": 83.3333,
+     "expansion_pct": 11, "contraction_pct": -2, "churn_pct": -4, "nrr": 105, "grr": 94},
+    {"year": "2025",  "guided": false, "begin": 83.3333, "new_logo_pct": 16, "base_pct": 4, "total_pct": 20, "end": 100.0000,
+     "expansion_pct": 10, "contraction_pct": -2, "churn_pct": -4, "nrr": 104, "grr": 94},
+    {"year": "2026f", "guided": true,  "begin": 100.0000, "new_logo_pct": 17, "base_pct": 5, "total_pct": 22, "end": 122.0000,
+     "expansion_pct": 11, "contraction_pct": -2, "churn_pct": -4, "nrr": 105, "grr": 94},
+    {"year": "2027f", "guided": true,  "begin": 122.0000, "new_logo_pct": 18, "base_pct": 5, "total_pct": 23, "end": 150.0600,
+     "expansion_pct": 11, "contraction_pct": -2, "churn_pct": -4, "nrr": 105, "grr": 94}
+  ],
+  "quarterly_2025": [
+    {"period": "Q1 2025", "begin": 83.3333, "new_logo": 3.0000, "base_net": 0.7500, "churn_rate": 1.0, "contraction_rate": 0.5},
+    {"period": "Q2 2025", "begin": 87.0833, "new_logo": 3.2000, "base_net": 0.8000, "churn_rate": 1.0, "contraction_rate": 0.5},
+    {"period": "Q3 2025", "begin": 91.0833, "new_logo": 3.4500, "base_net": 0.8500, "churn_rate": 1.0, "contraction_rate": 0.5},
+    {"period": "Q4 2025", "begin": 95.3833, "new_logo": 3.6834, "base_net": 0.9333, "churn_rate": 1.0, "contraction_rate": 0.5}
+  ]
+}

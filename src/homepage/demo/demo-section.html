@@ -1,0 +1,44 @@
+<!-- ============================================================= -->
+<!-- PACER DEMO SECTION  ·  insert into index-build.html          -->
+<!-- Place directly AFTER the <div class="logo-strip">…</div>     -->
+<!-- (line ~144) and BEFORE the use-cases marker (line ~147).     -->
+<!--                                                               -->
+<!-- DEPLOY NOTE: the reel uses Chart.js + inline JS, which        -->
+<!-- WordPress strips from page HTML. Host pacer-demo-reel.html    -->
+<!-- at a stable URL and point the iframe src at it. Options:      -->
+<!--   (a) upload reel via WPCode "HTML snippet" page, or          -->
+<!--   (b) host the reel file and iframe its URL.                  -->
+<!-- Replace DEMO_REEL_URL below at deploy time.                   -->
+<!-- ============================================================= -->
+<section class="section demo-section" data-section="see-it-work">
+  <div class="section-inner" style="text-align:center;">
+    <div class="section-eyebrow">See it work</div>
+    <h2>Watch Pacer <em>plan a number.</em></h2>
+    <p class="section-lead" style="margin:18px auto 0;">
+      Ask Pacer a revenue question in plain English. It answers top&#8209;down &mdash; a live ARR growth
+      decomposition and a board&#8209;grade Excel waterfall, built in seconds.
+    </p>
+
+    <div class="demo-frame">
+      <iframe class="demo-reel" src="DEMO_REEL_URL"
+              title="Pacer AI — ARR planning demo" loading="lazy"
+              referrerpolicy="no-referrer"></iframe>
+    </div>
+
+    <div class="demo-cta">
+      <a href="#contact" class="btn-lg">Request a live demo</a>
+      <span class="demo-note">Illustrative $100M ARR SaaS &middot; figures for demonstration</span>
+    </div>
+  </div>
+</section>
+
+<!-- Add these rules to the homepage CSS (wpcode-homepage-css.css) -->
+<style>
+#pacerai-homepage .demo-section{padding-top:72px;padding-bottom:72px}
+#pacerai-homepage .demo-frame{max-width:980px;margin:44px auto 0;background:#0C1424;border:1px solid var(--navy-border);
+  border-radius:18px;overflow:hidden;box-shadow:0 0 0 1px rgba(39,137,154,.12),0 40px 120px rgba(0,0,0,.55),0 0 90px rgba(39,137,154,.07)}
+#pacerai-homepage .demo-reel{display:block;width:100%;height:760px;border:0;background:#080E1C}
+#pacerai-homepage .demo-cta{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:36px}
+#pacerai-homepage .demo-note{font-size:12px;color:var(--muted);letter-spacing:.02em}
+@media (max-width:768px){#pacerai-homepage .demo-reel{height:680px}}
+</style>

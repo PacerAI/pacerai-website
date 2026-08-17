@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pacer AI — ARR Planning in Claude</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+  :root{
+    --paper:#F5F4EF; --surface:#FFFFFF; --ink:#2B2A26; --ink-soft:#6E6B64; --ink-faint:#97938B;
+    --line:#E8E5DD; --line-soft:#EFEDE6; --bone:#F0EEE6; --coral:#D97757; --coral-deep:#BE5A38;
+    --ok:#3F8F5B;
+    /* pacer artifact (dark) tokens reused by the chart */
+    --navy:#080E1C; --navy-border:#1E2D4A; --teal:#27899A; --teal-light:#70C49C;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",ui-sans-serif,"DM Sans",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{background:var(--paper);font-family:var(--sans);color:var(--ink);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:22px}
+  .app{width:100%;max-width:900px;height:760px;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+       border-radius:16px;overflow:hidden;box-shadow:0 30px 90px rgba(40,35,25,.16),0 2px 8px rgba(40,35,25,.06)}
+  /* top bar (Claude) */
+  .topbar{display:flex;align-items:center;gap:11px;padding:12px 18px;border-bottom:1px solid var(--line-soft);background:var(--paper)}
+  .brandC{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;color:var(--ink)}
+  .sun{width:22px;height:22px;flex-shrink:0}
+  .modelchip{margin-left:2px;display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--ink-soft);
+             border:1px solid var(--line);border-radius:7px;padding:3px 9px;background:var(--surface)}
+  .modelchip .car{font-size:9px;color:var(--ink-faint)}
+  .connchip{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:500;color:#3d7a54;
+            background:rgba(63,143,91,.09);border:1px solid rgba(63,143,91,.22);padding:4px 11px;border-radius:100px}
+  .connchip .d{width:6px;height:6px;border-radius:50%;background:#3f8f5b;animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  /* thread */
+  .thread{flex:1;overflow-y:auto;padding:26px 34px 12px;scroll-behavior:smooth}
+  .thread::-webkit-scrollbar{width:9px}
+  .thread::-webkit-scrollbar-thumb{background:#E2DFD6;border-radius:5px}
+  .turn{margin-bottom:24px;opacity:0;transform:translateY(10px);transition:opacity .45s ease,transform .45s ease}
+  .turn.show{opacity:1;transform:none}
+  /* user row: right aligned bone bubble */
+  .user-row{display:flex;justify-content:flex-end}
+  .user-bubble{max-width:75%;background:var(--bone);border:1px solid #E7E3D8;border-radius:16px;padding:12px 17px;
+               font-size:15.5px;line-height:1.55;color:#332F28}
+  /* claude row */
+  .claude-row{display:flex;gap:13px}
+  .claude-row .sun{margin-top:2px}
+  .claude-body{flex:1;min-width:0}
+  .claude-body p{font-size:15.5px;line-height:1.65;color:var(--ink);margin:0 0 2px}
+  .cursor{display:inline-block;width:2px;height:1.05em;background:var(--coral);vertical-align:text-bottom;margin-left:1px;animation:blink .8s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  /* thinking */
+  .think{display:inline-flex;gap:5px;align-items:center;padding:4px 0}
+  .think span{width:7px;height:7px;border-radius:50%;background:#CFC9BC;animation:bob 1.2s infinite}
+  .think span:nth-child(2){animation-delay:.15s}.think span:nth-child(3){animation-delay:.3s}
+  @keyframes bob{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+  /* MCP tool-call block */
+  .tool{margin:12px 0 4px;border:1px solid var(--line);border-radius:11px;background:#FBFAF7;overflow:hidden}
+  .tool-head{display:flex;align-items:center;gap:10px;padding:11px 14px;font-size:13.5px}
+  .tool-ic{width:24px;height:24px;border-radius:6px;background:#0F1929;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .tool-name{font-weight:600;color:var(--ink)}
+  .tool-fn{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);background:#F0EEE7;border:1px solid var(--line);padding:1px 7px;border-radius:5px}
+  .tool-status{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-soft)}
+  .spin{width:13px;height:13px;border:2px solid #DAD5C8;border-top-color:var(--coral);border-radius:50%;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .check{color:var(--ok);font-weight:700}
+  /* artifact card (Claude artifact) */
+  .artifact{margin-top:10px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);
+            opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s ease}
+  .artifact.show{opacity:1;transform:none}
+  .art-head{display:flex;align-items:center;gap:9px;padding:9px 14px;border-bottom:1px solid var(--line-soft);background:#FBFAF7;font-size:13px}
+  .art-head .doc{color:var(--ink-faint)}
+  .art-head .art-title{font-weight:600;color:var(--ink)}
+  .art-head .art-actions{margin-left:auto;display:flex;gap:12px;color:var(--ink-faint);font-size:13px}
+  .art-body{padding:0}
+  .art-body.dark{background:#0A1120;padding:16px}
+  .canvas-box{position:relative;height:330px}
+  .chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin:12px 4px 2px;font-size:11px;color:#CDD5E0}
+  .chart-legend .k{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .sw.line{width:15px;height:3px;border-radius:2px;background:var(--teal)}
+  .sw.dash{width:15px;height:0;border-top:3px dashed var(--teal-light)}
+  /* excel artifact */
+  .xl{background:#fff}
+  .xl-head{background:#0F1929;color:#fff;padding:13px 18px}
+  .xl-head .h1{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600}
+  .xl-head .h2{font-size:11px;color:#9fb0c4;margin-top:2px}
+  .xl-section{font-family:'Cormorant Garamond',serif;font-size:14.5px;font-weight:600;color:#fff;background:#1C3560;padding:7px 18px}
+  table.wf{width:100%;border-collapse:collapse;font-size:12px;color:#0F1929}
+  table.wf th,table.wf td{padding:5px 12px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  table.wf th{font-size:10px;font-weight:700;color:#1C3560;border-bottom:2px solid #27899A;background:#fff}
+  table.wf td.lab,table.wf th.lab{text-align:left;font-weight:500;color:#0F1929}
+  table.wf tr.mov td.lab{padding-left:22px;font-weight:400;color:#334155}
+  table.wf tr.begin td{background:#EAF1F4;font-weight:700}
+  table.wf tr.sub td{font-weight:700;border-top:1px solid #d9dee6}
+  table.wf tr.end td{background:#DDEBEF;font-weight:700;border-top:2px solid #1C3560}
+  .pos{color:#1E9E63}.neg{color:#C0504D}
+  .colgap{width:12px;background:#fff !important}
+  .pct-head{color:#27899A !important}
+  .row-hidden td{opacity:0}
+  table.wf tr{transition:opacity .3s ease}
+  .xl-foot{padding:8px 18px;font-size:9px;color:#64748b;font-style:italic;border-top:1px solid #eef1f4}
+  /* composer */
+  .composer{padding:12px 18px 16px;border-top:1px solid var(--line-soft);background:var(--paper)}
+  .composer-box{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:11px 12px 11px 16px}
+  .composer-box .ph{flex:1;font-size:14.5px;color:var(--ink-faint)}
+  .attach{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ink-soft);border:1px solid var(--line);border-radius:100px;padding:3px 9px}
+  .attach .dot{width:5px;height:5px;border-radius:50%;background:#3f8f5b}
+  .send{width:30px;height:30px;border-radius:9px;background:var(--coral);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+  /* controls */
+  .controls{position:fixed;bottom:16px;right:18px;z-index:20}
+  .ctl{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--ink);
+       background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;transition:.2s}
+  .ctl:hover{border-color:var(--coral);color:var(--coral-deep)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <span class="brandC">
+      <svg class="sun" viewBox="0 0 24 24" aria-hidden="true">__SUN__</svg>
+      Claude
+    </span>
+    <span class="modelchip">Claude Opus 4.8 <span class="car">▾</span></span>
+    <span class="connchip"><span class="d"></span> Pacer&nbsp;·&nbsp;MCP connected</span>
+  </div>
+
+  <div class="thread" id="thread"></div>
+
+  <div class="composer">
+    <div class="composer-box">
+      <span class="attach"><span class="dot"></span> Pacer</span>
+      <span class="ph">Reply to Claude…</span>
+      <span class="send">↑</span>
+    </div>
+  </div>
+</div>
+
+<div class="controls"><button class="ctl" id="replay">↻ Replay</button></div>
+
+<script>
+// Claude sunburst mark (approximate) — coral radiating petals
+const SUN = (()=>{ let rays=''; const N=16, cx=12, cy=12, ri=3.1, ro=10.4;
+  for(let i=0;i<N;i++){ const a=(i/N)*Math.PI*2; const x1=cx+Math.cos(a)*ri, y1=cy+Math.sin(a)*ri, x2=cx+Math.cos(a)*ro, y2=cy+Math.sin(a)*ro;
+    rays+=`<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#D97757" stroke-width="2.05" stroke-linecap="round"/>`; }
+  return rays+`<circle cx="12" cy="12" r="2.5" fill="#D97757"/>`;
+})();
+document.querySelectorAll('.sun').forEach(s=>{ if(s.innerHTML.includes('__SUN__')||s.innerHTML.trim()==='__SUN__'||!s.children.length) s.innerHTML=SUN; });
+
+const scenario = {
+  labels:['2023','2024','2025','2026 (f)','2027 (f)'],
+  newlogo:[20,19,16,17,18], base:[5,5,4,5,5], arr:[67.2,83.3,100,122,150],
+  total:[25,24,20,22,23], fcast:3
+};
+const thread = document.getElementById('thread');
+const sleep = ms => new Promise(r=>setTimeout(r, ms));
+let chartInstance = null;
+function el(html){ const d=document.createElement('div'); d.innerHTML=html.trim(); return d.firstElementChild; }
+function scrollDown(){ thread.scrollTop = thread.scrollHeight; }
+function sunSVG(){ return `<svg class="sun" viewBox="0 0 24 24">${SUN}</svg>`; }
+
+async function typeInto(node, text, speed=24){
+  const cur = el('<span class="cursor"></span>'); node.appendChild(cur);
+  for(const ch of text){ cur.insertAdjacentText('beforebegin', ch); scrollDown(); await sleep(speed); }
+  cur.remove();
+}
+function userTurn(){
+  const t = el('<div class="turn user-row"><div class="user-bubble" data-body></div></div>');
+  thread.appendChild(t); requestAnimationFrame(()=>t.classList.add('show'));
+  return t.querySelector('[data-body]');
+}
+function claudeTurn(){
+  const t = el(`<div class="turn claude-row">${sunSVG()}<div class="claude-body" data-body></div></div>`);
+  thread.appendChild(t); requestAnimationFrame(()=>t.classList.add('show'));
+  return t.querySelector('[data-body]');
+}
+async function thinking(node, ms){
+  const th = el('<div class="think"><span></span><span></span><span></span></div>');
+  node.appendChild(th); scrollDown(); await sleep(ms); th.remove();
+}
+async function claudeSay(node, text, gap=8){
+  const p = el('<p></p>'); if(node.children.length) p.style.marginTop=gap+'px'; node.appendChild(p);
+  await typeInto(p, text); return p;
+}
+
+/* ---- MCP tool call block ---- */
+async function toolCall(node, fn, runMs=1150){
+  const pmark = '<svg width="13" height="11" viewBox="0 0 32 28" fill="none"><path d="M5 4 L12 14 L5 24" stroke="#27899A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 4 L22 14 L15 24" stroke="#70C49C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const t = el(`<div class="tool"><div class="tool-head">
+     <span class="tool-ic">${pmark}</span>
+     <span class="tool-name">Pacer</span>
+     <span class="tool-fn">${fn}</span>
+     <span class="tool-status" data-st><span class="spin"></span> Running…</span>
+   </div></div>`);
+  node.appendChild(t); scrollDown();
+  await sleep(runMs);
+  t.querySelector('[data-st]').innerHTML = '<span class="check">✓</span> Ran';
+  await sleep(180);
+  return t;
+}
+
+/* ---- chart artifact ---- */
+function chartArtifact(node){
+  const card = el(`<div class="artifact">
+    <div class="art-head"><span class="doc">◧</span><span class="art-title">ARR Growth Plan · $100M → $150M</span>
+      <span class="art-actions"><span>⧉ Copy</span><span>↧ Download</span><span>⤢</span></span></div>
+    <div class="art-body dark">
+      <div class="canvas-box"><canvas id="reelChart"></canvas></div>
+      <div class="chart-legend">
+        <span class="k"><span class="sw" style="background:#2B7DC8"></span> New Logo growth</span>
+        <span class="k"><span class="sw" style="background:#70C49C"></span> Customer Base growth</span>
+        <span class="k"><span class="sw line"></span> Ending ARR ($M)</span>
+        <span class="k"><span class="sw dash"></span> Forecast</span>
+      </div>
+    </div></div>`);
+  node.appendChild(card); requestAnimationFrame(()=>card.classList.add('show'));
+  return card;
+}
+function drawChart(){
+  const teal='#27899A',tealLt='#70C49C',navy='#080E1C',grid='rgba(39,137,154,.12)',txt='#8A95A8',txtLt='#CDD5E0';
+  const F=scenario.fcast;
+  function shade(c,which){const{ctx,chartArea}=c.chart;if(!chartArea)return 'rgba(0,0,0,0)';
+    const g=ctx.createLinearGradient(0,chartArea.top,0,chartArea.bottom);
+    if(which==='new'){g.addColorStop(0,'rgba(43,125,200,.72)');g.addColorStop(1,'rgba(43,125,200,.26)');}
+    else{g.addColorStop(0,'rgba(112,196,156,.58)');g.addColorStop(1,'rgba(112,196,156,.20)');}return g;}
+  chartInstance = new Chart(document.getElementById('reelChart'),{
+    plugins:[ChartDataLabels],
+    data:{labels:scenario.labels,datasets:[
+      {type:'line',label:'Customer Base growth',data:scenario.base,yAxisID:'y',fill:true,
+       backgroundColor:c=>shade(c,'base'),borderColor:'rgba(112,196,156,.9)',borderWidth:1.5,pointRadius:0,tension:.35,stack:'g',order:3,
+       segment:{borderDash:ctx=>ctx.p1DataIndex>=F?[5,4]:undefined}},
+      {type:'line',label:'New Logo growth',data:scenario.newlogo,yAxisID:'y',fill:true,
+       backgroundColor:c=>shade(c,'new'),borderColor:'rgba(43,125,200,.95)',borderWidth:1.5,pointRadius:0,tension:.35,stack:'g',order:2,
+       segment:{borderDash:ctx=>ctx.p1DataIndex>=F?[5,4]:undefined},
+       datalabels:{display:true,align:'top',anchor:'end',offset:6,clamp:true,clip:false,
+         formatter:(v,c)=>scenario.total[c.dataIndex]+'%',
+         color:c=>c.dataIndex>=F?tealLt:txtLt,
+         font:c=>({family:'DM Sans',weight:'600',size:12,style:c.dataIndex>=F?'italic':'normal'})}},
+      {type:'line',label:'Ending ARR ($M)',data:scenario.arr,yAxisID:'y1',fill:false,borderColor:teal,borderWidth:2.5,tension:.3,
+       pointRadius:c=>[2,4].includes(c.dataIndex)?5:3,pointBackgroundColor:c=>c.dataIndex>=F?tealLt:teal,pointBorderColor:navy,pointBorderWidth:2,order:1,
+       segment:{borderDash:ctx=>ctx.p1DataIndex>=F?[6,5]:undefined,borderColor:ctx=>ctx.p1DataIndex>=F?tealLt:teal},
+       datalabels:{display:c=>[2,4].includes(c.dataIndex),align:'top',anchor:'end',offset:7,clamp:true,clip:false,
+         formatter:v=>'$'+Math.round(v)+'M',color:tealLt,font:{family:'Cormorant Garamond',weight:'600',size:16}}}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22,right:8,left:2,bottom:0}},
+      animation:{duration:1700,easing:'easeOutQuart'},interaction:{mode:'index',intersect:false},
+      scales:{
+        x:{grid:{display:false},ticks:{color:txtLt,font:c=>({family:'DM Sans',size:12,weight:c.index>=F?'600':'400'})},border:{color:'rgba(30,45,74,.8)'}},
+        y:{position:'left',stacked:true,min:0,max:30,grid:{color:grid},border:{display:false},
+           ticks:{color:txt,font:{family:'DM Sans',size:10},callback:v=>v+'%',stepSize:5}},
+        y1:{position:'right',min:0,max:160,grid:{display:false},border:{display:false},
+           afterBuildTicks:ax=>{ax.ticks=[0,50,100,150].map(v=>({value:v}))},
+           ticks:{color:teal,font:{family:'DM Sans',size:10},callback:v=>'$'+v+'M'}}},
+      plugins:{legend:{display:false},tooltip:{enabled:false}}
+    }
+  });
+}
+
+/* ---- excel artifact ---- */
+const A = {years:['2023','2024','2025'],begin:[53.8,67.2,83.3],newlogo:[10.8,12.8,13.3],exp:[5.9,7.4,8.3],
+  contr:[-1.1,-1.3,-1.7],churn:[-2.2,-2.7,-3.3],base:[2.7,3.4,3.3],net:[13.4,16.1,16.7],end:[67.2,83.3,100.0],
+  nlp:[20,19,16],ep:[11,11,10],cp:[-2,-2,-2],chp:[-4,-4,-4],bp:[5,5,4],tp:[25,24,20],endp:[125,124,120]};
+const Q = {q:['Q1 2025','Q2 2025','Q3 2025','Q4 2025'],begin:[83.3,87.1,91.1,95.4],newlogo:[3.0,3.2,3.5,3.7],exp:[2.0,2.1,2.2,2.4],
+  contr:[-0.4,-0.4,-0.5,-0.5],churn:[-0.8,-0.9,-0.9,-1.0],base:[0.8,0.8,0.9,0.9],net:[3.8,4.0,4.3,4.6],end:[87.1,91.1,95.4,100.0],
+  nlp:[3.6,3.7,3.8,3.9],ep:[2.4,2.4,2.4,2.5],cp:[-0.5,-0.5,-0.5,-0.5],chp:[-1.0,-1.0,-1.0,-1.0],bp:[0.9,0.9,0.9,1.0],tp:[4.5,4.6,4.7,4.8],endp:[104.5,104.6,104.7,104.8]};
+function fmt(v){return (v<0?'(':'')+Math.abs(v).toFixed(1)+(v<0?')':'');}
+function pctf(v){return (v<0?'(':'')+Math.abs(v).toFixed(0)+'%'+(v<0?')':'');}
+function moneyRow(cls,label,arr,pcts,{sign=false}={}){
+  let cells=arr.map(v=>`<td class="${sign&&v<0?'neg':(sign&&v>0?'pos':'')}">${fmt(v)}</td>`).join('');
+  let pctCells=pcts?pcts.map(v=>`<td class="${sign&&v<0?'neg':(sign&&v>0?'pos':'')}">${pctf(v)}</td>`).join(''):arr.map(()=>'<td></td>').join('');
+  return `<tr class="${cls} row-hidden"><td class="lab">${label}</td>${cells}<td class="colgap"></td>${pctCells}</tr>`;
+}
+function wfTable(D,periods){
+  const head=`<tr><th class="lab"></th>${periods.map(p=>`<th>${p}</th>`).join('')}<th class="colgap"></th>${periods.map(p=>`<th class="pct-head">${p} %</th>`).join('')}</tr>`;
+  const rows=[
+    moneyRow('begin','Beginning ARR',D.begin,null),
+    moneyRow('mov','New Logo ARR',D.newlogo,D.nlp,{sign:true}),
+    moneyRow('mov','Expansion ARR',D.exp,D.ep,{sign:true}),
+    moneyRow('mov','Contraction ARR',D.contr,D.cp,{sign:true}),
+    moneyRow('mov','Gross Churn ARR',D.churn,D.chp,{sign:true}),
+    moneyRow('sub','Customer Base Growth',D.base,D.bp,{sign:true}),
+    moneyRow('sub','Net New ARR',D.net,D.tp,{sign:true}),
+    moneyRow('end','Ending ARR',D.end,D.endp)
+  ].join('');
+  return `<table class="wf"><thead>${head}</thead><tbody>${rows}</tbody></table>`;
+}
+function excelArtifact(node){
+  const card=el(`<div class="artifact">
+    <div class="art-head"><span class="doc">▦</span><span class="art-title">ARR-Waterfall-Analysis.xlsx</span>
+      <span class="art-actions"><span>⧉ Copy</span><span>↧ Download</span><span>⤢</span></span></div>
+    <div class="art-body">
+      <div class="xl">
+        <div class="xl-head"><div class="h1">ARR Waterfall Analysis</div><div class="h2">Path from $100M to $150M ARR · % of Beginning ARR · $ in millions</div></div>
+        <div class="xl-section">3-Year ARR Waterfall · 2023–2025</div>
+        ${wfTable(A,A.years)}
+        <div class="xl-section">Quarterly ARR Waterfall · 2025</div>
+        ${wfTable(Q,Q.q)}
+        <div class="xl-foot">Customer Base Growth = Expansion − Contraction − Gross Churn (= NRR − 100%). % columns are of Beginning ARR. Ending ARR ties to $100.0M in 2025.</div>
+      </div>
+    </div></div>`);
+  node.appendChild(card); requestAnimationFrame(()=>card.classList.add('show'));
+  return card;
+}
+async function cascadeRows(card){
+  const rows=card.querySelectorAll('table.wf tr.row-hidden');
+  for(const r of rows){ r.classList.remove('row-hidden'); scrollDown(); await sleep(80); }
+}
+
+/* ---- timeline ---- */
+async function run(){
+  thread.innerHTML=''; await sleep(500);
+
+  // 1. CRO question
+  const ub = userTurn(); await sleep(220);
+  await typeInto(ub, "Pacer, can you help me plan to go from $100M to $150M ARR in two years?", 22);
+  await sleep(450);
+
+  // 2. Claude replies + calls Pacer for the chart
+  const c1 = claudeTurn(); await thinking(c1, 900);
+  await claudeSay(c1, "Sure can — let's start top down.");
+  await claudeSay(c1, "I'll pull your ARR growth and decompose it into New Logo and Customer Base, then chart the path to $150M.");
+  await toolCall(c1, "build_arr_growth_chart", 1250);
+  const chart = chartArtifact(c1); await sleep(350); drawChart(); scrollDown();
+  await sleep(2500);
+
+  // 3. Claude builds the Excel waterfall via Pacer
+  const c2 = claudeTurn(); await thinking(c2, 800);
+  await claudeSay(c2, "Now the full ARR Waterfall in Excel — a 3-year waterfall plus a quarterly view of 2025, each as % of beginning ARR.");
+  await toolCall(c2, "build_arr_waterfall", 1300);
+  const xl = excelArtifact(c2); await sleep(450); await cascadeRows(xl);
+  await sleep(350);
+  await claudeSay(c2, "The plan holds: New Logo re-accelerates 16% → 18% and net retention lifts to 105% — enough to compound $100M to $150M by 2027.", 10);
+  scrollDown();
+}
+
+document.getElementById('replay').addEventListener('click', ()=>{ if(chartInstance){chartInstance.destroy();chartInstance=null;} run(); });
+run();
+</script>
+</body>
+</html>
