@@ -14,3 +14,7 @@ infra/*/.wrangler/
 .env.*.local
 docs/design/homepage/_*.html
 docs/design/homepage/bone_v3-*.html
+
+# Python bytecode
+__pycache__/
+*.py[cod]
