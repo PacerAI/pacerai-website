@@ -74,8 +74,14 @@ jobs:
             || (echo "::error::foundation/brand/voice.yml missing — submodule checkout failed" && exit 1)
           test -f foundation/brand/anti-ai-writing-style.md \
             || (echo "::error::foundation/brand/anti-ai-writing-style.md missing — submodule checkout failed" && exit 1)
-          test -f foundation/pricing/pricing-packaging.yml \
-            || (echo "::error::foundation/pricing/pricing-packaging.yml missing — submodule checkout failed" && exit 1)
+          # product-pricing-tiers.md is the sentinel: per pacerai-os/CLAUDE.md it is the
+          # one pricing file that is fleet-uniform across every consumer, so its absence
+          # means the submodule checkout genuinely failed rather than a per-role variance.
+          # (Was pricing-packaging.yml — that filename has not existed since spec #17
+          # restructured pricing into the five product-pricing-*.md files, so this gate
+          # had been failing on main continuously since at least 2026-07-23.)
+          test -f foundation/pricing/product-pricing-tiers.md \
+            || (echo "::error::foundation/pricing/product-pricing-tiers.md missing — submodule checkout failed" && exit 1)
 
       - name: Determine validation scope
         id: scope
@@ -101,14 +107,26 @@ jobs:
             echo "mode=full" >> "$GITHUB_OUTPUT"
             echo "scripts/validate.py changed — running FULL validation against all default files."
           elif [ -n "$src_changed" ]; then
+            # validate.py is an HTML validator — it opens each file as UTF-8 text.
+            # Filter to .html so non-HTML assets under src/ (xlsx, json, png, .py)
+            # are not handed to it. Without this, adding a binary file anywhere under
+            # src/ crashes the run with UnicodeDecodeError rather than failing a rule.
             existing=""
             while IFS= read -r f; do
-              [ -n "$f" ] && [ -f "$f" ] && existing+="$f "
+              [ -n "$f" ] && [ -f "$f" ] || continue
+              case "$f" in
+                # src/homepage/demo/ holds embeddable FRAGMENTS (demo sections, chart
+                # partials), not published pages. validate.py enforces whole-page rules
+                # — NAV MISSING / FOOTER MISSING — which a fragment can never satisfy.
+                # Excluded so the gate keeps its meaning for real pages.
+                src/homepage/demo/*) ;;
+                *.html) existing+="$f " ;;
+              esac
             done <<< "$src_changed"
             existing=$(echo "$existing" | xargs)
             if [ -z "$existing" ]; then
               echo "mode=skip" >> "$GITHUB_OUTPUT"
-              echo "Changed src files are all deletes/renames-away — nothing to validate."
+              echo "No changed src/*.html files to validate (deletes, renames-away, or non-HTML assets only)."
             else
               echo "mode=scoped" >> "$GITHUB_OUTPUT"
               echo "files=$existing" >> "$GITHUB_OUTPUT"

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homepage · Demo section preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- the site's real homepage CSS -->
+<link rel="stylesheet" href="../wpcode-homepage-css.css">
+<style>
+  html,body{background:#080E1C}
+  /* demo-section styles (mirrors demo-section.html) */
+  #pacerai-homepage .demo-section{padding-top:72px;padding-bottom:72px}
+  #pacerai-homepage .demo-frame{max-width:980px;margin:44px auto 0;background:#0C1424;border:1px solid var(--navy-border);
+    border-radius:18px;overflow:hidden;box-shadow:0 0 0 1px rgba(39,137,154,.12),0 40px 120px rgba(0,0,0,.55),0 0 90px rgba(39,137,154,.07)}
+  #pacerai-homepage .demo-reel{display:block;width:100%;height:760px;border:0;background:#080E1C}
+  #pacerai-homepage .demo-cta{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:36px}
+  #pacerai-homepage .demo-note{font-size:12px;color:var(--muted);letter-spacing:.02em}
+  .preview-flag{position:fixed;top:0;left:0;right:0;z-index:9999;background:#27899A;color:#04121a;font:600 12px/1 'DM Sans',sans-serif;
+    text-align:center;padding:7px;letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="preview-flag">LOCAL PREVIEW — homepage demo section in site styling · reel iframed from local file</div>
+<div id="pacerai-homepage" style="padding-top:30px">
+
+  <!-- minimal nav (mirrors the real homepage) -->
+  <nav>
+    <a href="#" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+      <svg width="32" height="28" viewBox="0 0 32 28" fill="none"><path d="M2 2 L11 14 L2 26" stroke="#1C3D6E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 2 L20 14 L11 26" stroke="#27899A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2 L29 14 L20 26" stroke="#70C49C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-family:Georgia,serif;font-size:21px;font-weight:bold;color:#fff;">Pacer&nbsp;<span style="color:#70C49C;">AI</span></span>
+    </a>
+    <div class="nav-right"><a href="#" class="btn-teal">Request a Demo</a></div>
+  </nav>
+
+  <!-- context: a slim stand-in for the logo strip that precedes the demo section -->
+  <div class="logo-strip" style="padding-top:110px">
+    <div class="ls-label">past customers</div>
+    <div class="logo-row" style="opacity:.5">Brandwatch &nbsp;·&nbsp; Fortis Life Science &nbsp;·&nbsp; Platinum Equity &nbsp;·&nbsp; Semrush &nbsp;·&nbsp; Summit Partners</div>
+  </div>
+
+  <!-- ===== THE DEMO SECTION (what gets inserted into the homepage) ===== -->
+  <section class="section demo-section" data-section="see-it-work">
+    <div class="section-inner" style="text-align:center;">
+      <div class="section-eyebrow">See it work</div>
+      <h2>Watch Pacer <em>plan a number.</em></h2>
+      <p class="section-lead" style="margin:18px auto 0;">
+        Ask Pacer a revenue question in plain English. It answers top&#8209;down &mdash; a live ARR growth
+        decomposition and a board&#8209;grade Excel waterfall, built in seconds.
+      </p>
+      <div class="demo-frame">
+        <iframe class="demo-reel" src="pacer-demo-reel.html" title="Pacer AI — ARR planning demo" loading="lazy"></iframe>
+      </div>
+      <div class="demo-cta">
+        <a href="#" class="btn-lg">Request a live demo</a>
+        <span class="demo-note">Illustrative $100M ARR SaaS &middot; figures for demonstration</span>
+      </div>
+    </div>
+  </section>
+  <!-- ===== END DEMO SECTION ===== -->
+
+  <div style="height:80px"></div>
+</div>
+</body>
+</html>
