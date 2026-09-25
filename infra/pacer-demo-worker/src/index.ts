@@ -20,6 +20,24 @@ interface Env {
   TURNSTILE_SECRET: string;
   SLACK_WEBHOOK_URL?: string;
   PACER_DEMO_PASSWORD?: string;
+  // Shared with whitepaper-worker (pacerai-gtm) — one `leads` table for every
+  // email captured on getpacerai.com. Schema lives in that repo's migrations/.
+  LEADS?: D1Database;
+}
+
+// Personal-domain list mirrors whitepaper-worker's classifier so a lead looks
+// the same in the `leads` table no matter which Worker wrote the row.
+const PERSONAL_DOMAINS = new Set([
+  "gmail.com", "yahoo.com", "hotmail.com", "outlook.com",
+  "icloud.com", "aol.com", "proton.me", "protonmail.com",
+  "me.com", "mac.com", "live.com", "msn.com",
+]);
+const OWN_DOMAINS = new Set(["getpacerai.com", "predictiveanalyticspartners.com"]);
+
+function classifyLead(domain: string): string {
+  if (OWN_DOMAINS.has(domain)) return "internal";
+  if (PERSONAL_DOMAINS.has(domain)) return "personal_email";
+  return "valid_lead";
 }
 
 const CONNECTOR_URL = "https://pacerai-demo-mcp.azurewebsites.net/mcp";
@@ -31,7 +49,7 @@ const FRAME_HEADERS = {
 };
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
     if (url.pathname === "/health") {
@@ -43,7 +61,7 @@ export default {
       if (request.method !== "POST") {
         return json({ error: "method_not_allowed" }, 405);
       }
-      return handleSignup(request, env);
+      return handleSignup(request, env, ctx);
     }
 
     if (request.method !== "GET" && request.method !== "HEAD") {
@@ -52,7 +70,10 @@ export default {
 
     // The signup widget (iframed by getpacerai.com/demo-connect).
     if (url.pathname === "/signup") {
-      return new Response(signupHtml(env.TURNSTILE_SITE_KEY), {
+      // ?email= is passed through from a capture form elsewhere on the site
+      // (e.g. the homepage hero) so the visitor doesn't type it twice.
+      const prefill = (url.searchParams.get("email") || "").trim().slice(0, 254);
+      return new Response(signupHtml(env.TURNSTILE_SITE_KEY, prefill), {
         status: 200,
         headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store", ...FRAME_HEADERS },
       });
@@ -73,7 +94,7 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
-async function handleSignup(request: Request, env: Env): Promise<Response> {
+async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   let email = "";
   let token = "";
   let company = "";
@@ -118,19 +139,86 @@ async function handleSignup(request: Request, env: Env): Promise<Response> {
     // Non-fatal: still grant access + notify.
   }
 
-  // Notify Slack #gtm-triggers once per new email (no-ops until the webhook secret is set).
-  if (isNew && env.SLACK_WEBHOOK_URL) {
-    const line = `:white_check_mark: New demo request — *${email}*${company ? ` · ${company}` : ""} · ${ts}`;
-    try {
-      await fetch(env.SLACK_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text: line }),
-      });
-    } catch {
-      // Non-fatal.
-    }
-  }
+  const domain = email.split("@")[1] ?? "";
+  const leadClass = classifyLead(domain);
+  const requestId = `demo_${ts}_${crypto.randomUUID().slice(0, 6)}`;
+
+  // Everything below is off the critical path — the visitor gets their password
+  // immediately and never waits on Slack or D1.
+  ctx.waitUntil(
+    (async () => {
+      const errors: string[] = [];
+
+      // D1: the table of record, shared with whitepaper-worker. Every submit is
+      // a row (repeats included) so the funnel stays auditable.
+      if (env.LEADS) {
+        try {
+          await env.LEADS.prepare(
+            `INSERT INTO leads (
+               request_id, email, email_domain, company, lead_class, source,
+               asset_slug, page_url, ip, created_at
+             ) VALUES (?,?,?,?,?,?,?,?,?,?)`
+          )
+            .bind(
+              requestId,
+              email,
+              domain,
+              company || null,
+              leadClass,
+              "demo",
+              "demo-access",
+              "https://getpacerai.com/demo-connect",
+              ip || null,
+              ts
+            )
+            .run();
+        } catch (e: any) {
+          errors.push(`d1_insert: ${e?.message ?? "unknown"}`);
+        }
+      }
+
+      // Slack #website-leads — one channel for every captured email, matching
+      // whitepaper-worker's format. Only on a genuinely new email.
+      if (isNew && env.SLACK_WEBHOOK_URL) {
+        const emoji =
+          leadClass === "valid_lead" ? ":fire:" : leadClass === "internal" ? ":test_tube:" : ":warning:";
+        try {
+          await fetch(env.SLACK_WEBHOOK_URL, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              text: [
+                `${emoji} *Demo access request — ${leadClass.replace("_", " ")}*`,
+                `*Email:* ${email}`,
+                ...(company ? [`*Company:* ${company}`] : []),
+                `*Classification:* ${leadClass}`,
+                `*Source:* demo`,
+                `*Page:* https://getpacerai.com/demo-connect`,
+                `*Request:* ${requestId}`,
+              ].join("\n"),
+            }),
+          });
+        } catch (e: any) {
+          errors.push(`slack: ${e?.message ?? "unknown"}`);
+        }
+      }
+
+      console.log(
+        JSON.stringify({
+          ts,
+          request_id: requestId,
+          email,
+          email_domain: domain,
+          lead_class: leadClass,
+          source: "demo",
+          is_new: isNew,
+          d1: { ok: !errors.some((e) => e.startsWith("d1_")) },
+          slack: { ok: !errors.some((e) => e.startsWith("slack")) },
+          errors,
+        })
+      );
+    })()
+  );
 
   // Reveal access. Password comes from a Worker secret (kept in sync with the Azure MCP).
   return json({
@@ -140,7 +228,10 @@ async function handleSignup(request: Request, env: Env): Promise<Response> {
   });
 }
 
-function signupHtml(siteKey: string): string {
+function signupHtml(siteKey: string, prefillEmail = ""): string {
+  // Only ever lands in a value="" attribute; escape the characters that could
+  // break out of it. Server-side validation still runs on POST regardless.
+  const pf = prefillEmail.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const sk = siteKey || "";
   return `<!doctype html>
 <html lang="en"><head>
@@ -183,7 +274,7 @@ function signupHtml(siteKey: string): string {
     <p>Enter your work email, pass a quick bot check, and we&rsquo;ll unlock the Pacer AI Demo connector for you.</p>
     <div class="row">
       <label for="email">Work email</label>
-      <input id="email" type="email" placeholder="you@company.com" autocomplete="email">
+      <input id="email" type="email" placeholder="you@company.com" autocomplete="email" value="${pf}">
     </div>
     <div class="row">
       <label for="company">Company <span style="font-weight:400;color:var(--muted)">(optional)</span></label>

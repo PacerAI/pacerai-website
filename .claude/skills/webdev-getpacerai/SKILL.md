@@ -195,7 +195,7 @@ done
 - **Background:** Dark navy (#080E1C)
 - **Accent:** Teal (#27899A), Teal Light (#70C49C)
 - **Aesthetic:** Minimal, financial-professional. No playful UI elements.
-- **CTA language:** "Request a Demo", "Talk to a RevOps Expert" — never "Get Started Free"
+- **CTA language:** primary is email capture — "Try the Demo Free", "Get the White Paper"; booking ("Talk to Will") is secondary and lives on /contact/ only. Never "Learn More".
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."
 
 ## Key References

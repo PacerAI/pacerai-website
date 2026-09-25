@@ -345,6 +345,24 @@ html, body, .wp-site-blocks {
   #pacerai-blog .blog-card:hover .card-link { gap: 10px; }
 
   /* ─── NEWSLETTER CTA ─── */
+  #pacerai-blog .wp-cta-card { max-width: 440px; margin: 24px auto 0; }
+  #pacerai-blog .wp-cta-form { display: flex; gap: 8px; flex-wrap: wrap; }
+  #pacerai-blog .wp-cta-form input[type="email"] {
+    flex: 1 1 200px; min-width: 0; padding: 13px 15px; font-size: 15px;
+    font-family: inherit; background: #fff; border: 1px solid var(--navy-border);
+    border-radius: 8px; color: #1A202C; outline: none;
+  }
+  #pacerai-blog .wp-cta-form input[type="email"]:focus { border-color: var(--teal); }
+  #pacerai-blog .wp-cta-form button {
+    flex: 0 0 auto; padding: 13px 22px; font-size: 14px; font-weight: 600;
+    font-family: inherit; color: #fff; background: var(--teal);
+    border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s;
+  }
+  #pacerai-blog .wp-cta-form button:hover { filter: brightness(1.08); }
+  #pacerai-blog .wp-cta-form button:disabled { opacity: .65; cursor: default; }
+  #pacerai-blog .wp-cta-privacy { font-size: 12px; color: var(--text-muted, #94A3B8); margin-top: 10px; }
+  #pacerai-blog .wp-cta-privacy a { color: var(--teal); text-decoration: underline; }
+
   #pacerai-blog .newsletter-section {
     padding: 80px 48px;
     background: var(--navy-mid);
@@ -778,10 +796,16 @@ html, body, .wp-site-blocks {
 </div>
 
 <!-- ═══════════════════════════════════════ NEWSLETTER ═══════════════════════════════════════ -->
-<section class="newsletter-section">
-  <h2>Subscribe to <em>Agents of Insight</em></h2>
-  <p>Weekly revenue intelligence insights, ARR analysis tips, and AI + RevOps trends. Delivered every Thursday.</p>
-  <a href="#" class="btn-teal">Subscribe on Substack →</a>
+<section class="newsletter-section" id="wp-get-the-paper">
+  <h2>Get the board-quality playbook</h2>
+  <p>The white paper behind the model: how board-grade ARR snowballs are built, reconciled, and defended. Free PDF, straight to your inbox.</p>
+  <div class="wp-cta-card">
+    <form class="wp-cta-form" data-asset-slug="board-quality-arr-snowballs" data-success-msg="Sent &mdash; your download is opening now.">
+      <input type="email" placeholder="Enter your work email" autocomplete="email" required>
+      <button type="submit">Get the White Paper &rarr;</button>
+    </form>
+    <div class="wp-cta-privacy">No spam, unsubscribe anytime. Also on <a href="https://agentsofinsight.substack.com/" target="_blank" rel="noopener">Agents of Insight</a>, our weekly newsletter.</div>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->

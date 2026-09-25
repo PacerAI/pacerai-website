@@ -29,9 +29,10 @@ Pacer AI is an ARR intelligence platform built for PE-backed B2B SaaS companies 
 | CRO | Growth-stage SaaS | Can't see expansion/churn drivers clearly | "See where your ARR is growing and leaking" |
 
 ### CTA Language
-- **Primary:** "Request a Demo", "See a Live ARR Demo"
-- **Secondary:** "How It Works", "Talk to a RevOps Expert"
-- **Never use:** "Get Started Free", "Sign Up", "Try It Now"
+*(Revised 2026-09-24 — email capture is now the primary motion. Canonical source: `foundation/products/cta-language.yml`.)*
+- **Primary (email capture):** "Try the Demo Free", "Get the White Paper"
+- **Secondary (booking, /contact/ only):** "Talk to Will", "Book a Free Diagnostic"
+- **Never use:** "Learn More", "Submit", "Click Here"
 
 ### Competitive Positioning
 
@@ -313,7 +314,7 @@ Build a Claude Skill that:
 ### Key Metrics to Track
 - **Homepage:** Bounce rate, scroll depth, CTA click rate, time on page
 - **Blog:** Pageviews, avg read time, scroll completion, CTA clicks from blog
-- **Conversion funnel:** Homepage → Demo CTA click → Calendly booking → Demo completed
+- **Conversion funnel:** Any page → email capture form → `leads` row in D1 + Slack `#website-leads` → Apollo nurture → (self-serve demo or white paper) → booking, only if they ask
 
 ---
 
@@ -350,16 +351,23 @@ Visitor hits getpacerai.com
 ## 9. Lead Generation Capture
 
 ### Current Lead Capture Points
-| Touchpoint | Current State | Capture Method |
-|------------|---------------|----------------|
-| "Request Demo" CTA | Links to Calendly | Calendly captures email + name at booking |
-| "See a Live ARR Demo" CTA | Links to Calendly | Same as above |
-| "Talk to a RevOps Expert" CTA | Links to Calendly | Same as above |
-| Blog posts | No capture | **Gap — needs email gate or CTA** |
-| Resources (guides, templates) | Not built yet | **Planned — gated downloads** |
-| Newsletter (Agents of Insight) | Links to Substack (TBD) | Substack captures email |
 
-### Planned Lead Capture Enhancements
+*(Rebuilt 2026-09-24. Everything below is live, not planned — see `goals/email-capture.md`.)*
+
+| Touchpoint | Offer | Capture Method |
+|------------|-------|----------------|
+| Homepage hero | Free demo access | `.wp-cta-form` → whitepaper-worker → D1 + Slack, redirects to `/demo-connect` |
+| Homepage closing band | Board-Quality white paper | `.wp-cta-form` → PDF opens + Apollo nurture |
+| Resources hub | Board-Quality white paper | Same |
+| All 13 blog posts | Board-Quality white paper | Same, in the `post-cta` panel (replaced the Calendly button) |
+| `/demo-connect` | Free demo access | Worker-served widget: email + Turnstile → password reveal → D1 + Slack |
+| `/contact/` | Booking | Calendly — the **only** Calendly on the site, deliberately |
+| Newsletter (Agents of Insight) | Substack | Linked from the Resources capture block |
+
+**Table of record:** Cloudflare D1 `pacerai-leads.leads`. Both Workers write it. Schema at `pacerai-gtm/infra/whitepaper-worker/migrations/0001_leads.sql`.
+**Alerting:** Slack `#website-leads`, every capture, labeled with source + lead classification. Email notification to Will is deferred — see `goals/email-capture.md`.
+
+### Backlog — further lead capture
 
 #### A. Email Capture on Blog
 - **Exit-intent popup** or **inline CTA block** at end of each blog post

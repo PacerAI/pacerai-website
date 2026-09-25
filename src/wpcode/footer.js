@@ -83,18 +83,27 @@
   setTimeout(tick, 800);
 })();
 
-/* --- 2. White paper CTA form handler --- */
+/* --- 2. Lead-capture form handler (all .wp-cta-form) --- */
 /* --- 3. Pipeline number stream animation --- */
 /* --- 4. Mobile nav accordion --- */
 (function() {
-  /* 2. Form handler */
-  var form = document.querySelector('.wp-cta-form');
-  if (form) {
-    var WORKER_URL = 'https://whitepaper-worker.will-078.workers.dev';
+  /* 2. Lead-capture form handler (all .wp-cta-form on the page) */
+  /* Each form declares its own offer:
+   *   data-asset-slug   which ASSETS entry the Worker should serve (default: the white paper)
+   *   data-success-msg  confirmation copy for this placement
+   *   data-redirect     where to send the visitor after a capture-only submit
+   * A response with download_url opens the file; one without just confirms. */
+  var WORKER_URL = 'https://whitepaper-worker.will-078.workers.dev';
 
+  document.querySelectorAll('.wp-cta-form').forEach(function(form) {
     var input = form.querySelector('input[type="email"]');
     var button = form.querySelector('button');
+    if (!input || !button) return;
+
     var origText = button.textContent;
+    var slug = form.getAttribute('data-asset-slug') || 'board-quality-arr-snowballs';
+    var successMsg = form.getAttribute('data-success-msg') || 'Check your inbox \u2014 we\u2019ll send you a copy too.';
+    var redirect = form.getAttribute('data-redirect') || '';
 
     var msgEl = document.createElement('p');
     msgEl.style.cssText = 'font-size:12px;margin-top:8px;text-align:center;min-height:18px;';
@@ -112,12 +121,12 @@
       }
 
       button.disabled = true;
-      button.textContent = 'Preparing download\u2026';
+      button.textContent = 'One moment\u2026';
 
       var params = new URLSearchParams(window.location.search);
       var body = JSON.stringify({
         email: email,
-        asset_slug: 'board-quality-arr-snowballs',
+        asset_slug: slug,
         page_url: window.location.href,
         utm_source: params.get('utm_source'),
         utm_medium: params.get('utm_medium'),
@@ -131,15 +140,24 @@
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        if (data && data.success && data.download_url) {
-          button.textContent = 'Downloading\u2026';
-          msgEl.style.color = '#15803D';
-          msgEl.textContent = 'Check your inbox \u2014 we\u2019ll send you a copy too.';
-          window.open(data.download_url, '_blank');
-        } else {
+        if (!data || !data.success) {
           msgEl.textContent = 'Something went wrong. Please try again.';
           button.disabled = false;
           button.textContent = origText;
+          return;
+        }
+        msgEl.style.color = '#15803D';
+        msgEl.textContent = successMsg;
+        if (data.download_url) {
+          button.textContent = 'Downloading\u2026';
+          window.open(data.download_url, '_blank');
+        } else {
+          button.textContent = 'Thanks \u2014 you\u2019re in';
+          if (redirect) {
+            /* Carry the email forward so the demo widget doesn't ask twice. */
+            var dest = redirect + (redirect.indexOf('?') === -1 ? '?' : '&') + 'email=' + encodeURIComponent(email);
+            setTimeout(function() { window.location.href = dest; }, 900);
+          }
         }
       })
       .catch(function() {
@@ -148,7 +166,20 @@
         button.textContent = origText;
       });
     });
-  }
+  });
+
+  /* 2b. Demo signup iframe — forward ?email= from the page URL into the widget.
+   * The widget is cross-origin (Worker-served), so the parent cannot fill it
+   * directly; the Worker reads the param and prefills server-side instead. */
+  (function() {
+    var qp = new URLSearchParams(window.location.search);
+    var em = (qp.get('email') || '').trim();
+    if (!em) return;
+    document.querySelectorAll('iframe[src*="/signup"]').forEach(function(f) {
+      if (f.src.indexOf('email=') !== -1) return;
+      f.src = f.src + (f.src.indexOf('?') === -1 ? '?' : '&') + 'email=' + encodeURIComponent(em);
+    });
+  })();
 
   /* 3. Pipeline number stream animation */
   var c = document.getElementById('num-stream-lt');

@@ -9,7 +9,11 @@
 
 ## Goal
 
-Build and maintain a multi-page marketing website for getpacerai.com that communicates Pacer AI's value proposition to PE-backed SaaS operators and converts visitors into demo requests.
+Build and maintain a multi-page marketing website for getpacerai.com that communicates Pacer AI's value proposition to revenue leaders at recurring-revenue companies and **converts visitors into captured work emails** — by offering free, self-serve demo access and free resources.
+
+Booking a call is the *secondary* path, kept for buyers who are already ready. It lives on `/contact/` and nowhere else.
+
+> **Goal changed 2026-09-24.** The prior goal was "converts visitors into demo requests," meaning Calendly bookings. That put a 30-minute commitment in front of every visitor and captured nothing from the ones who weren't ready. The site now asks for an email, hands back something immediately (demo access or a white paper), and lets nurture do the rest. See `goals/email-capture.md`.
 
 ## Problem Statement
 
@@ -58,6 +62,18 @@ The original homepage did not reflect Pacer AI's positioning as a board-level AR
 - [ ] Lighthouse SEO score >= 90
 - [ ] Yoast SEO metadata set for all pages
 - [ ] SEO/AEO audit agent built
+
+### Conversion criteria (added 2026-09-24)
+
+Every criterion above is a *build* criterion — the old list had no measure of whether the site actually worked. These are the ones that matter under the new goal:
+
+- [x] Every live page offers an email capture, or links to one within one click
+- [x] Captured emails land in a durable table (`leads` in Cloudflare D1), not just a CRM
+- [x] Every capture fires a Slack alert to `#website-leads` with source + classification
+- [x] Calendly appears on `/contact/` only
+- [x] Every "free resource" CTA resolves to an actual artifact, not a booking page
+- [ ] Email notification to Will on capture (deferred — Slack only for now; see `goals/email-capture.md`)
+- [ ] Baseline measured: captures/week, by source, valid-lead share
 
 ## Scope — In
 

@@ -309,7 +309,7 @@ Every page follows the same pattern:
 - **Primary accent:** Teal — bone: `#2E7D74` / `#70C49C`; legacy dark: `#27899A` / `#70C49C`
 - **v3 bone tokens:** `--bone:#F5F4EF --surface:#FAFAF7 --navy:#1F3864 --teal:#2E7D74 --ink:#20242B --muted:#5F5A50 --line:#E6E1D6`
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents. No playful illustrations or rounded pill buttons.
-- **CTA language:** "Request a Demo", "See a Live ARR Demo", "Talk to a RevOps Expert" — never "Get Started Free"
+- **CTA language:** primary is email capture — "Try the Demo Free", "Get the White Paper"; booking ("Talk to Will") is secondary and lives on /contact/ only. Never "Learn More".
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."
 
 **Canonical source:** `PacerAI/pacerai-foundation/` — see brand/, strategy/, and commercial/ for full definitions.
