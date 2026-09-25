@@ -364,7 +364,9 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
           var pw=document.getElementById('pw');
           if(d.password){ pw.textContent=d.password; }
           else{ document.getElementById('pwWrap').classList.add('hide');
-                document.getElementById('emailNote').textContent='Your access password is on its way to '+email+'.'; }
+                /* Fallback only when PACER_DEMO_PASSWORD is unset. Nothing emails the
+                   password today, so promise a human, not an automated send. */
+                document.getElementById('emailNote').textContent='Got it \u2014 Will will send your access password to '+email+' shortly.'; }
         } else {
           submitted=false;            // allow a retry on failure
           onFail((d&&d.error==='turnstile_failed')?'Bot check failed.':'Something went wrong.');

@@ -1,0 +1,162 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#ffffff",
+    "primaryColor": "#ffffff",
+    "primaryTextColor": "#1b2a41",
+    "primaryBorderColor": "#1b2a41",
+    "lineColor": "#5c7c89",
+    "clusterBkg": "#fafbfc",
+    "clusterBorder": "#d5dde3",
+    "fontFamily": "Georgia, serif",
+    "fontSize": "14px"
+  }
+}}%%
+flowchart TD
+
+    %% ============ OFFER ============
+    subgraph OFFER["What we give away"]
+        WP["White paper<br/>Board-Quality ARR Snowballs<br/>slug · board-quality-arr-snowballs"]
+        DEMO["Demo access<br/>synthetic $100M book<br/>slug · demo-access"]
+        WAIT["Research waitlist<br/>slug · research-waitlist"]
+        CALL["Talk to sales<br/>Calendly · /contact only"]
+    end
+
+    %% ============ SURFACE ============
+    subgraph SURFACE["Where the ask lives"]
+        HERO["Homepage hero<br/>WP 25 · demo-access"]
+        BAND["Homepage closing band<br/>WP 25 · white paper"]
+        HUB["Resources hub<br/>WP 230 · white paper"]
+        POSTS["13 blog posts<br/>post-cta panel · white paper"]
+        DC["/demo-connect<br/>WP 983 · Turnstile widget"]
+        WAITPG["/research<br/>UNREGISTERED · not deployed"]
+        CONTACT["/contact<br/>WP 375 · the only Calendly"]
+    end
+
+    %% ============ CAPTURE ============
+    subgraph CAPTURE["Edge — Cloudflare Workers"]
+        FJS["src/wpcode/footer.js §2<br/>binds EVERY .wp-cta-form<br/>reads data-asset-slug"]
+        WPW["whitepaper-worker<br/>POST / · CORS · KV 60s idempotency"]
+        PDW["pacer-demo-worker<br/>POST /demo-signup · same-origin"]
+        TS{{"Turnstile siteverify<br/>BOT GATE"}}
+        CLS{{"classifyLead(domain)<br/>internal · personal · competitor · valid<br/>DOMAIN MATCH ONLY — no score"}}
+    end
+
+    %% ============ DATA ============
+    subgraph DATA["Data layer"]
+        D1[("D1 · pacerai-leads · leads<br/>APPEND-ONLY TABLE OF RECORD<br/>both Workers write it")]
+        KV[("KV · DEMO_SIGNUPS<br/>legacy side-record<br/>feeds demo_users.yml roster")]
+    end
+
+    %% ============ NOTIFY ============
+    subgraph NOTIFY["Notification"]
+        SLACK["Slack · #website-leads<br/>class emoji · source · UTM · Apollo link"]
+        LOG["Structured log<br/>wrangler tail · errors[]"]
+    end
+
+    %% ============ PLAY ============
+    subgraph PLAY["GTM play — Apollo"]
+        APC["POST /v1/contacts<br/>labels · whitepaper-download"]
+        APE["POST /v1/people/match<br/>backfill name · title · org"]
+        SEQV["Signal_CONTACT_Whitepaper_BoardQualityARR<br/>4 steps · Day 0/3/8/15 · stop on reply"]
+        SEQN["Signal_CONTACT_Whitepaper_NonLead<br/>1 step"]
+        NOSEQ["No enrollment<br/>internal · demo-access · research-waitlist"]
+        DASH["apollo-channel-status.py · nightly 3am<br/>label rollup to GTME dashboard KPI<br/>REPORTING ONLY"]
+    end
+
+    %% ============ HUMAN ============
+    subgraph HUMAN["Human"]
+        WILL{{"Will reads #website-leads<br/>escalate recognisable PE-backed<br/>domain inside 24h — JUDGMENT, NOT CODE"}}
+    end
+
+    %% ============ FUTURE ============
+    subgraph FUTURE["Not built"]
+        SCORE["ICP / score routing<br/>scoring.yml 0-30-60-80 bands<br/>RB2B visitor ID · tier-router"]
+        RESEND["Email-to-Will on capture<br/>Resend stub, commented out"]
+        CONSUME["Anything reading the leads table"]
+    end
+
+    %% ============ FLOWS ============
+    %% Offer -> the surface that carries it
+    WP --> BAND
+    WP --> HUB
+    WP --> POSTS
+    DEMO --> HERO
+    DEMO --> DC
+    WAIT --> WAITPG
+    CALL --> CONTACT
+
+    %% Surface -> capture
+    HERO --> FJS
+    BAND --> FJS
+    HUB --> FJS
+    POSTS --> FJS
+    WAITPG --> FJS
+    FJS --> WPW
+    DC --> PDW
+
+    %% Demo path: bot gate first, no Apollo
+    PDW --> TS
+    TS -.->|fail: 403, no row| PDW
+    TS -->|pass| CLS
+    PDW --> KV
+
+    %% Resource path
+    WPW --> CLS
+
+    %% Apollo runs BEFORE the D1 write, so the row carries apollo_contact_id
+    CLS --> APC
+    APC --> APE
+    APC -.->|401: row still written| D1
+    APE -->|valid_lead| SEQV
+    APE -->|personal · competitor| SEQN
+    APE -->|internal · no-sequence slug| NOSEQ
+    SEQV --> D1
+    SEQN --> D1
+    NOSEQ --> D1
+
+    %% Data -> notification -> human
+    D1 --> SLACK
+    D1 --> LOG
+    SLACK --> WILL
+    SEQV --> DASH
+    SEQN --> DASH
+
+    %% Calendly never reaches the data layer
+    CONTACT -.->|no row · no alert| WILL
+
+    %% Not built
+    D1 -.-> CONSUME
+    CLS -.-> SCORE
+    SLACK -.-> RESEND
+
+    %% ============ LIGHT BRAND STYLING ============
+    classDef default fill:#ffffff,stroke:#c3ced6,color:#1b2a41
+    classDef navy fill:#ffffff,stroke:#1b2a41,color:#1b2a41,stroke-width:1.5px
+    classDef teal fill:#f0f7f7,stroke:#2a7f7f,color:#1b2a41
+    classDef sage fill:#f4f7f2,stroke:#7d9471,color:#1b2a41
+    classDef gate fill:#fdfaf1,stroke:#b8963e,color:#1b2a41,stroke-width:1.5px
+    classDef contract fill:#eef5f2,stroke:#0f5132,color:#0f5132,stroke-width:2px
+    classDef seam fill:#f6f7f8,stroke:#8a939b,color:#1b2a41
+    classDef future fill:#f3f3f3,stroke:#999999,stroke-dasharray:4 4,color:#666666
+
+    class WP,DEMO,WAIT,CALL navy
+    class HERO,BAND,HUB,POSTS,DC,CONTACT teal
+    class WAITPG future
+    class FJS,WPW,PDW sage
+    class TS,CLS,WILL gate
+    class D1 contract
+    class KV seam
+    class SLACK,LOG navy
+    class APC,APE,SEQV,SEQN,NOSEQ,DASH sage
+    class SCORE,RESEND,CONSUME future
+
+    %% ============ SUBGRAPH ZONE COLORS ============
+    style OFFER fill:#fdeeec,stroke:#b3402f,color:#7a2417
+    style SURFACE fill:#ecf3fa,stroke:#4a7fb5,color:#1f3d5c
+    style CAPTURE fill:#eef6ee,stroke:#4f7d4f,color:#2c4a2c
+    style DATA fill:#1b2a41,stroke:#1b2a41,color:#ffffff
+    style NOTIFY fill:#fdfaf1,stroke:#b8963e,color:#6b5418
+    style PLAY fill:#f4f7f2,stroke:#7d9471,color:#3d4a35
+    style HUMAN fill:#fafbfc,stroke:#5c7c89,color:#1b2a41
+    style FUTURE fill:#f3f3f3,stroke:#999999,color:#666666

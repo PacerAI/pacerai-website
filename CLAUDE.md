@@ -63,7 +63,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | Pricing | 111 | `pricing` | — | *(legacy — v3: 301 → `/#pricing`)* |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
-**Blog articles (all 12 bone + live, parent 230; deploy with `--force` — pre-existing prose voice-debt trips `validate.py`):**
+**Blog articles (all 13 bone + live, parent 230; deploy with `--force` — pre-existing prose voice-debt trips `validate.py`):**
 
 | Page | WP ID | Slug | Source File |
 |------|-------|------|-------------|
@@ -79,6 +79,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | Semrush-Adobe Case Study | 888 | `semrush-adobe-acquisition-case-study` *(root URL)* | `src/blog/posts/semrush-adobe-case-study-build.html` |
 | What is an ARR Waterfall | 850 | `what-is-an-arr-waterfall` *(canonical `/resources/`; root dupe 873 301→ this)* | `src/blog/posts/what-is-an-arr-waterfall-build.html` |
 | What is cRPO (Current Performance Obligation) | 865 | `what-is-current-performance-obligation` | `src/blog/posts/crpo-build.html` |
+| Grow NRR from 101% to 105% | 778 | `grow-nrr-101-to-105-case-study` | `src/blog/posts/778-build.html` |
 
 *(The Jan-2026 batch — 227/236/244/288/264 = WP 378/376/368/358/360 — got fixed+completed FAQPage + Article(+Person author=Will Sullivan) schema.)*
 
@@ -142,6 +143,8 @@ docs/
 ├── document/
 │   ├── changelog.md                    # Deploy log
 │   └── Internal_Documentation.md       # Messaging, positioning, site tree, SEO strategy
+├── lead-capture-architecture.md     # Form → Worker → D1 `leads` → Slack → Apollo (READ before touching capture)
+├── lead-capture-flow-light.mermaid  # Diagram sidecar for the above
 └── deploy/
     ├── runbook.md                      # Deploy instructions
     ├── wp-admin-actions.md             # Organization/Person WPCode schema snippet + redirect runbook
@@ -151,6 +154,10 @@ pacerai-context/
 ├── pacerai.md                          # Canonical company context (products, personas, differentiation)
 └── apollo_ai.md                        # Apollo.io AI Context Center paste-ready document
 ```
+
+**Page authoring + WPCode:** [`src/README.md`](src/README.md) — how a page is assembled, how the canonical
+nav/footer fragments attach, the three WPCode snippets and how to paste the footer one without taking the
+site's JS down. Read it before creating a page or editing `src/wpcode/footer.js`.
 
 ## Local Development Scripts
 
@@ -167,6 +174,10 @@ python3 scripts/deploy.py 25                  # Deploy homepage
 python3 scripts/deploy.py all                 # Deploy all pages
 python3 scripts/deploy.py 25 --dry-run        # Preview what would happen
 python3 scripts/deploy.py 25 --force          # Skip validation (used for the 12 blog articles — prose voice-debt)
+
+# Rebuild the paste-ready WPCode footer snippet (wraps footer.js in script tags)
+python3 scripts/build_footer_paste.py         # writes src/wpcode/footer.paste.txt
+python3 scripts/build_footer_paste.py --check # verify it's current
 
 # Regenerate the SEO data tables (holds the per-page Yoast SEO data)
 python3 scripts/build_seo_table.py            # Emits docs/review/seo-table.csv + docs/review/seo-table.html

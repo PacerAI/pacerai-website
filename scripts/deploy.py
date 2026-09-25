@@ -50,6 +50,7 @@ PAGE_REGISTRY = {
     591: "src/blog/posts/comparison-build-vs-need.html",
     888: "src/blog/posts/semrush-adobe-case-study-build.html",
     850: "src/blog/posts/what-is-an-arr-waterfall-build.html",
+    778: "src/blog/posts/778-build.html",
 }
 
 PAGE_NAMES = {
@@ -63,6 +64,7 @@ PAGE_NAMES = {
     368: "Blog: ARR Snowball Analysis", 360: "Blog: AI for RevOps", 358: "Blog: Why ARR Waterfalls Matter",
     441: "Blog: Why LLMs Can't Build Snowball", 781: "Blog: Board-Quality Snowballs",
     591: "Blog: Build vs Boards Need", 888: "Blog: Semrush-Adobe", 850: "Blog: What is ARR Waterfall",
+    778: "Blog: Grow NRR 101 to 105",
 }
 
 
