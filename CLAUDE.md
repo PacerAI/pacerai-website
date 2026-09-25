@@ -59,6 +59,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | **Team** (parent) | 366 | `team` | — | `src/team/team-page.html` |
 | **About** | 374 | `about` | 366 | `src/team/about.html` *(legacy — 301 → `/#about`)* |
 | **Contact** | 375 | `contact` | — | `src/team/contact.html` *(bone; moved to top-level `/contact/`; was parent 366)* |
+| **Demo Connect** | 983 | `demo-connect` | — | `src/demo-connect.html` *(bone; spec 011 AC-1 demo onboarding; LIVE 2026-09-22; embeds the demo-connect reel from the staging Worker)* |
 | Pricing | 111 | `pricing` | — | *(legacy — v3: 301 → `/#pricing`)* |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
@@ -264,6 +265,8 @@ These are silent failures — WordPress won't error, but your styles/scripts won
 | Homepage CSS too large for inline `<style>` | Homepage CSS is ~37K chars — inline would push page over 68K limit | CSS externalized to WPCode Header injection. Source: `src/homepage/wpcode-homepage-css.css`. Update WPCode snippet in WP Admin when CSS changes. |
 | Yoast SEO title + meta description NOT REST-writable on WordPress.com | REST API silently ignores `yoast_head` / Yoast title/meta fields — no error, no change | Set Yoast title/meta **in WP Admin** (browser). Per-page worklist: `docs/deploy/yoast-worklist.md`. Excerpts remain a fallback for meta desc only. |
 | WPCode Footer snippet is fragile — a malformed closing tag once broke ALL footer JS | Every footer-injected script (rotor, marquee, pipeline) dies silently site-wide | Homepage animations (hero rotor w/ 13 phrases, logo marquee, pipeline numbers) moved to the inline `<img onerror>` injector in `src/homepage/index-build.html` (bypasses WP script-stripping), guarded by `window.__paRotor` / `window.__paPipe` so they never double-run if the WPCode footer is later fixed. |
+
+| Cloning a stale page's nav/footer/CSS (e.g. `src/team/contact.html`) | Missing overrides → page renders clamped to WordPress's 620px content-size ("too narrow"), sticky nav gets squeezed so header buttons look missing, footer can't full-bleed | Port the chrome from **`src/homepage/index-build.html`** (the current bone reference), not older pages. The load-bearing line is the TT4 override `.wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width:none!important}` + `position:fixed` nav. `contact.html` predates these and is stale. |
 
 **Design reference (v3 bone homepage):** `docs/design/homepage/index-build-bone_v3_2026-07-22.html` — self-contained, browser-openable copy of the v3 homepage (page CSS/HTML + inlined WPCode JS). Diff live CSS against it. *(Legacy dark reference archived at `docs/design/homepage/archive/`.)*
 **AEO Row spec:** `docs/design/AEO-Row-Text-and-Image.md` — copy-paste-ready CSS for text+image sections.

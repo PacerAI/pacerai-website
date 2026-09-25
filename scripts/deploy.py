@@ -36,6 +36,7 @@ PAGE_REGISTRY = {
     366: "src/team/team-page.html",
     374: "src/team/about.html",
     375: "src/team/contact.html",
+    983: "src/demo-connect.html",
     865: "src/blog/posts/crpo-build.html",
     # --- v3 bone blog posts (voice-debt in original prose → deploy with --force until a voice pass) ---
     491: "src/blog/posts/491-build.html",
@@ -56,6 +57,7 @@ PAGE_NAMES = {
     372: "ARR Snowball", 373: "Customer Data Cube", 554: "Transaction Readiness",
     651: "RevOps Transformation", 650: "GTM Transformation", 652: "FP&A Transformation",
     366: "Team Page", 374: "About", 375: "Contact",
+    983: "Demo Connect",
     865: "cRPO Blog",
     491: "Blog: Build vs Hire", 378: "Blog: What is ARR Snowball", 376: "Blog: Prevent Churn",
     368: "Blog: ARR Snowball Analysis", 360: "Blog: AI for RevOps", 358: "Blog: Why ARR Waterfalls Matter",
