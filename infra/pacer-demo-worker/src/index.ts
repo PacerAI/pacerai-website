@@ -44,6 +44,16 @@ function classifyLead(domain: string): string {
   return "valid_lead";
 }
 
+// Origin-aware wrapper, mirroring whitepaper-worker. A corporate-looking domain
+// submitted from a hosting network is downgraded outright: a row reading
+// "valid_lead" beside a warning triangle is a contradiction, and the triangle is
+// the part that turned out to be right.
+function classify(domain: string, asOrg: string | undefined): string {
+  const base = classifyLead(domain);
+  if (base === "valid_lead" && isHostingOrigin(asOrg)) return "suspicious";
+  return base;
+}
+
 // Networks that serve automation rather than office workers. A FLAG, not a
 // reclassification: a real prospect on a corporate VPN presents identically.
 const HOSTING_ASNS = [
@@ -60,7 +70,9 @@ function isHostingOrigin(asOrg: string | undefined): boolean {
 
 // This Worker never calls Apollo, so the mail domain is the only site we have.
 function deriveWebsite(domain: string, leadClass: string): string | null {
-  return leadClass === "valid_lead" ? `https://${domain}` : null;
+  return leadClass === "valid_lead" || leadClass === "suspicious"
+    ? `https://${domain}`
+    : null;
 }
 
 const CONNECTOR_URL = "https://pacerai-demo-mcp.azurewebsites.net/mcp";
@@ -163,9 +175,9 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
   }
 
   const domain = email.split("@")[1] ?? "";
-  const leadClass = classifyLead(domain);
-  const requestId = `demo_${ts}_${crypto.randomUUID().slice(0, 6)}`;
   const asOrg = (request as any).cf?.asOrganization as string | undefined;
+  const leadClass = classify(domain, asOrg);
+  const requestId = `demo_${ts}_${crypto.randomUUID().slice(0, 6)}`;
   const website = deriveWebsite(domain, leadClass);
 
   // Everything below is off the critical path — the visitor gets their password
@@ -211,6 +223,7 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
           leadClass === "valid_lead" ? ":fire:"
           : leadClass === "internal" ? ":test_tube:"
           : leadClass === "disposable" ? ":wastebasket:"
+          : leadClass === "suspicious" ? ":mag:"
           : ":warning:";
         try {
           await fetch(env.SLACK_WEBHOOK_URL, {
