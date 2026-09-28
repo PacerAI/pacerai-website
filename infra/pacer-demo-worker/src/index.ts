@@ -1,4 +1,5 @@
 import demoHtml from "./demo.html";
+import { DISPOSABLE_DOMAINS } from "./disposable-domains";
 
 /**
  * pacer-demo-worker
@@ -34,10 +35,32 @@ const PERSONAL_DOMAINS = new Set([
 ]);
 const OWN_DOMAINS = new Set(["getpacerai.com", "predictiveanalyticspartners.com"]);
 
+// Mirrors whitepaper-worker's classifier so a lead looks the same in `leads`
+// whichever Worker wrote the row.
 function classifyLead(domain: string): string {
   if (OWN_DOMAINS.has(domain)) return "internal";
+  if (DISPOSABLE_DOMAINS.has(domain)) return "disposable";
   if (PERSONAL_DOMAINS.has(domain)) return "personal_email";
   return "valid_lead";
+}
+
+// Networks that serve automation rather than office workers. A FLAG, not a
+// reclassification: a real prospect on a corporate VPN presents identically.
+const HOSTING_ASNS = [
+  "leaseweb", "digitalocean", "linode", "ovh", "hetzner", "vultr", "contabo",
+  "amazon", "google cloud", "microsoft azure", "oracle cloud", "alibaba",
+  "choopa", "quadranet", "colocrossing", "m247", "datacamp", "hostwinds",
+];
+
+function isHostingOrigin(asOrg: string | undefined): boolean {
+  if (!asOrg) return false;
+  const a = asOrg.toLowerCase();
+  return HOSTING_ASNS.some((h) => a.includes(h));
+}
+
+// This Worker never calls Apollo, so the mail domain is the only site we have.
+function deriveWebsite(domain: string, leadClass: string): string | null {
+  return leadClass === "valid_lead" ? `https://${domain}` : null;
 }
 
 const CONNECTOR_URL = "https://pacerai-demo-mcp.azurewebsites.net/mcp";
@@ -142,6 +165,8 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
   const domain = email.split("@")[1] ?? "";
   const leadClass = classifyLead(domain);
   const requestId = `demo_${ts}_${crypto.randomUUID().slice(0, 6)}`;
+  const asOrg = (request as any).cf?.asOrganization as string | undefined;
+  const website = deriveWebsite(domain, leadClass);
 
   // Everything below is off the critical path — the visitor gets their password
   // immediately and never waits on Slack or D1.
@@ -156,8 +181,8 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
           await env.LEADS.prepare(
             `INSERT INTO leads (
                request_id, email, email_domain, company, lead_class, source,
-               asset_slug, page_url, ip, created_at
-             ) VALUES (?,?,?,?,?,?,?,?,?,?)`
+               asset_slug, page_url, ip, created_at, website, as_org
+             ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`
           )
             .bind(
               requestId,
@@ -169,7 +194,9 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
               "demo-access",
               "https://getpacerai.com/demo-connect",
               ip || null,
-              ts
+              ts,
+              website,
+              asOrg ?? null
             )
             .run();
         } catch (e: any) {
@@ -181,7 +208,10 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
       // whitepaper-worker's format. Only on a genuinely new email.
       if (isNew && env.SLACK_WEBHOOK_URL) {
         const emoji =
-          leadClass === "valid_lead" ? ":fire:" : leadClass === "internal" ? ":test_tube:" : ":warning:";
+          leadClass === "valid_lead" ? ":fire:"
+          : leadClass === "internal" ? ":test_tube:"
+          : leadClass === "disposable" ? ":wastebasket:"
+          : ":warning:";
         try {
           await fetch(env.SLACK_WEBHOOK_URL, {
             method: "POST",
@@ -192,6 +222,8 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
                 `*Email:* ${email}`,
                 ...(company ? [`*Company:* ${company}`] : []),
                 `*Classification:* ${leadClass}`,
+                ...(isHostingOrigin(asOrg) ? [`*:warning: Origin:* ${asOrg} (datacenter, not an office network)`] : []),
+                ...(website ? [`*Website:* ${website}`] : []),
                 `*Source:* demo`,
                 `*Page:* https://getpacerai.com/demo-connect`,
                 `*Request:* ${requestId}`,
@@ -211,6 +243,9 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
           email_domain: domain,
           lead_class: leadClass,
           source: "demo",
+          website,
+          as_org: asOrg ?? null,
+          hosting_origin: isHostingOrigin(asOrg),
           is_new: isNew,
           d1: { ok: !errors.some((e) => e.startsWith("d1_")) },
           slack: { ok: !errors.some((e) => e.startsWith("slack")) },
