@@ -32,6 +32,30 @@ These were discovered during the April 3, 2026 deployment. Violating any of thes
 | JSON-LD | ~4,000 chars | Structured data stays inline (needed per-page) |
 | **Total in wp:html block** | **< 67,000 chars** | Leave 2K buffer under the ~69K limit |
 
+### WPCode snippets — what is installed
+
+Three snippets exist in WP Admin → WPCode. Full procedure, including the paste hazards below:
+[`../../src/README.md`](../../src/README.md).
+
+| WP Admin location | Source file | State |
+|---|---|---|
+| Header & Footer → **Header** | `src/homepage/wpcode-homepage-css.css` | **Deliberately blank since v3** — leave it empty |
+| Header & Footer → **Footer** | `src/wpcode/footer.js` | Live. All site-wide JS, **including the lead-capture form handler** |
+| Site Wide Header (HTML) | pasted in [`wp-admin-actions.md`](wp-admin-actions.md) | Organization / Person JSON-LD |
+
+> ⚠️ **The Footer snippet is how you take the whole site's JS down.** A stray opening `<script>` where a
+> closing tag belonged once produced `Unexpected token <` and killed every footer script silently — forms
+> included. Three rules:
+> 1. Paste **`src/wpcode/footer.paste.txt`** (generated, already wrapped in `<script>` tags) into the
+>    Header & Footer → Footer field. Or use a WPCode *"JavaScript Snippet"*, which auto-wraps — then paste
+>    `footer.js` itself with no tags.
+> 2. Never let a literal closing script tag into `footer.js`. `scripts/build_footer_paste.py` refuses to
+>    build if one appears.
+> 3. Never paste minified JS — WordPress inserts line breaks mid-token.
+>
+> **Verify:** console → `document.querySelectorAll('.wp-cta-form').length`, no syntax error.
+> **Rollback:** `git show HEAD~1:src/wpcode/footer.js`. WordPress keeps no history of snippet edits.
+
 ### WPCode CSS Delivery (Homepage)
 
 > **v3.0.0 change:** the bone homepage CSS is **inline** (~16K, in the page `<style>`), so the
@@ -145,17 +169,15 @@ Verify: `source ~/.zshrc && echo $WP_BASE_URL && echo $WP_USER && echo ${WP_APP_
 
 ## Page Registry
 
-Always reference `CLAUDE.md` for the authoritative page registry. Key pages:
+`CLAUDE.md` holds the authoritative registry, and `scripts/deploy.py` holds the machine-readable one
+(`PAGE_REGISTRY` + `PAGE_NAMES`). **A new page must be added to both** — one registered only in `CLAUDE.md`
+is undeployable. `python3 scripts/deploy.py` with no arguments prints the live list.
 
-| Page | WP ID | Source File |
-|------|-------|-------------|
-| Home | 25 | `src/homepage/index-build.html` |
-| Blog | 230 | `src/blog/index-build.html` |
-| Platform Overview | 371 | `src/platform/overview.html` |
-| ARR Snowball | 372 | `src/solutions/arr-snowball.html` |
-| Customer Data Cube | 373 | `src/solutions/customer-data-cube.html` |
-| About (→ Team) | 374 | `src/team/about.html` |
-| Contact | 375 | `src/team/contact.html` |
+Currently live and bone: Home (25) · Resources hub (230) · Team (366) · Contact (375) · Demo Connect (983)
+· 13 blog articles under parent 230.
+
+Retired and 301-redirected — **do not redeploy their content**: the six `/solutions/*` pages, Platform
+Overview (371), About (374), legacy Pricing (111).
 
 Parent placeholder pages (no content): Platform (362), Solutions (364), Company/Team (366).
 
@@ -305,14 +327,16 @@ Quick version: ask Claude Code to "write a blog post about [topic] and publish i
 ### 1. HTTP status check
 ```bash
 source ~/.zshrc
+# Live pages must return 200. Retired URLs must return 301 — a 200 there means
+# stale content got redeployed; a 404 means a redirect was lost.
 for url in \
   "https://getpacerai.com/" \
-  "https://getpacerai.com/blog/" \
-  "https://getpacerai.com/platform/overview/" \
-  "https://getpacerai.com/solutions/arr-snowball-board-reporting/" \
+  "https://getpacerai.com/resources/" \
+  "https://getpacerai.com/team/" \
+  "https://getpacerai.com/contact/" \
+  "https://getpacerai.com/demo-connect/" \
   "https://getpacerai.com/solutions/customer-data-cube/" \
-  "https://getpacerai.com/company/about/" \
-  "https://getpacerai.com/company/contact/"; do
+  "https://getpacerai.com/team/about/"; do
   code=$(curl -s -o /dev/null -w "%{http_code}" "$url")
   echo "$code  $url"
 done

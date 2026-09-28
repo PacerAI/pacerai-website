@@ -15,6 +15,21 @@ fallthrough = false
 [observability]
 enabled = true
 
+# Demo self-serve signup (/signup widget + POST /demo-signup).
+# Public Turnstile site key (safe to ship in the served HTML).
+[vars]
+TURNSTILE_SITE_KEY = "0x4AAAAAAFCmrSWLyo0ieLAF"
+
+# Email-capture list written by POST /demo-signup (synced to demo_users.yml on review).
+[[kv_namespaces]]
+binding = "DEMO_SIGNUPS"
+id = "105573715cf94372bd65e505caf5d845"
+
+# Secrets (set with `wrangler secret put`, NOT in this file):
+#   TURNSTILE_SECRET     — Turnstile siteverify secret (set by agent at build)
+#   SLACK_WEBHOOK_URL    — Incoming Webhook for #gtm-triggers (Will provides)
+#   PACER_DEMO_PASSWORD  — current demo password, matches Azure PACER_OAUTH_PASSWORD (Will sets)
+
 # ── Staging: the dev half of the demo-reel pipeline ───────────────────────────
 # A SEPARATE worker (pacer-demo-worker-staging.will-078.workers.dev) that serves every
 # reel in src/variants/ at /v/{slug}, plus an index at /. New reels and new versions are
@@ -41,3 +56,11 @@ enabled = true
 # [[routes]]
 # pattern = "demo.getpacerai.com"
 # custom_domain = true
+
+# D1 — shared `leads` table (created in pacerai-gtm/infra/whitepaper-worker,
+# schema at migrations/0001_leads.sql there). Both Workers write to it so demo
+# signups and resource downloads land in one place.
+[[d1_databases]]
+binding = "LEADS"
+database_name = "pacerai-leads"
+database_id = "e0d0228a-75a6-4eff-b2b0-9455623229d2"

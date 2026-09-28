@@ -1,0 +1,196 @@
+<style>
+.wp-site-blocks > header, .wp-site-blocks > footer, header.wp-block-template-part, footer.wp-block-template-part, .wp-block-template-part:first-child { display: none !important; }
+.wp-block-post-title, .wp-block-spacer { display: none !important; }
+html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: #F5F4EF !important; }
+.wp-site-blocks, .wp-site-blocks > main, .wp-site-blocks > main > .wp-block-group, .wp-site-blocks .is-layout-constrained, .wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)), .has-global-padding, .entry-content { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
+
+:root{
+  --bone:#F5F4EF; --surface:#FAFAF7; --card:#F1EFE8; --line:#E6E1D6;
+  --navy:#1F3864; --navy-dark:#16294a; --navy-light:#2B4A7A; --teal:#2E7D74; --teal-light:#70C49C;
+  --ink:#20242B; --ink-mid:#3A372F; --muted:#5F5A50; --kick:#9A8F78;
+  --font-body:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;
+  --maxw:1180px;
+}
+#pacerai-homepage *{margin:0;padding:0;box-sizing:border-box}
+#pacerai-homepage{width:100%;max-width:100vw;overflow-x:hidden;font-family:var(--font-body);background:var(--bone);color:var(--ink);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+#pacerai-homepage a{color:inherit;text-decoration:none}
+#pacerai-homepage img{max-width:100%}
+
+#pacerai-homepage nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:0 32px;height:64px;background:rgba(245,244,239,.86);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+#pacerai-homepage .nav-logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;letter-spacing:-.2px;color:var(--ink);justify-self:start}
+#pacerai-homepage .nav-logo .chev{height:15px;width:auto;fill:none;stroke:var(--navy);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#pacerai-homepage .nav-logo span{color:var(--teal)}
+#pacerai-homepage .nav-links{display:flex;align-items:center;gap:4px;list-style:none;justify-self:center}
+#pacerai-homepage .nav-links a{display:inline-block;padding:9px 13px;border-radius:8px;font-size:14.5px;font-weight:600;color:#494540;white-space:nowrap;cursor:pointer}
+#pacerai-homepage .nav-links a:hover{background:#ebe8df;color:var(--ink)}
+#pacerai-homepage .nav-right{display:flex;align-items:center;gap:10px;justify-self:end}
+#pacerai-homepage .btn-login{padding:9px 14px;border-radius:9px;font-weight:700;font-size:14px;color:var(--navy);background:transparent;border:1px solid var(--line)}
+#pacerai-homepage .btn-login:hover{border-color:var(--navy)}
+#pacerai-homepage .btn-cta{padding:9px 16px;border-radius:9px;font-weight:700;font-size:14px;color:#fff;background:var(--navy);border:1px solid var(--navy);white-space:nowrap}
+#pacerai-homepage .btn-cta:hover{background:var(--navy-dark)}
+#pacerai-homepage .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+#pacerai-homepage .mobile-menu-btn span{display:block;width:22px;height:2px;background:var(--ink-mid);border-radius:2px}
+
+#pacerai-homepage h1,#pacerai-homepage h2,#pacerai-homepage h3,#pacerai-homepage h4,#pacerai-homepage h5,#pacerai-homepage .nav-logo{font-family:'DM Sans',system-ui,-apple-system,sans-serif !important}
+
+#pacerai-homepage .hero{text-align:left;padding:120px 24px 18px;max-width:var(--maxw);margin:0 auto}
+#pacerai-homepage .kick{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--kick);font-weight:700}
+#pacerai-homepage .hero h1{font-size:clamp(32px,5.4vw,48px);line-height:1.14;margin:14px 0 0;font-weight:800;letter-spacing:-.6px;color:var(--ink);max-width:860px;text-wrap:balance}
+#pacerai-homepage .hero-sub{font-size:18px;color:var(--ink-mid);max-width:680px;margin:18px 0 0;line-height:1.5;font-weight:600}
+#pacerai-homepage .hero-sub b{color:var(--navy)}
+
+#pacerai-homepage .reel-wrap{max-width:var(--maxw);margin:26px auto 0;padding:0 24px}
+#pacerai-homepage .reel{max-width:1000px;margin:0 auto;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+#pacerai-homepage .reel iframe{width:100%;height:600px;border:0;display:block}
+#pacerai-homepage .reel-cap{max-width:1000px;margin:12px auto 0;font-size:13.5px;color:var(--muted);text-align:center}
+#pacerai-homepage .reel-cap b{color:var(--ink)}
+
+#pacerai-homepage .signup-wrap{max-width:600px;margin:26px auto 0;padding:0 24px}
+#pacerai-homepage .signup iframe{width:100%;height:640px;border:0;display:block;border-radius:16px}
+
+#pacerai-homepage .body{max-width:820px;margin:0 auto;padding:26px 24px 96px}
+#pacerai-homepage h2.sec{font-size:clamp(22px,3vw,26px);font-weight:800;color:var(--ink);letter-spacing:-.3px;margin:40px 0 14px}
+#pacerai-homepage .pill{display:inline-block;background:var(--navy);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;vertical-align:middle;margin-left:8px}
+#pacerai-homepage ol{padding-left:22px}
+#pacerai-homepage ol li{margin:11px 0;font-size:15.5px}
+#pacerai-homepage .url{display:inline-block;font-size:15px;font-weight:700;color:var(--navy)}
+#pacerai-homepage a.url:hover{color:var(--teal)}
+#pacerai-homepage .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-size:13.5px}
+#pacerai-homepage .prompts{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:14px 0}
+#pacerai-homepage .prompts .p{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--teal);font-weight:700;font-size:15.5px;margin:8px 0}
+#pacerai-homepage .after{font-size:15px;color:var(--muted);margin-top:8px}
+#pacerai-homepage .note{font-size:13.5px;color:var(--muted);border-top:1px dashed var(--line);margin-top:36px;padding-top:18px}
+#pacerai-homepage .note b{color:var(--ink)}
+
+#pacerai-homepage footer{border-top:1px solid var(--line);background:var(--surface);padding:64px 24px 32px}
+#pacerai-homepage .footer-top{display:grid;grid-template-columns:260px repeat(4,1fr);gap:40px;max-width:var(--maxw);margin:0 auto;padding-bottom:40px;border-bottom:1px solid var(--line)}
+#pacerai-homepage .footer-brand p{font-size:13px;color:var(--muted);line-height:1.7;margin-top:14px}
+#pacerai-homepage .footer-col-head{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:18px}
+#pacerai-homepage .footer-col ul{list-style:none}
+#pacerai-homepage .footer-col li{margin-bottom:10px}
+#pacerai-homepage .footer-col a{font-size:13px;color:var(--muted)}
+#pacerai-homepage .footer-col a:hover{color:var(--teal)}
+
+@media(max-width:900px){
+  #pacerai-homepage nav{grid-template-columns:1fr auto;padding:0 16px}
+  #pacerai-homepage .nav-links{display:none}
+  #pacerai-homepage nav.nav-open .nav-links{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--bone);border-bottom:1px solid var(--line);box-shadow:0 14px 34px rgba(15,25,45,.10);padding:10px 16px 16px;gap:0;z-index:130}
+  #pacerai-homepage nav.nav-open .nav-links li{width:100%}
+  #pacerai-homepage nav.nav-open .nav-links a{display:block;width:100%;padding:14px 6px;font-size:16px;border-bottom:1px solid var(--line);border-radius:0}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(2){opacity:0}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  #pacerai-homepage .mobile-menu-btn span{transition:transform .2s,opacity .2s}
+  #pacerai-homepage .mobile-menu-btn{display:flex}
+  #pacerai-homepage .btn-login{display:none}
+  #pacerai-homepage .hero{padding-top:104px}
+  #pacerai-homepage .hero h1{font-size:29px;line-height:1.2}
+  #pacerai-homepage .hero-sub{font-size:16px}
+  #pacerai-homepage .reel iframe{height:520px}
+  #pacerai-homepage .footer-top{grid-template-columns:1fr 1fr;gap:28px}
+  #pacerai-homepage .footer-brand{grid-column:1/-1}
+}
+</style>
+
+<div id="pacerai-homepage">
+<nav>
+  <a href="/" class="nav-logo">Pacer <span>AI</span>
+    <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#revenue-modeling-agent">Revenue Modeling Agent</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/resources/">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
+    <a href="/demo-connect" class="btn-cta">Try the Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="this.closest('nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="kick">Pacer AI Demo</div>
+  <h1>See if you&rsquo;re on pace &mdash; in Claude, in 2 minutes</h1>
+  <p class="hero-sub">Connect the Pacer AI Demo to Claude, then just type <b>pace</b> and <b>gap</b>. It reads a live book and tells you whether you&rsquo;ll make the number &mdash; and how to close the gap.</p>
+</section>
+
+<div class="signup-wrap">
+  <div class="signup">
+    <iframe src="https://pacer-demo-worker.will-078.workers.dev/signup" title="Get demo access — enter your email" loading="lazy"></iframe>
+  </div>
+</div>
+
+<div class="reel-wrap">
+  <div class="reel">
+    <iframe src="https://pacer-demo-worker-staging.will-078.workers.dev/v/demo-connect" title="Pacer AI — add the connector, sign in, type pace" loading="lazy"></iframe>
+  </div>
+  <div class="reel-cap">A guided walkthrough: add the connector, sign in, type <b>pace</b> &mdash; charts render right in the chat. Run it yourself on a synthetic $100M book with the steps below.</div>
+</div>
+
+<div class="body">
+
+  <h2 class="sec">Add the connector <span class="pill">2 min</span></h2>
+  <ol>
+    <li><b>Browser (recommended):</b> open <a class="url" href="https://claude.ai/new?modal=add-custom-connector#customize/connectors">claude.ai/new?modal=add-custom-connector</a> &mdash; it opens the Add-custom-connector dialog directly.</li>
+    <li><b>Mobile or Desktop app:</b> tap the <b>+</b> in the prompt area &rarr; <b>Connectors</b> &rarr; <b>Manage connectors</b> &rarr; <b>Add custom connector</b>.</li>
+    <li>Enter the name <b>Pacer AI Demo</b> and this URL: <span class="url">https://pacerai-demo-mcp.azurewebsites.net/mcp</span></li>
+    <li>Keep the detected defaults (<b>Sign in now</b> + <b>Register automatically</b>) and click <b>Add</b>.</li>
+    <li>On the <b>Pacer AI Demo</b> sign-in page, enter your work email + the access password <b>your Pacer contact shared with you</b>.</li>
+  </ol>
+
+  <h2 class="sec">Then just type</h2>
+  <div class="prompts">
+    <div class="p">pace</div>
+    <div class="p">gap</div>
+    <div class="p">how do I close the gap to target?</div>
+  </div>
+  <div class="after">Charts render right in the chat on Claude web/desktop. Follow up in plain English &mdash; ask about a segment, an account, or the month.</div>
+
+  <div class="note">
+    The demo runs on a synthetic $100M book (fictional accounts). Questions? <b>will@getpacerai.com</b>.
+    Enter your work email above and your access password is revealed on this page &mdash; no call, no waiting.
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="font-size:17px">Pacer <span style="color:var(--teal)">AI</span>
+        <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+      </a>
+      <p>The Revenue Modeling Agent for Sales Leaders. Reconciled to Finance, built on Microsoft Fabric.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Product</div>
+      <ul>
+        <li><a href="/#revenue-modeling-agent">Revenue Modeling Agent</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+        <li><a href="/#integrations">Integrations</a></li>
+        <li><a href="/#security">Security</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Use Cases</div>
+      <ul>
+        <li><a href="/#gtm-planning">GTM Planning</a></li>
+        <li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
+        <li><a href="/#case-studies">Case Studies</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Resources</div>
+      <ul>
+        <li><a href="/resources/">Resources</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</div>

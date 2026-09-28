@@ -69,21 +69,22 @@ Every page is a single `<!-- wp:html -->` Gutenberg block:
   /* CSS variables, component styles, responsive breakpoints (768px, 1024px) */
 </style>
 <div id="pacerai-homepage">
-  <nav><!-- Shared nav with dropdowns + mobile hamburger --></nav>
+  <nav><!-- Shared nav — v3 is FLAT/centered, no dropdowns. Source: src/nav-headers.html --></nav>
   <!-- Page-specific content sections -->
-  <footer><!-- Shared 5-column footer --></footer>
+  <footer><!-- Shared 4-column footer: Product · Use Cases · Company · Resources. Source: src/footer/footer.html --></footer>
 </div>
-<script>/* Mobile nav: hamburger toggle + dropdown expand/collapse */</script>
+<!-- No inline <script> — WordPress strips it. JS lives in the WPCode Footer snippet (src/wpcode/footer.js)
+     or the <img onerror> injector. See src/README.md. -->
 ```
 
 ### Shared Elements (duplicated in every file)
 
-Changes to ANY of these require updating ALL 7 source files and batch redeploying:
+Changes to ANY of these require updating EVERY live source file (22+ pages — see scripts/deploy.py PAGE_REGISTRY) and batch redeploying:
 - TT4 override CSS (hide theme chrome, force dark bg, hide `.wp-block-post-title`)
 - CSS variables (`:root` brand colors/fonts)
-- Nav HTML (fixed nav with dropdown menus, SVG logo, mobile hamburger)
-- Footer HTML (5-column grid: Brand, Use Cases, Solutions, Team, Connect)
-- Mobile nav JS (hamburger toggle + dropdown expand/collapse)
+- Nav HTML — canonical: `src/nav-headers.html` (two variants: homepage smooth-scroll vs sub-page `/#section`)
+- Footer HTML — canonical: `src/footer/footer.html` (4 columns; the Solutions column retired with the /solutions/* 301s)
+- Mobile nav JS — in `src/wpcode/footer.js`, installed via the WPCode Footer snippet
 - Responsive CSS (768px mobile + 1024px tablet breakpoints)
 
 ## Deploy Workflows
@@ -168,6 +169,11 @@ for url in \
 done
 ```
 
+> **Read [`src/README.md`](../../../src/README.md) first** for page anatomy, how the canonical nav/footer
+> fragments attach, the three WPCode snippets, and how to paste the footer one without taking the site's JS
+> down. Deploy through `python3 scripts/deploy.py <id>` — it validates, backs up and verifies. Raw `requests`
+> calls bypass the pre-publish hook in `.claude/rules/wordpress-deploy.md`.
+
 ## Operating Rules
 
 1. **Always read before writing** — fetch current page before modifying
@@ -175,7 +181,7 @@ done
 3. **Preserve Yoast** — never overwrite `yoast_head` or SEO metadata fields
 4. **Stop on errors** — if any API call returns non-2xx, stop and report
 5. **Document changes** — append to `docs/document/changelog.md` after every deploy
-6. **Update all pages for shared changes** — nav, footer, base CSS changes require batch redeploy of all 7 files
+6. **Update all pages for shared changes** — nav, footer, base CSS changes require a batch redeploy of every live page
 7. **Register new pages** — always update `CLAUDE.md` page registry when creating new WP pages
 
 ## WordPress.com CSS/JS Pitfalls (CRITICAL)
@@ -192,10 +198,10 @@ done
 ## Brand Constraints
 
 - **Fonts:** DM Sans (body), Cormorant Garamond (headings)
-- **Background:** Dark navy (#080E1C)
-- **Accent:** Teal (#27899A), Teal Light (#70C49C)
+- **Background:** bone `#F5F4EF` (surface `#FAFAF7`) — v3.0.x is bone end to end. Dark navy `#080E1C` survives only on redirected legacy URLs.
+- **Accent:** Teal `#2E7D74` / `#70C49C`; primary buttons are navy `#1F3864`. (Legacy dark teal was `#27899A`.)
 - **Aesthetic:** Minimal, financial-professional. No playful UI elements.
-- **CTA language:** "Request a Demo", "Talk to a RevOps Expert" — never "Get Started Free"
+- **CTA language:** primary is email capture — "Try the Demo Free", "Get the White Paper"; booking ("Talk to Will") is secondary and lives on /contact/ only. Never "Learn More".
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."
 
 ## Key References

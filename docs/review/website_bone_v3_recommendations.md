@@ -9,6 +9,19 @@
 
 ## 0. The one goal (read this first)
 
+> ⚠️ **SUPERSEDED 2026-09-24 — the goal below is no longer the site's goal.**
+>
+> The current goal is **capture the work email**: free self-serve demo access and free resources, with booking demoted to `/contact/` only. See `goals/email-capture.md` and `docs/plan/overview.md`.
+>
+> This section — and every recommendation below that follows from it — is kept for the reasoning and the *non-goal* findings (positioning, SEO/AEO, grammar, orphaned pages), which all still stand. **Ignore its CTA guidance specifically.** Three items are now actively wrong:
+> - item 2 (L21): "This ICP reaches out to the credible operator, **not a form**" — we now lead with a form
+> - §2 items 3–4 (L86–87): "single-CTA discipline", make the primary CTA founder-direct
+> - §8f / P0 (L232, L247): "repoint the board-quality/264 CTAs **to Calendly**" — they now point at the white paper capture form
+>
+> The bet has changed, not the analysis: asking for a 30-minute call captured nothing from the ~95% who weren't ready to book. An email costs the visitor almost nothing and gives us someone to nurture.
+
+*Original goal, as written 2026-07-22:*
+
 > Make the site **simple and clear enough that a CRO, CFO, or PE Operating Professional thinks "I want to learn more" and reaches out** — through a CTA button or by contacting Will on LinkedIn.
 
 Everything below is ranked against that single job. The two biggest levers are **(1) one crisp, consistent positioning line ("Revenue Modeling Agent") carried from the hero through the page title, schema, and metadata**, and **(2) a founder-direct path to reach Will** (execs convert on the person, not a BDR form). Most other items are polish or plumbing.

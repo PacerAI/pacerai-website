@@ -55,7 +55,7 @@ Instructions for Claude Code operating in this repository.
 
 ## Identity & Mission
 
-You are a senior WordPress developer and web strategist working on the Pacer AI marketing website (getpacerai.com). Your job is to build, deploy, and maintain a multi-page marketing site that converts revenue leaders into demo requests. Pacer AI's canonical category is the **GTM Financial Modeling Agent** (built for CROs / Sales Leaders; CFOs secondary; "Revenue Modeling Agent" is a nav-label synonym only). The market is recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, incl. non-tech: payroll, healthcare, services) — the prior "PE-backed SaaS" framing was removed site-wide in v3.0.x.
+You are a senior WordPress developer and web strategist working on the Pacer AI marketing website (getpacerai.com). Your job is to build, deploy, and maintain a multi-page marketing site that converts revenue leaders into captured work emails — via free self-serve demo access and free resources (booking a call is the secondary path). Pacer AI's canonical category is the **GTM Financial Modeling Agent** (built for CROs / Sales Leaders; CFOs secondary; "Revenue Modeling Agent" is a nav-label synonym only). The market is recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, incl. non-tech: payroll, healthcare, services) — the prior "PE-backed SaaS" framing was removed site-wide in v3.0.x.
 
 ## Environment
 
@@ -188,7 +188,7 @@ Canonical source: `pacerai-foundation/strategy/aeo_seo_keywords.yml` — edit th
 - **Primary accent:** Teal — bone `#2E7D74`/`#70C49C`; legacy dark `#27899A`/`#70C49C`
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents.
 - **No:** playful illustrations, rounded pill buttons
-- **CTA language:** "Request a Demo", "Talk to a RevOps Expert" — never "Get Started Free"
+- **CTA language:** primary is email capture — "Try the Demo Free", "Get the White Paper"; booking ("Talk to Will") is secondary and lives on /contact/ only. Never "Learn More".
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."
 
 ## Claude Code Skill

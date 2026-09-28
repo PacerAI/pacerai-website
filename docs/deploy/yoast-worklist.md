@@ -85,3 +85,7 @@ Order: Fix first, then Minor. Titles <=60, metas <=155.
 21. [OK] Why ARR Waterfall Models Matter  (/resources/why-arr-waterfall-models-matter-for-saas-growth/, WP 358)
    TITLE (58): Why ARR Waterfall Models Matter for SaaS Growth | Pacer AI
    META: keep current (change title only)
+
+22. [NEW] Grow NRR from 101% to 105%  (/resources/grow-nrr-101-to-105-case-study/, WP 778)
+   TITLE (54): How I Grew a Client's NRR from 101% to 105% | Pacer AI
+   META  (147): A six-month case study: sunsetting weak add-on products, fixing pricing leakage and fencing off M&A churn moved net revenue retention 101% to 105%.
