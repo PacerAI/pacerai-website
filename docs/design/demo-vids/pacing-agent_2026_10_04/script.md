@@ -132,4 +132,7 @@ I can add these lists as tabs in a workbook, or break the expansion list down by
 ## End card
 
 **Type “pace” in your own Claude** — Connect the Pacer AI demo in two minutes. No credit card, no call required.
-[Try the Demo Free →](https://getpacerai.com/demo-connect) · Replay
+[Try the Demo Free →](https://getpacerai.com/demo-connect) · Review the output · Replay
+
+*Review the output* closes the card and scrolls back to the top so the viewer can read the whole conversation;
+a bar keeps *Try the Demo Free* and *Replay* in reach.

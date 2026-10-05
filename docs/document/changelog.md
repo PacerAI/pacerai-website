@@ -8,6 +8,18 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-05 — Pacing Agent video is the homepage video
+
+- **Status:** LIVE. `./promote.sh pacing-agent-v2 --deploy` → production `pacer-demo-worker` `/` serves sha
+  `1e25e149…` (was `cro-arr-v1`, `dda61798…`). The homepage iframe is unchanged and now plays it. `/signup` and
+  `/health` verified 200 after the deploy.
+- **v2 vs v1:** the end card adds **Review the output** (Will, 2026-10-05) next to Try the Demo Free and Replay.
+- **Registry:** `pacerai-content` branch `demo-reel/pacing-agent-v2` (`production_variant: pacing-agent-v2`,
+  promotion_log entry, catalog `pacing-agent-v2/`).
+- **Rollback:** `cd infra/pacer-demo-worker && ./promote.sh cro-arr-v1 --deploy`.
+
+---
+
 ## 2026-10-05 — Pacing Agent demo video staged; homepage chart now comes from the same dataset
 
 - **Status:** chart LIVE (page 25, backup `docs/review/pre-deploy-backup-25-20261005-1527.json`). Video STAGED at
