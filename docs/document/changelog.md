@@ -8,6 +8,23 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-05 — Pacing Agent demo video staged; homepage chart now comes from the same dataset
+
+- **Status:** chart LIVE (page 25, backup `docs/review/pre-deploy-backup-25-20261005-1527.json`). Video STAGED at
+  `https://pacer-demo-worker-staging.will-078.workers.dev/v/pacing-agent-v1` (sha `62516d89…`), awaiting Will's review
+  before `promote.sh` puts it on the homepage. Production `/` still serves `cro-arr-v1`.
+- **Video:** user types `pace` (month, quarter, year charts + pacing summary + September deals + Go-Get), then `gap`
+  (whitespace renewing Sep 2026 + new-logo motions), ending on "Try the Demo Free" → /demo-connect. Built by
+  `pacerai-platform-claude-native/demo-site/build_pacing_video.py` from the real tool renderers on an illustrative
+  dataset as of 2026-09-20 ($100M → $120M FY2026 plan; $14M new logo + $6M expansion).
+- **Homepage chart:** `scripts/build_pacing_chart.py` now takes the video's `pace_annual.svg` and applies the website
+  tweaks (label right of point, "Plan", "illustrative data"). Reads Booked $112.2M vs plan $114.4M, $2.3M behind.
+  `img/pacing/fy26-annual-pacing.json` and the copied renderer are gone; the dataset is the single source.
+- **Archive:** `docs/design/demo-vids/` (planning-agent_2026_10_04 = `cro-arr-v1`, pacing-agent_2026_10_04 = new).
+  Seed: `docs/seed/2026-10-05-pacing-agent-demo-video.md`.
+
+---
+
 ## 2026-10-05 — Homepage pacing chart restyled to match the pace_annual MCP chart
 
 - **Status:** LIVE. Page 25. Backup `docs/review/pre-deploy-backup-25-20261005-1340.json`.
