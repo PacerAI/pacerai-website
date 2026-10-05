@@ -8,6 +8,41 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-05 — Homepage pacing chart restyled to match the pace_annual MCP chart
+
+- **Status:** LIVE. Page 25. Backup `docs/review/pre-deploy-backup-25-20261005-1340.json`.
+- Chart now uses the `svg_pace` design (white card, teal "PACING AGENT · ANNUAL" eyebrow, Cormorant title, centered
+  legend, translucent teal/navy bands, dashed even-monthly plan, navy booked line, orange gap marker, Dec target).
+- Follow-up: booked value label moved right of the point; legend "Plan (even monthly)" → "Plan".
+- **`scripts/deploy.py` fix:** WordPress.com's bot challenge ("Checking your browser...") began returning 403 to the
+  script's custom SSL context (no http/1.1 ALPN, verification off). It now uses urllib's default verified context.
+- Homepage `<style>` imports Cormorant Garamond + JetBrains Mono; unused Income Statement / ARR-movement card CSS removed
+  (inline CSS 30,188 → 27,361 chars).
+
+---
+
+## 2026-10-05 — "Make plan with confidence" homepage + email capture live site-wide
+
+- **Status:** LIVE. Plan: `docs/plan/2026-10-05-make-plan-messaging.md`. Branch `feat/make-plan-messaging` (stacked on PR #24).
+- **Deployed by:** Claude Code (Will's go)
+- **Pages:** 25 (Homepage), 230 (Resources), 366 (Team), 375 (Contact), 983 (Demo Connect), plus all 13 posts
+  (491 378 376 368 360 358 441 781 591 888 850 865 778, `--force` for the older writing-style findings).
+- **Homepage:** kick "Daily Pacing Agent"; h1 "Pacer AI helps Sales Leaders ‹rotor›" with six phrases (make plan with
+  confidence · close the gap to plan · improve Net Retention Rates · cross-sell products · improve durable revenue growth
+  · improve forecast accuracy); Why h2 "…achieve their sales targets and operating plans" with the FY26 annual pacing
+  chart (illustrative; `scripts/build_pacing_chart.py`, data `img/pacing/fy26-annual-pacing.json`) replacing the
+  Income Statement vs ARR-movements cards; 6 pacing use cases; Buy-In and Value rewritten; Get Started = "Try a Demo
+  now" + email form ("Demo in Claude now" → /demo-connect) + "Schedule a Demo" → calendly.com/pacerai/demo-pacer-ai.
+- **Email capture (PR #24) now live on every page:** hero demo-access form on the homepage, white-paper forms on
+  Resources and the posts. The diagnostic and strategy-session Calendly links are gone from the homepage.
+- **Category rename:** "Revenue Modeling Agent" / "GTM Financial Modeling Agent" → "Daily Pacing Agent" in nav, footer
+  and body copy on all 18 pages (anchor `#revenue-modeling-agent` kept).
+- **Hero rotor:** class renamed `.rotor` → `.pa-rotor` and phrases moved to `data-phrases`, so the old WPCode footer
+  can't override them. `src/wpcode/footer.js` updated to match; pasting `footer.paste.txt` is optional.
+- **Pre-change snapshot:** `docs/archive/live-site-2026-10-05/`. **Backups:** `docs/review/pre-deploy-backup-*-20261005-13*.json`.
+
+---
+
 ## 2026-10-05 — Demo Connect hero copy
 
 - **Status:** LIVE. Page 983 (`/demo-connect/`), source `src/demo-connect.html`.

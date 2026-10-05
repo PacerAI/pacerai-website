@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.com hosted site deployed via the WordPress REST API. No local dev server — content is authored as standalone HTML files and pushed to WordPress as Pages.
 
-**Category (canonical):** Pacer AI is the **GTM Financial Modeling Agent** — built for CROs / Sales Leaders (CFOs secondary). "Revenue Modeling Agent" is retained only as a nav-label synonym.
+**Category (canonical, 2026-10-05):** Pacer AI is the **Daily Pacing Agent**: it helps Sales Leaders make plan with confidence (pace to plan, the gap to close, how to close it). Built for CROs / Sales Leaders (CFOs secondary). Replaced "GTM Financial Modeling Agent" site-wide on 2026-10-05; nav and footer label is "Daily Pacing Agent" (the `#revenue-modeling-agent` anchor is kept so old links work). Yoast titles and the Organization JSON-LD `alternateName` still carry the old term until updated in WP Admin.
 
 **Target:** recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services). Buyer personas: CROs, Sales Leaders, RevOps, CFOs, and PE Portfolio Ops. *(The prior "PE-backed SaaS" framing was removed site-wide in v3.0.x.)*
 
@@ -35,7 +35,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 > **bone (`#F5F4EF`)**. Only legacy/redirected URLs remain non-bone.
 > The 6 `/solutions/*` pages are **retired from nav + homepage and 301-redirected to the homepage**
 > (source files kept for archive/rollback; do not redeploy their content). Legacy `/pricing/` (111)
-> **301-redirects to `/#pricing`**. Homepage nav is flat/centered (Revenue Modeling Agent · Use Cases ·
+> **301-redirects to `/#pricing`**. Homepage nav is flat/centered (Daily Pacing Agent · Use Cases ·
 > Team · Pricing · Resources). The Blog (230) WP page title is renamed **"Blog" → "Resources"** (slug
 > already `resources`; posts auto-301, `/blog/` → `/resources/` redirect live; runbook
 > `docs/deploy/blog-to-resources-rename.md`). "Resources" nav → `/resources/`.
@@ -313,14 +313,14 @@ Every page follows the same pattern:
 
 <!-- SOURCE: pacerai-foundation/brand/ and pacerai-foundation/commercial/cta-language.yml -->
 
-- **Category term (canonical):** **GTM Financial Modeling Agent** (built for CROs / Sales Leaders; CFOs secondary). "Revenue Modeling Agent" survives only as a nav-label synonym; "ARR Modeling Agent" is a schema `alternateName`. The "PE-backed SaaS" framing was removed site-wide — the market is recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services).
+- **Category term (canonical):** **Daily Pacing Agent** (since 2026-10-05; was "GTM Financial Modeling Agent"). Positioning line: *helping sales leaders make plan with confidence*. The market is recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services).
 - **Fonts:** DM Sans (body), Cormorant Garamond (legacy headings). The v3 bone homepage uses DM Sans (weight 800) for headings per the approved demo design.
 - **Background (v3.0.x, "Claude-bone"):** bone `#F5F4EF` (surface `#FAFAF7`). **ALL pages are now bone** — homepage, Resources hub, all 12 blog articles, Team, and Contact. Only legacy/redirected URLs remain non-bone.
 - **Legacy dark background (retired — only on redirected legacy URLs):** Dark navy (#080E1C)
 - **Primary accent:** Teal — bone: `#2E7D74` / `#70C49C`; legacy dark: `#27899A` / `#70C49C`
 - **v3 bone tokens:** `--bone:#F5F4EF --surface:#FAFAF7 --navy:#1F3864 --teal:#2E7D74 --ink:#20242B --muted:#5F5A50 --line:#E6E1D6`
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents. No playful illustrations or rounded pill buttons.
-- **CTA language:** primary is email capture — "Try the Demo Free", "Get the White Paper"; booking ("Talk to Will") is secondary and lives on /contact/ only. Never "Learn More".
+- **CTA language:** primary is email capture — "Try the Demo Free", "Demo in Claude now", "Get the White Paper"; booking ("Talk to Will") is secondary and lives on /contact/ only. Never "Learn More".
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."
 
 **Canonical source:** `PacerAI/pacerai-foundation/` — see brand/, strategy/, and commercial/ for full definitions.

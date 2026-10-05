@@ -1,0 +1,412 @@
+{
+  "id": 375,
+  "date": "2026-03-10T04:13:05",
+  "date_gmt": "2026-03-10T10:13:05",
+  "guid": {
+    "rendered": "https://getpacerai.com/company/contact/",
+    "raw": "https://getpacerai.com/company/contact/"
+  },
+  "modified": "2026-09-24T14:47:53",
+  "modified_gmt": "2026-09-24T20:47:53",
+  "password": "",
+  "slug": "contact",
+  "status": "publish",
+  "type": "page",
+  "link": "https://getpacerai.com/contact/",
+  "title": {
+    "raw": "Contact",
+    "rendered": "Contact"
+  },
+  "content": {
+    "raw": "<!-- wp:html --><style>\n.wp-site-blocks > header, .wp-site-blocks > footer, header.wp-block-template-part, footer.wp-block-template-part, .wp-block-template-part:first-child { display: none !important; }\n.wp-block-post-title, .wp-block-spacer { display: none !important; }\nhtml, body, .wp-site-blocks { background: #F5F4EF !important; background-color: #F5F4EF !important; }\n.wp-site-blocks, .wp-site-blocks > main, .wp-site-blocks .is-layout-constrained, .has-global-padding, .entry-content { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }\n\n#pacerai-homepage{--bone:#F5F4EF;--surface:#FAFAF7;--navy:#1F3864;--navy-dark:#16294A;--teal:#2E7D74;--ink:#20242B;--ink-mid:#3A3730;--muted:#5F5A50;--line:#E6E1D6;--kick:#9A8F78;--maxw:1120px;font-family:'DM Sans',system-ui,sans-serif;background:var(--bone);color:var(--ink);line-height:1.6;font-size:15px;overflow-x:hidden}\n#pacerai-homepage *{margin:0;padding:0;box-sizing:border-box}\n#pacerai-homepage a{color:inherit;text-decoration:none}\n\n#pacerai-homepage nav{position:sticky;top:0;z-index:120;display:grid;grid-template-columns:auto 1fr auto;align-items:center;height:64px;padding:0 32px;background:rgba(245,244,239,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}\n#pacerai-homepage .nav-logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px;color:var(--ink)}\n#pacerai-homepage .nav-logo span{color:var(--teal)}\n#pacerai-homepage .nav-logo .chev{width:26px;height:12px;fill:none;stroke:var(--teal);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}\n#pacerai-homepage .nav-links{display:flex;align-items:center;gap:4px;list-style:none;justify-self:center}\n#pacerai-homepage .nav-links a{display:inline-block;padding:9px 13px;border-radius:8px;font-size:14.5px;font-weight:600;color:#494540;white-space:nowrap}\n#pacerai-homepage .nav-links a:hover{background:#ebe8df;color:var(--ink)}\n#pacerai-homepage .nav-right{display:flex;align-items:center;gap:10px;justify-self:end}\n#pacerai-homepage .btn-login{font-size:14px;font-weight:600;color:var(--navy);padding:8px 14px;border:1px solid var(--line);border-radius:9px}\n#pacerai-homepage .btn-cta{padding:9px 16px;border-radius:9px;font-weight:700;font-size:14px;color:#fff;background:var(--navy);border:1px solid var(--navy);white-space:nowrap}\n#pacerai-homepage .btn-cta:hover{background:var(--navy-dark)}\n#pacerai-homepage .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}\n#pacerai-homepage .mobile-menu-btn span{display:block;width:22px;height:2px;background:var(--ink-mid);border-radius:2px;transition:transform .2s,opacity .2s}\n\n#pacerai-homepage .hero{text-align:center;padding:96px 24px 40px;max-width:760px;margin:0 auto}\n#pacerai-homepage .kick{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--kick);font-weight:700;margin-bottom:14px}\n#pacerai-homepage .hero h1{font-size:clamp(38px,6vw,60px);font-weight:800;line-height:1.04;letter-spacing:-1px;color:var(--ink)}\n#pacerai-homepage .hero p{font-size:18px;color:var(--muted);margin:20px auto 0;max-width:560px}\n\n#pacerai-homepage .contact-wrap{max-width:var(--maxw);margin:0 auto;padding:20px 24px 90px}\n#pacerai-homepage .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}\n#pacerai-homepage .ccard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px}\n#pacerai-homepage .ccard.primary{border-color:rgba(31,56,100,.35);background:linear-gradient(135deg,rgba(46,125,116,.06),var(--surface))}\n#pacerai-homepage .ccard h3{font-size:19px;font-weight:800;color:var(--ink);margin-bottom:8px}\n#pacerai-homepage .ccard p{font-size:14.5px;color:var(--muted);margin-bottom:18px}\n#pacerai-homepage .ccard .clink{display:inline-flex;align-items:center;gap:7px;font-size:14.5px;font-weight:700;color:var(--navy)}\n#pacerai-homepage .ccard .clink svg{width:15px;height:15px;fill:#0A66C2}\n#pacerai-homepage .ccard.primary .clink{background:var(--navy);color:#fff;padding:11px 20px;border-radius:10px}\n#pacerai-homepage .ccard.primary .clink:hover{background:var(--navy-dark)}\n\n#pacerai-homepage footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 32px 40px}\n#pacerai-homepage .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;max-width:var(--maxw);margin:0 auto}\n#pacerai-homepage .footer-brand p{font-size:13.5px;color:var(--muted);margin-top:12px;max-width:280px}\n#pacerai-homepage .footer-col-head{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--kick);margin-bottom:14px}\n#pacerai-homepage .footer-col ul{list-style:none}\n#pacerai-homepage .footer-col li{margin-bottom:9px}\n#pacerai-homepage .footer-col a{font-size:13.5px;color:var(--muted)}\n#pacerai-homepage .footer-col a:hover{color:var(--navy)}\n\n@media(max-width:900px){\n  #pacerai-homepage nav{grid-template-columns:1fr auto;padding:0 16px}\n  #pacerai-homepage .nav-links{display:none}\n  #pacerai-homepage nav.nav-open .nav-links{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--bone);border-bottom:1px solid var(--line);box-shadow:0 14px 34px rgba(15,25,45,.10);padding:10px 16px 16px;gap:0;z-index:130}\n  #pacerai-homepage nav.nav-open .nav-links li{width:100%}\n  #pacerai-homepage nav.nav-open .nav-links a{display:block;width:100%;padding:14px 6px;font-size:16px;border-bottom:1px solid var(--line);border-radius:0}\n  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}\n  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(2){opacity:0}\n  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}\n  #pacerai-homepage .mobile-menu-btn{display:flex}\n  #pacerai-homepage .btn-login{display:none}\n  #pacerai-homepage .contact-grid{grid-template-columns:1fr}\n  #pacerai-homepage .footer-top{grid-template-columns:1fr 1fr;gap:28px}\n}\n#pacerai-homepage h1,#pacerai-homepage h2,#pacerai-homepage h3,#pacerai-homepage h4,#pacerai-homepage h5,#pacerai-homepage .nav-logo{font-family:'DM Sans',system-ui,-apple-system,sans-serif !important}\n</style>\n\n<div id=\"pacerai-homepage\">\n<nav>\n  <a href=\"/\" class=\"nav-logo\">Pacer <span>AI</span>\n    <svg class=\"chev\" viewBox=\"0 0 40 18\" aria-hidden=\"true\"><path d=\"M3 3 L10 9 L3 15\"/><path d=\"M15 3 L22 9 L15 15\"/><path d=\"M27 3 L34 9 L27 15\"/></svg>\n  </a>\n  <ul class=\"nav-links\">\n    <li><a href=\"/#revenue-modeling-agent\">Revenue Modeling Agent</a></li>\n    <li><a href=\"/#use-cases\">Use Cases</a></li>\n    <li><a href=\"/#team\">Team</a></li>\n    <li><a href=\"/#pricing\">Pricing</a></li>\n    <li><a href=\"/resources/\">Resources</a></li>\n  </ul>\n  <div class=\"nav-right\">\n    <a href=\"https://app.getpacerai.com/.auth/login/aad\" class=\"btn-login\">Log In</a>\n    <a href=\"/demo-connect\" class=\"btn-cta\">Try the Demo</a>\n    <button class=\"mobile-menu-btn\" aria-label=\"Menu\" onclick=\"this.closest('nav').classList.toggle('nav-open')\"><span></span><span></span><span></span></button>\n  </div>\n</nav>\n\n<section class=\"hero\">\n  <div class=\"kick\">Contact</div>\n  <h1>Let&rsquo;s talk.</h1>\n  <p>Whether you want a live diagnostic, a founder-to-founder conversation, or just have a question about building your revenue model &mdash; here&rsquo;s how to reach us.</p>\n</section>\n\n<div class=\"contact-wrap\">\n  <div class=\"contact-grid\">\n    <div class=\"ccard primary\">\n      <h3>Book a Free Diagnostic</h3>\n      <p>The fastest way in. Pick a time and we&rsquo;ll walk your revenue data through the GTM Financial Modeling Agent live &mdash; no slides.</p>\n      <a class=\"clink\" href=\"https://calendly.com/pacerai/diagnostic\">Book a 30-min diagnostic &rarr;</a>\n    </div>\n    <div class=\"ccard\">\n      <h3>Talk to Will</h3>\n      <p>Prefer to start with a conversation? Book time directly with founder Will Sullivan &mdash; a former PwC M&amp;A advisor.</p>\n      <a class=\"clink\" href=\"https://calendly.com/pacerai/strategy-session\">Schedule a founder call &rarr;</a>\n    </div>\n    <div class=\"ccard\">\n      <h3>Email us</h3>\n      <p>Have a question or a portfolio-wide deployment in mind? Reach us directly &mdash; we typically reply within one business day.</p>\n      <a class=\"clink\" href=\"mailto:will@getpacerai.com\">will@getpacerai.com</a>\n    </div>\n    <div class=\"ccard\">\n      <h3>Connect on LinkedIn</h3>\n      <p>Follow the build and reach out to Will directly on LinkedIn.</p>\n      <a class=\"clink\" href=\"https://www.linkedin.com/in/will-sullivan98/\" target=\"_blank\" rel=\"noopener\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.02 8.25H4.9V24H.02V8.25zM8.34 8.25h4.67v2.15h.07c.65-1.23 2.24-2.53 4.61-2.53 4.93 0 5.84 3.24 5.84 7.46V24h-4.87v-6.98c0-1.66-.03-3.8-2.32-3.8-2.32 0-2.68 1.81-2.68 3.68V24H8.34V8.25z\"/></svg>Connect with Will</a>\n    </div>\n  </div>\n</div>\n\n<footer>\n  <div class=\"footer-top\">\n    <div class=\"footer-brand\">\n      <a href=\"/\" class=\"nav-logo\" style=\"font-size:17px\">Pacer <span style=\"color:var(--teal)\">AI</span>\n        <svg class=\"chev\" viewBox=\"0 0 40 18\" aria-hidden=\"true\"><path d=\"M3 3 L10 9 L3 15\"/><path d=\"M15 3 L22 9 L15 15\"/><path d=\"M27 3 L34 9 L27 15\"/></svg>\n      </a>\n      <p>The GTM Financial Modeling Agent for Sales Leaders. Reconciled to Finance, built on Microsoft Fabric.</p>\n    </div>\n    <div class=\"footer-col\">\n      <div class=\"footer-col-head\">Product</div>\n      <ul>\n        <li><a href=\"/#revenue-modeling-agent\">Revenue Modeling Agent</a></li>\n        <li><a href=\"/#how-it-works\">How It Works</a></li>\n        <li><a href=\"/#integrations\">Integrations</a></li>\n        <li><a href=\"/#security\">Security</a></li>\n      </ul>\n    </div>\n    <div class=\"footer-col\">\n      <div class=\"footer-col-head\">Use Cases</div>\n      <ul>\n        <li><a href=\"/#gtm-planning\">GTM Planning</a></li>\n        <li><a href=\"/#arr-waterfall-modeling\">ARR Waterfall Modeling</a></li>\n        <li><a href=\"/#case-studies\">Case Studies</a></li>\n        <li><a href=\"/#pricing\">Pricing</a></li>\n      </ul>\n    </div>\n    <div class=\"footer-col\">\n      <div class=\"footer-col-head\">Resources</div>\n      <ul>\n        <li><a href=\"/resources/\">Resources</a></li>\n        <li><a href=\"/contact/\">Contact</a></li>\n        <li><a href=\"https://www.linkedin.com/company/getpacerai\" target=\"_blank\" rel=\"noopener\">LinkedIn</a></li>\n        <li><a href=\"https://app.getpacerai.com/.auth/login/aad\">Log In</a></li>\n      </ul>\n    </div>\n  </div>\n</footer>\n</div>\n<!-- /wp:html -->",
+    "rendered": "<style>\n.wp-site-blocks > header, .wp-site-blocks > footer, header.wp-block-template-part, footer.wp-block-template-part, .wp-block-template-part:first-child { display: none !important; }\n.wp-block-post-title, .wp-block-spacer { display: none !important; }\nhtml, body, .wp-site-blocks { background: #F5F4EF !important; background-color: #F5F4EF !important; }\n.wp-site-blocks, .wp-site-blocks > main, .wp-site-blocks .is-layout-constrained, .has-global-padding, .entry-content { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }\n\n#pacerai-homepage{--bone:#F5F4EF;--surface:#FAFAF7;--navy:#1F3864;--navy-dark:#16294A;--teal:#2E7D74;--ink:#20242B;--ink-mid:#3A3730;--muted:#5F5A50;--line:#E6E1D6;--kick:#9A8F78;--maxw:1120px;font-family:'DM Sans',system-ui,sans-serif;background:var(--bone);color:var(--ink);line-height:1.6;font-size:15px;overflow-x:hidden}\n#pacerai-homepage *{margin:0;padding:0;box-sizing:border-box}\n#pacerai-homepage a{color:inherit;text-decoration:none}\n\n#pacerai-homepage nav{position:sticky;top:0;z-index:120;display:grid;grid-template-columns:auto 1fr auto;align-items:center;height:64px;padding:0 32px;background:rgba(245,244,239,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}\n#pacerai-homepage .nav-logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px;color:var(--ink)}\n#pacerai-homepage .nav-logo span{color:var(--teal)}\n#pacerai-homepage .nav-logo .chev{width:26px;height:12px;fill:none;stroke:var(--teal);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}\n#pacerai-homepage .nav-links{display:flex;align-items:center;gap:4px;list-style:none;justify-self:center}\n#pacerai-homepage .nav-links a{display:inline-block;padding:9px 13px;border-radius:8px;font-size:14.5px;font-weight:600;color:#494540;white-space:nowrap}\n#pacerai-homepage .nav-links a:hover{background:#ebe8df;color:var(--ink)}\n#pacerai-homepage .nav-right{display:flex;align-items:center;gap:10px;justify-self:end}\n#pacerai-homepage .btn-login{font-size:14px;font-weight:600;color:var(--navy);padding:8px 14px;border:1px solid var(--line);border-radius:9px}\n#pacerai-homepage .btn-cta{padding:9px 16px;border-radius:9px;font-weight:700;font-size:14px;color:#fff;background:var(--navy);border:1px solid var(--navy);white-space:nowrap}\n#pacerai-homepage .btn-cta:hover{background:var(--navy-dark)}\n#pacerai-homepage .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}\n#pacerai-homepage .mobile-menu-btn span{display:block;width:22px;height:2px;background:var(--ink-mid);border-radius:2px;transition:transform .2s,opacity .2s}\n\n#pacerai-homepage .hero{text-align:center;padding:96px 24px 40px;max-width:760px;margin:0 auto}\n#pacerai-homepage .kick{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--kick);font-weight:700;margin-bottom:14px}\n#pacerai-homepage .hero h1{font-size:clamp(38px,6vw,60px);font-weight:800;line-height:1.04;letter-spacing:-1px;color:var(--ink)}\n#pacerai-homepage .hero p{font-size:18px;color:var(--muted);margin:20px auto 0;max-width:560px}\n\n#pacerai-homepage .contact-wrap{max-width:var(--maxw);margin:0 auto;padding:20px 24px 90px}\n#pacerai-homepage .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}\n#pacerai-homepage .ccard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px}\n#pacerai-homepage .ccard.primary{border-color:rgba(31,56,100,.35);background:linear-gradient(135deg,rgba(46,125,116,.06),var(--surface))}\n#pacerai-homepage .ccard h3{font-size:19px;font-weight:800;color:var(--ink);margin-bottom:8px}\n#pacerai-homepage .ccard p{font-size:14.5px;color:var(--muted);margin-bottom:18px}\n#pacerai-homepage .ccard .clink{display:inline-flex;align-items:center;gap:7px;font-size:14.5px;font-weight:700;color:var(--navy)}\n#pacerai-homepage .ccard .clink svg{width:15px;height:15px;fill:#0A66C2}\n#pacerai-homepage .ccard.primary .clink{background:var(--navy);color:#fff;padding:11px 20px;border-radius:10px}\n#pacerai-homepage .ccard.primary .clink:hover{background:var(--navy-dark)}\n\n#pacerai-homepage footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 32px 40px}\n#pacerai-homepage .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;max-width:var(--maxw);margin:0 auto}\n#pacerai-homepage .footer-brand p{font-size:13.5px;color:var(--muted);margin-top:12px;max-width:280px}\n#pacerai-homepage .footer-col-head{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--kick);margin-bottom:14px}\n#pacerai-homepage .footer-col ul{list-style:none}\n#pacerai-homepage .footer-col li{margin-bottom:9px}\n#pacerai-homepage .footer-col a{font-size:13.5px;color:var(--muted)}\n#pacerai-homepage .footer-col a:hover{color:var(--navy)}\n\n@media(max-width:900px){\n  #pacerai-homepage nav{grid-template-columns:1fr auto;padding:0 16px}\n  #pacerai-homepage .nav-links{display:none}\n  #pacerai-homepage nav.nav-open .nav-links{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--bone);border-bottom:1px solid var(--line);box-shadow:0 14px 34px rgba(15,25,45,.10);padding:10px 16px 16px;gap:0;z-index:130}\n  #pacerai-homepage nav.nav-open .nav-links li{width:100%}\n  #pacerai-homepage nav.nav-open .nav-links a{display:block;width:100%;padding:14px 6px;font-size:16px;border-bottom:1px solid var(--line);border-radius:0}\n  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}\n  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(2){opacity:0}\n  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}\n  #pacerai-homepage .mobile-menu-btn{display:flex}\n  #pacerai-homepage .btn-login{display:none}\n  #pacerai-homepage .contact-grid{grid-template-columns:1fr}\n  #pacerai-homepage .footer-top{grid-template-columns:1fr 1fr;gap:28px}\n}\n#pacerai-homepage h1,#pacerai-homepage h2,#pacerai-homepage h3,#pacerai-homepage h4,#pacerai-homepage h5,#pacerai-homepage .nav-logo{font-family:'DM Sans',system-ui,-apple-system,sans-serif !important}\n</style>\n\n<div id=\"pacerai-homepage\">\n<nav>\n  <a href=\"/\" class=\"nav-logo\">Pacer <span>AI</span>\n    <svg class=\"chev\" viewBox=\"0 0 40 18\" aria-hidden=\"true\"><path d=\"M3 3 L10 9 L3 15\"/><path d=\"M15 3 L22 9 L15 15\"/><path d=\"M27 3 L34 9 L27 15\"/></svg>\n  </a>\n  <ul class=\"nav-links\">\n    <li><a href=\"/#revenue-modeling-agent\">Revenue Modeling Agent</a></li>\n    <li><a href=\"/#use-cases\">Use Cases</a></li>\n    <li><a href=\"/#team\">Team</a></li>\n    <li><a href=\"/#pricing\">Pricing</a></li>\n    <li><a href=\"/resources/\">Resources</a></li>\n  </ul>\n  <div class=\"nav-right\">\n    <a href=\"https://app.getpacerai.com/.auth/login/aad\" class=\"btn-login\">Log In</a>\n    <a href=\"/demo-connect\" class=\"btn-cta\">Try the Demo</a>\n    <button class=\"mobile-menu-btn\" aria-label=\"Menu\" onclick=\"this.closest('nav').classList.toggle('nav-open')\"><span></span><span></span><span></span></button>\n  </div>\n</nav>\n\n<section class=\"hero\">\n  <div class=\"kick\">Contact</div>\n  <h1>Let&rsquo;s talk.</h1>\n  <p>Whether you want a live diagnostic, a founder-to-founder conversation, or just have a question about building your revenue model &mdash; here&rsquo;s how to reach us.</p>\n</section>\n\n<div class=\"contact-wrap\">\n  <div class=\"contact-grid\">\n    <div class=\"ccard primary\">\n      <h3>Book a Free Diagnostic</h3>\n      <p>The fastest way in. Pick a time and we&rsquo;ll walk your revenue data through the GTM Financial Modeling Agent live &mdash; no slides.</p>\n      <a class=\"clink\" href=\"https://calendly.com/pacerai/diagnostic\">Book a 30-min diagnostic &rarr;</a>\n    </div>\n    <div class=\"ccard\">\n      <h3>Talk to Will</h3>\n      <p>Prefer to start with a conversation? Book time directly with founder Will Sullivan &mdash; a former PwC M&amp;A advisor.</p>\n      <a class=\"clink\" href=\"https://calendly.com/pacerai/strategy-session\">Schedule a founder call &rarr;</a>\n    </div>\n    <div class=\"ccard\">\n      <h3>Email us</h3>\n      <p>Have a question or a portfolio-wide deployment in mind? Reach us directly &mdash; we typically reply within one business day.</p>\n      <a class=\"clink\" href=\"mailto:will@getpacerai.com\">will@getpacerai.com</a>\n    </div>\n    <div class=\"ccard\">\n      <h3>Connect on LinkedIn</h3>\n      <p>Follow the build and reach out to Will directly on LinkedIn.</p>\n      <a class=\"clink\" href=\"https://www.linkedin.com/in/will-sullivan98/\" target=\"_blank\" rel=\"noopener\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.02 8.25H4.9V24H.02V8.25zM8.34 8.25h4.67v2.15h.07c.65-1.23 2.24-2.53 4.61-2.53 4.93 0 5.84 3.24 5.84 7.46V24h-4.87v-6.98c0-1.66-.03-3.8-2.32-3.8-2.32 0-2.68 1.81-2.68 3.68V24H8.34V8.25z\"/></svg>Connect with Will</a>\n    </div>\n  </div>\n</div>\n\n<footer>\n  <div class=\"footer-top\">\n    <div class=\"footer-brand\">\n      <a href=\"/\" class=\"nav-logo\" style=\"font-size:17px\">Pacer <span style=\"color:var(--teal)\">AI</span>\n        <svg class=\"chev\" viewBox=\"0 0 40 18\" aria-hidden=\"true\"><path d=\"M3 3 L10 9 L3 15\"/><path d=\"M15 3 L22 9 L15 15\"/><path d=\"M27 3 L34 9 L27 15\"/></svg>\n      </a>\n      <p>The GTM Financial Modeling Agent for Sales Leaders. Reconciled to Finance, built on Microsoft Fabric.</p>\n    </div>\n    <div class=\"footer-col\">\n      <div class=\"footer-col-head\">Product</div>\n      <ul>\n        <li><a href=\"/#revenue-modeling-agent\">Revenue Modeling Agent</a></li>\n        <li><a href=\"/#how-it-works\">How It Works</a></li>\n        <li><a href=\"/#integrations\">Integrations</a></li>\n        <li><a href=\"/#security\">Security</a></li>\n      </ul>\n    </div>\n    <div class=\"footer-col\">\n      <div class=\"footer-col-head\">Use Cases</div>\n      <ul>\n        <li><a href=\"/#gtm-planning\">GTM Planning</a></li>\n        <li><a href=\"/#arr-waterfall-modeling\">ARR Waterfall Modeling</a></li>\n        <li><a href=\"/#case-studies\">Case Studies</a></li>\n        <li><a href=\"/#pricing\">Pricing</a></li>\n      </ul>\n    </div>\n    <div class=\"footer-col\">\n      <div class=\"footer-col-head\">Resources</div>\n      <ul>\n        <li><a href=\"/resources/\">Resources</a></li>\n        <li><a href=\"/contact/\">Contact</a></li>\n        <li><a href=\"https://www.linkedin.com/company/getpacerai\" target=\"_blank\" rel=\"noopener\">LinkedIn</a></li>\n        <li><a href=\"https://app.getpacerai.com/.auth/login/aad\">Log In</a></li>\n      </ul>\n    </div>\n  </div>\n</footer>\n</div>\n",
+    "protected": false,
+    "block_version": 1
+  },
+  "excerpt": {
+    "raw": "Contact Pacer AI to discuss ARR Snowball reporting, customer data cubes, transaction readiness, and revenue intelligence for your PE-backed SaaS company.",
+    "rendered": "<p>Contact Pacer AI to discuss ARR Snowball reporting, customer data cubes, transaction readiness, and revenue intelligence for your PE-backed SaaS company.</p>\n",
+    "protected": false
+  },
+  "author": 235927395,
+  "featured_media": 0,
+  "parent": 0,
+  "menu_order": 0,
+  "comment_status": "closed",
+  "ping_status": "closed",
+  "template": "",
+  "meta": {
+    "_wpcom_ai_launchpad_about_page": false,
+    "_wpcom_ai_launchpad_gallery_page": false,
+    "_wpcom_ai_launchpad_contact_page": false,
+    "_wpcom_ai_launchpad_events_page": false,
+    "_wpcom_ai_launchpad_video_page": false,
+    "_wpcom_ai_launchpad_portfolio_piece": false,
+    "footnotes": ""
+  },
+  "permalink_template": "https://getpacerai.com/%pagename%/",
+  "generated_slug": "contact",
+  "class_list": [
+    "post-375",
+    "page",
+    "type-page",
+    "status-publish",
+    "hentry"
+  ],
+  "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v28.6 - https://yoast.com/product/yoast-seo-wordpress/ -->\n<title>Contact Pacer AI \u2014 Talk to Will</title>\n<meta name=\"description\" content=\"Book a diagnostic or reach founder Will Sullivan directly about GTM financial modeling \u2014 build and reconcile your revenue model inside Claude.\" class=\"yoast-seo-meta-tag\" />\n<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" />\n<link rel=\"canonical\" href=\"https://getpacerai.com/contact/\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:locale\" content=\"en_US\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:type\" content=\"article\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:title\" content=\"Contact Pacer AI \u2014 Talk to Will\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:description\" content=\"Book a diagnostic or reach founder Will Sullivan directly about GTM financial modeling \u2014 build and reconcile your revenue model inside Claude.\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:url\" content=\"https://getpacerai.com/contact/\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:site_name\" content=\"Get Pacer AI\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"article:modified_time\" content=\"2026-09-24T20:47:53+00:00\" class=\"yoast-seo-meta-tag\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" class=\"yoast-seo-meta-tag\" />\n<meta name=\"twitter:label1\" content=\"Est. reading time\" class=\"yoast-seo-meta-tag\" />\n\t<meta name=\"twitter:data1\" content=\"2 minutes\" class=\"yoast-seo-meta-tag\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https:\\/\\/getpacerai.com\\/contact\\/\",\"url\":\"https:\\/\\/getpacerai.com\\/contact\\/\",\"name\":\"Contact Pacer AI \u2014 Talk to Will\",\"isPartOf\":{\"@id\":\"https:\\/\\/getpacerai.com\\/#website\"},\"datePublished\":\"2026-03-10T10:13:05+00:00\",\"dateModified\":\"2026-09-24T20:47:53+00:00\",\"description\":\"Book a diagnostic or reach founder Will Sullivan directly about GTM financial modeling \u2014 build and reconcile your revenue model inside Claude.\",\"breadcrumb\":{\"@id\":\"https:\\/\\/getpacerai.com\\/contact\\/#breadcrumb\"},\"inLanguage\":\"en-US\",\"potentialAction\":[{\"@type\":\"ReadAction\",\"target\":[\"https:\\/\\/getpacerai.com\\/contact\\/\"]}]},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/getpacerai.com\\/contact\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https:\\/\\/getpacerai.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Contact\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/getpacerai.com\\/#website\",\"url\":\"https:\\/\\/getpacerai.com\\/\",\"name\":\"Get Pacer AI\",\"description\":\"End-to-End GTM operations visibility\",\"publisher\":{\"@id\":\"https:\\/\\/getpacerai.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/getpacerai.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/getpacerai.com\\/#organization\",\"name\":\"Pacer AI\",\"url\":\"https:\\/\\/getpacerai.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https:\\/\\/getpacerai.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/i0.wp.com\\/getpacerai.com\\/wp-content\\/uploads\\/2025\\/11\\/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1\",\"contentUrl\":\"https:\\/\\/i0.wp.com\\/getpacerai.com\\/wp-content\\/uploads\\/2025\\/11\\/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1\",\"width\":512,\"height\":512,\"caption\":\"Pacer AI\"},\"image\":{\"@id\":\"https:\\/\\/getpacerai.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.linkedin.com\\/company\\/getpacerai\",\"https:\\/\\/www.youtube.com\\/@PacerAI\"]}]}</script>\n<!-- / Yoast SEO plugin. -->",
+  "yoast_head_json": {
+    "title": "Contact Pacer AI \u2014 Talk to Will",
+    "description": "Book a diagnostic or reach founder Will Sullivan directly about GTM financial modeling \u2014 build and reconcile your revenue model inside Claude.",
+    "robots": {
+      "index": "index",
+      "follow": "follow",
+      "max-snippet": "max-snippet:-1",
+      "max-image-preview": "max-image-preview:large",
+      "max-video-preview": "max-video-preview:-1"
+    },
+    "canonical": "https://getpacerai.com/contact/",
+    "og_locale": "en_US",
+    "og_type": "article",
+    "og_title": "Contact Pacer AI \u2014 Talk to Will",
+    "og_description": "Book a diagnostic or reach founder Will Sullivan directly about GTM financial modeling \u2014 build and reconcile your revenue model inside Claude.",
+    "og_url": "https://getpacerai.com/contact/",
+    "og_site_name": "Get Pacer AI",
+    "article_modified_time": "2026-09-24T20:47:53+00:00",
+    "twitter_card": "summary_large_image",
+    "twitter_misc": {
+      "Est. reading time": "2 minutes"
+    },
+    "schema": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://getpacerai.com/contact/",
+          "url": "https://getpacerai.com/contact/",
+          "name": "Contact Pacer AI \u2014 Talk to Will",
+          "isPartOf": {
+            "@id": "https://getpacerai.com/#website"
+          },
+          "datePublished": "2026-03-10T10:13:05+00:00",
+          "dateModified": "2026-09-24T20:47:53+00:00",
+          "description": "Book a diagnostic or reach founder Will Sullivan directly about GTM financial modeling \u2014 build and reconcile your revenue model inside Claude.",
+          "breadcrumb": {
+            "@id": "https://getpacerai.com/contact/#breadcrumb"
+          },
+          "inLanguage": "en-US",
+          "potentialAction": [
+            {
+              "@type": "ReadAction",
+              "target": [
+                "https://getpacerai.com/contact/"
+              ]
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://getpacerai.com/contact/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://getpacerai.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Contact"
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://getpacerai.com/#website",
+          "url": "https://getpacerai.com/",
+          "name": "Get Pacer AI",
+          "description": "End-to-End GTM operations visibility",
+          "publisher": {
+            "@id": "https://getpacerai.com/#organization"
+          },
+          "potentialAction": [
+            {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://getpacerai.com/?s={search_term_string}"
+              },
+              "query-input": {
+                "@type": "PropertyValueSpecification",
+                "valueRequired": true,
+                "valueName": "search_term_string"
+              }
+            }
+          ],
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://getpacerai.com/#organization",
+          "name": "Pacer AI",
+          "url": "https://getpacerai.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "inLanguage": "en-US",
+            "@id": "https://getpacerai.com/#/schema/logo/image/",
+            "url": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2025/11/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1",
+            "contentUrl": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2025/11/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1",
+            "width": 512,
+            "height": 512,
+            "caption": "Pacer AI"
+          },
+          "image": {
+            "@id": "https://getpacerai.com/#/schema/logo/image/"
+          },
+          "sameAs": [
+            "https://www.linkedin.com/company/getpacerai",
+            "https://www.youtube.com/@PacerAI"
+          ]
+        }
+      ]
+    }
+  },
+  "jetpack_likes_enabled": true,
+  "jetpack_sharing_enabled": true,
+  "jetpack_shortlink": "https://wp.me/PgRFPe-63",
+  "jetpack-related-posts": [
+    {
+      "id": 983,
+      "url": "https://getpacerai.com/demo-connect/",
+      "url_meta": {
+        "origin": 375,
+        "position": 0
+      },
+      "title": "See Pacer AI in action",
+      "author": "Will Sullivan",
+      "date": "September 22, 2026",
+      "format": false,
+      "excerpt": "Pacer AI Revenue Modeling Agent Use Cases Team Pricing Resources Log In Try the Demo Pacer AI Demo Add the Claude connector to see how you\u2019re pacing toward revenue goals: by market, by product, by rep \u2014 the gap to close, and how to close the gap now. A guided\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    },
+    {
+      "id": 25,
+      "url": "https://getpacerai.com/",
+      "url_meta": {
+        "origin": 375,
+        "position": 1
+      },
+      "title": "Home",
+      "author": "Will Sullivan",
+      "date": "October 22, 2025",
+      "format": false,
+      "excerpt": "Pacer AI builds, analyzes, and operationalizes ARR Waterfalls for PE-backed SaaS companies at $50M-$1B ARR. Automated board reporting, customer data cubes, and AI agents with verifiable, dashboard-backed answers.",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    },
+    {
+      "id": 230,
+      "url": "https://getpacerai.com/resources/",
+      "url_meta": {
+        "origin": 375,
+        "position": 2
+      },
+      "title": "Resources",
+      "author": "Will Sullivan",
+      "date": "January 12, 2026",
+      "format": false,
+      "excerpt": "Insights on ARR Snowball analysis, customer data infrastructure, RevOps transformation, and revenue intelligence for PE-backed SaaS companies.",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    },
+    {
+      "id": 778,
+      "url": "https://getpacerai.com/resources/grow-nrr-101-to-105-case-study/",
+      "url_meta": {
+        "origin": 375,
+        "position": 3
+      },
+      "title": "How I Helped a Client Grow NRR from 101% to 105% in 6 Months",
+      "author": "Will Sullivan",
+      "date": "September 27, 2026",
+      "format": false,
+      "excerpt": "Pacer\u00a0AI Revenue Modeling Agent Use Cases Team Pricing Resources Log In Try the Demo Home / Resources / NRR Case Study ARR Snowballs How I Helped a Client Grow NRR from 101% to 105% in 6 Months Will Sullivan April 17, 2026 A healthcare software company was preparing to go\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    },
+    {
+      "id": 491,
+      "url": "https://getpacerai.com/resources/build-customer-data-cube-in-house-or-hire/",
+      "url_meta": {
+        "origin": 375,
+        "position": 4
+      },
+      "title": "Should I Build a Customer Data Cube In-House or Hire Someone?",
+      "author": "Will Sullivan",
+      "date": "April 3, 2026",
+      "format": false,
+      "excerpt": "Pacer\u00a0AI Revenue Modeling Agent Use Cases Team Pricing Resources Log In Try the Demo Home / Resources / Build vs. Hire ARR Snowballs Should I Build a Customer Data Cube In-House or Hire Someone? Pacer AI April 3, 2026 Should you build a customer data cube in-house or hire someone?\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    },
+    {
+      "id": 850,
+      "url": "https://getpacerai.com/resources/what-is-an-arr-waterfall/",
+      "url_meta": {
+        "origin": 375,
+        "position": 5
+      },
+      "title": "What Is an ARR Waterfall? Definition, Components, and How to Build One",
+      "author": "Will Sullivan",
+      "date": "May 4, 2026",
+      "format": false,
+      "excerpt": "An ARR Waterfall is a single-period decomposition of recurring revenue into new, expansion, contraction, and churn. Learn the components, formula, and how PE-backed SaaS teams build one.",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "",
+        "src": "",
+        "width": 0,
+        "height": 0
+      },
+      "classes": []
+    }
+  ],
+  "_links": {
+    "self": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/375",
+        "targetHints": {
+          "allow": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ]
+        }
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages"
+      }
+    ],
+    "about": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/types/page"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://getpacerai.com/wp-json/wp/v2/users/235927395"
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://getpacerai.com/wp-json/wp/v2/comments?post=375"
+      }
+    ],
+    "version-history": [
+      {
+        "count": 25,
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/375/revisions"
+      }
+    ],
+    "predecessor-version": [
+      {
+        "id": 990,
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/375/revisions/990"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/media?parent=375"
+      }
+    ],
+    "wp:action-publish": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/375"
+      }
+    ],
+    "wp:action-unfiltered-html": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/375"
+      }
+    ],
+    "wp:action-assign-author": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/375"
+      }
+    ],
+    "curies": [
+      {
+        "name": "wp",
+        "href": "https://api.w.org/{rel}",
+        "templated": true
+      }
+    ]
+  }
+}

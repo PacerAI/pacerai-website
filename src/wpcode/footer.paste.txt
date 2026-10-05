@@ -43,7 +43,7 @@
  *   5. Research waitlist form handler (.research-waitlist-form)
  *      - POSTs to same Worker with asset_slug 'research-waitlist'
  *      - No download; confirms signup only
- *   6. v3 bone homepage — hero rotor word swap (#pacerai-homepage .rotor)
+ *   6. v3 bone homepage — hero rotor word swap (#pacerai-homepage .pa-rotor)
  *   7. v3 bone homepage — logo marquee duplication (#pacerai-homepage .track)
  *   8. v3 bone homepage — pipeline number stream (#pacerai-homepage .how .pipe-nums)
  *      (#1 typed-line stays for legacy pages; it exits if .typed-line is absent)
@@ -301,14 +301,16 @@
 
 /* --- 6. v3 bone homepage — hero rotor word swap --- */
 (function() {
-  var rotor = document.querySelector('#pacerai-homepage .rotor');
+  var rotor = document.querySelector('#pacerai-homepage .pa-rotor');
   if (!rotor) return;
   if (window.__paRotor) return; window.__paRotor = 1; /* guard: page injector may own this */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var phrases = ['Sales Targets', 'ARR Waterfalls', 'ARR Reporting', 'GTM Plans',
-    'Sales-Led Growth', 'Product-Led Growth', 'Enterprise Sales', 'Capacity Modeling',
-    'Coverage Modeling', 'Headcount Planning', 'Expansion Whitespace', 'Forecasting',
-    'Performance Tracking'];
+  /* The page owns the phrase list (data-phrases on .pa-rotor, "|"-separated) so a copy change never
+     needs a WPCode paste. The fallback below only runs if that attribute is missing. */
+  var phrases = (rotor.getAttribute('data-phrases') || '').split('|').filter(Boolean);
+  if (phrases.length < 2) phrases = ['make plan with confidence.', 'close the gap to plan.',
+    'improve Net Retention Rates.', 'cross-sell products.', 'improve durable revenue growth.',
+    'improve forecast accuracy.'];
   var i = 0;
   setInterval(function() {
     i = (i + 1) % phrases.length;
