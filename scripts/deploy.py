@@ -11,7 +11,6 @@ Usage:
     python3 scripts/deploy.py 25 --force             # Skip validation
     python3 scripts/deploy.py 25 --skip-backup       # Skip backup step
 """
-import ssl
 import urllib.request
 import base64
 import json
@@ -78,10 +77,10 @@ def get_credentials():
 
 
 def wp_request(url, data=None, method="GET"):
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-
+    # Use urllib's own default HTTPS context. A custom SSLContext (verification off, or even a plain
+    # create_default_context()) skips the http/1.1 ALPN urllib sets on its default, which changes the TLS
+    # fingerprint; WordPress.com's bot challenge ("Checking your browser...", HTTP 403) started blocking
+    # that on 2026-10-05.
     wp_user, wp_pass = get_credentials()
     creds = base64.b64encode(f"{wp_user}:{wp_pass}".encode()).decode()
 
@@ -95,7 +94,7 @@ def wp_request(url, data=None, method="GET"):
     if data:
         req.add_header("Content-Type", "application/json")
 
-    with urllib.request.urlopen(req, context=ctx) as resp:
+    with urllib.request.urlopen(req) as resp:
         return json.loads(resp.read().decode())
 
 
