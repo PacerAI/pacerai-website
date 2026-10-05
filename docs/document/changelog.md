@@ -8,6 +8,19 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-05 — Demo Connect hero copy
+
+- **Status:** LIVE. Page 983 (`/demo-connect/`), source `src/demo-connect.html`.
+- **Deployed by:** Claude Code
+- **Hero:** h1 → "Add the Claude connector"; sub → "to see how you're pacing toward revenue goals: by market,
+  by product, by rep — the gap to close, and how to close the gap now."
+- **Demo password:** the password revealed on this page comes from the `pacer-demo-worker` secret
+  `PACER_DEMO_PASSWORD`, not the page HTML. It had drifted from Azure `PACER_OAUTH_PASSWORD`;
+  `set_demo_password.sh` (platform repo) now sets both.
+- **Backup:** `docs/review/pre-deploy-backup-983-20261005-1145.json`
+
+---
+
 ## v3.0.x — 2026-07-23 — GTM Financial Modeling Agent rebrand + full-site bone go-live
 
 - **Status:** LIVE. PR #20 merged; `v3.0.0` tagged. The Claude-bone (`#F5F4EF`) rebuild is deployed end to end.

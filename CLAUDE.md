@@ -59,10 +59,11 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | **Team** (parent) | 366 | `team` | — | `src/team/team-page.html` |
 | **About** | 374 | `about` | 366 | `src/team/about.html` *(legacy — 301 → `/#about`)* |
 | **Contact** | 375 | `contact` | — | `src/team/contact.html` *(bone; moved to top-level `/contact/`; was parent 366)* |
+| **Demo Connect** | 983 | `demo-connect` | — | `src/demo-connect.html` *(bone; spec 011 AC-1 demo onboarding; LIVE 2026-09-22; embeds the demo-connect reel from the staging Worker)* |
 | Pricing | 111 | `pricing` | — | *(legacy — v3: 301 → `/#pricing`)* |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
-**Blog articles (all 12 bone + live, parent 230; deploy with `--force` — pre-existing prose voice-debt trips `validate.py`):**
+**Blog articles (all 13 bone + live, parent 230; deploy with `--force` — pre-existing prose voice-debt trips `validate.py`):**
 
 | Page | WP ID | Slug | Source File |
 |------|-------|------|-------------|
@@ -78,6 +79,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | Semrush-Adobe Case Study | 888 | `semrush-adobe-acquisition-case-study` *(root URL)* | `src/blog/posts/semrush-adobe-case-study-build.html` |
 | What is an ARR Waterfall | 850 | `what-is-an-arr-waterfall` *(canonical `/resources/`; root dupe 873 301→ this)* | `src/blog/posts/what-is-an-arr-waterfall-build.html` |
 | What is cRPO (Current Performance Obligation) | 865 | `what-is-current-performance-obligation` | `src/blog/posts/crpo-build.html` |
+| Grow NRR from 101% to 105% | 778 | `grow-nrr-101-to-105-case-study` | `src/blog/posts/778-build.html` |
 
 *(The Jan-2026 batch — 227/236/244/288/264 = WP 378/376/368/358/360 — got fixed+completed FAQPage + Article(+Person author=Will Sullivan) schema.)*
 
@@ -141,6 +143,8 @@ docs/
 ├── document/
 │   ├── changelog.md                    # Deploy log
 │   └── Internal_Documentation.md       # Messaging, positioning, site tree, SEO strategy
+├── lead-capture-architecture.md     # Form → Worker → D1 `leads` → Slack → Apollo (READ before touching capture)
+├── lead-capture-flow-light.mermaid  # Diagram sidecar for the above
 └── deploy/
     ├── runbook.md                      # Deploy instructions
     ├── wp-admin-actions.md             # Organization/Person WPCode schema snippet + redirect runbook
@@ -150,6 +154,10 @@ pacerai-context/
 ├── pacerai.md                          # Canonical company context (products, personas, differentiation)
 └── apollo_ai.md                        # Apollo.io AI Context Center paste-ready document
 ```
+
+**Page authoring + WPCode:** [`src/README.md`](src/README.md) — how a page is assembled, how the canonical
+nav/footer fragments attach, the three WPCode snippets and how to paste the footer one without taking the
+site's JS down. Read it before creating a page or editing `src/wpcode/footer.js`.
 
 ## Local Development Scripts
 
@@ -166,6 +174,10 @@ python3 scripts/deploy.py 25                  # Deploy homepage
 python3 scripts/deploy.py all                 # Deploy all pages
 python3 scripts/deploy.py 25 --dry-run        # Preview what would happen
 python3 scripts/deploy.py 25 --force          # Skip validation (used for the 12 blog articles — prose voice-debt)
+
+# Rebuild the paste-ready WPCode footer snippet (wraps footer.js in script tags)
+python3 scripts/build_footer_paste.py         # writes src/wpcode/footer.paste.txt
+python3 scripts/build_footer_paste.py --check # verify it's current
 
 # Regenerate the SEO data tables (holds the per-page Yoast SEO data)
 python3 scripts/build_seo_table.py            # Emits docs/review/seo-table.csv + docs/review/seo-table.html
@@ -265,6 +277,8 @@ These are silent failures — WordPress won't error, but your styles/scripts won
 | Yoast SEO title + meta description NOT REST-writable on WordPress.com | REST API silently ignores `yoast_head` / Yoast title/meta fields — no error, no change | Set Yoast title/meta **in WP Admin** (browser). Per-page worklist: `docs/deploy/yoast-worklist.md`. Excerpts remain a fallback for meta desc only. |
 | WPCode Footer snippet is fragile — a malformed closing tag once broke ALL footer JS | Every footer-injected script (rotor, marquee, pipeline) dies silently site-wide | Homepage animations (hero rotor w/ 13 phrases, logo marquee, pipeline numbers) moved to the inline `<img onerror>` injector in `src/homepage/index-build.html` (bypasses WP script-stripping), guarded by `window.__paRotor` / `window.__paPipe` so they never double-run if the WPCode footer is later fixed. |
 
+| Cloning a stale page's nav/footer/CSS (e.g. `src/team/contact.html`) | Missing overrides → page renders clamped to WordPress's 620px content-size ("too narrow"), sticky nav gets squeezed so header buttons look missing, footer can't full-bleed | Port the chrome from **`src/homepage/index-build.html`** (the current bone reference), not older pages. The load-bearing line is the TT4 override `.wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width:none!important}` + `position:fixed` nav. `contact.html` predates these and is stale. |
+
 **Design reference (v3 bone homepage):** `docs/design/homepage/index-build-bone_v3_2026-07-22.html` — self-contained, browser-openable copy of the v3 homepage (page CSS/HTML + inlined WPCode JS). Diff live CSS against it. *(Legacy dark reference archived at `docs/design/homepage/archive/`.)*
 **AEO Row spec:** `docs/design/AEO-Row-Text-and-Image.md` — copy-paste-ready CSS for text+image sections.
 
@@ -306,7 +320,7 @@ Every page follows the same pattern:
 - **Primary accent:** Teal — bone: `#2E7D74` / `#70C49C`; legacy dark: `#27899A` / `#70C49C`
 - **v3 bone tokens:** `--bone:#F5F4EF --surface:#FAFAF7 --navy:#1F3864 --teal:#2E7D74 --ink:#20242B --muted:#5F5A50 --line:#E6E1D6`
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents. No playful illustrations or rounded pill buttons.
-- **CTA language:** "Request a Demo", "See a Live ARR Demo", "Talk to a RevOps Expert" — never "Get Started Free"
+- **CTA language:** primary is email capture — "Try the Demo Free", "Get the White Paper"; booking ("Talk to Will") is secondary and lives on /contact/ only. Never "Learn More".
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."
 
 **Canonical source:** `PacerAI/pacerai-foundation/` — see brand/, strategy/, and commercial/ for full definitions.

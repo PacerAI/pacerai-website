@@ -5,9 +5,11 @@
 // Then: npm run deploy:staging
 // ─────────────────────────────────────────────────────────────────────────────
 import croArrV1 from "./variants/cro-arr-v1.html";
+import demoConnect from "./variants/demo-connect.html";
 
 const VARIANTS: Record<string, { html: string; title: string }> = {
   "cro-arr-v1": { html: croArrV1, title: "CRO ARR Planning — $100M to $150M" },
+  "demo-connect": { html: demoConnect, title: "Connect the demo — add the connector, sign in, type pace" },
 };
 
 // Kept in sync with pacerai-content/collateral/demo_reels/registry.yaml → production_variant.

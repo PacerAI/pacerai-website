@@ -16,6 +16,9 @@ If you're opening this repo for the first time: read `AGENTS.md` (OS-pointer blo
 | **Current cadence** | [`CADENCE.md`](CADENCE.md) | What runs on a schedule here (agents, workflows) |
 | **Ad hoc log** | [`AD-HOC-LOG.md`](AD-HOC-LOG.md) | Append-only — local edits with no cross-repo blast radius |
 | **Deploy runbook** | [`docs/deploy/runbook.md`](docs/deploy/runbook.md) | Read before any REST API push to WordPress |
+| **Page authoring + WPCode** | [`src/README.md`](src/README.md) | How a page is built, how nav/footer attach, and how to paste the WPCode footer without breaking the site |
+| **Lead-capture architecture** | [`docs/lead-capture-architecture.md`](docs/lead-capture-architecture.md) | Form → Worker → D1 `leads` → Slack → Apollo sequence; where to change each part |
+| **Capture goal + measures** | [`goals/email-capture.md`](goals/email-capture.md) | What the site optimises for and the SQL that measures it |
 | **Page registry (canonical)** | [`CLAUDE.md`](CLAUDE.md#wordpress-page-registry) | WP ID → slug → source-file map; the source of truth for what pages exist |
 | **Webpages metadata audit** | [`webpages-metadata.md`](webpages-metadata.md) | Yoast title / meta-desc / OG image status per page |
 | **Build dashboard** | [`website-development-dash.html`](website-development-dash.html) | In-repo dashboard for site build progress |
@@ -85,7 +88,7 @@ pacerai-website/
 │   ├── team/                              # Team page + about + contact
 │   ├── footer/                            # Shared footer fragments
 │   ├── nav-headers.html                   # Shared nav fragment
-│   └── wpcode/                            # Externalized CSS injected via WPCode plugin
+│   └── wpcode/                            # footer.js — source of truth for the WPCode Footer snippet
 ├── scripts/                               # preview.py + validate.py + deploy.py + build_seo_table.py (Python; WP REST API)
 ├── docs/                                  # PDBRDD documentation
 │   ├── plan/                              # PRD, site tree, build prompts
@@ -163,7 +166,8 @@ All 12 blog articles (bone + live under `/resources/`) plus slugs, parents, and 
 | `webpages-metadata.md` | Registry (reference) | Per-page Yoast title / meta-desc / OG image / index status | Operator |
 | `src/<segment>/*.html` | Source | Page source HTML (one per WP Page) — deployed as `<!-- wp:html -->` blocks via REST API | `webdev-getpacerai` / `blog-post` |
 | `src/nav-headers.html` + `src/footer/` | Source (shared) | Shared nav + footer fragments duplicated across all pages — change requires re-deploy of every page | `webdev-getpacerai` |
-| `src/wpcode/wpcode-homepage-css.css` | Source (externalized) | Homepage CSS externalized to WPCode (page exceeds 68K inline limit) — update WPCode snippet in WP Admin on change | `webdev-getpacerai` |
+| `src/wpcode/footer.js` | Source (externalized) | Site-wide JS installed in the WPCode **Footer** snippet — incl. the lead-capture form handler. Paste `src/wpcode/footer.paste.txt` into WP Admin on change; see [`src/README.md`](src/README.md) | `webdev-getpacerai` |
+| `src/homepage/wpcode-homepage-css.css` | Archive | Pre-v3 externalized homepage CSS. The WPCode **Header** snippet is deliberately blank since v3 — leave it empty | `webdev-getpacerai` |
 | `scripts/deploy.py` | Tooling | WP REST API deploy with built-in validation + backup + verification | Operator |
 | `scripts/validate.py` | Tooling | Char count + broken-link + footer/nav consistency; `--strict` is the Pre-Publish gate | Operator |
 | `scripts/preview.py` | Tooling | Local preview server — strips WP scripts, injects WPCode CSS to simulate render | Operator |
