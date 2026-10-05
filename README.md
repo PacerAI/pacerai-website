@@ -1,6 +1,6 @@
 # pacerai-website
 
-**Goal:** Pacer AI's public marketing surface — answers "what does Pacer AI sell and to whom?" Pacer AI is positioned as the **GTM Financial Modeling Agent** (built for CROs / Sales Leaders, CFOs secondary; "Revenue Modeling Agent" is a nav-label synonym) for recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services). Authored as standalone HTML files with inline CSS, published as WordPress.com Pages via the REST API (no local dev server, no framework). Operator role is `repo-operator`; four named on-dispatch agents (`blog-post`, `ui-ux-pro-max`, `webdev-getpacerai`, `website-char-count`) own authoring, UX review, deploy, and SEO-character-bounds checks. Upstream seam: `pacerai-foundation` (brand, voice, ICP, pricing — auto-loaded into `CLAUDE.md` via four `@`-imports of `foundation/pricing/*.md` per spec #17). Downstream seam: WordPress REST API at `getpacerai.com` — every page lands as a WP Page with a tracked ID. Both lifecycles can coexist — domain content work in this repo runs under PDBRDD locally; cross-repo work follows SPIDRDD.
+**Goal:** Pacer AI's public marketing surface — answers "what does Pacer AI sell and to whom?" Pacer AI is positioned as the **Daily Pacing Agent**, helping sales leaders make plan with confidence (built for CROs / Sales Leaders, CFOs secondary; renamed from "GTM Financial Modeling Agent" on 2026-10-05) for recurring-revenue companies ($50M–$1B, often PE/sponsor-backed, including non-tech: payroll, healthcare, services). Authored as standalone HTML files with inline CSS, published as WordPress.com Pages via the REST API (no local dev server, no framework). Operator role is `repo-operator`; four named on-dispatch agents (`blog-post`, `ui-ux-pro-max`, `webdev-getpacerai`, `website-char-count`) own authoring, UX review, deploy, and SEO-character-bounds checks. Upstream seam: `pacerai-foundation` (brand, voice, ICP, pricing — auto-loaded into `CLAUDE.md` via four `@`-imports of `foundation/pricing/*.md` per spec #17). Downstream seam: WordPress REST API at `getpacerai.com` — every page lands as a WP Page with a tracked ID. Both lifecycles can coexist — domain content work in this repo runs under PDBRDD locally; cross-repo work follows SPIDRDD.
 
 If you're opening this repo for the first time: read `AGENTS.md` (OS-pointer block points back to `pacerai-os/POLICY.md` for the work-mode gate), then `STATUS.md` for current state. Before deploying anything to WordPress, read `docs/deploy/runbook.md` and confirm `WP_BASE_URL`, `WP_USER`, `WP_APP_PASSWORD` are sourced via `source ~/.zshrc`.
 
@@ -19,6 +19,8 @@ If you're opening this repo for the first time: read `AGENTS.md` (OS-pointer blo
 | **Page authoring + WPCode** | [`src/README.md`](src/README.md) | How a page is built, how nav/footer attach, and how to paste the WPCode footer without breaking the site |
 | **Lead-capture architecture** | [`docs/lead-capture-architecture.md`](docs/lead-capture-architecture.md) | Form → Worker → D1 `leads` → Slack → Apollo sequence; where to change each part |
 | **Capture goal + measures** | [`goals/email-capture.md`](goals/email-capture.md) | What the site optimises for and the SQL that measures it |
+| **Demo videos** | [`docs/design/demo-vids/`](docs/design/demo-vids/README.md) | Every homepage demo video served (live: `pacing-agent-v2`, user types `pace` then `gap`); how to rebuild, stage, promote, roll back |
+| **Seeds + plans** | [`docs/seed/`](docs/seed/) · [`docs/plan/`](docs/plan/) | The verbatim prompt behind a piece of work, and the plan that executed it (e.g. `2026-10-05-make-plan-messaging.md`) |
 | **Page registry (canonical)** | [`CLAUDE.md`](CLAUDE.md#wordpress-page-registry) | WP ID → slug → source-file map; the source of truth for what pages exist |
 | **Webpages metadata audit** | [`webpages-metadata.md`](webpages-metadata.md) | Yoast title / meta-desc / OG image status per page |
 | **Build dashboard** | [`website-development-dash.html`](website-development-dash.html) | In-repo dashboard for site build progress |
@@ -45,6 +47,13 @@ python3 scripts/preview.py                                   # Local preview —
 python3 scripts/validate.py [<file>]                         # Char count, broken links, footer/nav consistency
 python3 scripts/validate.py --strict                         # Strict-mode gate used by Pre-Publish Validation workflow
 python3 scripts/deploy.py <wp_id|all> [--dry-run|--force]    # Deploy via WP REST API w/ validation + backup + verify
+python3 scripts/build_pacing_chart.py                        # Homepage pacing chart from the demo video's pace_annual.svg
+
+# Homepage demo video (Cloudflare Worker; generator lives in pacerai-platform-claude-native/demo-site/)
+cd infra/pacer-demo-worker
+PACER_DEMO_SRC=<video.html> ./sync.sh <new-slug>               # stage a new version (never overwrite a slug)
+npm run deploy:staging                                       # review at …-staging…/v/<new-slug>
+./promote.sh <new-slug> --deploy                             # put it on the homepage (rollback: promote the old slug)
 ```
 
 Skills live at [`.claude/skills/`](.claude/skills/) — one directory per slash command above. GitHub Actions wire two `@claude`-driven workflows (review on PR, mention-driven response) plus the `Pre-Publish Validation` gate that runs `validate.py --strict` on publishable artifacts.
@@ -89,17 +98,20 @@ pacerai-website/
 │   ├── footer/                            # Shared footer fragments
 │   ├── nav-headers.html                   # Shared nav fragment
 │   └── wpcode/                            # footer.js — source of truth for the WPCode Footer snippet
-├── scripts/                               # preview.py + validate.py + deploy.py + build_seo_table.py (Python; WP REST API)
+├── scripts/                               # preview.py + validate.py + deploy.py + build_seo_table.py + build_pacing_chart.py
+├── infra/pacer-demo-worker/               # Cloudflare Worker: homepage demo video (src/demo.html) + /demo-connect signup
 ├── docs/                                  # PDBRDD documentation
 │   ├── plan/                              # PRD, site tree, build prompts
-│   ├── design/                            # HTML mockups
+│   ├── design/                            # HTML mockups; demo-vids/ = every homepage demo video served
+│   ├── seed/                              # Verbatim prompts that started a piece of work
+│   ├── archive/                           # Rendered live-site snapshots taken before big changes
 │   ├── build/                             # Architecture, technical decisions
 │   ├── review/                            # QA checklist, known issues, backups
 │   ├── document/                          # Changelog, internal documentation
 │   └── deploy/                            # Deploy runbook
 ├── content-staging/                       # Pre-publication content drafts
 ├── prompt-library/                        # Reusable prompts (authoring + review)
-├── img/                                   # Image assets
+├── img/                                   # Image assets; img/pacing/ = homepage pacing chart (generated)
 ├── foundation/                            # pacerai-foundation submodule (doctrine link, not copy)
 └── .claude/
     ├── operator.md                        # Operator config for this repo (repo-operator role)
@@ -169,6 +181,9 @@ All 12 blog articles (bone + live under `/resources/`) plus slugs, parents, and 
 | `src/wpcode/footer.js` | Source (externalized) | Site-wide JS installed in the WPCode **Footer** snippet — incl. the lead-capture form handler. Paste `src/wpcode/footer.paste.txt` into WP Admin on change; see [`src/README.md`](src/README.md) | `webdev-getpacerai` |
 | `src/homepage/wpcode-homepage-css.css` | Archive | Pre-v3 externalized homepage CSS. The WPCode **Header** snippet is deliberately blank since v3 — leave it empty | `webdev-getpacerai` |
 | `scripts/deploy.py` | Tooling | WP REST API deploy with built-in validation + backup + verification | Operator |
+| `scripts/build_pacing_chart.py` | Tooling | Homepage "Why Pacer AI exists" chart: takes the demo video's `pace_annual.svg`, applies website tweaks, inlines into the homepage | Operator |
+| `infra/pacer-demo-worker/` | Infra | Cloudflare Worker serving the homepage demo video (`src/demo.html`, written only by `promote.sh`) and the `/demo-connect` signup | Operator (deploys gated on Will) |
+| `docs/design/demo-vids/` | Archive | One folder per homepage demo video ever served, with transcript + README | Operator |
 | `scripts/validate.py` | Tooling | Char count + broken-link + footer/nav consistency; `--strict` is the Pre-Publish gate | Operator |
 | `scripts/preview.py` | Tooling | Local preview server — strips WP scripts, injects WPCode CSS to simulate render | Operator |
 | `docs/deploy/runbook.md` | Doctrine | Deploy procedure (backup, verify, batch) — read before any REST push | Operator |
@@ -208,7 +223,7 @@ Source of truth: `pacerai-os/contracts/data-fleet-registry.md`.
 | Risk | Severity | Mitigation |
 |---|---|---|
 | `CLAUDE.md` is 328 lines — exceeds the 200-line guideline flagged by the architecture audit; carries the full WP page registry, deploy patterns, WordPress.com pitfalls, brand constraints, and operator rules in one file | Medium | Pre-existing risk tracked separately (out of spec #22 scope per Plan §10.4 / §11.11 watch-fors); a future Seed splits the page registry + WordPress pitfalls into sub-docs and leaves `CLAUDE.md` as the session brief proper |
-| Yoast title + meta descriptions cannot be set via the WP REST API on WordPress.com — must be set manually in WP Admin per page | Medium | v3.0.x: all 21 indexed pages rebranded to the "GTM Financial Modeling Agent for CROs" message in WP Admin; per-page worklist at `docs/deploy/yoast-worklist.md`; Organization + Person schema added via a WPCode JSON-LD snippet (`docs/deploy/wp-admin-actions.md`). Excerpts remain a meta-desc fallback |
+| Yoast title + meta descriptions cannot be set via the WP REST API on WordPress.com — must be set manually in WP Admin per page | Medium | **Open (2026-10-05):** on-page copy now says "Daily Pacing Agent"; the Yoast titles/meta still carry the older "GTM Financial Modeling Agent for CROs" message from v3.0.x and need updating in WP Admin; per-page worklist at `docs/deploy/yoast-worklist.md`; Organization + Person schema added via a WPCode JSON-LD snippet (`docs/deploy/wp-admin-actions.md`). Excerpts remain a meta-desc fallback |
 | Foundation submodule version pinning — `foundation/` was bumped on 2026-05-19 (ad hoc fleet wiring fix) and again on 2026-05-20 (spec #17 pricing-doctrine wire); a future foundation canonical edit landing without a coordinated submodule bump here could resolve the four `@`-imports against stale doctrine | Low | `foundation-waterfall audit` (in `pacerai-foundation`) detects drift across consumers; `pacerai-os/bin/check-foundation-wiring.sh` (registry-driven, spec #14) gates the wiring at the OS harness layer |
 | WordPress.com silent-failure surface — `#pacerai-homepage *` margin/padding resets, inline `<script>` strip, theme-CSS overrides, WPCode footer line-break insertion into minified JS; failures are not erroring, just visually wrong post-deploy (documented in `CLAUDE.md` ## WordPress.com CSS/JS Pitfalls) | Low | Always verify computed styles via DevTools after deploy; non-minified JS in WPCode; deploy runbook (`docs/deploy/runbook.md`) carries verification step; `validate.py --strict` Pre-Publish gate catches some classes pre-merge |
 | Homepage slug is `no-title` — pre-spec legacy, affects permalink; needs Will's review before change | Low | Tracked in `CLAUDE.md` ## Known Issues; no functional impact until a slug change is attempted |
