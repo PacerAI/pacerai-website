@@ -7,7 +7,7 @@ any version can be replayed or restored. They are served by the `pacer-demo-work
 | Folder | Worker variant | What it shows | sha256 | Status |
 |---|---|---|---|---|
 | [`planning-agent_2026_10_04/`](planning-agent_2026_10_04/) | `cro-arr-v1` | Planning Agent: "$100M ARR in 2025 → $150M in 2027", ends in the Excel workbook | `dda61798b1b9…` | On the homepage 2026-07-22 → 2026-10-05; now staging only, kept for cross-sell |
-| [`pacing-agent_2026_10_04/`](pacing-agent_2026_10_04/) | `pacing-agent-v2` | Pacing Agent: user types `pace`, then `gap`; end card Try the Demo Free · Review the output · Replay | `1e25e1491fd5…` | **On the homepage since 2026-10-05** (`v1` was the first staged cut, never live) |
+| [`pacing-agent_2026_10_04/`](pacing-agent_2026_10_04/) | `pacing-agent-v3` | Pacing Agent: user types `pace`, then `gap`; end card Try the Demo Free · Review the output · Replay | `9237422ce272…` | **On the homepage** (v2 live earlier on 2026-10-05; v3 adds the white-space ACCOUNT header) |
 
 **Go-to-market fit:** the homepage video lands the **Pacing Agent** (watch → give a work email on `/demo-connect` →
 try it free). The **Planning Agent** video is the cross-sell follow-up.

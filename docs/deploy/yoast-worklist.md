@@ -1,3 +1,24 @@
+# 2026-10-05 — "Daily Pacing Agent" rename (do these first)
+
+The on-page copy says "Daily Pacing Agent" since 2026-10-05; these Yoast fields still carry the old
+"GTM Financial Modeling Agent" message (checked against the live HTML 2026-10-05), or are missing. WP Admin only.
+Edit in **WP Admin → Pages → (page) → Yoast SEO → SEO title / Meta description**. Titles ≤60, metas ≤155 (counted).
+
+| # | Page | URL | WP ID | SEO title | Meta description |
+|---|---|---|---|---|---|
+| R1 | Home | `/` | 25 | Pacer AI — The Daily Pacing Agent for Sales Leaders (51) | Pacer AI is the Daily Pacing Agent for sales leaders: know every day if you will make plan, where the gap is, and how to close it, inside Claude. (145) |
+| R2 | Resources | `/resources/` | 230 | Resources — Pacing, ARR & Revenue Planning Guides \| Pacer AI (60) | Guides on pacing to plan, ARR waterfalls and revenue models for CROs and finance leaders, from the team behind the Daily Pacing Agent. (134) |
+| R3 | Team | `/team/` | 366 | *(keep)* Team — Pacer AI \| The Operator Behind the Agent | Pacer AI is founder-led by Will Sullivan, a former PwC M&A advisor and West Point graduate. Meet the operator behind the Daily Pacing Agent. (140) |
+| R4 | Contact | `/contact/` | 375 | *(keep)* Contact Pacer AI — Talk to Will | Book a demo or reach founder Will Sullivan directly: see your pace to plan, the gap to close and how to close it, with the Daily Pacing Agent in Claude. (152) |
+| R5 | Demo Connect | `/demo-connect/` | 983 | Try the Pacer AI Demo Free — Pace to Plan in Claude (51) | Connect the Pacer AI demo to Claude in two minutes, type pace, and see if you will make plan this month, quarter and year. No credit card required. (147) |
+| R6 | NRR case study | `/resources/grow-nrr-101-to-105-case-study/` | 778 | How I Grew a Client's NRR from 101% to 105% \| Pacer AI (54) | A six-month case study: sunsetting weak add-on products, fixing pricing leakage and fencing off M&A churn moved net revenue retention 101% to 105%. (147) |
+
+If a page's Yoast **Social** tab has its own title/description set, update it to match (the homepage `og:title` came
+from there). Then update the WPCode JSON-LD snippet's `alternateName` and `description` per
+[`wp-admin-actions.md`](wp-admin-actions.md) §2.
+
+---
+
 # Task 3 — Yoast title/meta worklist (WP Admin -> page -> Yoast SEO)
 
 Order: Fix first, then Minor. Titles <=60, metas <=155.

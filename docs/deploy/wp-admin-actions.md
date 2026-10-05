@@ -15,6 +15,8 @@ See the **SEO Messaging Table** artifact (current → recommended for every page
 
 **Step A (in Yoast, free) — fix the `sameAs` at the source:** Yoast → **Settings → Site representation → Organization → Social profiles**. Set LinkedIn to `https://www.linkedin.com/company/getpacerai` (the live schema currently emits the wrong `/company/pacer-ai`) and YouTube to `https://www.youtube.com/@PacerAI`. This makes Yoast's own Organization node agree with the snippet below.
 
+**Updated 2026-10-05 (Daily Pacing Agent rename):** `alternateName` and `description` below are the target values; the live snippet still has the old ones until it is edited in WPCode.
+
 **Step B — add this WPCode snippet** (WPCode → **+ Add Snippet → HTML Snippet**; Location: **Site Wide Header**; or a JavaScript/PHP snippet if you prefer). It uses the **same `@id`** as Yoast's Organization node (`…/#organization`) so Google *merges* the extra properties into the existing node instead of creating a duplicate:
 
 ```html
@@ -24,9 +26,9 @@ See the **SEO Messaging Table** artifact (current → recommended for every page
   "@type": "Organization",
   "@id": "https://getpacerai.com/#organization",
   "name": "Pacer AI",
-  "alternateName": ["Revenue Modeling Agent", "ARR Modeling Agent"],
+  "alternateName": ["Daily Pacing Agent", "ARR Modeling Agent"],
   "url": "https://getpacerai.com/",
-  "description": "Pacer AI is the GTM Financial Modeling Agent for CROs and Sales Leaders — it builds and reconciles your ARR waterfall and revenue model inside Claude.",
+  "description": "Pacer AI is the Daily Pacing Agent for CROs and sales leaders: it shows every day whether you will make plan, the gap to close, and how to close it, inside Claude.",
   "foundingDate": "2023-05",
   "logo": {
     "@type": "ImageObject",

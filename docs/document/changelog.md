@@ -8,6 +8,16 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-05 — White-space chart: ACCOUNT column header (pacing-agent-v3)
+
+- **Status:** LIVE. `./promote.sh pacing-agent-v3 --deploy` → production `/` sha `9237422c…`; `/signup` + `/health` 200.
+- **Change (MCP tool renderer, `demo_gap.svg_whitespace`):** an ACCOUNT header now sits over the account ids, next to
+  WHITE SPACE, and the right margin fits the longest "$NNNK contracted" label (it was clipped). The video's 20px
+  canvas workaround is removed. Rollback: `./promote.sh pacing-agent-v2 --deploy`.
+- The live MCP connector shows the new header only after the Azure app is redeployed (Will-gated).
+
+---
+
 ## 2026-10-05 — Pacing Agent video is the homepage video
 
 - **Status:** LIVE. `./promote.sh pacing-agent-v2 --deploy` → production `pacer-demo-worker` `/` serves sha
