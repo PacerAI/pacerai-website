@@ -23,7 +23,7 @@ Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.c
 - **CMS:** WordPress.com (hosted, no SSH/WP-CLI access)
 - **Theme:** Twenty Twenty-Four (WordPress default — fully overridden by inline CSS)
 - **Deploy method:** WordPress REST API + Application Password (Python `requests` library)
-- **No build tools** for the pages — no npm, no bundler, no framework. Pure HTML/CSS, vanilla JS for mobile nav only. *(Exception: `infra/pacer-demo-worker/` is a self-contained Cloudflare Worker — its own npm + wrangler — that serves the v3 homepage's demo-video iframe. It is website infra, isolated from page authoring; see its README.)*
+- **No build tools** for the pages — no npm, no bundler, no framework. Pure HTML/CSS, vanilla JS for mobile nav only. *(Exception: `infra/pacer-demo-worker/` is a self-contained Cloudflare Worker — its own npm + wrangler — that serves the homepage demo video (`pacing-agent-v2` since 2026-10-05) and the `/demo-connect` signup widget. It is website infra, isolated from page authoring; see its README and the demo-video section below.)*
 - **Font loading:** Google Fonts loaded by WordPress — no `<link>` tags needed in page HTML.
 
 ## WordPress Page Registry
@@ -143,12 +143,18 @@ docs/
 ├── document/
 │   ├── changelog.md                    # Deploy log
 │   └── Internal_Documentation.md       # Messaging, positioning, site tree, SEO strategy
+├── seed/                           # Verbatim prompts that started a piece of work (e.g. 2026-10-05 pacing demo video)
+├── archive/live-site-YYYY-MM-DD/    # Rendered snapshots of the live site taken before a big change
 ├── lead-capture-architecture.md     # Form → Worker → D1 `leads` → Slack → Apollo (READ before touching capture)
 ├── lead-capture-flow-light.mermaid  # Diagram sidecar for the above
 └── deploy/
     ├── runbook.md                      # Deploy instructions
     ├── wp-admin-actions.md             # Organization/Person WPCode schema snippet + redirect runbook
     └── yoast-worklist.md               # Per-page Yoast title/meta worklist (WP Admin only)
+
+docs/design/demo-vids/                  # Every homepage demo video served, one folder each (README = index)
+img/pacing/                             # Homepage "Why Pacer AI exists" chart (generated; see demo-video section)
+infra/pacer-demo-worker/                # Cloudflare Worker: homepage demo video + /demo-connect signup
 
 pacerai-context/
 ├── pacerai.md                          # Canonical company context (products, personas, differentiation)
@@ -179,9 +185,34 @@ python3 scripts/deploy.py 25 --force          # Skip validation (used for the 12
 python3 scripts/build_footer_paste.py         # writes src/wpcode/footer.paste.txt
 python3 scripts/build_footer_paste.py --check # verify it's current
 
+# Homepage "Why Pacer AI exists" chart — from the demo video's pace_annual.svg (platform repo), then deploy 25
+python3 scripts/build_pacing_chart.py        # writes img/pacing/ + inlines into src/homepage/index-build.html
+
 # Regenerate the SEO data tables (holds the per-page Yoast SEO data)
 python3 scripts/build_seo_table.py            # Emits docs/review/seo-table.csv + docs/review/seo-table.html
 ```
+
+## Homepage demo video + "Why Pacer AI exists" chart (2026-10-05)
+
+- **Demo video.** The homepage showcase iframes the production `pacer-demo-worker` at `/`, which serves
+  `infra/pacer-demo-worker/src/demo.html`. Live: **`pacing-agent-v2`**: the user types `pace`, then `gap`;
+  the end card offers Try the Demo Free (→ `/demo-connect`) · Review the output · Replay. The previous Planning
+  Agent video (`cro-arr-v1`) stays on staging (`/v/cro-arr-v1`) for the cross-sell.
+- **The generator lives in the platform repo:** `pacerai-platform-claude-native/demo-site/build_pacing_video.py`
+  runs the real MCP chart renderers on the illustrative dataset `demo-site/pacing_fixture.py` (as of 2026-09-20,
+  $100M → $120M FY2026 plan). Never hand-edit a video.
+- **A new version is a new slug:** `PACER_DEMO_SRC=<file> ./sync.sh <slug>` → register in `src/staging.ts` →
+  `npm run deploy:staging` → Will reviews `/v/<slug>` → `./promote.sh <slug> --deploy` (the only writer of
+  `src/demo.html`) → record it in `pacerai-content/collateral/demo_reels/registry.yaml`.
+  Rollback: `./promote.sh cro-arr-v1 --deploy`. The same worker serves the `/demo-connect` signup widget
+  (`/signup`, `POST /demo-signup`), so check `/signup` returns 200 after every production deploy.
+- **Archive:** [`docs/design/demo-vids/`](docs/design/demo-vids/README.md) keeps every video that was served, one
+  folder each. The prompt that started this is in [`docs/seed/`](docs/seed/).
+- **"Why Pacer AI exists" chart.** `python3 scripts/build_pacing_chart.py` takes the video's own
+  `pace_annual.svg` (platform `demo-site/out/pacing-agent/`), applies the website tweaks (value label right of the
+  point, "Plan", "illustrative data"), writes `img/pacing/` and inlines it into the homepage
+  `<figure class="pace-fig">`; then `python3 scripts/deploy.py 25`. The homepage and the video always show the same
+  numbers. **Change the data in the platform repo, not here.**
 
 ## Key Workflows
 
@@ -278,6 +309,7 @@ These are silent failures — WordPress won't error, but your styles/scripts won
 | WPCode Footer snippet is fragile — a malformed closing tag once broke ALL footer JS | Every footer-injected script (rotor, marquee, pipeline) dies silently site-wide | Homepage animations (hero rotor w/ 13 phrases, logo marquee, pipeline numbers) moved to the inline `<img onerror>` injector in `src/homepage/index-build.html` (bypasses WP script-stripping), guarded by `window.__paRotor` / `window.__paPipe` so they never double-run if the WPCode footer is later fixed. |
 
 | Cloning a stale page's nav/footer/CSS (e.g. `src/team/contact.html`) | Missing overrides → page renders clamped to WordPress's 620px content-size ("too narrow"), sticky nav gets squeezed so header buttons look missing, footer can't full-bleed | Port the chrome from **`src/homepage/index-build.html`** (the current bone reference), not older pages. The load-bearing line is the TT4 override `.wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width:none!important}` + `position:fixed` nav. `contact.html` predates these and is stale. |
+| WordPress.com bot challenge (2026-10-05) | `deploy.py` started getting HTTP 403 "Checking your browser..." while curl with the same credentials got 200 | `deploy.py` uses urllib's **default** HTTPS context. Never pass a custom `SSLContext` (even `create_default_context()`): it drops the http/1.1 ALPN and changes the TLS fingerprint the challenge keys on |
 
 **Design reference (v3 bone homepage):** `docs/design/homepage/index-build-bone_v3_2026-07-22.html` — self-contained, browser-openable copy of the v3 homepage (page CSS/HTML + inlined WPCode JS). Diff live CSS against it. *(Legacy dark reference archived at `docs/design/homepage/archive/`.)*
 **AEO Row spec:** `docs/design/AEO-Row-Text-and-Image.md` — copy-paste-ready CSS for text+image sections.
@@ -328,6 +360,7 @@ Every page follows the same pattern:
 ## Known Issues
 
 - **Homepage slug is `no-title`** — needs Will's review before changing (affects permalink)
+- **Category rename not yet in Yoast** — on-page copy says "Daily Pacing Agent" since 2026-10-05, but the Yoast titles/meta on all indexed pages and the WPCode JSON-LD `alternateName` still say "GTM Financial Modeling Agent" / "Revenue Modeling Agent". WP Admin only; worklist in `docs/deploy/yoast-worklist.md`.
 - **Yoast title + meta descriptions** — NOT writable via the WordPress.com REST API; set in WP Admin (browser) per page. v3.0.x: Yoast title + meta rebranded across **all 21 indexed pages** to the "GTM Financial Modeling Agent for CROs" message; per-page worklist at `docs/deploy/yoast-worklist.md`. Homepage `og:title` corrected to "Pacer AI — The GTM Financial Modeling Agent for CROs". Organization + Person schema added via a WPCode JSON-LD snippet (founder Will Sullivan, foundingDate 2023-05, sameAs linkedin.com/company/getpacerai + linkedin.com/in/will-sullivan98 + youtube.com/@PacerAI, alternateName ["Revenue Modeling Agent","ARR Modeling Agent"]) — see `docs/deploy/wp-admin-actions.md`.
 
 ## Resolved Issues (April 2026)

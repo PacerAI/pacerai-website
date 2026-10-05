@@ -74,6 +74,10 @@ Built 2026-10-05 on this branch; `validate.py --strict` 12/12; deploy dry-run OK
 
 ## Part C: FY26 annual pacing chart ✅
 
+> **Superseded 2026-10-05 (later):** the chart now comes from the Pacing Agent demo video's dataset — see
+> [`../design/demo-vids/pacing-agent_2026_10_04/README.md`](../design/demo-vids/pacing-agent_2026_10_04/README.md).
+> `fy26-annual-pacing.json` was removed; edit the dataset in the platform repo instead.
+
 - **Style (2026-10-05 revision):** matches the `pace_annual` MCP chart (`svg_pace` in
   `pacerai-platform-claude-native/mcp/pacer_intake_mcp/demo_pace.py`; reference `docs/roadmap/assets/pace_annual.png`).
   The homepage `<style>` imports Cormorant Garamond + JetBrains Mono for it. If `svg_pace` changes, update `build_pacing_chart.py` to match.

@@ -6,15 +6,19 @@
 // ─────────────────────────────────────────────────────────────────────────────
 import croArrV1 from "./variants/cro-arr-v1.html";
 import demoConnect from "./variants/demo-connect.html";
+import pacingAgentV1 from "./variants/pacing-agent-v1.html";
+import pacingAgentV2 from "./variants/pacing-agent-v2.html";
 
 const VARIANTS: Record<string, { html: string; title: string }> = {
   "cro-arr-v1": { html: croArrV1, title: "CRO ARR Planning — $100M to $150M" },
   "demo-connect": { html: demoConnect, title: "Connect the demo — add the connector, sign in, type pace" },
+  "pacing-agent-v1": { html: pacingAgentV1, title: "Pacing Agent — type pace, then gap (illustrative data, 20 Sep 2026)" },
+  "pacing-agent-v2": { html: pacingAgentV2, title: "Pacing Agent — pace, then gap; end card adds Review the output" },
 };
 
 // Kept in sync with pacerai-content/collateral/demo_reels/registry.yaml → production_variant.
 // Display only; this Worker never serves production traffic.
-const PRODUCTION_VARIANT = "cro-arr-v1";
+const PRODUCTION_VARIANT = "pacing-agent-v2";
 
 /**
  * pacer-demo-worker-staging
