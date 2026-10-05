@@ -23,7 +23,7 @@ Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.c
 - **CMS:** WordPress.com (hosted, no SSH/WP-CLI access)
 - **Theme:** Twenty Twenty-Four (WordPress default — fully overridden by inline CSS)
 - **Deploy method:** WordPress REST API + Application Password (Python `requests` library)
-- **No build tools** for the pages — no npm, no bundler, no framework. Pure HTML/CSS, vanilla JS for mobile nav only. *(Exception: `infra/pacer-demo-worker/` is a self-contained Cloudflare Worker — its own npm + wrangler — that serves the homepage demo video (`pacing-agent-v2` since 2026-10-05) and the `/demo-connect` signup widget. It is website infra, isolated from page authoring; see its README and the demo-video section below.)*
+- **No build tools** for the pages — no npm, no bundler, no framework. Pure HTML/CSS, vanilla JS for mobile nav only. *(Exception: `infra/pacer-demo-worker/` is a self-contained Cloudflare Worker — its own npm + wrangler — that serves the homepage demo video (`pacing-agent-v3` since 2026-10-05) and the `/demo-connect` signup widget. It is website infra, isolated from page authoring; see its README and the demo-video section below.)*
 - **Font loading:** Google Fonts loaded by WordPress — no `<link>` tags needed in page HTML.
 
 ## WordPress Page Registry
@@ -195,7 +195,7 @@ python3 scripts/build_seo_table.py            # Emits docs/review/seo-table.csv 
 ## Homepage demo video + "Why Pacer AI exists" chart (2026-10-05)
 
 - **Demo video.** The homepage showcase iframes the production `pacer-demo-worker` at `/`, which serves
-  `infra/pacer-demo-worker/src/demo.html`. Live: **`pacing-agent-v2`**: the user types `pace`, then `gap`;
+  `infra/pacer-demo-worker/src/demo.html`. Live: **`pacing-agent-v3`**: the user types `pace`, then `gap`;
   the end card offers Try the Demo Free (→ `/demo-connect`) · Review the output · Replay. The previous Planning
   Agent video (`cro-arr-v1`) stays on staging (`/v/cro-arr-v1`) for the cross-sell.
 - **The generator lives in the platform repo:** `pacerai-platform-claude-native/demo-site/build_pacing_video.py`

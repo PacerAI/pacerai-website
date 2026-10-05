@@ -19,7 +19,7 @@ If you're opening this repo for the first time: read `AGENTS.md` (OS-pointer blo
 | **Page authoring + WPCode** | [`src/README.md`](src/README.md) | How a page is built, how nav/footer attach, and how to paste the WPCode footer without breaking the site |
 | **Lead-capture architecture** | [`docs/lead-capture-architecture.md`](docs/lead-capture-architecture.md) | Form → Worker → D1 `leads` → Slack → Apollo sequence; where to change each part |
 | **Capture goal + measures** | [`goals/email-capture.md`](goals/email-capture.md) | What the site optimises for and the SQL that measures it |
-| **Demo videos** | [`docs/design/demo-vids/`](docs/design/demo-vids/README.md) | Every homepage demo video served (live: `pacing-agent-v2`, user types `pace` then `gap`); how to rebuild, stage, promote, roll back |
+| **Demo videos** | [`docs/design/demo-vids/`](docs/design/demo-vids/README.md) | Every homepage demo video served (live: `pacing-agent-v3`, user types `pace` then `gap`); how to rebuild, stage, promote, roll back |
 | **Seeds + plans** | [`docs/seed/`](docs/seed/) · [`docs/plan/`](docs/plan/) | The verbatim prompt behind a piece of work, and the plan that executed it (e.g. `2026-10-05-make-plan-messaging.md`) |
 | **Page registry (canonical)** | [`CLAUDE.md`](CLAUDE.md#wordpress-page-registry) | WP ID → slug → source-file map; the source of truth for what pages exist |
 | **Webpages metadata audit** | [`webpages-metadata.md`](webpages-metadata.md) | Yoast title / meta-desc / OG image status per page |
