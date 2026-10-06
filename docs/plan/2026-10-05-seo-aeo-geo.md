@@ -112,3 +112,42 @@ image · B6b ⏳ hidden footer navigation (9 `href="#"`) and the hidden post-tit
 Re-run the live audit checks per change: page HTML for the definition paragraph and FAQ JSON-LD (parse it), the
 removed wording, `curl -I` for the worker's `X-Robots-Tag`, link targets return 200 (no 301 hops), and after Part B:
 `/team/` robots meta, `?utm_source=x` on a legacy URL returns 301, `og:site_name`, `llms.txt` content.
+
+## Part B follow-up: browser prompt (2026-10-07)
+
+Calendar reminder: Wed 2026-10-07 08:30 MT. Log in to Google Search Console, Bing Webmaster Tools and
+getpacerai.com/wp-admin in the browser Claude drives, then paste:
+
+````
+You're finishing SEO work for getpacerai.com. I'm logged in to Google Search Console, Bing Webmaster Tools and
+WordPress Admin. Change only what's listed; never edit page content. If a screen differs from what I describe, or a
+property/site isn't found, stop and tell me. Do the parts in order.
+
+PART 1 — Google Search Console (https://search.google.com/search-console)
+1. Select the getpacerai.com property (Domain or https://getpacerai.com/ URL-prefix, whichever exists).
+2. For each URL, paste it into the "Inspect any URL" bar at the top, wait for the result, click "Request indexing",
+   wait for "Indexing requested", then move on:
+   https://getpacerai.com/
+   https://getpacerai.com/demo-connect/
+   https://getpacerai.com/team/
+   https://getpacerai.com/resources/
+3. Left menu → Sitemaps → add/resubmit: sitemap_index.xml → Submit. Report the status shown.
+
+PART 2 — Bing Webmaster Tools (https://www.bing.com/webmasters)
+1. Select the getpacerai.com site.
+2. URL Inspection → inspect each of the same 4 URLs → "Request indexing" (or use "URL Submission" with all 4).
+3. Sitemaps → submit https://getpacerai.com/sitemap_index.xml (or "Resubmit" if it's listed). Report the status.
+
+PART 3 — WordPress Admin (https://getpacerai.com/wp-admin)
+1. Yoast SEO → Settings → Site basics → "Site image": choose the media item "pacer-ai-daily-pacing-agent-og"
+   (Pacer AI — Daily Pacing Agent social image). Save.
+2. Pages → Home → Edit → Yoast SEO → Social → replace the Facebook/X image (currently "pacer-ai-og-cro-modeling")
+   with "pacer-ai-daily-pacing-agent-og". Update. Don't touch the page content.
+3. Appearance → Editor → Patterns → Template Parts → Footer: delete the Navigation block whose links are
+   Team / History / Careers / Privacy Policy / Terms and Conditions / Contact Us / Facebook / Instagram / Twitter
+   (they all point to "#"). Save.
+4. Appearance → Editor → Templates → "Pages": delete the "Title" (Post Title) block. Save. Repeat for "Single Posts"
+   if it has one.
+
+Finish with a list: each step → "done" / "unchanged" / "problem: …", including any Search Console/Bing status text.
+````
