@@ -8,6 +8,34 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-06 — Homepage line, Will Sullivan bylines, social image
+
+- **Status:** LIVE. Homepage (25) + all 13 posts redeployed.
+- **Homepage:** the "Why Pacer AI exists" paragraph → "Pacer AI helps companies operate exit-ready using an advanced
+  version of the data model Big 4 accounting firms use in M&A." (Will).
+- **Posts:** byline "Will Sullivan" (→ `/team/`) on all 13; Article author = Person `#will-sullivan` (Will's call).
+- **Social image:** `img/og/pacer-ai-daily-pacing-agent-og.png` uploaded (media 1062) and set as featured image on 17
+  pages. Yoast does not use it for og:image until it is set as the Yoast Site image / homepage Social image (WP Admin).
+- **WP Admin (browser run, verified):** `/team/` indexable; redirects ignore query strings; 13 legacy pages drafted;
+  Site Title "Pacer AI"; llms.txt rewritten; WPCode legalName + `/contact/`.
+
+---
+
+## 2026-10-05 — SEO / AEO / GEO pass (plan Part A)
+
+- **Status:** LIVE. Plan: `docs/plan/2026-10-05-seo-aeo-geo.md`. Pages 25, 230, 366, 375, 983 + all 13 posts; demo worker.
+- **Homepage:** mission h2 ("Pacer AI's mission is…"); crawlable definition of the Daily Pacing Agent; "Pace to plan out.";
+  3 pacing FAQs + FAQPage JSON-LD for all 13 visible Q&As. Now 66,045 chars (955 under the validate limit).
+- **Team:** Person JSON-LD `https://getpacerai.com/team/#will-sullivan`; "revenue intelligence" wording replaced.
+- **Resources:** H1 "Pacer AI Resources"; CollectionPage name/description. **Contact:** demo-first ("Schedule a Demo" →
+  calendly.com/pacerai/demo-pacer-ai; diagnostic kept as a secondary link; "Try the Demo Free" in the intro).
+- **Demo Connect:** SoftwareApplication JSON-LD (free demo); the "$100M book" claim corrected (the live demo is the
+  ~$7–8M startup company). Homepage hero line corrected the same way.
+- **Posts:** stale wording in 264/288/Semrush (+ their content-* sources). **Links:** 71 internal links no longer go
+  through 301s (`/demo-connect/`, `/contact/`, `/#how-it-works`). **Worker:** `x-robots-tag: noindex`.
+
+---
+
 ## 2026-10-05 — White-space chart: ACCOUNT column header (pacing-agent-v3)
 
 - **Status:** LIVE. `./promote.sh pacing-agent-v3 --deploy` → production `/` sha `9237422c…`; `/signup` + `/health` 200.

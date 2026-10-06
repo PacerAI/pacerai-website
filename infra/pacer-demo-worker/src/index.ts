@@ -81,6 +81,9 @@ const FRAME_HEADERS = {
   "content-security-policy": "frame-ancestors https://getpacerai.com https://*.getpacerai.com;",
   "x-content-type-options": "nosniff",
   "referrer-policy": "no-referrer",
+  // The video and signup widget only make sense inside getpacerai.com; keep the bare workers.dev URL
+  // out of search results so it never competes with the site (SEO plan 2026-10-05, A9).
+  "x-robots-tag": "noindex",
 };
 
 export default {
