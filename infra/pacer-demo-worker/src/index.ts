@@ -589,7 +589,7 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
   <div id="s1">
     <div class="kick">Pacer AI Demo</div>
     <h2>Get instant demo access</h2>
-    <p>Enter your work email, pass a quick bot check, and we&rsquo;ll unlock the Pacer AI Demo connector for you.</p>
+    <p>Enter your work email, pass a quick bot check, and we&rsquo;ll unlock the Pacer AI - Demo connector for you.</p>
     <div class="row">
       <label for="email">Work email</label>
       <input id="email" type="email" placeholder="you@company.com" autocomplete="email" value="${pf}">
@@ -600,7 +600,7 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
     </div>
     <button id="continue">Continue</button>
     <div class="err" id="err1"></div>
-    <div class="muted-note">Runs on a synthetic $100M book. We&rsquo;ll email you occasionally about the demo &mdash; no spam.</div>
+    <div class="muted-note">Runs on a synthetic company with fictional accounts. We&rsquo;ll email you occasionally about the demo &mdash; no spam.</div>
   </div>
 
   <div id="s2" class="hide">
@@ -614,15 +614,15 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
   <div id="s3" class="hide">
     <div class="kick">You&rsquo;re in</div>
     <h2>Your demo access</h2>
-    <p>Add the <b>Pacer AI Demo</b> connector in Claude, sign in with your work email + this password, then type <span class="mono">pace</span>.</p>
+    <p>Add the <b>Pacer AI - Demo</b> connector in Claude, sign in with your work email + this password, then type <span class="mono">pace</span>.</p>
     <div id="pwWrap">
       <label>Access password</label>
       <div class="pw" id="pw">&mdash;</div>
     </div>
     <ol>
       <li><b>Browser:</b> open <a href="https://claude.ai/new?modal=add-custom-connector#customize/connectors" target="_blank" rel="noopener">claude.ai add-custom-connector</a>.</li>
-      <li>Name <b>Pacer AI Demo</b> · URL <span class="mono">https://pacerai-demo-mcp.azurewebsites.net/mcp</span> · keep defaults &rarr; Add.</li>
-      <li>Sign in with your work email + the password above, then type <span class="mono">pace</span>, <span class="mono">gap</span>.</li>
+      <li>Name <b>Pacer AI - Demo</b> · URL <span class="mono">https://pacerai-demo-mcp.azurewebsites.net/mcp</span> &rarr; Continue &rarr; keep the defaults &rarr; Add.</li>
+      <li>Sign in with your work email + the password above, set Tool permissions to <b>Always allow</b>, then type <span class="mono">pace</span>.</li>
     </ol>
     <div class="muted-note" id="emailNote"></div>
   </div>

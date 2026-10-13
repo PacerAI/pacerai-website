@@ -8,6 +8,43 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-13 — /demo-connect: hero image + 8 visual steps
+
+- **Status:** LIVE. Page 983 deployed three times (the build, then two text fixes). Production worker redeployed
+  (version `0dc8f03d`). The homepage video is unchanged (sha `9237422c…` before and after). Backups:
+  `docs/review/pre-deploy-backup-983-20261013-*.json`.
+- **Page order:**
+  1. Hero ("Add the Claude connector") with a Claude Connectors image: Gmail, Slack, **Pacer AI - Demo**
+     (outlined), Google Calendar, Google Drive.
+  2. The signup card.
+  3. **8 steps.** Each has a cropped real screenshot (WP media 1107–1115; sources in `img/demo-connect/`).
+  4. Follow-up prompts.
+  5. The walkthrough reel, under "See it in action".
+  6. The note.
+- **Step wording now matches Claude's dialog:**
+  - The name is "Pacer AI - Demo".
+  - Step 1 ends at **Continue**; Add comes on dialog step 2.
+  - The password is "shown in the card above".
+  - New step 7: **Tool permissions → Always allow**, set after adding, because the add dialog has no permission
+    control.
+  - Name and URL sit in click-to-select boxes.
+  - HowTo JSON-LD added.
+- **Privacy:** screenshots are cropped to the dialog. Will's connector list is blurred, and task and chat titles
+  are removed. The `?preview=1` URL suffix used to reach dialog step 2 is masked. The step 6 sign-in image is
+  rendered locally from `oauth.py` `_LOGIN_HTML` (no live OAuth).
+- **WordPress gotcha:** wptexturize turns `Pacer AI - Demo` into an en dash in text, which would make the copy box
+  paste the wrong character. Visible text uses `&#45;`; attributes and JSON-LD are left alone.
+- **Worker card:** "Runs on a synthetic $100M book" became "a synthetic company with fictional accounts". The name
+  became Pacer AI - Demo. The mini-steps now read Continue → defaults → Add, then Always allow.
+- **Verified live in Chrome:**
+  - 1 H1, 8 steps, all 9 images 200.
+  - No "100M".
+  - Step 1 link ends `#customize/connectors`.
+  - The copy boxes are ASCII, and the URL box selects exactly the 46-character URL.
+  - 390px layout checked in a 390px frame.
+
+---
+
 ## 2026-10-12 — Tear Sheet short link + /tear-sheet skill
 
 - **Status:** LIVE. 18 pages redeployed (25, 230, 366, 375, 983 + 13 posts).
