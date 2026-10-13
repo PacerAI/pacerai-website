@@ -85,3 +85,6 @@ published; the redirect is what's live.
 
 If the short link misbehaves, the redirect lives in WP Admin → Tools → Redirection, entry `/tear-sheet/` (#18).
 `status` names the mismatch.
+
+This skill is available in every repo through the symlink `~/.claude/skills/tear-sheet`, which exists only on this
+machine. To restore it, see `pacerai-website/CLAUDE.md` § Claude Code Skills.

@@ -392,13 +392,22 @@ All pages now include `Service` schema.org markup in JSON-LD for AI scraper disc
 
 **AI Context Center:** `pacerai-context/apollo_ai.md` contains the paste-ready document for Apollo.io's AI agent. Update this file when products or positioning change.
 
-## Claude Code Skill
+## Claude Code Skills
 
-This repo includes a project-level skill: `.claude/skills/webdev-getpacerai/SKILL.md`
+Two project-level skills live in `.claude/skills/`. Their files are versioned here, on GitHub. Always edit them here.
 
-Invoke with `/webdev-getpacerai [action]` — includes page registry, deploy workflows, brand constraints, and operating rules.
+| Skill | Invoke | Where it works |
+|---|---|---|
+| `webdev-getpacerai` | `/webdev-getpacerai [action]`: page registry, deploy workflows, brand constraints, operating rules | This repo only. Older versions of this file said it was symlinked into `~/.claude/skills`; as of 2026-10-12 no such symlink exists |
+| `tear-sheet` | `/tear-sheet [status \| edit <change> \| publish [pdf] \| rollback [media_id]]`: the Tear Sheet PDF behind getpacerai.com/tear-sheet/ | Every repo, through the symlink `~/.claude/skills/tear-sheet` → `.claude/skills/tear-sheet` (created 2026-10-12) |
 
-Also symlinked to `~/.claude/skills/webdev-getpacerai` for cross-session availability. Edit the project-level file — the symlink points here.
+**The global symlink is machine-local; this file is its record.** `~/.claude/skills` is a local git repo with **no
+GitHub remote**. The symlink and its README row are committed there (`7366112`, 2026-10-12), but that commit exists
+only on this machine. On a new machine, or if the symlink disappears, restore it:
+
+```bash
+ln -s ~/Documents/pacerai/pacerai-website/.claude/skills/tear-sheet ~/.claude/skills/tear-sheet
+```
 
 ## Flag for Human Review
 
