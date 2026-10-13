@@ -36,7 +36,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 > The 6 `/solutions/*` pages are **retired from nav + homepage and 301-redirected to the homepage**
 > (source files kept for archive/rollback; do not redeploy their content). Legacy `/pricing/` (111)
 > **301-redirects to `/#pricing`**. Homepage nav is flat/centered (Daily Pacing Agent · Use Cases ·
-> Team · Pricing · Resources). The Blog (230) WP page title is renamed **"Blog" → "Resources"** (slug
+> Team · Pricing · Resources · Tear Sheet). *(Tear Sheet added 2026-10-07: the PDF at WP media 1063, also first in the footer's Resources column.)* The Blog (230) WP page title is renamed **"Blog" → "Resources"** (slug
 > already `resources`; posts auto-301, `/blog/` → `/resources/` redirect live; runbook
 > `docs/deploy/blog-to-resources-rename.md`). "Resources" nav → `/resources/`.
 > **Redirects (301, Redirection plugin):** `/team/about/` → `/#about`, `/platform/overview/` → `/#how-it-works`,

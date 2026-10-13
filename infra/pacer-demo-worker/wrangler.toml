@@ -29,6 +29,11 @@ id = "105573715cf94372bd65e505caf5d845"
 #   TURNSTILE_SECRET     — Turnstile siteverify secret (set by agent at build)
 #   SLACK_WEBHOOK_URL    — Incoming Webhook for #gtm-triggers (Will provides)
 #   PACER_DEMO_PASSWORD  — current demo password, matches Azure PACER_OAUTH_PASSWORD (Will sets)
+#   APOLLO_API_KEY                 — same value as pacerai-gtm/.env APOLLO_API_KEY
+#   APOLLO_EMAIL_ACCOUNT_ID        — sender mailbox, 698cf8caac41ac000da4c9f9 (will@getpacerai.com)
+#   APOLLO_SEQUENCE_ID_DEMO_SIGNUP — Signal_CONTACT_DemoSignup_Triage sequence, 6ac6a3099f51790014977897
+#   All three Apollo secrets are optional: unset = signups skip Apollo (key) or land
+#   on the list without the email (sequence id). See pacerai-gtm/tactics/website-visitor/docs/design/flow.md.
 
 # ── Staging: the dev half of the demo-reel pipeline ───────────────────────────
 # A SEPARATE worker (pacer-demo-worker-staging.will-078.workers.dev) that serves every
