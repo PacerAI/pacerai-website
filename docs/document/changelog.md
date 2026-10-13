@@ -8,6 +8,20 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-12 — Tear Sheet short link + /tear-sheet skill
+
+- **Status:** LIVE. 18 pages redeployed (25, 230, 366, 375, 983 + 13 posts).
+- **Short link:** `getpacerai.com/tear-sheet/` = Redirection **#18**, a **302** to the current PDF (a 302 because it gets
+  repointed; browsers cache 301s). All 39 site links (nav + footer, both fragments) now use `/tear-sheet/` instead of
+  the PDF file URL. Both Apollo emails (demo signup, beta tester) link `https://getpacerai.com/tear-sheet/`.
+  Verified: each page has 2 short links and no direct PDF link; the link 302s to the PDF (200, 2,339,924 bytes).
+- **Publishing a new version** no longer touches pages or emails: `scripts/tear_sheet.py publish <pdf>` uploads,
+  repoints #18, verifies and records it in `docs/tear-sheet/versions.json`. `rollback` repoints to any earlier version.
+- **`/tear-sheet` skill** (`.claude/skills/tear-sheet/`, symlinked into `~/.claude/skills`): edit the source Design
+  canvas "Pacer AI One-Pager", Will exports the PDF, then publish / rollback / status.
+
+---
+
 ## 2026-10-07 — Tear Sheet in nav + footer; demo signups reach Apollo
 
 - **Status:** LIVE. 18 pages redeployed (25, 230, 366, 375, 983 + 13 posts); 25/375/983 twice (nav CSS fix).
