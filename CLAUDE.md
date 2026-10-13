@@ -36,7 +36,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 > The 6 `/solutions/*` pages are **retired from nav + homepage and 301-redirected to the homepage**
 > (source files kept for archive/rollback; do not redeploy their content). Legacy `/pricing/` (111)
 > **301-redirects to `/#pricing`**. Homepage nav is flat/centered (Daily Pacing Agent · Use Cases ·
-> Team · Pricing · Resources · Tear Sheet). *(Tear Sheet added 2026-10-07: the PDF at WP media 1063, also first in the footer's Resources column.)* The Blog (230) WP page title is renamed **"Blog" → "Resources"** (slug
+> Team · Pricing · Resources · Tear Sheet). *(Tear Sheet added 2026-10-07, also first in the footer's Resources column. It links `/tear-sheet/`, a Redirection 302 (#18) to the current PDF. Never link the PDF file itself. Edit/publish/rollback with the **`/tear-sheet`** skill + `scripts/tear_sheet.py`; history in `docs/tear-sheet/versions.json`.)* The Blog (230) WP page title is renamed **"Blog" → "Resources"** (slug
 > already `resources`; posts auto-301, `/blog/` → `/resources/` redirect live; runbook
 > `docs/deploy/blog-to-resources-rename.md`). "Resources" nav → `/resources/`.
 > **Redirects (301, Redirection plugin):** `/team/about/` → `/#about`, `/platform/overview/` → `/#how-it-works`,
@@ -187,6 +187,11 @@ python3 scripts/build_footer_paste.py --check # verify it's current
 
 # Homepage "Why Pacer AI exists" chart — from the demo video's pace_annual.svg (platform repo), then deploy 25
 python3 scripts/build_pacing_chart.py        # writes img/pacing/ + inlines into src/homepage/index-build.html
+
+# Tear Sheet PDF behind getpacerai.com/tear-sheet/ (see .claude/skills/tear-sheet/SKILL.md)
+python3 scripts/tear_sheet.py status            # live version + verify the short link
+python3 scripts/tear_sheet.py publish <pdf> --note "…" [--dry-run]   # upload + repoint, no page deploys
+python3 scripts/tear_sheet.py rollback [media_id]
 
 # Regenerate the SEO data tables (holds the per-page Yoast SEO data)
 python3 scripts/build_seo_table.py            # Emits docs/review/seo-table.csv + docs/review/seo-table.html

@@ -1,0 +1,23 @@
+{
+  "short_link": "https://getpacerai.com/tear-sheet/",
+  "redirection_id": 18,
+  "source_canvas": "https://claude.ai/artifact/UNKgEc4riY2ANxn9y1xYNh",
+  "linked_from": [
+    "site nav + footer on every page (src/nav-headers.html, src/footer/footer.html) -> /tear-sheet/",
+    "Apollo Signal_CONTACT_DemoSignup_Triage email (6ac6a3099f51790014977897) -> https://getpacerai.com/tear-sheet/",
+    "Apollo Product_BetaTester email (6ac6a30bc4f8150018d90e12) -> https://getpacerai.com/tear-sheet/"
+  ],
+  "versions": [
+    {
+      "version": 1,
+      "date": "2026-10-07",
+      "media_id": 1063,
+      "url": "https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-tear-sheet.pdf",
+      "pages": 3,
+      "bytes": 2339924,
+      "sha256": "f6db4c916d9cc0e4ff560d9b2615df98d0ec331e4668acada9a03f5019a8bf4f",
+      "note": "First release: canvas export of 'Pacer AI Three-Pager v4' (2026-10-06)",
+      "published_at": "2026-10-07T19:41:00+00:00"
+    }
+  ]
+}

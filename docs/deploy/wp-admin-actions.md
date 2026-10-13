@@ -62,7 +62,10 @@ Notes: `contactPoint` uses `will@getpacerai.com` / type `sales` — change if yo
 
 ## 3. Redirects (Tools → Redirection plugin, or Yoast Premium → Redirects)
 
-All **301 (permanent)**.
+All **301 (permanent)**, with one deliberate exception: **`/tear-sheet/` (#18) is a 302** to the current Tear Sheet
+PDF, because it is repointed on every new version and browsers cache 301s. Never convert it; repoint it only with
+`scripts/tear_sheet.py` (the `/tear-sheet` skill). It is managed through the Redirection REST API
+(`/wp-json/redirection/v1/redirect`), which works with the Application Password.
 
 **Duplicate URLs — collapse root dupes into the `/resources/` canonical:**
 
