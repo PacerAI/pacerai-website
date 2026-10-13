@@ -85,6 +85,21 @@ Slack is an FYI; email is tracked. The widget is **served by the Worker and ifra
   `infra/pacer-demo-worker/`). If the two drift, the page reveals a password the connector rejects.
 - [ ] Later: a small step/script to sync approved KV entries into `demo_users.yml`.
 
+### v1.1 — visual steps (2026-10-13)
+`/demo-connect` was text-only, and its wording didn't match Claude's dialog: "Pacer AI Demo" vs **Pacer AI - Demo**,
+"click Add" where the button is **Continue**, and a password "your Pacer contact shared" while the card reveals it.
+Rebuilt as:
+- **Hero image:** Claude's Connectors list with Pacer AI - Demo after Gmail and Slack.
+- **The signup card**, unchanged.
+- **Eight steps with real, cropped screenshots:** open the dialog (link or **+** menu) → Name → URL + Continue →
+  keep detected defaults + Add → Connect + sign in → Tool permissions **Always allow** → type `pace`.
+- **Then** the walkthrough reel, moved to the bottom.
+
+The password stays behind the email. Claude's add dialog has no permission setting, so "allow all the time" is
+**Tool permissions → Always allow**, set after the connector exists. The signup card's "$100M book" became
+"a synthetic company with fictional accounts". Image sources: `img/demo-connect/` (WP media 1107–1115).
+Re-shoot them if Claude's dialog changes.
+
 ### Decision resolved
 Access model = **capture → Turnstile → auto-reveal password** (v1.0, per Will — faster). Slack #gtm-triggers is
 an FYI notification, not an approval gate. Email verification is v2.0.
