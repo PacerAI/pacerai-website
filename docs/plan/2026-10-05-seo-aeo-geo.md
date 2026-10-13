@@ -113,6 +113,13 @@ Re-run the live audit checks per change: page HTML for the definition paragraph 
 removed wording, `curl -I` for the worker's `X-Robots-Tag`, link targets return 200 (no 301 hops), and after Part B:
 `/team/` robots meta, `?utm_source=x` on a legacy URL returns 301, `og:site_name`, `llms.txt` content.
 
+**Status 2026-10-13 (verified live after Will's reindex run):** reindex requested in Search Console + Bing ✅ · Yoast site
+image ✅ (10 pages serve the new social image) · **hidden post-title H1 + footer placeholders fixed via REST**: 20 content
+pages now use the theme's `page-no-title` template (one H1 per page; it also stopped the featured image, which the stock
+`page` template had been rendering as a banner on 16 pages since 2026-10-06), and the footer template part is an empty
+custom part (wp_id 1103; 0 `href="#"`). Rollback: set `template` back to `""` / clear the Footer customisation.
+⏳ Homepage Yoast **Social** image still `pacer-ai-og-cro-modeling` (Home → Yoast → Social → remove it or pick media 1062).
+
 ## Part B follow-up: browser prompt (2026-10-07)
 
 Calendar reminder: Wed 2026-10-07 08:30 MT. Log in to Google Search Console, Bing Webmaster Tools and

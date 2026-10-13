@@ -40,6 +40,20 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-13 — Theme leftovers fixed; featured-image banner removed
+
+- **Status:** LIVE (WordPress REST; no page content changed).
+- **Pages → `page-no-title` template** (20: 230, 366, 375, 983, 778, 888, 865, 850, 781, 591, 491, 441, 378, 376, 368, 360,
+  358, 851, 853, 855): removes the hidden duplicate `<h1 class="wp-block-post-title">` and the stock template's Post
+  Featured Image block. That block had been showing the social image as a banner on 16 pages since the 2026-10-06
+  featured-image change. Rollback: `template: ""`.
+- **Footer template part** customised to an empty group (wp_id 1103): removes 9 hidden `href="#"` links. Rollback: clear
+  the Footer customisation in Appearance → Editor.
+- Verified on 11 pages: 1 H1, no featured-image block, 0 `href="#"`, robots index; sitemap 21; llms.txt and homepage FAQ intact.
+- **Open:** homepage Yoast Social image is still the old artwork (WP Admin only).
+
+---
+
 ## 2026-10-06 — Homepage line, Will Sullivan bylines, social image
 
 - **Status:** LIVE. Homepage (25) + all 13 posts redeployed.
