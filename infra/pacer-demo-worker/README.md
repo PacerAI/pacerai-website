@@ -120,3 +120,26 @@ Nicer URL, but requires the `getpacerai.com` zone to be on **Cloudflare DNS** (t
 WordPress.com-hosted, so confirm DNS first). If so: uncomment the `[[routes]]` block + set
 `workers_dev = false` in `wrangler.toml`, `npm run deploy`, then update the homepage iframe `src`
 to `https://demo.getpacerai.com/`. Until then, the `workers.dev` URL is the reliable default.
+
+## `/signup` + `POST /demo-signup` — demo access and Apollo follow-up
+
+The same production Worker serves the `/demo-connect` signup widget (`/signup`, iframed by WP page 983). A submit
+runs Turnstile → KV `DEMO_SIGNUPS` → returns the connector URL + password. Then, off the critical path:
+Apollo (`syncApollo()`) → D1 `leads` row → Slack `#website-leads`.
+
+The full flow, the class → action table, the Apollo ids and the operating checks are in
+`pacerai-gtm/tactics/website-visitor/docs/design/flow.md`. Change that file when you change `syncApollo()`.
+
+**Secrets** (`npx wrangler secret put <NAME>`; `wrangler.toml` has the comments):
+
+| Secret | Value / source | Unset means |
+|---|---|---|
+| `TURNSTILE_SECRET` | Cloudflare Turnstile widget | every signup 403s |
+| `PACER_DEMO_PASSWORD` | must equal Azure `PACER_OAUTH_PASSWORD` | the revealed password doesn't work |
+| `SLACK_WEBHOOK_URL` | `#website-leads` webhook | no alerts |
+| `APOLLO_API_KEY` | `pacerai-gtm/.env` `APOLLO_API_KEY` | Apollo step skipped |
+| `APOLLO_EMAIL_ACCOUNT_ID` | `698cf8caac41ac000da4c9f9` (will@getpacerai.com) | list only, no email |
+| `APOLLO_SEQUENCE_ID_DEMO_SIGNUP` | `6ac6a3099f51790014977897` | list only, no email |
+
+**Deploy caution:** `./promote.sh <slug> --deploy` ships whatever `src/index.ts` holds, so never promote a reel
+with a half-finished signup change in the tree. After any production deploy, check that `/signup` returns 200.

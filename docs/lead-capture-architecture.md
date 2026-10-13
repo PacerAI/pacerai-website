@@ -49,7 +49,11 @@ DATA       D1 ▸ pacerai-leads ▸ leads   (append-only; ONE table, BOTH Worker
                               valid_lead          → Signal_CONTACT_Whitepaper_BoardQualityARR  (4 steps · Day 0/3/8/15)
                               personal / competitor → Signal_CONTACT_Whitepaper_NonLead        (1 step)
                               internal            → no enrollment
-                              demo-access · research-waitlist → no enrollment (no sequence yet)
+                              demo-access · research-waitlist → no enrollment, any class (fixed 2026-10-07)
+                            pacer-demo-worker (/demo-connect, since 2026-10-07):
+                              find-before-create → list Signal_CONTACT_DemoSignup_Triage
+                              valid / personal + first name → sequence of the same name (1 email)
+                              competitor · suspicious · internal → list only · disposable → no Apollo
                                    │
                                    ▼
 HUMAN                       Will reads #website-leads and escalates a recognisable
@@ -66,7 +70,7 @@ HUMAN                       Will reads #website-leads and escalates a recognisab
 | Trigger | any `.wp-cta-form` on any page | the Worker-served widget iframed by `/demo-connect` |
 | Bot gate | none (KV 60s idempotency only) | Cloudflare Turnstile, verified server-side |
 | Hands back | `download_url` for slugs that have a file | connector URL + access password |
-| Apollo | contact + enrich + sequence | **none** — the demo grants itself |
+| Apollo | contact + enrich + sequence | contact (find-before-create) + list + sequence `Signal_CONTACT_DemoSignup_Triage` (since 2026-10-07) |
 | Writes | `leads` | `leads` **and** legacy KV `DEMO_SIGNUPS` |
 
 They stay separate because the demo needs a bot gate and a secret to hand out, and the resource path needs CORS and a fast redirect to a file. They write the same table so one query answers the whole funnel.
@@ -118,7 +122,7 @@ Two related traps:
 | Schema | `pacerai-gtm/infra/whitepaper-worker/migrations/0001_leads.sql` |
 | Capture endpoint | `https://whitepaper-worker.will-078.workers.dev` (POST `/`) |
 | Demo endpoint | `https://pacer-demo-worker.will-078.workers.dev` (POST `/demo-signup`, widget at `/signup`) |
-| Sequences | valid `69d83dab0a15420021ae717d` · non-lead `69e2577cfba82800152a99ab` |
+| Sequences | valid `69d83dab0a15420021ae717d` · non-lead `69e2577cfba82800152a99ab` · demo signup `6ac6a3099f51790014977897` · beta tester (manual) `6ac6a30bc4f8150018d90e12` |
 | Alert channel | `#website-leads` (`SLACK_WEBHOOK_URL_WEBSITE_LEADS`; the Worker secret drops the suffix) |
 
 ```bash
@@ -166,4 +170,8 @@ Recorded rather than silently fixed — each is a real inconsistency you will hi
    npx wrangler d1 execute pacerai-leads --remote --command \
      "SELECT COUNT(*) FROM leads WHERE apollo_contact_id IS NULL AND lead_class!='internal'"
    ```
-6. **Nothing reads the `leads` table yet.** The dashboard's inbound KPI is built from Apollo labels, not from D1. Until something consumes it, the table is an audit log and a manual query surface.
+6. **Demo signups reached no one until 2026-10-07.** pacer-demo-worker had no Apollo step, so `/demo-connect`
+   signups were never followed up, and the hero form's `sequence-demo-access` list was mistaken for that
+   follow-up (it was deleted by hand, then recreated). The GTM-side flow, Apollo ids and checks now live in
+   `pacerai-gtm/tactics/website-visitor/docs/design/flow.md`.
+7. **Nothing reads the `leads` table yet.** The dashboard's inbound KPI is built from Apollo labels, not from D1. Until something consumes it, the table is an audit log and a manual query surface.

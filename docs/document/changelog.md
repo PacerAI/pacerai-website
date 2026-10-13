@@ -8,6 +8,24 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-07 — Tear Sheet in nav + footer; demo signups reach Apollo
+
+- **Status:** LIVE. 18 pages redeployed (25, 230, 366, 375, 983 + 13 posts); 25/375/983 twice (nav CSS fix).
+  Backups in `docs/review/pre-deploy-backup-*-20261007-*.json`.
+- **Tear Sheet:** the three-pager PDF (v4) uploaded as `pacer-ai-tear-sheet.pdf`, WP media **1063**
+  (`/wp-content/uploads/2026/10/pacer-ai-tear-sheet.pdf`). Linked, opening in a new tab, as the 6th nav item (after Resources) and the
+  first item in the footer's Resources column, on every page. Fragments updated: `src/nav-headers.html`,
+  `src/footer/footer.html`. Verified: every page returns 200 and has 2 links.
+- **Nav fit:** the 6th item wrapped Log In and clipped "Try the Demo" at 900–1150px on the pages that carry the nav
+  CSS (homepage, contact, demo-connect). Added `@media(max-width:1180px)` (tighter link padding, nowrap Log In) and
+  `@media(max-width:1060px)` (hide header Log In; it is in the footer). Checked at 1440/1180/1100/1000/920: no overflow.
+  Blog pages use their own nav CSS and fit as-is.
+- **pacer-demo-worker:** `/demo-connect` signups now go to Apollo. List + sequence `Signal_CONTACT_DemoSignup_Triage`,
+  find-before-create, competitor domains added; 3 new optional secrets. Deployed; `/signup` 200. Flow doc:
+  `pacerai-gtm/tactics/website-visitor/docs/design/flow.md`. `docs/lead-capture-architecture.md` + mermaid updated.
+
+---
+
 ## 2026-10-06 — Homepage line, Will Sullivan bylines, social image
 
 - **Status:** LIVE. Homepage (25) + all 13 posts redeployed.

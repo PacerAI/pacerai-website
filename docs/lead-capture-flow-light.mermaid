@@ -61,6 +61,7 @@ flowchart TD
         SEQV["Signal_CONTACT_Whitepaper_BoardQualityARR<br/>4 steps · Day 0/3/8/15 · stop on reply"]
         SEQN["Signal_CONTACT_Whitepaper_NonLead<br/>1 step"]
         NOSEQ["No enrollment<br/>internal · demo-access · research-waitlist"]
+        SEQD["Signal_CONTACT_DemoSignup_Triage<br/>list + 1 auto email · valid/personal w/ first name"]
         DASH["apollo-channel-status.py · nightly 3am<br/>label rollup to GTME dashboard KPI<br/>REPORTING ONLY"]
     end
 
@@ -100,6 +101,8 @@ flowchart TD
     TS -.->|fail: 403, no row| PDW
     TS -->|pass| CLS
     PDW --> KV
+    CLS -->|demo path| SEQD
+    SEQD --> D1
 
     %% Resource path
     WPW --> CLS
@@ -148,7 +151,7 @@ flowchart TD
     class D1 contract
     class KV seam
     class SLACK,LOG navy
-    class APC,APE,SEQV,SEQN,NOSEQ,DASH sage
+    class APC,APE,SEQV,SEQN,NOSEQ,SEQD,DASH sage
     class SCORE,RESEND,CONSUME future
 
     %% ============ SUBGRAPH ZONE COLORS ============

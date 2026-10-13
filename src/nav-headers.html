@@ -8,8 +8,11 @@
   2. Copy the appropriate <nav>...</nav> block into every src/ page file
   3. Batch deploy all pages (see docs/deploy/runbook.md)
 
-  v3 nav is FLAT (no dropdowns) and CENTERED. Exactly 5 items + Log In:
-    Daily Pacing Agent · Use Cases · Pricing · Team · Resources   [Log In]
+  v3 nav is FLAT (no dropdowns) and CENTERED. Exactly 6 items + Log In:
+    Daily Pacing Agent · Use Cases · Pricing · Team · Resources · Tear Sheet   [Log In]
+  - Tear Sheet (added 2026-10-07) -> the PDF in the WP media library (ID 1063), new tab.
+  - 6 items crowd the bar at 900-1180px: pages carrying the nav CSS (homepage, contact, demo-connect) add
+    @media(max-width:1180px) tighter link padding + nowrap Log In, and @media(max-width:1060px) hide Log In.
   - Homepage variant: uses data-scroll-to + onclick="_s(event,'...')" for in-page scroll.
   - Sub-page variant: plain /#section hrefs (land on homepage, hash-scroll via the
     onload handler injected by the <img onerror> in the homepage wrapper).
@@ -46,6 +49,7 @@
     <li><a href="/#team" data-scroll-to="team" onclick="_s(event,'team')">Team</a></li>
     <li><a href="/#pricing" data-scroll-to="pricing" onclick="_s(event,'pricing')">Pricing</a></li>
     <li><a href="/resources/">Resources</a></li>
+    <li><a href="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-tear-sheet.pdf" target="_blank" rel="noopener">Tear Sheet</a></li>
   </ul>
   <div class="nav-right">
     <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
@@ -68,6 +72,7 @@
     <li><a href="/#team">Team</a></li>
     <li><a href="/#pricing">Pricing</a></li>
     <li><a href="/resources/">Resources</a></li>
+    <li><a href="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-tear-sheet.pdf" target="_blank" rel="noopener">Tear Sheet</a></li>
   </ul>
   <div class="nav-right">
     <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
