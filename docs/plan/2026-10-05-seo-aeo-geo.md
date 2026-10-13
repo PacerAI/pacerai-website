@@ -118,7 +118,7 @@ image ✅ (10 pages serve the new social image) · **hidden post-title H1 + foot
 pages now use the theme's `page-no-title` template (one H1 per page; it also stopped the featured image, which the stock
 `page` template had been rendering as a banner on 16 pages since 2026-10-06), and the footer template part is an empty
 custom part (wp_id 1103; 0 `href="#"`). Rollback: set `template` back to `""` / clear the Footer customisation.
-⏳ Homepage Yoast **Social** image still `pacer-ai-og-cro-modeling` (Home → Yoast → Social → remove it or pick media 1062).
+✅ Homepage Yoast **Social** image replaced with `pacer-ai-daily-pacing-agent-og` (media 1062) via Claude in Chrome, 2026-10-13; live `og:image` verified, X falls back to it. **All Part B items done.**
 
 ## Part B follow-up: browser prompt (2026-10-07)
 

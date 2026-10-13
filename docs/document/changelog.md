@@ -50,7 +50,8 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 - **Footer template part** customised to an empty group (wp_id 1103): removes 9 hidden `href="#"` links. Rollback: clear
   the Footer customisation in Appearance → Editor.
 - Verified on 11 pages: 1 H1, no featured-image block, 0 `href="#"`, robots index; sitemap 21; llms.txt and homepage FAQ intact.
-- **Open:** homepage Yoast Social image is still the old artwork (WP Admin only).
+- **Homepage social image** replaced in Yoast → Social (Claude in Chrome): live `og:image` = `pacer-ai-daily-pacing-agent-og.png`.
+  Editor save left the content identical to source; page 25 redeployed from source anyway.
 
 ---
 
