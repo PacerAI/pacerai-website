@@ -582,6 +582,10 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
   a{color:var(--navy);font-weight:700}
   .mono{font-family:ui-monospace,Menlo,monospace;background:var(--bone);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12.5px}
   .muted-note{font-size:12px;color:var(--muted);margin-top:8px}
+  .walk{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+  .walk span{font-size:13.5px;font-weight:600;color:var(--ink)}
+  a.btn-walk{display:inline-block;padding:9px 14px;border-radius:10px;background:var(--teal);color:#fff;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap}
+  a.btn-walk:hover{background:#25665f}
 </style></head>
 <body>
 <div class="card">
@@ -601,6 +605,7 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
     <button id="continue">Continue</button>
     <div class="err" id="err1"></div>
     <div class="muted-note">Runs on a synthetic company with fictional accounts. We&rsquo;ll email you occasionally about the demo &mdash; no spam.</div>
+    <div class="walk"><span>Prefer to have someone walk you through it?</span><a class="btn-walk" href="https://calendly.com/pacerai/demo-pacer-ai" target="_blank" rel="noopener">Schedule a Walkthrough &rarr;</a></div>
   </div>
 
   <div id="s2" class="hide">
@@ -625,6 +630,7 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
       <li>Sign in with your work email + the password above, set Tool permissions to <b>Always allow</b>, then type <span class="mono">pace</span>.</li>
     </ol>
     <div class="muted-note" id="emailNote"></div>
+    <div class="walk"><span>Want help with the setup?</span><a class="btn-walk" href="https://calendly.com/pacerai/demo-pacer-ai" target="_blank" rel="noopener">Schedule a Walkthrough &rarr;</a></div>
   </div>
 
 </div>

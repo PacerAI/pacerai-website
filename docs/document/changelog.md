@@ -8,6 +8,46 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-13 — /demo-connect: step screenshots re-shot at 2x
+
+- **Status:** LIVE. Page 983 deployed.
+- **Why they looked soft:**
+  - The hero came from a native Retina screenshot: 1673px shown at about 900px, roughly 2x.
+  - The step shots came from Claude in Chrome's `screenshot` action, which saves at 1x CSS pixels as JPEG. A Retina
+    screen then upscaled them 2x.
+  - Step 6 was rendered at 2x, but its `width`/`height` attributes were 1x. Photon (`i0.wp.com`) resizes to those
+    attributes, so it served a 1x copy.
+- **Fix:**
+  - Re-shot steps 1–5, 7 and 8 with the `zoom` action, which captures the region at device resolution. Each capture
+    is normalised to exactly 2x, cropped and annotated by `crop_steps_2x.py` (same masks and blur, same `?preview=1`
+    mask).
+  - Uploaded as WP media 1122–1128 (`…-2x.png`). The 1x media 1108–1112, 1114 and 1115 are no longer used.
+  - Each `<img>` now carries its 2x pixel size as `width`/`height`, so Photon serves full resolution. An inline
+    `max-width` set to half that size keeps the display size, and the column CSS adds `width:100%`.
+  - Verified live: every step image is served at 2x, and the inline styles survive WordPress.
+- **Rule for future shots:** use `zoom` with `save_to_disk`, never `screenshot`. Set `width`/`height` to the pixel
+  size and cap the display size with `max-width`.
+
+---
+
+## 2026-10-13 — /demo-connect: "Schedule a Walkthrough" CTAs
+
+- **Status:** LIVE. Page 983 deployed. Production worker redeployed (version `b688bb7b`). The homepage video is
+  unchanged (sha `9237422c…`).
+- **What:** three teal "Schedule a Walkthrough →" buttons, all linking to `calendly.com/pacerai/demo-pacer-ai` (the
+  homepage's Schedule a Demo link) and opening in a new tab:
+  1. **Inside the signup card**, served by the worker. It sits under the email form ("Prefer to have someone walk you
+     through it?") and under the revealed password ("Want help with the setup?"). It lives in the card rather than
+     on the page because the card's frame is a fixed height, so a page-level button floated about 150px below the
+     form.
+  2. **Between steps 4 and 5:** "Prefer to finish the setup on a call?"
+  3. **After the walkthrough video:** "Have a question about how it would work on your own revenue data?"
+- **Frame height:** the signup frame is now 750px at ≤480px width (measured: the password screen is about 730px at
+  390px width). Desktop stays 640px (password screen about 545px, email screen about 610px).
+- **Voice lint:** "Rather" is banned, so the copy uses "Prefer to…".
+
+---
+
 ## 2026-10-13 — /demo-connect: hero image + 8 visual steps
 
 - **Status:** LIVE. Page 983 deployed three times (the build, then two text fixes). Production worker redeployed
