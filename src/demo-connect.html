@@ -50,12 +50,18 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 #pacerai-homepage .step-n{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;font-size:14px;margin-bottom:10px}
 #pacerai-homepage .step h3{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.2px;line-height:1.3;margin-bottom:8px}
 #pacerai-homepage .step p{font-size:15px;color:var(--ink-mid);margin:0 0 10px}
-#pacerai-homepage .step-shot img{display:block;height:auto;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 6px 20px rgba(15,25,45,.07)}
+#pacerai-homepage .step-shot img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 6px 20px rgba(15,25,45,.07)}
 #pacerai-homepage .copy{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;font-weight:700;color:var(--navy);background:#fff;border:1px dashed var(--teal);border-radius:10px;padding:11px 13px;margin:4px 0 6px;user-select:all;-webkit-user-select:all;overflow-wrap:anywhere;cursor:text}
 #pacerai-homepage .hint{font-size:13px !important;color:var(--muted) !important}
 #pacerai-homepage a.btn-open{display:inline-block;margin:4px 0 10px;padding:11px 18px;border-radius:10px;font-weight:700;font-size:15px;color:#fff;background:var(--navy)}
 #pacerai-homepage a.btn-open:hover{background:var(--navy-dark)}
 #pacerai-homepage .body.mid{padding-bottom:0}
+#pacerai-homepage .cta-band{display:flex;align-items:center;justify-content:space-between;gap:14px 20px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin:6px 0 24px}
+#pacerai-homepage .cta-band p{font-size:15.5px;font-weight:600;color:var(--ink);margin:0}
+#pacerai-homepage a.btn-walk{display:inline-block;padding:11px 18px;border-radius:10px;font-weight:700;font-size:15px;color:#fff;background:var(--teal);white-space:nowrap}
+#pacerai-homepage a.btn-walk:hover{background:#25665f}
+#pacerai-homepage ol.steps.cont{margin-top:0}
+#pacerai-homepage .reel-wrap .cta-band{max-width:1000px;margin:22px auto 0}
 
 #pacerai-homepage .reel-wrap{max-width:var(--maxw);margin:26px auto 0;padding:0 24px}
 #pacerai-homepage .reel-wrap h2.sec{max-width:1000px;margin:40px auto 14px}
@@ -110,6 +116,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   #pacerai-homepage .footer-top{grid-template-columns:1fr 1fr;gap:28px}
   #pacerai-homepage .footer-brand{grid-column:1/-1}
 }
+@media(max-width:480px){#pacerai-homepage .signup iframe{height:750px}}
 </style>
 
 <div id="pacerai-homepage">
@@ -159,7 +166,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
         <p>Signed in to claude.ai in your browser? This button opens the dialog directly.</p>
         <a class="btn-open" href="https://claude.ai/new?modal=add-custom-connector#customize/connectors" target="_blank" rel="noopener">Open the dialog in Claude</a>
       </div>
-      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-1-open-dialog.png" width="472" height="395" alt="Claude&rsquo;s Add custom connector dialog, step 1 of 2, with Name and MCP server URL fields" loading="lazy" decoding="async"></div>
+      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-1-open-dialog-2x.png" width="976" height="816" style="max-width:488px" alt="Claude&rsquo;s Add custom connector dialog, step 1 of 2, with Name and MCP server URL fields" loading="lazy" decoding="async"></div>
     </li>
     <li class="step">
       <div class="step-txt">
@@ -168,7 +175,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
         <p>In the Claude app or on claude.ai, click <b>+</b> in the prompt box &rarr; <b>Connectors</b> &rarr; <b>Add connector</b> &rarr; <b>Add custom connector</b>.</p>
         <p class="hint">Or choose <b>Manage connectors</b>, then <b>Add custom connector</b>.</p>
       </div>
-      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-2-plus-menu.png" width="626" height="500" alt="Claude prompt box + menu: Connectors, then Add connector, then Add custom connector" loading="lazy" decoding="async"></div>
+      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-2-plus-menu-2x.png" width="1288" height="1020" style="max-width:644px" alt="Claude prompt box + menu: Connectors, then Add connector, then Add custom connector" loading="lazy" decoding="async"></div>
     </li>
     <li class="step">
       <div class="step-txt">
@@ -178,7 +185,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
         <span class="copy">Pacer AI &#45; Demo</span>
         <p class="hint">Click the box to select it, then copy.</p>
       </div>
-      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-3-name.png" width="472" height="395" alt="Add custom connector dialog with the Name field set to Pacer AI - Demo" loading="lazy" decoding="async"></div>
+      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-3-name-2x.png" width="976" height="816" style="max-width:488px" alt="Add custom connector dialog with the Name field set to Pacer AI - Demo" loading="lazy" decoding="async"></div>
     </li>
     <li class="step">
       <div class="step-txt">
@@ -188,15 +195,18 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
         <span class="copy">https://pacerai-demo-mcp.azurewebsites.net/<wbr>mcp</span>
         <p>Then click <b>Continue</b>.</p>
       </div>
-      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-4-url.png" width="472" height="395" alt="Add custom connector dialog with the MCP server URL filled in and the Continue button" loading="lazy" decoding="async"></div>
+      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-4-url-2x.png" width="976" height="816" style="max-width:488px" alt="Add custom connector dialog with the MCP server URL filled in and the Continue button" loading="lazy" decoding="async"></div>
     </li>
+  </ol>
+  <div class="cta-band"><p>Prefer to finish the setup on a call?</p><a class="btn-walk" href="https://calendly.com/pacerai/demo-pacer-ai" target="_blank" rel="noopener">Schedule a Walkthrough &rarr;</a></div>
+  <ol class="steps cont" start="5">
     <li class="step">
       <div class="step-txt">
         <div class="step-n">5</div>
         <h3>Keep the detected defaults and click Add</h3>
         <p>Claude detects <b>Sign in now</b> and <b>Register automatically</b>. Leave both as they are and click <b>Add</b>.</p>
       </div>
-      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-5-add.png" width="472" height="695" alt="Add custom connector step 2 with Sign in now and Register automatically detected, and the Add button" loading="lazy" decoding="async"></div>
+      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-5-add-2x.png" width="976" height="1424" style="max-width:488px" alt="Add custom connector step 2 with Sign in now and Register automatically detected, and the Add button" loading="lazy" decoding="async"></div>
     </li>
     <li class="step">
       <div class="step-txt">
@@ -205,7 +215,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
         <p>Claude opens the Pacer AI sign-in page. Enter your work email and the <b>access password shown in the card above</b> once you enter your email, then click <b>Start the demo</b>.</p>
         <p class="hint">No sign-in page? Open Settings &rarr; Connectors &rarr; <b>Pacer AI &#45; Demo</b> and click <b>Connect</b>.</p>
       </div>
-      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-6-sign-in.png" width="440" height="332" alt="Pacer AI Demo sign-in page with work email and access password fields" loading="lazy" decoding="async"></div>
+      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-6-sign-in.png" width="880" height="664" style="max-width:440px" alt="Pacer AI Demo sign-in page with work email and access password fields" loading="lazy" decoding="async"></div>
     </li>
     <li class="step">
       <div class="step-txt">
@@ -213,7 +223,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
         <h3>Allow the tools to run</h3>
         <p>In Settings &rarr; Connectors &rarr; <b>Pacer AI &#45; Demo</b>, open the <b>Interactive tools</b> menu under Tool permissions and choose <b>Always allow</b>. Claude then draws each chart without stopping to ask.</p>
       </div>
-      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-7-always-allow.png" width="714" height="350" alt="Pacer AI - Demo connector tool permissions menu with Always allow" loading="lazy" decoding="async"></div>
+      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-7-always-allow-2x.png" width="1456" height="716" style="max-width:728px" alt="Pacer AI - Demo connector tool permissions menu with Always allow" loading="lazy" decoding="async"></div>
     </li>
     <li class="step">
       <div class="step-txt">
@@ -221,7 +231,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
         <h3>Type <span class="mono">pace</span></h3>
         <p>Start a new chat and type <span class="mono">pace</span>. The month, quarter and year pacing charts render right in the chat.</p>
       </div>
-      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-8-pace.png" width="670" height="542" alt="Claude answering pace with the Pacer AI month-to-date pacing chart" loading="lazy" decoding="async"></div>
+      <div class="step-shot"><img src="https://getpacerai.com/wp-content/uploads/2026/10/pacer-ai-demo-connect-step-8-pace-2x.png" width="1380" height="1108" style="max-width:690px" alt="Claude answering pace with the Pacer AI month-to-date pacing chart" loading="lazy" decoding="async"></div>
     </li>
   </ol>
 </div>
@@ -243,6 +253,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     <iframe src="https://pacer-demo-worker-staging.will-078.workers.dev/v/demo-connect" title="Pacer AI — add the connector, sign in, type pace" loading="lazy"></iframe>
   </div>
   <div class="reel-cap">A guided walkthrough: add the connector, sign in, type <b>pace</b> &mdash; charts render right in the chat. It runs on a synthetic recurring-revenue company.</div>
+  <div class="cta-band"><p>Have a question about how it would work on your own revenue data?</p><a class="btn-walk" href="https://calendly.com/pacerai/demo-pacer-ai" target="_blank" rel="noopener">Schedule a Walkthrough &rarr;</a></div>
 </div>
 
 <div class="body">
