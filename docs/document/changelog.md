@@ -8,6 +8,39 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-14 — /pricing/ live from the Price Book, with order capture on Choose
+
+- **Status:** LIVE. Will approved the prices (foundation Price Book v1.0, pacerai-foundation #29), the
+  wording, and the go. PR #35.
+- **Page 111 `/pricing/`:**
+  - Built by `scripts/build_pricing.py` from `foundation/pricing/product-pricing-price-book.md`.
+  - Published with the `page-no-title` template.
+  - Backup: `docs/review/pre-deploy-backup-111-20261014-1006.json`.
+  - The saved content was checked byte-identical to the build after the Yoast save.
+- **Redirection:** the `/pricing/` → `/#pricing` rule is disabled, not deleted.
+- **Yoast:**
+  - Title: "Pacer AI Pricing: Sales Pacing and Planning Agents".
+  - Meta: the two package prices and five users included. It replaced a stale "$2,000/month" description.
+- **pacer-demo-worker:**
+  - Production version `fd166e8c` (the previous version `28e2c3ad` was Will's `RESEND_API_KEY` secret change).
+  - New routes: `GET /order` and `POST /pricing-request`.
+  - `/signup`, `/` and `/health` checked 200 after the deploy.
+- **D1 `pacerai-leads`:** migration 0003 adds the `pricing_requests` table (pacerai-gtm #80). The 18 existing
+  leads are untouched.
+- **GA4:**
+  - Event-scoped dimensions "Pricing plan" (`plan`) and "Billing" (`billing`).
+  - Events `pricing_estimate`, `pricing_choose` and `pricing_request`.
+  - `pricing_request` is to be marked a key event after its first hit.
+- **Verified live, logged out, in headless Chrome:**
+  - At 390px there is no horizontal scroll, and the theme header and title are hidden.
+  - 7 planning users plus 1 block comes to $4,600/mo and $55,200 ACV.
+  - Choose opens the order card inside getpacerai.com, and the card resized its frame (postMessage works).
+  - No JS errors.
+- **Open:**
+  - Resend has no `mail.getpacerai.com` DNS records yet, so the two emails fail until the domain is
+    verified.
+  - Each request is still saved, posted to Slack (which shows the email failure) and put on the Apollo list.
+
 ## 2026-10-13 — Website tracking: one Apollo tracker, GA4 events, first-touch attribution
 
 - **Status:** LIVE. Will approved each account change. Decisions, event dictionary and how-to:

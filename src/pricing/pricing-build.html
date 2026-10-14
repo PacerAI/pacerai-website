@@ -1,0 +1,336 @@
+<style>
+.wp-site-blocks > header, .wp-site-blocks > footer, header.wp-block-template-part, footer.wp-block-template-part, .wp-block-template-part:first-child { display: none !important; }
+.wp-block-post-title, .wp-block-spacer { display: none !important; }
+html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: #F5F4EF !important; }
+.wp-site-blocks, .wp-site-blocks > main, .wp-site-blocks > main > .wp-block-group, .wp-site-blocks .is-layout-constrained, .wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)), .has-global-padding, .entry-content { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
+
+:root{
+  --bone:#F5F4EF; --surface:#FAFAF7; --card:#F1EFE8; --line:#E6E1D6; --line-strong:#D6D0C2;
+  --navy:#1F3864; --navy-dark:#16294a; --teal:#2E7D74; --teal-light:#70C49C; --chip:#E4EFEA;
+  --ink:#20242B; --ink-mid:#3A372F; --muted:#5F5A50; --kick:#9A8F78;
+  --shadow:0 20px 60px rgba(15,25,45,.06),0 2px 6px rgba(15,25,45,.04);
+  --font-body:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;
+  --maxw:1180px;
+}
+#pacerai-homepage *{margin:0;padding:0;box-sizing:border-box}
+#pacerai-homepage{width:100%;max-width:100vw;overflow-x:hidden;font-family:var(--font-body);background:var(--bone);color:var(--ink);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+#pacerai-homepage a{color:inherit;text-decoration:none}
+#pacerai-homepage h1,#pacerai-homepage h2,#pacerai-homepage h3,#pacerai-homepage h4,#pacerai-homepage .nav-logo{font-family:'DM Sans',system-ui,-apple-system,sans-serif !important}
+
+#pacerai-homepage nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:0 32px;height:64px;background:rgba(245,244,239,.86);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+#pacerai-homepage .nav-logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;letter-spacing:-.2px;color:var(--ink);justify-self:start}
+#pacerai-homepage .nav-logo .chev{height:15px;width:auto;fill:none;stroke:var(--navy);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#pacerai-homepage .nav-logo span{color:var(--teal)}
+#pacerai-homepage .nav-links{display:flex;align-items:center;gap:4px;list-style:none;justify-self:center}
+#pacerai-homepage .nav-links a{display:inline-block;padding:9px 13px;border-radius:8px;font-size:14.5px;font-weight:600;color:#494540;white-space:nowrap;cursor:pointer}
+#pacerai-homepage .nav-links a:hover{background:#ebe8df;color:var(--ink)}
+#pacerai-homepage .nav-right{display:flex;align-items:center;gap:10px;justify-self:end}
+#pacerai-homepage .btn-login{padding:9px 14px;border-radius:9px;font-weight:700;font-size:14px;color:var(--navy);background:transparent;border:1px solid var(--line)}
+#pacerai-homepage .btn-login:hover{border-color:var(--navy)}
+#pacerai-homepage .btn-cta{padding:9px 16px;border-radius:9px;font-weight:700;font-size:14px;color:#fff;background:var(--navy);border:1px solid var(--navy);white-space:nowrap}
+#pacerai-homepage .btn-cta:hover{background:var(--navy-dark)}
+#pacerai-homepage .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+#pacerai-homepage .mobile-menu-btn span{display:block;width:22px;height:2px;background:var(--ink-mid);border-radius:2px}
+
+#pacerai-homepage .wrap{max-width:900px;margin:0 auto;padding:64px 16px 72px}
+#pacerai-homepage .num,#pacerai-homepage .amt,#pacerai-homepage .sub b,#pacerai-homepage td.num,#pacerai-homepage .step output{font-variant-numeric:tabular-nums}
+#pacerai-homepage .hero{text-align:center;padding:56px 0 36px;display:grid;gap:14px;justify-items:center}
+#pacerai-homepage .kick{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--kick);font-weight:700}
+#pacerai-homepage .hero h1{font-weight:800;font-size:clamp(30px,4.8vw,44px);line-height:1.14;letter-spacing:-.6px;color:var(--ink);text-wrap:balance}
+#pacerai-homepage .hero p{color:var(--ink-mid);font-size:17px;font-weight:500;max-width:56ch;text-wrap:balance}
+#pacerai-homepage .billing{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;font-size:14px;font-weight:600;margin-top:10px}
+#pacerai-homepage .billing .lbl{color:var(--muted);cursor:pointer;background:none;border:0;font:inherit;padding:0}
+#pacerai-homepage .billing .lbl.on{color:var(--ink)}
+#pacerai-homepage .switch{width:44px;height:24px;border-radius:999px;border:0;background:var(--line-strong);position:relative;cursor:pointer;padding:0;transition:background .2s}
+#pacerai-homepage .switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+#pacerai-homepage .switch[aria-checked="true"]{background:var(--navy)}
+#pacerai-homepage .switch[aria-checked="true"]::after{transform:translateX(20px)}
+#pacerai-homepage .save{font-size:12px;font-weight:700;background:var(--chip);color:var(--teal);padding:3px 8px;border-radius:6px}
+#pacerai-homepage .switch:focus-visible,#pacerai-homepage .lbl:focus-visible,#pacerai-homepage .cta:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+#pacerai-homepage .grid{display:grid;gap:20px;grid-template-columns:repeat(2,minmax(0,1fr))}
+#pacerai-homepage .tier{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:18px;min-width:0;position:relative}
+#pacerai-homepage .tier.feature{border-color:var(--navy);box-shadow:var(--shadow)}
+#pacerai-homepage .tag{position:absolute;top:-11px;left:28px;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 10px;border-radius:6px;background:var(--navy);color:#fff}
+#pacerai-homepage .tier h2{font-weight:800;font-size:22px;line-height:1.2;letter-spacing:-.3px;color:var(--ink)}
+#pacerai-homepage .who{margin:6px 0 0;color:var(--muted);font-size:14.5px}
+#pacerai-homepage .price{display:flex;align-items:baseline;gap:6px}
+#pacerai-homepage .amt{font-size:42px;font-weight:800;letter-spacing:-1px;color:var(--ink)}
+#pacerai-homepage .per{color:var(--muted);font-size:14px;font-weight:600}
+#pacerai-homepage .sub{font-size:13px;color:var(--muted);margin-top:-12px;min-height:20px}
+#pacerai-homepage .sub b{font-weight:700;color:var(--ink)}
+#pacerai-homepage .cta{font:inherit;font-weight:700;font-size:15px;border-radius:11px;padding:13px 16px;border:1px solid var(--navy);background:transparent;color:var(--navy);cursor:pointer;text-align:center}
+#pacerai-homepage .cta:hover{background:rgba(31,56,100,.06)}
+#pacerai-homepage .tier.feature .cta{background:var(--navy);color:#fff}
+#pacerai-homepage .tier.feature .cta:hover{background:var(--navy-dark)}
+#pacerai-homepage .fgroup{display:grid;gap:10px}
+#pacerai-homepage .fgroup h4{font-size:15px;font-weight:800;letter-spacing:-.2px;color:var(--navy)}
+#pacerai-homepage .fgroup h4 span{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin-left:8px}
+#pacerai-homepage .fgroup + .fgroup{border-top:1px solid var(--line);padding-top:14px}
+#pacerai-homepage .fgroup.tight + .fgroup{border-top:0;padding-top:0}
+#pacerai-homepage .flist{align-content:start;display:grid;gap:16px}
+#pacerai-homepage ul.feat{list-style:none;display:grid;gap:10px;font-size:14.5px;color:var(--ink-mid)}
+#pacerai-homepage ul.feat li{display:grid;grid-template-columns:16px 1fr;gap:10px;align-items:start}
+#pacerai-homepage ul.feat li::before{content:"";width:16px;height:16px;margin-top:2px;border-radius:50%;background:var(--chip) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.2 2.2 4.8-4.8' fill='none' stroke='%232E7D74' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+#pacerai-homepage .blocks{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#pacerai-homepage .blocks .lab{font-size:14px;font-weight:700;line-height:1.3;color:var(--ink)}
+#pacerai-homepage .blocks .lab span{display:block;font-size:12px;font-weight:500;color:var(--muted)}
+#pacerai-homepage .blocks .lab span span{display:inline}
+#pacerai-homepage .step{display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:9px;background:var(--surface);flex-shrink:0}
+#pacerai-homepage .step button{font:inherit;width:32px;height:32px;border:0;background:transparent;color:var(--navy);cursor:pointer;font-size:17px;font-weight:700;line-height:1}
+#pacerai-homepage .step button:disabled{color:var(--line-strong);cursor:default}
+#pacerai-homepage .step button:focus-visible{outline:2px solid var(--teal);outline-offset:1px;border-radius:6px}
+#pacerai-homepage .step output{min-width:28px;text-align:center;font-size:14px;font-weight:700}
+#pacerai-homepage .opts{display:grid;align-self:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 14px}
+#pacerai-homepage .opts .blocks{padding:12px 0;border-bottom:1px solid var(--line)}
+#pacerai-homepage .opts .blocks:last-child{border-bottom:0}
+
+#pacerai-homepage .services-block{margin-top:56px}
+#pacerai-homepage .sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:6px 16px;margin-bottom:14px}
+#pacerai-homepage .sec-head h2{font-weight:800;font-size:clamp(24px,3.4vw,30px);letter-spacing:-.4px;color:var(--ink)}
+#pacerai-homepage .sec-head p{color:var(--muted);font-size:14px}
+#pacerai-homepage .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+#pacerai-homepage table{width:100%;border-collapse:collapse;font-size:14px;min-width:600px;margin:0;border:0}
+#pacerai-homepage th,#pacerai-homepage td{text-align:left;padding:13px 16px;border:0;border-bottom:1px solid var(--line);vertical-align:top}
+#pacerai-homepage th{font-size:11.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--kick);background:var(--card)}
+#pacerai-homepage td{color:var(--ink-mid)}
+#pacerai-homepage td:first-child{font-weight:700;color:var(--ink)}
+#pacerai-homepage td.r,#pacerai-homepage th.r{text-align:right}
+#pacerai-homepage td.num{white-space:nowrap;font-weight:600;color:var(--ink)}
+#pacerai-homepage tr:last-child td{border-bottom:0}
+#pacerai-homepage td .note{display:block;font-size:12px;color:var(--muted)}
+#pacerai-homepage .order-modal{position:fixed;inset:0;z-index:200;background:rgba(15,25,45,.45);display:flex;align-items:flex-start;justify-content:center;padding:76px 16px 16px;overflow-y:auto}
+#pacerai-homepage .order-box{position:relative;width:100%;max-width:560px;background:var(--bone);border-radius:16px;box-shadow:0 30px 80px rgba(15,25,45,.25)}
+#pacerai-homepage .order-box iframe{display:block;width:100%;height:640px;border:0;border-radius:16px;background:var(--bone)}
+#pacerai-homepage .order-close{position:absolute;top:-14px;right:-10px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(15,25,45,.15)}
+#pacerai-homepage .order-close:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+#pacerai-homepage .soon{margin-top:28px;text-align:center;font-weight:700;color:var(--teal)}
+#pacerai-homepage .foot{margin-top:20px;font-size:12px;color:var(--muted);text-align:center}
+@media (prefers-reduced-motion:reduce){#pacerai-homepage *{transition:none!important}}
+@supports (grid-template-rows:subgrid){
+  @media (min-width:641px){
+    #pacerai-homepage .grid{row-gap:0}
+    #pacerai-homepage .tier{display:grid;grid-row:span 6;grid-template-rows:subgrid;row-gap:18px;align-content:start}
+  }
+}
+
+#pacerai-homepage footer{border-top:1px solid var(--line);background:var(--surface);padding:64px 24px 32px}
+#pacerai-homepage .footer-top{display:grid;grid-template-columns:260px repeat(4,1fr);gap:40px;max-width:var(--maxw);margin:0 auto;padding-bottom:40px;border-bottom:1px solid var(--line)}
+#pacerai-homepage .footer-brand p{font-size:13px;color:var(--muted);line-height:1.7;margin-top:14px}
+#pacerai-homepage .footer-col-head{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:18px}
+#pacerai-homepage .footer-col ul{list-style:none}
+#pacerai-homepage .footer-col li{margin-bottom:10px}
+#pacerai-homepage .footer-col a{font-size:13px;color:var(--muted)}
+#pacerai-homepage .footer-col a:hover{color:var(--teal)}
+#pacerai-homepage .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;max-width:var(--maxw);margin:24px auto 0}
+#pacerai-homepage .footer-bottom .copy{font-size:12px;color:var(--kick)}
+#pacerai-homepage .footer-bottom .legal{display:flex;gap:22px}
+#pacerai-homepage .footer-bottom .legal a{font-size:12px;color:var(--kick)}
+
+@media(max-width:1180px){#pacerai-homepage .nav-links a{padding:9px 8px;font-size:14px}#pacerai-homepage .btn-login{white-space:nowrap}}
+@media(max-width:1060px){#pacerai-homepage .btn-login{display:none}}
+@media(max-width:900px){
+  #pacerai-homepage nav{grid-template-columns:1fr auto;padding:0 16px}
+  #pacerai-homepage .nav-links{display:none}
+  #pacerai-homepage nav.nav-open .nav-links{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--bone);border-bottom:1px solid var(--line);box-shadow:0 14px 34px rgba(15,25,45,.10);padding:10px 16px 16px;gap:0;z-index:130}
+  #pacerai-homepage nav.nav-open .nav-links li{width:100%}
+  #pacerai-homepage nav.nav-open .nav-links a{display:block;width:100%;padding:14px 6px;font-size:16px;border-bottom:1px solid var(--line);border-radius:0}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(2){opacity:0}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  #pacerai-homepage .mobile-menu-btn span{transition:transform .2s,opacity .2s}
+  #pacerai-homepage .mobile-menu-btn{display:flex}
+  #pacerai-homepage .footer-top{grid-template-columns:1fr 1fr;gap:28px}
+  #pacerai-homepage .footer-brand{grid-column:1/-1}
+}
+@media(max-width:640px){
+  #pacerai-homepage .grid{grid-template-columns:1fr}
+  #pacerai-homepage .wrap{padding-top:40px}
+  #pacerai-homepage .tier{padding:24px 20px}
+  #pacerai-homepage table{min-width:0}
+  #pacerai-homepage th:nth-child(3),#pacerai-homepage td:nth-child(3),#pacerai-homepage th:nth-child(4),#pacerai-homepage td:nth-child(4){display:none}
+  #pacerai-homepage th,#pacerai-homepage td{padding:12px}
+}
+</style>
+<div id="pacerai-homepage">
+<nav>
+  <a href="/" class="nav-logo">Pacer <span>AI</span>
+    <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#revenue-modeling-agent">Daily Pacing Agent</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/resources/">Resources</a></li>
+    <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
+    <a href="/demo-connect/" class="btn-cta">Try the Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="this.closest('nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="wrap pricing-two-pack" data-section="pricing" data-price-book="v1.0" data-seat-a="50" data-seat-m="60" data-included="5" data-block="1500" data-block-hours="5" data-order-url="https://pacer-demo-worker.will-078.workers.dev/order">
+  <div class="hero">
+    <div class="kick">Pricing</div>
+    <h1>Know daily whether you&rsquo;ll make plan</h1>
+    <p>Start with pacing for the sales team. Add planning when finance is ready to work from the same model.</p>
+    <div class="billing">
+      <button class="lbl js-lbl-m" type="button">Monthly</button>
+      <button class="switch js-bill" type="button" role="switch" aria-checked="true" aria-label="Bill annually"></button>
+      <button class="lbl on js-lbl-a" type="button">Annual</button>
+      <span class="save">Save ~17%</span>
+    </div>
+  </div>
+
+  <div class="grid">
+    <article class="tier price-sales-pacing" data-plan="sales_pacing">
+      <div><h2>Sales Pacing</h2><p class="who">Real-time Forecasting, Expansion and Go-Get insights for the Sales team.</p></div>
+      <div class="price"><span class="amt" data-m="1800" data-a="1500">$1,500</span><span class="per">/mo</span></div>
+      <div class="sub"><b>$18,000</b> Annual contract billed monthly</div>
+      <button class="cta js-choose" type="button" data-plan="sales_pacing">Choose Sales Pacing</button>
+      <div class="flist">
+        <div class="fgroup"><h4>Pacing Agent</h4>
+          <ul class="feat">
+            <li>Daily Pacing Report</li>
+            <li>Action items to close the plan-to-actual gap</li>
+            <li>Identified upsell whitespace opportunities</li>
+            <li>Identified cross-sell whitespace opportunities</li>
+            <li>Real-time access to CRM data</li>
+          </ul>
+        </div>
+        <div class="fgroup"><h4>Included</h4>
+          <ul class="feat">
+            <li>CRM integration included</li>
+            <li>Documentation + Slack agent support</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opts">
+        <div class="blocks" data-kind="users" data-agent="pacing" data-n="5" data-min="1">
+          <div class="lab">Pacer users<span>5 included</span><span>Additional users: <span class="seatp">$50</span>/user/mo</span></div>
+          <div class="step"><button type="button" data-d="-1" aria-label="Fewer pacer users">&minus;</button><output>5</output><button type="button" data-d="1" aria-label="More pacer users">+</button></div>
+        </div>
+        <div class="blocks" data-kind="block" data-n="0" data-min="0">
+          <div class="lab">Monthly 5-hr blocks<span>Office hours with the Pacer team &middot; $1,500/mo each</span></div>
+          <div class="step"><button type="button" data-d="-1" aria-label="Fewer 5-hour blocks">&minus;</button><output>0</output><button type="button" data-d="1" aria-label="More 5-hour blocks">+</button></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="tier feature price-pacing-planning" data-plan="pacing_planning">
+      <span class="tag">Sales + Finance</span>
+      <div><h2>Sales Pacing &amp; Planning</h2><p class="who">Excel pivot table integration &amp; GTM Financial Planning &amp; Reporting.</p></div>
+      <div class="price"><span class="amt" data-m="3600" data-a="3000">$3,000</span><span class="per">/mo</span></div>
+      <div class="sub"><b>$36,000</b> Annual contract billed monthly</div>
+      <button class="cta js-choose" type="button" data-plan="pacing_planning">Choose Pacing &amp; Planning</button>
+      <div class="flist">
+        <div class="fgroup tight"><h4>Pacing Agent included</h4></div>
+        <div class="fgroup"><h4>Planning Agent<span>Adds</span></h4>
+          <ul class="feat">
+            <li>ARR Waterfall modeling</li>
+            <li>Sales plans built on ARR Waterfall models</li>
+            <li>Bottoms-up planning</li>
+            <li>Excel integration</li>
+          </ul>
+        </div>
+        <div class="fgroup"><h4>Included</h4>
+          <ul class="feat">
+            <li>CRM integration included</li>
+            <li>Documentation + Slack agent support</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opts">
+        <div class="blocks" data-kind="users" data-agent="pacing" data-n="5" data-min="1">
+          <div class="lab">Pacer users<span>5 included</span><span>Additional users: <span class="seatp">$50</span>/user/mo</span></div>
+          <div class="step"><button type="button" data-d="-1" aria-label="Fewer pacer users">&minus;</button><output>5</output><button type="button" data-d="1" aria-label="More pacer users">+</button></div>
+        </div>
+        <div class="blocks" data-kind="users" data-agent="planning" data-n="5" data-min="1">
+          <div class="lab">Planning users<span>5 included</span><span>Additional users: <span class="seatp">$50</span>/user/mo</span></div>
+          <div class="step"><button type="button" data-d="-1" aria-label="Fewer planning users">&minus;</button><output>5</output><button type="button" data-d="1" aria-label="More planning users">+</button></div>
+        </div>
+        <div class="blocks" data-kind="block" data-n="0" data-min="0">
+          <div class="lab">Monthly 5-hr blocks<span>Office hours with the Pacer team &middot; $1,500/mo each</span></div>
+          <div class="step"><button type="button" data-d="-1" aria-label="Fewer 5-hour blocks">&minus;</button><output>0</output><button type="button" data-d="1" aria-label="More 5-hour blocks">+</button></div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <section class="services-block" data-section="professional-services">
+    <div class="sec-head"><h2>Professional services</h2><p>Office hours are purchased, never bundled.</p></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Service</th><th>Detail</th><th class="r">Hours</th><th class="r">Rate</th><th class="r">Price</th></tr></thead>
+        <tbody>
+          <tr><td>Installation &amp; integrations</td><td>Each integration (CRM, EPM/ERP such as NetSuite)<span class="note">Both packages include the first CRM integration</span></td><td class="r num">&ndash;</td><td class="r num">&ndash;</td><td class="r num">$3,500</td></tr>
+          <tr><td>Monthly 5-hr block</td><td>Recurring office hours with the Pacer team</td><td class="r num">5/mo</td><td class="r num">$300</td><td class="r num">$1,500/mo</td></tr>
+          <tr><td>5-hour block</td><td>One-time</td><td class="r num">5</td><td class="r num">$300</td><td class="r num">$1,500</td></tr>
+          <tr><td>20-hour block</td><td>One-time</td><td class="r num">20</td><td class="r num">$275</td><td class="r num">$5,500</td></tr>
+          <tr><td>40-hour block</td><td>One-time; requires an annual subscription</td><td class="r num">40</td><td class="r num">$250</td><td class="r num">$10,000</td></tr>
+          <tr><td>Additional users</td><td>Beyond the 5 included per agent</td><td class="r num">&ndash;</td><td class="r num">&ndash;</td><td class="r num">$50/user/mo annual<br>$60/user/mo monthly</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="soon">Additional agents, skills &amp; integrations to come.</p>
+  <p class="foot">All prices in USD. Annual plans are 12-month contracts billed monthly; monthly plans are month-to-month. Price Book v1.0.</p>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="font-size:17px">Pacer <span style="color:var(--teal)">AI</span>
+        <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+      </a>
+      <p>The Daily Pacing Agent for Sales Leaders. Reconciled to Finance, built on Microsoft Fabric.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Product</div>
+      <ul>
+        <li><a href="/#revenue-modeling-agent">Daily Pacing Agent</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+        <li><a href="/#integrations">Integrations</a></li>
+        <li><a href="/#security">Security</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Use Cases</div>
+      <ul>
+        <li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
+        <li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
+        <li><a href="/#case-studies">Case Studies</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Company</div>
+      <ul>
+        <li><a href="/team/">Team</a></li>
+        <li><a href="/team/#partners">Partners</a></li>
+        <li><a href="/#how-it-works">Platform</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Resources</div>
+      <ul>
+        <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+        <li><a href="/resources/">Blog</a></li>
+        <li><a href="/research/">Research</a></li>
+        <li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+    <div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></div>
+  </div>
+</footer>
+<img src="//0" alt="" style="display:none" onerror="(function () { if (window.__paPricing) return; function start() { var root = document.querySelector('#pacerai-homepage .pricing-two-pack'); if (!root || window.__paPricing) return; window.__paPricing = 1; var cfg = root.dataset; var SEAT_A = +cfg.seatA, SEAT_M = +cfg.seatM, INCLUDED = +cfg.included, BLOCK = +cfg.block; var BLOCK_HOURS = +cfg.blockHours, MAXU = 200, MAXB = 8; var annual = true, timer = null; var tiers = [].slice.call(root.querySelectorAll('.tier')); function fmt(n) { return '$' + Number(n).toLocaleString('en-US'); } function loc(t) { return [].filter.call(t.classList, function (c) { return c.indexOf('price-') === 0; })[0] || ''; } function track(name, params) { try { if (window.pacerTrack) window.pacerTrack(name, params); } catch (e) {} } function selection(t) { var amt = t.querySelector('.amt'); var s = { plan: t.dataset.plan, billing: annual ? 'annual' : 'monthly', value: Number(annual ? amt.dataset.a : amt.dataset.m), pacer_users: 0, planning_users: 0, hour_blocks: 0, extra_users: 0 }; t.querySelectorAll('.opts .blocks').forEach(function (r) { var n = Number(r.dataset.n); if (r.dataset.kind === 'block') { s.hour_blocks = n; s.value += n * BLOCK; return; } if (r.dataset.agent === 'planning') s.planning_users = n; else s.pacer_users = n; var add = Math.max(0, n - INCLUDED); s.extra_users += add; s.value += add * (annual ? SEAT_A : SEAT_M); }); return s; } function render() { root.querySelectorAll('.seatp').forEach(function (e) { e.textContent = fmt(annual ? SEAT_A : SEAT_M); }); root.querySelector('.js-bill').setAttribute('aria-checked', String(annual)); root.querySelector('.js-lbl-a').classList.toggle('on', annual); root.querySelector('.js-lbl-m').classList.toggle('on', !annual); tiers.forEach(function (t) { t.querySelectorAll('.opts .blocks').forEach(function (r) { var n = Number(r.dataset.n), max = r.dataset.kind === 'block' ? MAXB : MAXU; r.querySelector('output').textContent = n; var b = r.querySelectorAll('.step button'); b[0].disabled = n &lt;= Number(r.dataset.min); b[1].disabled = n &gt;= max; }); var s = selection(t), notes = []; t.querySelector('.amt').textContent = fmt(s.value); if (s.extra_users) notes.push(s.extra_users + ' additional user' + (s.extra_users &gt; 1 ? 's' : '')); if (s.hour_blocks) notes.push(s.hour_blocks * BLOCK_HOURS + ' hrs/mo'); var tail = notes.length ? ' &amp;middot; includes ' + notes.join(' + ') : ''; t.querySelector('.sub').innerHTML = annual ? '&lt;b&gt;' + fmt(s.value * 12) + '&lt;/b&gt; Annual contract billed monthly' + tail : 'Month-to-month, no annual commitment' + tail; }); } function changed(t) { render(); clearTimeout(timer); timer = setTimeout(function () { [].concat(t ? [t] : tiers).forEach(function (x) { var s = selection(x); track('pricing_estimate', { plan: s.plan, billing: s.billing, value: s.value, currency: 'USD', cta_location: loc(x) }); }); }, 1500); } root.querySelectorAll('.opts .blocks').forEach(function (r) { r.querySelectorAll('.step button').forEach(function (b) { b.addEventListener('click', function () { var max = r.dataset.kind === 'block' ? MAXB : MAXU; r.dataset.n = Math.min(max, Math.max(Number(r.dataset.min), Number(r.dataset.n) + Number(b.dataset.d))); changed(r.closest('.tier')); }); }); }); root.querySelector('.js-bill').addEventListener('click', function () { annual = !annual; changed(null); }); root.querySelector('.js-lbl-a').addEventListener('click', function () { annual = true; changed(null); }); root.querySelector('.js-lbl-m').addEventListener('click', function () { annual = false; changed(null); }); var ORDER = cfg.orderUrl || '', modal = null, frame = null, ORIGIN = ''; try { ORIGIN = ORDER ? new window.URL(ORDER).origin : ''; } catch (e) { ORDER = ''; } function closeOrder() { if (modal) { modal.parentNode.removeChild(modal); modal = null; frame = null; } } function openOrder(s) { closeOrder(); var q = ['plan=' + s.plan, 'billing=' + s.billing, 'pu=' + s.pacer_users, 'fu=' + s.planning_users, 'hb=' + s.hour_blocks, 'pb=' + encodeURIComponent(cfg.priceBook || ''), 'page=' + encodeURIComponent(window.location.pathname)]; var at = {}; try { if (window.pacerAttr) at = window.pacerAttr() || {}; } catch (e) {} ['utm_source', 'utm_medium', 'utm_campaign', 'landing'].forEach(function (k) { if (at[k]) q.push(k + '=' + encodeURIComponent(String(at[k]).slice(0, 200))); }); modal = document.createElement('div'); modal.className = 'order-modal'; modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-label', 'Your selection'); var box = document.createElement('div'), x = document.createElement('button'); box.className = 'order-box'; x.className = 'order-close'; x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.innerHTML = '&amp;times;'; frame = document.createElement('iframe'); frame.title = 'Your selection: email me this summary'; frame.src = ORDER + '?' + q.join('&amp;'); box.appendChild(x); box.appendChild(frame); modal.appendChild(box); document.getElementById('pacerai-homepage').appendChild(modal); x.addEventListener('click', closeOrder); modal.addEventListener('click', function (e) { if (e.target === modal) closeOrder(); }); x.focus(); } document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeOrder(); }); window.addEventListener('message', function (e) { if (!ORIGIN || e.origin !== ORIGIN || !e.data || typeof e.data !== 'object') return; if (e.data.type === 'pacer:resize' &amp;&amp; frame) { frame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 320), 1400) + 'px'; } else if (e.data.type === 'pacer:event' &amp;&amp; e.data.name === 'pricing_request') { var p = e.data.params || {}; track('pricing_request', { plan: String(p.plan || ''), billing: String(p.billing || ''), value: Number(p.value) || 0, currency: 'USD', cta_location: 'order_card' }); if (window.pacerSetUser &amp;&amp; p.user_id) window.pacerSetUser(String(p.user_id)); } }); root.querySelectorAll('.js-choose').forEach(function (btn) { btn.addEventListener('click', function () { var t = btn.closest('.tier'), s = selection(t); track('pricing_choose', { plan: s.plan, billing: s.billing, value: s.value, currency: 'USD', pacer_users: s.pacer_users, planning_users: s.planning_users, hour_blocks: s.hour_blocks, cta_location: loc(t) }); if (ORDER) openOrder(s); }); }); render(); } if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start(); })();">
+</div>

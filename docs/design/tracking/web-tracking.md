@@ -33,7 +33,7 @@ The goal is to answer three questions every week:
 | D2 | **Removed Snitcher** (two Tag Manager tags, two profiles). | Only one profile (`sYADCNqvn1`) ever ran; the other was blocked as a duplicate. Snitcher names visiting companies, which Apollo already does. Nothing in HQ or the GTM workflows reads it, and it sent every page view to another vendor. Restore: Tag Manager → Versions → version 6. |
 | D3 | **Turned off WordPress.com's built-in Google Analytics** (Jetpack → Traffic → "Add Google"). | It was on with an empty Measurement ID, so it tracked nothing and printed an error comment on every page. Site Kit's GA4 tag is the real one and is unaffected. |
 | D4 | **GA4 events are sent from our own code** (`footer.js` section 0) through Site Kit's `gtag`. Tag Manager stays installed but empty. | Events live in git, are tested, and can't drift in a UI. Tag Manager stays so a future vendor tag needs no code change. |
-| D5 | **Exactly three GA4 key events:** `demo_signup`, `whitepaper_download`, `schedule_walkthrough`. Plus the pre-existing `pricing_page_visit`, which fires once `/pricing/` is live. | Key events should be **outcomes**: an email captured, or a call booked. `try_demo_click` and `demo_email_capture` are steps toward `demo_signup`; marking them too would count one visitor two or three times. They stay as ordinary events for funnel analysis. |
+| D5 | **Exactly three GA4 key events:** `demo_signup`, `whitepaper_download`, `schedule_walkthrough`. Plus the pre-existing `pricing_page_visit`, which fires once `/pricing/` is live, and (2026-10-14) `pricing_request`: an email plus a chosen package is an outcome. | Key events should be **outcomes**: an email captured, or a call booked. `try_demo_click` and `demo_email_capture` are steps toward `demo_signup`; marking them too would count one visitor two or three times. They stay as ordinary events for funnel analysis. |
 | D6 | **Apollo intent pages:** `/pricing/`, `/demo-connect/` and `/contact/` are **high**; `/resources/` is **low**. Contact-level tracking stays off. | Pricing, demo and contact visits are buying signals. Blog readers are usually researching. This only labels visits in Apollo; it starts no outreach. Contact-level tracking needs Apollo's Inbound add-on. |
 | D7 | **First-touch attribution**, 30 days, in the visitor's browser. The first UTMs, or else the outside referrer as `utm_source=<host>` / `utm_medium=referral`, plus the landing page, travel with every capture. | Most visitors don't sign up on their first page. Without this, a LinkedIn visitor who read two posts and then signed up was recorded as a direct `/demo-connect` lead. The `referral` medium keeps these leads Organic in `lead-source-map.yml`; only paid mediums and marketplace sources change the Lead Source. |
 | D9 | **GA4 user ID = an opaque visitor ID, never a name or email** (2026-10-14). After a demo signup the worker returns `pv_` + 16 hex characters, stable per email. footer.js sets it as GA4's `user_id` and on every later visit from that browser. | GA4's terms forbid emails, including hashed ones, as user IDs. The Apollo contact ID isn't known until about a second after the password shows. The ID maps to the person through the lead record: `SELECT email, apollo_contact_id FROM leads WHERE request_id LIKE '%_<16 hex>'` (also in KV `DEMO_SIGNUPS`, field `vid`). |
@@ -92,7 +92,9 @@ Every event carries `page_path`. Click events also carry `cta_location`, `link_t
 | `resource_filter` | A Resources category pill (ARR Snowballs, Case Study, M&A…), or arriving on `/resources/#<category>`. Param `category`. GA4 drops the `#` from page URLs, so this is the only record of the category | footer.js §0 | No |
 | `demo_video_complete` | A demo video reaches its end card. Param `video` (`homepage`, or the staging slug such as `demo-connect`) | Worker video bridge (`src/video-bridge.ts`) → footer.js §0 | No |
 | `demo_video_replay` / `demo_video_review` | Replay / Review the output in a demo video | Worker video bridge → footer.js §0 | No |
-| `pricing_estimate` | Reserved for the pricing estimator iframe (part D) | — | No |
+| `pricing_estimate` | On `/pricing/`, 1.5 s after the last Monthly / Annual toggle or user / hour-block change. Params `plan` (`sales_pacing` / `pacing_planning`), `billing` (`annual` / `monthly`), `value` (monthly total, USD), `currency`, `cta_location` (the card: `price-sales-pacing` / `price-pacing-planning`) | `src/pricing/pricing.js` (inlined into page 111 by `build_pricing.py`) | No |
+| `pricing_choose` | A click on a **Choose** button on `/pricing/`. Same params as `pricing_estimate`, plus `pacer_users`, `planning_users`, `hour_blocks`. Until order capture ships, Choose records this event and does nothing else (Will, 2026-10-14) | `src/pricing/pricing.js` | No: a step |
+| `pricing_request` | The order card on `/pricing/` saved the request and sent the emails (Worker `POST /pricing-request` returned ok). Params `plan`, `billing`, `value`, `currency`, `cta_location: order_card`; also sets the GA4 user_id | pacer-demo-worker `/order` → postMessage → `src/pricing/pricing.js` | **Yes** (an outcome: an email plus a chosen package; mark after the first hit) |
 
 ### Inventory: what each link and button sends (crawled 2026-10-14, 24 published pages)
 
@@ -188,14 +190,21 @@ A healthy page shows:
   - GA4 page, source and key-event counts (GA4 Data API, property 514635916; needs the `analytics.readonly`
     re-consent)
   - Apollo's named companies and their top pages
-- **Pricing page (part D).** When `/pricing/` goes live, `pricing_page_visit` starts firing, and the estimator
-  iframe reports `pricing_estimate` through the same postMessage channel.
+- **Pricing page (part D).** When `/pricing/` goes live, `pricing_page_visit` starts firing. The page's own
+  script (no iframe) sends `pricing_estimate` and `pricing_choose`. Register `plan` and `billing` as event-scoped
+  custom dimensions so reports can split by them. Order capture (next) adds `pricing_request`, a key event.
 - **Not changed:**
   - The `/demo-connect/` walkthrough reel still embeds the staging worker (`/v/demo-connect`).
   - Lead records carry no full referrer column. The referrer travels as `utm_source=<host>`,
     `utm_medium=referral`.
 
 ## 7. Change log
+- **2026-10-14: /pricing/ live.**
+  - GA4 dimensions "Pricing plan" (`plan`) and "Billing" (`billing`).
+  - Events `pricing_estimate` and `pricing_choose`, sent by the page script.
+  - Event `pricing_request`, from the order card through postMessage, which also sets the GA4 user_id.
+  - The Redirection rule `/pricing/` → `/#pricing` is disabled, so `pricing_page_visit` now fires.
+  - To do: mark `pricing_request` as a key event once it appears under Admin → Events.
 - **2026-10-14: video, jump-link and user-ID tracking** (Will approved each change).
   - **Workers:** production version `e5c9a59d` and staging `7e2bd763` add the video bridge
     (`demo_video_complete`, `demo_video_replay`, `demo_video_review`, `try_demo_click` from the end card). The
