@@ -92,7 +92,8 @@ Every event carries `page_path`. Click events also carry `cta_location`, `link_t
 | `resource_filter` | A Resources category pill (ARR Snowballs, Case Study, M&A…), or arriving on `/resources/#<category>`. Param `category`. GA4 drops the `#` from page URLs, so this is the only record of the category | footer.js §0 | No |
 | `demo_video_complete` | A demo video reaches its end card. Param `video` (`homepage`, or the staging slug such as `demo-connect`) | Worker video bridge (`src/video-bridge.ts`) → footer.js §0 | No |
 | `demo_video_replay` / `demo_video_review` | Replay / Review the output in a demo video | Worker video bridge → footer.js §0 | No |
-| `pricing_estimate` | Reserved for the pricing estimator iframe (part D) | — | No |
+| `pricing_estimate` | On `/pricing/`, 1.5 s after the last Monthly / Annual toggle or user / hour-block change. Params `plan` (`sales_pacing` / `pacing_planning`), `billing` (`annual` / `monthly`), `value` (monthly total, USD), `currency`, `cta_location` (the card: `price-sales-pacing` / `price-pacing-planning`) | `src/pricing/pricing.js` (inlined into page 111 by `build_pricing.py`) | No |
+| `pricing_choose` | A click on a **Choose** button on `/pricing/`. Same params as `pricing_estimate`, plus `pacer_users`, `planning_users`, `hour_blocks`. Until order capture ships, Choose records this event and does nothing else (Will, 2026-10-14) | `src/pricing/pricing.js` | No: a step |
 
 ### Inventory: what each link and button sends (crawled 2026-10-14, 24 published pages)
 
@@ -188,8 +189,9 @@ A healthy page shows:
   - GA4 page, source and key-event counts (GA4 Data API, property 514635916; needs the `analytics.readonly`
     re-consent)
   - Apollo's named companies and their top pages
-- **Pricing page (part D).** When `/pricing/` goes live, `pricing_page_visit` starts firing, and the estimator
-  iframe reports `pricing_estimate` through the same postMessage channel.
+- **Pricing page (part D).** When `/pricing/` goes live, `pricing_page_visit` starts firing. The page's own
+  script (no iframe) sends `pricing_estimate` and `pricing_choose`. Register `plan` and `billing` as event-scoped
+  custom dimensions so reports can split by them. Order capture (next) adds `pricing_request`, a key event.
 - **Not changed:**
   - The `/demo-connect/` walkthrough reel still embeds the staging worker (`/v/demo-connect`).
   - Lead records carry no full referrer column. The referrer travels as `utm_source=<host>`,

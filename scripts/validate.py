@@ -126,30 +126,37 @@ def validate_voice(content, voice_rules):
     return failures
 
 
-def validate_foundation(content):
-    """Verify pricing tier mentions match foundation/pricing/pricing-packaging.yml.
+PRICE_BOOK = "foundation/pricing/product-pricing-price-book.md"
 
-    v0 scope: any $X/mo, $X/year, $X/yr mention in content must appear verbatim in
-    the foundation pricing file. Catches accidental price drift in published pages.
+
+def validate_foundation(content):
+    """Verify price mentions match the Price Book (foundation/pricing/product-pricing-price-book.md).
+
+    Every page: any $X/mo, $X/user/mo, $X/year mention must appear verbatim in the Price Book.
+    A page built from the Price Book (it carries data-price-book, i.e. /pricing/): EVERY $ amount on it
+    must appear there, so a hand edit to a one-time price is caught too. Other pages quote dollar figures
+    that are not prices ($100M of ARR), so they get the narrower check.
+    A missing Price Book is a failure: the check used to pass silently when its file was gone.
     """
     failures = []
-    pricing_path = os.path.join(REPO, "foundation/pricing/pricing-packaging.yml")
+    pricing_path = os.path.join(REPO, PRICE_BOOK)
     if not os.path.exists(pricing_path):
-        return failures
+        return [f"FOUNDATION: {PRICE_BOOK} not found. Update the foundation submodule "
+                f"(git submodule update --remote foundation) before deploying."]
 
     with open(pricing_path) as f:
         pricing_text = f.read()
 
-    price_pattern = r'\$[\d,]+(?:\.\d+)?[KkMm]?/(?:mo|month|year|yr|annum)'
-    foundation_prices = {p.lower() for p in re.findall(price_pattern, pricing_text)}
+    recurring = r'\$[\d,]+(?:\.\d+)?[KkMm]?/(?:user/)?(?:mo|month|year|yr|annum)'
+    any_amount = r'\$[\d,]+(?:\.\d+)?[KkMm]?'
+    pattern = any_amount if "data-price-book=" in content else recurring
+    book = {p.lower() for p in re.findall(recurring, pricing_text)} | {p.lower() for p in re.findall(any_amount, pricing_text)}
     text = _strip_html(content)
-    content_prices = set(re.findall(price_pattern, text))
-
-    drifted = sorted(p for p in content_prices if p.lower() not in foundation_prices)
+    drifted = sorted(p for p in set(re.findall(pattern, text)) if p.lower() not in book)
     if drifted:
         failures.append(
-            f"FOUNDATION: pricing mention(s) not in foundation/pricing/pricing-packaging.yml: {drifted}. "
-            f"Either update foundation first, or correct the page to match canonical pricing."
+            f"FOUNDATION: price(s) not in {PRICE_BOOK}: {drifted}. "
+            f"Either update the Price Book first, or correct the page to match it."
         )
     return failures
 
@@ -254,7 +261,7 @@ def validate_file(filepath, strict=False, voice_rules=None):
     else:
         passes.append("VOICE LINT: OK")
 
-    # 12. Foundation check (pricing facts match foundation/pricing/pricing-packaging.yml)
+    # 12. Foundation check (prices match the Price Book, foundation/pricing/product-pricing-price-book.md)
     foundation_failures = validate_foundation(content)
     if foundation_failures:
         failures.extend(foundation_failures)

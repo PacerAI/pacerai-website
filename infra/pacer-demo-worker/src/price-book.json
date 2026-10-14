@@ -1,0 +1,63 @@
+{
+  "version": "v1.0",
+  "included_users": 5,
+  "agents": {
+    "pacing": {
+      "m": 1800,
+      "a": 1500
+    },
+    "planning": {
+      "m": 1800,
+      "a": 1500
+    }
+  },
+  "user_license": {
+    "m": 60,
+    "a": 50
+  },
+  "packages": {
+    "sales_pacing": {
+      "name": "Sales Pacing",
+      "agents": [
+        "pacing"
+      ],
+      "m": 1800,
+      "a": 1500,
+      "acv": 18000
+    },
+    "pacing_planning": {
+      "name": "Sales Pacing & Planning",
+      "agents": [
+        "pacing",
+        "planning"
+      ],
+      "m": 3600,
+      "a": 3000,
+      "acv": 36000
+    }
+  },
+  "services": {
+    "integration": 3500,
+    "monthly_block": {
+      "m": 1500,
+      "a": 1500,
+      "hours": 5,
+      "rate": 300
+    },
+    "block_5": {
+      "price": 1500,
+      "hours": 5,
+      "rate": 300
+    },
+    "block_20": {
+      "price": 5500,
+      "hours": 20,
+      "rate": 275
+    },
+    "block_40": {
+      "price": 10000,
+      "hours": 40,
+      "rate": 250
+    }
+  }
+}

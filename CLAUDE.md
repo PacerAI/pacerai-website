@@ -1,8 +1,7 @@
 # CLAUDE.md
 
 @foundation/first_principles.md
-@foundation/pricing/product-pricing-portfolio.md
-@foundation/pricing/product-pricing-tiers.md
+@foundation/pricing/product-pricing-price-book.md
 
 <!-- pacerai-foundation/pricing/product-pricing-funnel.md intentionally NOT @-imported; reference on demand. Per spec #34 / agent-repo-foundation-wiring.md pricing matrix. -->
 <!-- pacerai-foundation/pricing/product-pricing-rationale.md intentionally NOT @-imported; reference on demand. Per spec #34 / agent-repo-foundation-wiring.md pricing matrix. -->
@@ -60,7 +59,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | **About** | 374 | `about` | 366 | `src/team/about.html` *(legacy — 301 → `/#about`)* |
 | **Contact** | 375 | `contact` | — | `src/team/contact.html` *(bone; moved to top-level `/contact/`; was parent 366)* |
 | **Demo Connect** | 983 | `demo-connect` | — | `src/demo-connect.html` *(bone; spec 011 AC-1 demo onboarding; LIVE 2026-09-22; embeds the demo-connect reel from the staging Worker)* |
-| Pricing | 111 | `pricing` | — | *(legacy — v3: 301 → `/#pricing`)* |
+| **Pricing** | 111 | `pricing` | — | `src/pricing/pricing-build.html` *(built by `scripts/build_pricing.py` from the foundation Price Book; never hand-edit. Source: `pricing-template.html` + `pricing.js`. Until go-live, Redirection still 301s `/pricing/` → `/#pricing`)* |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
 **Blog articles (all 13 bone + live, parent 230; deploy with `--force` — pre-existing prose voice-debt trips `validate.py`):**
@@ -192,6 +191,10 @@ python3 scripts/build_pacing_chart.py        # writes img/pacing/ + inlines into
 python3 scripts/tear_sheet.py status            # live version + verify the short link
 python3 scripts/tear_sheet.py publish <pdf> --note "…" [--dry-run]   # upload + repoint, no page deploys
 python3 scripts/tear_sheet.py rollback [media_id]
+
+# /pricing/ (page 111): every price comes from foundation/pricing/product-pricing-price-book.md
+python3 scripts/build_pricing.py              # writes src/pricing/pricing-build.html + the Worker's price-book.json
+python3 scripts/build_pricing.py --check      # exit 1 if either is stale
 
 # Regenerate the SEO data tables (holds the per-page Yoast SEO data)
 python3 scripts/build_seo_table.py            # Emits docs/review/seo-table.csv + docs/review/seo-table.html
