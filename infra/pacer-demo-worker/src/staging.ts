@@ -5,6 +5,7 @@
 // Then: npm run deploy:staging
 // ─────────────────────────────────────────────────────────────────────────────
 import croArrV1 from "./variants/cro-arr-v1.html";
+import { withVideoBridge } from "./video-bridge";
 import demoConnect from "./variants/demo-connect.html";
 import pacingAgentV1 from "./variants/pacing-agent-v1.html";
 import pacingAgentV2 from "./variants/pacing-agent-v2.html";
@@ -60,7 +61,7 @@ export default {
     if (variantMatch) {
       const variant = VARIANTS[variantMatch[1]];
       if (!variant) return html(notFoundPage(variantMatch[1]), 404);
-      return html(variant.html);
+      return html(withVideoBridge(variant.html));   // GA4 bridge: src/video-bridge.ts
     }
 
     if (url.pathname === "/") return html(indexPage());

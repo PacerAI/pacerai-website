@@ -1,4 +1,8 @@
 import demoHtml from "./demo.html";
+import { withVideoBridge } from "./video-bridge";
+
+// The homepage video, with the GA4 bridge added (src/video-bridge.ts) — computed once per isolate.
+const demoPage = withVideoBridge(demoHtml);
 import { DISPOSABLE_DOMAINS } from "./disposable-domains";
 
 /**
@@ -141,7 +145,7 @@ export default {
     }
 
     // The demo video (iframed by the homepage).
-    return new Response(demoHtml, {
+    return new Response(demoPage, {
       status: 200,
       headers: { "content-type": "text/html; charset=utf-8", "cache-control": "public, max-age=300", ...FRAME_HEADERS },
     });
@@ -159,11 +163,22 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
   let email = "";
   let token = "";
   let company = "";
+  // Attribution, passed by the parent page (footer.js section 2b) into the iframe URL and
+  // forwarded here by the widget: first-touch UTMs, landing page and the page holding the card.
+  const attr = { utm_source: null as string | null, utm_medium: null as string | null, utm_campaign: null as string | null,
+                 landing: null as string | null, page: null as string | null };
   try {
-    const body = (await request.json()) as { email?: string; token?: string; company?: string };
-    email = (body.email || "").trim().toLowerCase();
-    token = (body.token || "").trim();
-    company = (body.company || "").trim();
+    const body = (await request.json()) as Record<string, unknown>;
+    const str = (v: unknown, n = 120) => (typeof v === "string" && v.trim() ? v.trim().slice(0, n) : null);
+    const path = (v: unknown) => { const x = str(v, 200); return x && /^\/(?!\/)[\w\-./]*$/.test(x) ? x : null; };
+    email = (str(body.email, 254) || "").toLowerCase();
+    token = str(body.token, 4096) || "";
+    company = str(body.company, 200) || "";
+    attr.utm_source = str(body.utm_source);
+    attr.utm_medium = str(body.utm_medium);
+    attr.utm_campaign = str(body.utm_campaign);
+    attr.landing = path(body.landing);
+    attr.page = path(body.page);
   } catch {
     return json({ error: "bad_request" }, 400);
   }
@@ -192,10 +207,18 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
 
   // Track the email (KV is the live request list; synced to demo_users.yml on review).
   // Check first so we Slack ONLY on a new email — a re-submit or a Turnstile token refresh never re-pings.
+  // `vid` is the visitor id GA4 gets as its user_id (opaque, never the email): stable per email, kept in this
+  // KV record and at the end of the D1 request_id, which carries apollo_contact_id. So a GA4 user_id
+  // pv_<vid> traces to the Apollo contact: SELECT apollo_contact_id FROM leads WHERE request_id LIKE '%_<vid>'.
   let isNew = true;
+  let vid = crypto.randomUUID().replace(/-/g, "").slice(0, 16);
   try {
-    isNew = (await env.DEMO_SIGNUPS.get(email)) === null;
-    await env.DEMO_SIGNUPS.put(email, JSON.stringify({ email, company, ip, ts }));
+    const prev = await env.DEMO_SIGNUPS.get(email);
+    isNew = prev === null;
+    if (prev) {
+      try { const old = JSON.parse(prev) as { vid?: string }; if (old.vid && /^[0-9a-f]{16}$/.test(old.vid)) vid = old.vid; } catch { /* keep new */ }
+    }
+    await env.DEMO_SIGNUPS.put(email, JSON.stringify({ email, company, ip, ts, vid }));
   } catch {
     // Non-fatal: still grant access + notify.
   }
@@ -203,7 +226,11 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
   const domain = email.split("@")[1] ?? "";
   const asOrg = (request as any).cf?.asOrganization as string | undefined;
   const leadClass = classify(domain, asOrg);
-  const requestId = `demo_${ts}_${crypto.randomUUID().slice(0, 6)}`;
+  const requestId = `demo_${ts}_${vid}`;
+  const pageUrl = `https://getpacerai.com${attr.page || "/demo-connect/"}`;
+  const cameFrom = [attr.utm_source && `${attr.utm_source}${attr.utm_medium ? ` / ${attr.utm_medium}` : ""}`,
+                    attr.utm_campaign && `campaign ${attr.utm_campaign}`,
+                    attr.landing && `landed on ${attr.landing}`].filter(Boolean).join(" · ");
   const website = deriveWebsite(domain, leadClass);
 
   // Everything below is off the critical path — the visitor gets their password
@@ -229,9 +256,9 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
           await env.LEADS.prepare(
             `INSERT INTO leads (
                request_id, email, email_domain, company, lead_class, source,
-               asset_slug, page_url, ip, created_at, website, as_org,
-               apollo_contact_id, enrolled_sequence
-             ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+               asset_slug, page_url, utm_source, utm_medium, utm_campaign,
+               ip, created_at, website, as_org, apollo_contact_id, enrolled_sequence
+             ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
           )
             .bind(
               requestId,
@@ -241,7 +268,10 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
               leadClass,
               "demo",
               "demo-access",
-              "https://getpacerai.com/demo-connect",
+              pageUrl,
+              attr.utm_source,
+              attr.utm_medium,
+              attr.utm_campaign,
               ip || null,
               ts,
               website,
@@ -278,7 +308,8 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
                 ...(isHostingOrigin(asOrg) ? [`*:warning: Origin:* ${asOrg} (datacenter, not an office network)`] : []),
                 ...(website ? [`*Website:* ${website}`] : []),
                 `*Source:* demo`,
-                `*Page:* https://getpacerai.com/demo-connect`,
+                `*Page:* ${pageUrl}`,
+                ...(cameFrom ? [`*Came from:* ${cameFrom}`] : []),
                 `*Sequence:* ${apollo.enrolled ? DEMO_SIGNUP_LIST : `none — ${apollo.note}`}`,
                 `*Apollo:* ${apollo.contactId ? `https://app.apollo.io/#/people/${apollo.contactId}` : "(no contact)"}`,
                 `*Request:* ${requestId}`,
@@ -321,6 +352,7 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
     ok: true,
     connectorUrl: CONNECTOR_URL,
     password: env.PACER_DEMO_PASSWORD || null,
+    visitor_id: `pv_${vid}`,   // GA4 user_id (see the KV comment above) — opaque, not personal data
   });
 }
 
@@ -640,6 +672,14 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
   var s1=document.getElementById('s1'), s2=document.getElementById('s2'), s3=document.getElementById('s3');
   var err1=document.getElementById('err1'), err2=document.getElementById('err2');
   var SITEKEY=${JSON.stringify(sk)};
+  // Attribution from the parent page (footer.js 2b) rides along with the signup POST.
+  var qs=new URLSearchParams(location.search), attr={};
+  ['utm_source','utm_medium','utm_campaign','landing','page'].forEach(function(k){ var v=qs.get(k); if(v){ attr[k]=v.slice(0,200); } });
+  // GA4 lives on the parent page; tell it about conversions (footer.js section 0 listens).
+  function report(name,params){ try{ if(window.parent!==window){ window.parent.postMessage({type:'pacer:event',name:name,params:params||{}},'https://getpacerai.com'); } }catch(e){} }
+  document.querySelectorAll('a.btn-walk').forEach(function(a){
+    a.addEventListener('click',function(){ report('schedule_walkthrough',{cta_location: s3.classList.contains('hide')?'signup_card':'signup_card_reveal'}); });
+  });
 
   function valid(e){return /^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(e);}
 
@@ -678,10 +718,11 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
     submitted=true;
     err2.textContent='Verifying…';
     fetch('/demo-signup',{method:'POST',headers:{'content-type':'application/json'},
-      body:JSON.stringify({email:email,company:company,token:token})})
+      body:JSON.stringify(Object.assign({email:email,company:company,token:token},attr))})
       .then(function(r){return r.json();})
       .then(function(d){
         if(d && d.ok){
+          report('demo_signup',{cta_location:'signup_card', user_id: d.visitor_id||''});
           // Tear the widget down so it stops refreshing tokens + re-calling back in the background.
           if(window.turnstile && widgetId!==null){ try{ window.turnstile.remove(widgetId); }catch(e){} widgetId=null; }
           s2.classList.add('hide'); s3.classList.remove('hide');

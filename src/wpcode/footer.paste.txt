@@ -33,6 +33,10 @@
  * element and exits silently if not found. Safe to run site-wide.
  *
  * SECTIONS:
+ *   0. Analytics — window.pacerTrack (GA4 events via Site Kit's gtag), first-touch
+ *      attribution (window.pacerAttr: UTMs / referrer / landing page, 30 days),
+ *      delegated CTA click events, and the pacer:event postMessage bridge for
+ *      Worker-served iframes (demo signup, pricing estimator)
  *   1. Homepage hero typed-line animation (.typed-line, .type-cursor)
  *   2. White paper CTA form handler (.wp-cta-form)
  *      - POSTs to Cloudflare Worker → Apollo contact + sequence + Slack
@@ -49,12 +53,118 @@
  *      (#1 typed-line stays for legacy pages; it exits if .typed-line is absent)
  *
  * HISTORY:
+ *   2026-10-14  Section 0: GA4 user_id after a demo signup (window.pacerSetUser); section_jump (in-page links, and a #hash on arrival), resource_filter
+ *               (Resources category pills), and the demo-video bridge events (demo_video_complete,
+ *               demo_video_replay, demo_video_review, try_demo_click from the video end card)
+ *   2026-10-13  Section 0 analytics: GA4 events (demo_signup, schedule_walkthrough,
+ *               try_demo_click, tear_sheet_open, whitepaper_download, demo_email_capture),
+ *               first-touch attribution carried into both capture paths; the hero form
+ *               no longer puts the email in the /demo-connect URL (sessionStorage instead)
  *   2026-07-21  v3.0.0 Claude-bone redesign: added hero rotor, logo marquee,
  *               and bone pipeline number-stream (sections 6-8)
  *   2026-04-17  Added white paper CTA form handler (Phase 3 deploy)
  *               Added pipeline animation + mobile nav (moved from inline)
  *   Prior       Homepage typed-line animation (original WPCode install)
  * ================================================================ */
+
+/* --- 0. Analytics: conversion events + first-touch attribution --- */
+/* GA4 is Site Kit's tag (window.gtag). Every event carries page_path and, for clicks,
+ * cta_location = the id of the nearest enclosing section/element with an id, else its class. */
+window.pacerTrack = window.pacerTrack || function(name, params) {
+  try {
+    params = params || {};
+    if (!params.page_path) params.page_path = window.location.pathname;
+    if (typeof window.gtag === 'function') window.gtag('event', name, params);
+  } catch (e) {}
+};
+
+/* GA4 user_id: after a demo signup the Worker hands back an opaque visitor id (pv_ + 16 hex, never an
+ * email). It is kept in localStorage and set on every later page, so GA4 links that person's visits across
+ * sessions. The D1 lead row (request_id ending in the same 16 hex) maps it to the Apollo contact. */
+window.pacerSetUser = window.pacerSetUser || function(uid) {
+  if (!/^pv_[0-9a-f]{16}$/.test(uid || '')) return;
+  try { window.localStorage.setItem('pacer_uid', uid); } catch (e) {}
+  try { if (typeof window.gtag === 'function') window.gtag('set', { user_id: uid }); } catch (e) {}
+};
+(function() { var u = null; try { u = window.localStorage.getItem('pacer_uid'); } catch (e) {} if (u) window.pacerSetUser(u); })();
+
+/* First touch: the visitor's first UTMs / referrer / landing page, kept 30 days in
+ * localStorage. A capture uses the current URL's UTMs when present, else the first touch;
+ * an outside referrer with no UTMs becomes utm_source=<host>, utm_medium=referral. */
+window.pacerAttr = window.pacerAttr || (function() {
+  var KEY = 'pacer_ft', TTL = 30 * 864e5, now = Date.now();
+  var qp = new URLSearchParams(window.location.search), ft = null;
+  try { ft = JSON.parse(window.localStorage.getItem(KEY) || 'null'); } catch (e) {}
+  if (!ft || now - (ft.ts || 0) > TTL) {
+    var ref = '';
+    try { ref = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) {}
+    if (ref === window.location.hostname) ref = '';
+    ft = { utm_source: qp.get('utm_source') || (ref || ''), utm_medium: qp.get('utm_medium') || (ref ? 'referral' : ''),
+           utm_campaign: qp.get('utm_campaign') || '', landing: window.location.pathname, ts: now };
+    try { window.localStorage.setItem(KEY, JSON.stringify(ft)); } catch (e) {}
+  }
+  return function() {
+    var cur = qp.get('utm_source');
+    return {
+      utm_source: cur || ft.utm_source || null,
+      utm_medium: cur ? (qp.get('utm_medium') || null) : (ft.utm_medium || null),
+      utm_campaign: cur ? (qp.get('utm_campaign') || null) : (ft.utm_campaign || null),
+      landing: ft.landing || null
+    };
+  };
+})();
+
+(function() {
+  if (window.__pacerClicks) return; window.__pacerClicks = 1;
+  function where(el) {
+    for (var n = el; n && n !== document.body; n = n.parentElement) {
+      if (n.id && n.id.indexOf('pacerai-') !== 0) return n.id;
+      if (n.tagName === 'NAV' || n.tagName === 'FOOTER') return n.tagName.toLowerCase();
+      if (n.tagName === 'SECTION' && n.className) return String(n.className).split(' ')[0];
+    }
+    return el.className ? String(el.className).split(' ')[0] : '';
+  }
+  document.addEventListener('click', function(e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '', name = '', extra = {};
+    var url = null;
+    try { url = new URL(href, window.location.href); } catch (err) {}
+    var samePage = url && url.hash.length > 1 && url.origin === window.location.origin &&
+      url.pathname.replace(/\/$/, '') === window.location.pathname.replace(/\/$/, '');
+    if (href.indexOf('calendly.com') !== -1) name = 'schedule_walkthrough';
+    else if (href.indexOf('/demo-connect') !== -1 && window.location.pathname.indexOf('/demo-connect') !== 0) name = 'try_demo_click';
+    else if (href.indexOf('/tear-sheet') !== -1) name = 'tear_sheet_open';
+    else if (a.getAttribute('data-filter')) { name = 'resource_filter'; extra.category = a.getAttribute('data-filter'); }
+    else if (samePage) { name = 'section_jump'; extra.section = url.hash.slice(1); }
+    if (!name) return;
+    var params = { cta_location: where(a), link_text: (a.textContent || '').trim().slice(0, 60), link_url: href };
+    for (var k in extra) params[k] = extra[k];
+    window.pacerTrack(name, params);
+  }, true);
+
+  /* Arriving on a #hash (a shared /resources/#arr-snowballs link, or /#pricing from another page). */
+  if (window.location.hash.length > 1) {
+    var h = decodeURIComponent(window.location.hash.slice(1)).slice(0, 60);
+    if (window.location.pathname.indexOf('/resources') === 0 && document.querySelector('[data-filter="' + h.replace(/"/g, '') + '"]'))
+      window.pacerTrack('resource_filter', { category: h, cta_location: 'arrival' });
+    else window.pacerTrack('section_jump', { section: h, cta_location: 'arrival' });
+  }
+
+  /* Worker-served iframes (signup card, demo videos, pricing estimator) report events with
+   * postMessage({type:'pacer:event', name, params}). Only that origin is trusted. */
+  var WORKERS = { 'https://pacer-demo-worker.will-078.workers.dev': 1,           /* signup card, homepage video */
+                  'https://pacer-demo-worker-staging.will-078.workers.dev': 1 };  /* the /demo-connect/ reel */
+  var ALLOWED = { demo_signup: 1, schedule_walkthrough: 1, pricing_estimate: 1, try_demo_click: 1,
+                  demo_video_complete: 1, demo_video_replay: 1, demo_video_review: 1 };
+  window.addEventListener('message', function(e) {
+    if (!WORKERS[e.origin] || !e.data || e.data.type !== 'pacer:event' || !ALLOWED[e.data.name]) return;
+    var p = {}, src = e.data.params || {};
+    if (e.data.name === 'demo_signup' && src.user_id) window.pacerSetUser(String(src.user_id));
+    ['cta_location', 'video', 'plan', 'value'].forEach(function(k) { if (src[k] != null) p[k] = String(src[k]).slice(0, 80); });
+    window.pacerTrack(e.data.name, p);
+  });
+})();
 
 /* --- 1. Homepage hero typed-line animation --- */
 (function(){
@@ -137,14 +247,14 @@
       button.disabled = true;
       button.textContent = 'One moment\u2026';
 
-      var params = new URLSearchParams(window.location.search);
+      var at = window.pacerAttr();
       var body = JSON.stringify({
         email: email,
         asset_slug: slug,
-        page_url: window.location.href,
-        utm_source: params.get('utm_source'),
-        utm_medium: params.get('utm_medium'),
-        utm_campaign: params.get('utm_campaign')
+        page_url: window.location.origin + window.location.pathname,
+        utm_source: at.utm_source,
+        utm_medium: at.utm_medium,
+        utm_campaign: at.utm_campaign
       });
 
       fetch(WORKER_URL, {
@@ -162,15 +272,17 @@
         }
         msgEl.style.color = '#15803D';
         msgEl.textContent = successMsg;
+        window.pacerTrack(redirect ? 'demo_email_capture' : 'whitepaper_download', { asset_slug: slug });
         if (data.download_url) {
           button.textContent = 'Downloading\u2026';
           window.open(data.download_url, '_blank');
         } else {
           button.textContent = 'Thanks \u2014 you\u2019re in';
           if (redirect) {
-            /* Carry the email forward so the demo widget doesn't ask twice. */
-            var dest = redirect + (redirect.indexOf('?') === -1 ? '?' : '&') + 'email=' + encodeURIComponent(email);
-            setTimeout(function() { window.location.href = dest; }, 900);
+            /* Carry the email forward so the demo widget doesn't ask twice — in sessionStorage,
+             * never the URL (page URLs go to GA4, Apollo and Jetpack). */
+            try { window.sessionStorage.setItem('pacer_email', email); } catch (e) {}
+            setTimeout(function() { window.location.href = redirect; }, 900);
           }
         }
       })
@@ -182,16 +294,23 @@
     });
   });
 
-  /* 2b. Demo signup iframe — forward ?email= from the page URL into the widget.
-   * The widget is cross-origin (Worker-served), so the parent cannot fill it
-   * directly; the Worker reads the param and prefills server-side instead. */
+  /* 2b. Demo signup iframe — pass the email (from the hero form, via sessionStorage; legacy
+   * ?email= links still work) and the visitor's attribution into the widget. The widget is
+   * cross-origin (Worker-served), so the parent cannot fill it directly; the Worker reads
+   * the params and prefills / records them server-side instead. */
   (function() {
-    var qp = new URLSearchParams(window.location.search);
-    var em = (qp.get('email') || '').trim();
-    if (!em) return;
-    document.querySelectorAll('iframe[src*="/signup"]').forEach(function(f) {
-      if (f.src.indexOf('email=') !== -1) return;
-      f.src = f.src + (f.src.indexOf('?') === -1 ? '?' : '&') + 'email=' + encodeURIComponent(em);
+    var frames = document.querySelectorAll('iframe[src*="/signup"]');
+    if (!frames.length) return;
+    var em = '';
+    try { em = window.sessionStorage.getItem('pacer_email') || ''; } catch (e) {}
+    if (!em) em = (new URLSearchParams(window.location.search).get('email') || '').trim();
+    var at = window.pacerAttr(), q = [];
+    if (em) q.push('email=' + encodeURIComponent(em));
+    ['utm_source', 'utm_medium', 'utm_campaign', 'landing'].forEach(function(k) { if (at[k]) q.push(k + '=' + encodeURIComponent(at[k])); });
+    q.push('page=' + encodeURIComponent(window.location.pathname));
+    frames.forEach(function(f) {
+      if (f.src.indexOf('page=') !== -1) return;
+      f.src = f.src + (f.src.indexOf('?') === -1 ? '?' : '&') + q.join('&');
     });
   })();
 
@@ -263,14 +382,14 @@
     button.disabled = true;
     button.textContent = 'Joining…';
 
-    var params = new URLSearchParams(window.location.search);
+    var at = window.pacerAttr();
     var body = JSON.stringify({
       email: email,
       asset_slug: 'research-waitlist',
-      page_url: window.location.href,
-      utm_source: params.get('utm_source'),
-      utm_medium: params.get('utm_medium'),
-      utm_campaign: params.get('utm_campaign')
+      page_url: window.location.origin + window.location.pathname,
+      utm_source: at.utm_source,
+      utm_medium: at.utm_medium,
+      utm_campaign: at.utm_campaign
     });
 
     fetch(WORKER_URL, {
@@ -281,6 +400,7 @@
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data && data.success) {
+        window.pacerTrack('research_waitlist', {});
         button.textContent = 'You’re on the list';
         msgEl.style.color = '#2DB87A';
         msgEl.textContent = 'You’re on the list — we’ll email you the day we launch.';
