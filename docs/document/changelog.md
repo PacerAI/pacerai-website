@@ -8,6 +8,22 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-14 (later): every Pricing link goes to /pricing/; Talk to Sales; order-email doc
+
+- **Status:** LIVE. Will asked for both changes: all pricing items should reach `/pricing/`, and the pricing
+  page should have a "Talk to Sales" CTA.
+- **Deployed:** 19 pages: 111, 25, 230, 366, 375, 983 and the 13 articles (with `--force`). Backups are in
+  `docs/review/pre-deploy-backup-*-20261014-1132*.json`.
+- **Nav and footer:** "Pricing" now goes to `/pricing/` everywhere. Crawled live: no `/#pricing` links remain.
+- **Homepage:**
+  - "Discuss Pricing" (`/contact/`) becomes "See Pricing" (`/pricing/`).
+  - The pricing lede, the FAQ answer and the FAQPage JSON-LD now quote the two package prices.
+  - `getpacerai.com/#pricing` redirects to `/pricing/` (checked in headless Chrome).
+- **/pricing/:** a "Talk to Sales" band (Calendly) sits under the packages.
+- **pacer-demo-worker** `43c0889b`: Slack shows Resend's own error text. Will's first test request
+  (2026-10-14 17:27 UTC) saved to `leads` and `pricing_requests`, reached Slack and Apollo, but both emails
+  failed with 401, so the key was rejected. Fix: `docs/deploy/order-email-setup.md`.
+
 ## 2026-10-14 — /pricing/ live from the Price Book, with order capture on Choose
 
 - **Status:** LIVE. Will approved the prices (foundation Price Book v1.0, pacerai-foundation #29), the
