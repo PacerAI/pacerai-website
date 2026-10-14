@@ -74,14 +74,11 @@ jobs:
             || (echo "::error::foundation/brand/voice.yml missing — submodule checkout failed" && exit 1)
           test -f foundation/brand/anti-ai-writing-style.md \
             || (echo "::error::foundation/brand/anti-ai-writing-style.md missing — submodule checkout failed" && exit 1)
-          # product-pricing-tiers.md is the sentinel: per pacerai-os/CLAUDE.md it is the
-          # one pricing file that is fleet-uniform across every consumer, so its absence
-          # means the submodule checkout genuinely failed rather than a per-role variance.
-          # (Was pricing-packaging.yml — that filename has not existed since spec #17
-          # restructured pricing into the five product-pricing-*.md files, so this gate
-          # had been failing on main continuously since at least 2026-07-23.)
-          test -f foundation/pricing/product-pricing-tiers.md \
-            || (echo "::error::foundation/pricing/product-pricing-tiers.md missing — submodule checkout failed" && exit 1)
+          # The Price Book is the sentinel and the file validate.py check 12 reads (since 2026-10-14).
+          # The earlier sentinels named files foundation later archived (pricing-packaging.yml, then
+          # product-pricing-tiers.md on 2026-09-02), which failed this gate on every foundation bump.
+          test -f foundation/pricing/product-pricing-price-book.md \
+            || (echo "::error::foundation/pricing/product-pricing-price-book.md missing — submodule checkout failed" && exit 1)
 
       - name: Determine validation scope
         id: scope

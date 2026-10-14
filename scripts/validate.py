@@ -17,20 +17,16 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHAR_LIMIT = 67000  # 1K buffer under 68K hard limit
 HOMEPAGE_FILE = "src/homepage/index-build.html"
 
-# All deployable src files
+# The live, redeployable pages (what `python3 scripts/validate.py` and the CI "full" run check).
+# Retired pages are left out on purpose: /solutions/*, /platform/overview/ and /team/about/ are 301-redirected
+# and never redeployed, and their old copy fails the voice lint. They are still checked if passed by name.
 DEFAULT_FILES = [
     "src/homepage/index-build.html",
-    "src/solutions/arr-snowball.html",
-    "src/solutions/customer-data-cube.html",
-    "src/solutions/transaction-readiness.html",
-    "src/solutions/revops-transformation-pkg.html",
-    "src/solutions/gtm-transformation-pkg.html",
-    "src/solutions/fpanda-transformation-pkg.html",
-    "src/platform/overview.html",
-    "src/team/team-page.html",
-    "src/team/about.html",
-    "src/team/contact.html",
     "src/blog/index-build.html",
+    "src/team/team-page.html",
+    "src/team/contact.html",
+    "src/demo-connect.html",
+    "src/pricing/pricing-build.html",
 ]
 
 
