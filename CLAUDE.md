@@ -149,6 +149,7 @@ docs/
 └── deploy/
     ├── runbook.md                      # Deploy instructions
     ├── wp-admin-actions.md             # Organization/Person WPCode schema snippet + redirect runbook
+    ├── order-email-setup.md            # /pricing/ order emails: Resend key + domain, end-to-end test, Slack outcomes
     └── yoast-worklist.md               # Per-page Yoast title/meta worklist (WP Admin only)
 
 docs/design/demo-vids/                  # Every homepage demo video served, one folder each (README = index)
@@ -360,7 +361,7 @@ Every page follows the same pattern:
 - **Primary accent:** Teal — bone: `#2E7D74` / `#70C49C`; legacy dark: `#27899A` / `#70C49C`
 - **v3 bone tokens:** `--bone:#F5F4EF --surface:#FAFAF7 --navy:#1F3864 --teal:#2E7D74 --ink:#20242B --muted:#5F5A50 --line:#E6E1D6`
 - **Aesthetic:** Minimal, financial-professional. Subtle teal accents. No playful illustrations or rounded pill buttons.
-- **CTA language:** primary is email capture — "Try the Demo Free", "Demo in Claude now", "Get the White Paper"; booking ("Talk to Will") is secondary and lives on /contact/ only. Never "Learn More".
+- **CTA language:** primary is email capture — "Try the Demo Free", "Demo in Claude now", "Get the White Paper"; booking ("Talk to Will") is secondary and lives on /contact/; "Talk to Sales" (Calendly) sits on /pricing/ (Will, 2026-10-14). Never "Learn More".
 - **Voice:** Confident, precise. Never use "leverage" or "utilize."
 
 **Canonical source:** `PacerAI/pacerai-foundation/` — see brand/, strategy/, and commercial/ for full definitions.
