@@ -33,8 +33,8 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 > homepage (25), Resources hub (230), all **12 blog articles**, Team (366), and Contact (375) are all
 > **bone (`#F5F4EF`)**. Only legacy/redirected URLs remain non-bone.
 > The 6 `/solutions/*` pages are **retired from nav + homepage and 301-redirected to the homepage**
-> (source files kept for archive/rollback; do not redeploy their content). Legacy `/pricing/` (111)
-> **301-redirects to `/#pricing`**. Homepage nav is flat/centered (Daily Pacing Agent · Use Cases ·
+> (source files kept for archive/rollback; do not redeploy their content). `/pricing/` (111) is the
+> **Price Book pricing page since 2026-10-14** (its old 301 to `/#pricing` is disabled). Homepage nav is flat/centered (Daily Pacing Agent · Use Cases ·
 > Team · Pricing · Resources · Tear Sheet). *(Tear Sheet added 2026-10-07, also first in the footer's Resources column. It links `/tear-sheet/`, a Redirection 302 (#18) to the current PDF. Never link the PDF file itself. Edit/publish/rollback with the **`/tear-sheet`** skill + `scripts/tear_sheet.py`; history in `docs/tear-sheet/versions.json`.)* The Blog (230) WP page title is renamed **"Blog" → "Resources"** (slug
 > already `resources`; posts auto-301, `/blog/` → `/resources/` redirect live; runbook
 > `docs/deploy/blog-to-resources-rename.md`). "Resources" nav → `/resources/`.
@@ -59,7 +59,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | **About** | 374 | `about` | 366 | `src/team/about.html` *(legacy — 301 → `/#about`)* |
 | **Contact** | 375 | `contact` | — | `src/team/contact.html` *(bone; moved to top-level `/contact/`; was parent 366)* |
 | **Demo Connect** | 983 | `demo-connect` | — | `src/demo-connect.html` *(bone; spec 011 AC-1 demo onboarding; LIVE 2026-09-22; embeds the demo-connect reel from the staging Worker)* |
-| **Pricing** | 111 | `pricing` | — | `src/pricing/pricing-build.html` *(built by `scripts/build_pricing.py` from the foundation Price Book; never hand-edit. Source: `pricing-template.html` + `pricing.js`. Until go-live, Redirection still 301s `/pricing/` → `/#pricing`)* |
+| **Pricing** | 111 | `pricing` | — | `src/pricing/pricing-build.html` *(built by `scripts/build_pricing.py` from the foundation Price Book; never hand-edit. Source: `pricing-template.html` + `pricing.js`. **LIVE 2026-10-14**; the Redirection rule `/pricing/` → `/#pricing` is disabled, not deleted, so re-enabling it is the rollback)* |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
 **Blog articles (all 13 bone + live, parent 230; deploy with `--force` — pre-existing prose voice-debt trips `validate.py`):**

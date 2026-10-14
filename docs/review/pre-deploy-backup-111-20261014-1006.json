@@ -1,0 +1,421 @@
+{
+  "id": 111,
+  "date": "2025-11-18T17:05:56",
+  "date_gmt": "2025-11-19T00:05:56",
+  "guid": {
+    "rendered": "https://getpacerai.com/?page_id=111",
+    "raw": "https://getpacerai.com/?page_id=111"
+  },
+  "modified": "2026-10-06T04:00:32",
+  "modified_gmt": "2026-10-06T10:00:32",
+  "password": "",
+  "slug": "pricing",
+  "status": "draft",
+  "type": "page",
+  "link": "https://getpacerai.com/?page_id=111",
+  "title": {
+    "raw": "Pricing",
+    "rendered": "Pricing"
+  },
+  "content": {
+    "raw": "<!-- wp:fl-builder/layout -->\n<h1><strong>Pricing overview</strong></h1>\n<h3>Philosophy:</h3>\n<p>Our goal is to help you grow so we aligned our pricing model to your growth (or needs) so we are incentivized to help you grow.</p>\n<p>&nbsp;</p>\n<h3>Pricing Model:&nbsp; \"Revenue Under Analysis\"</h3>\n<p>We offer to analyze and automate the reporting of $100M of ARR for $2,000 per month.</p>\n\n<p>&nbsp;</p>\n<stripe-pricing-table pricing-table-id=\"prctbl_1SUyRb04FPHkGt9qiVCPo88i\" publishable-key=\"pk_live_51QMZZ104FPHkGt9qxzKgt91RnsxNs7JJuHHXnRnoKHmqXXcL7OCA44HadyjESwJydMESDFWoYejZpNeaU2wQXbd4000n0jw1B5\">\n</stripe-pricing-table>\n\t<h4>Discounts:</h4>\n<ul>\n<li>Partner discounts: 16% which is equivalent to two months free</li>\n<li>Veterans (Military Service): 8% which is equivalent to one month free\n<ul>\n<li>Veteran discounts applied to businesses owned by a Veteran or the primary sponsor or Internal partner is a Veteran</li>\n</ul>\n</li>\n</ul>\n\n<h4>Pricing details:</h4>\n<p>Seats:</p>\n<ul>\n<li>The subscriptions below come with 5-seat licenses, and more can be purchased anytime during the contract for $30 per user per month.</li>\n<li>Additionally, customer accounts can remove the additional seat license anytime during the contract as well.</li>\n</ul>\n<p>Data source Instances</p>\n<ul>\n<li><strong>CRM</strong>:\n<ul>\n<li>One CRM instance integration comes with the subscription purchase.</li>\n<li>Additional CRM integrations can be purchased for $2,000/mo per CRM instance</li>\n</ul>\n</li>\n</ul>\n<p>&nbsp;</p>\n<ul>\n<li><strong>SMB Financial Suites:</strong>\n<ul>\n<li>Integration of a financial suite focused on small and medium-sized businesses (SMBs) can be purchased for $2,000/mo per instance.</li>\n<li>Examples: QuickBooks, Xero, etc.</li>\n</ul>\n</li>\n</ul>\n<p>&nbsp;</p>\n<ul>\n<li><strong>Enterprise Financial Suites:</strong>\n<ul>\n<li>Integration of a financial suite for enterprises can be purchased for $4,000/mo per instance.</li>\n<li>Examples: NetSuite, Microsoft Dynamics</li>\n</ul>\n</li>\n</ul>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n\t\t\t<a href=\"https://calendly.com/predictive-analytics-partners\" target=\"_blank\" rel=\"noopener\">\n\t\t\t\t\t\t\tMeet with Sales\n\t\t\t\t\t</a>\n<!-- /wp:fl-builder/layout -->",
+    "rendered": "\n<h1><strong>Pricing overview</strong></h1>\n<h3>Philosophy:</h3>\n<p>Our goal is to help you grow so we aligned our pricing model to your growth (or needs) so we are incentivized to help you grow.</p>\n<p>&nbsp;</p>\n<h3>Pricing Model:&nbsp; &#8220;Revenue Under Analysis&#8221;</h3>\n<p>We offer to analyze and automate the reporting of $100M of ARR for $2,000 per month.</p>\n\n<p>&nbsp;</p>\n<stripe-pricing-table pricing-table-id=\"prctbl_1SUyRb04FPHkGt9qiVCPo88i\" publishable-key=\"pk_live_51QMZZ104FPHkGt9qxzKgt91RnsxNs7JJuHHXnRnoKHmqXXcL7OCA44HadyjESwJydMESDFWoYejZpNeaU2wQXbd4000n0jw1B5\">\n</stripe-pricing-table>\n\t<h4>Discounts:</h4>\n<ul>\n<li>Partner discounts: 16% which is equivalent to two months free</li>\n<li>Veterans (Military Service): 8% which is equivalent to one month free\n<ul>\n<li>Veteran discounts applied to businesses owned by a Veteran or the primary sponsor or Internal partner is a Veteran</li>\n</ul>\n</li>\n</ul>\n\n<h4>Pricing details:</h4>\n<p>Seats:</p>\n<ul>\n<li>The subscriptions below come with 5-seat licenses, and more can be purchased anytime during the contract for $30 per user per month.</li>\n<li>Additionally, customer accounts can remove the additional seat license anytime during the contract as well.</li>\n</ul>\n<p>Data source Instances</p>\n<ul>\n<li><strong>CRM</strong>:\n<ul>\n<li>One CRM instance integration comes with the subscription purchase.</li>\n<li>Additional CRM integrations can be purchased for $2,000/mo per CRM instance</li>\n</ul>\n</li>\n</ul>\n<p>&nbsp;</p>\n<ul>\n<li><strong>SMB Financial Suites:</strong>\n<ul>\n<li>Integration of a financial suite focused on small and medium-sized businesses (SMBs) can be purchased for $2,000/mo per instance.</li>\n<li>Examples: QuickBooks, Xero, etc.</li>\n</ul>\n</li>\n</ul>\n<p>&nbsp;</p>\n<ul>\n<li><strong>Enterprise Financial Suites:</strong>\n<ul>\n<li>Integration of a financial suite for enterprises can be purchased for $4,000/mo per instance.</li>\n<li>Examples: NetSuite, Microsoft Dynamics</li>\n</ul>\n</li>\n</ul>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n\t\t\t<a href=\"https://calendly.com/predictive-analytics-partners\" target=\"_blank\" rel=\"noopener\">\n\t\t\t\t\t\t\tMeet with Sales\n\t\t\t\t\t</a>\n",
+    "protected": false,
+    "block_version": 1
+  },
+  "excerpt": {
+    "raw": "",
+    "rendered": "",
+    "protected": false
+  },
+  "author": 235927395,
+  "featured_media": 0,
+  "parent": 0,
+  "menu_order": 0,
+  "comment_status": "closed",
+  "ping_status": "closed",
+  "template": "",
+  "meta": {
+    "_wpcom_ai_launchpad_about_page": false,
+    "_wpcom_ai_launchpad_gallery_page": false,
+    "_wpcom_ai_launchpad_contact_page": false,
+    "_wpcom_ai_launchpad_events_page": false,
+    "_wpcom_ai_launchpad_video_page": false,
+    "_wpcom_ai_launchpad_portfolio_piece": false,
+    "_jetpack_hide_featured_image": false,
+    "_jetpack_featured_image_duplicate_dismissed": 0,
+    "footnotes": ""
+  },
+  "permalink_template": "https://getpacerai.com/%pagename%/",
+  "generated_slug": "pricing",
+  "class_list": [
+    "post-111",
+    "page",
+    "type-page",
+    "status-draft",
+    "hentry"
+  ],
+  "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v28.7 - https://yoast.com/product/yoast-seo-wordpress/ -->\n<title>Pricing \u2014 Pacer AI</title>\n<meta name=\"description\" content=\"Pacer AI pricing \u2014 Revenue Under Analysis model. Analyze and automate reporting of $100M ARR for $2,000/month. Partner and volume discounts available.\" class=\"yoast-seo-meta-tag\" />\n<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" />\n<link rel=\"canonical\" href=\"https://getpacerai.com/?page_id=111\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:locale\" content=\"en_US\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:type\" content=\"article\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:title\" content=\"Pricing \u2014 Pacer AI\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:description\" content=\"Pacer AI pricing \u2014 Revenue Under Analysis model. Analyze and automate reporting of $100M ARR for $2,000/month. Partner and volume discounts available.\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:url\" content=\"https://getpacerai.com/?page_id=111\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"og:site_name\" content=\"Pacer AI\" class=\"yoast-seo-meta-tag\" />\n<meta property=\"article:modified_time\" content=\"2026-10-06T10:00:32+00:00\" class=\"yoast-seo-meta-tag\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" class=\"yoast-seo-meta-tag\" />\n<meta name=\"twitter:label1\" content=\"Est. reading time\" class=\"yoast-seo-meta-tag\" />\n\t<meta name=\"twitter:data1\" content=\"1 minute\" class=\"yoast-seo-meta-tag\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https:\\/\\/getpacerai.com\\/?page_id=111\",\"url\":\"https:\\/\\/getpacerai.com\\/?page_id=111\",\"name\":\"Pricing \u2014 Pacer AI\",\"isPartOf\":{\"@id\":\"https:\\/\\/getpacerai.com\\/#website\"},\"datePublished\":\"2025-11-19T00:05:56+00:00\",\"dateModified\":\"2026-10-06T10:00:32+00:00\",\"description\":\"Pacer AI pricing \u2014 Revenue Under Analysis model. Analyze and automate reporting of $100M ARR for $2,000\\/month. Partner and volume discounts available.\",\"breadcrumb\":{\"@id\":\"https:\\/\\/getpacerai.com\\/?page_id=111#breadcrumb\"},\"inLanguage\":\"en-US\",\"potentialAction\":[{\"@type\":\"ReadAction\",\"target\":[\"https:\\/\\/getpacerai.com\\/?page_id=111\"]}]},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/getpacerai.com\\/?page_id=111#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https:\\/\\/getpacerai.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Pricing\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/getpacerai.com\\/#website\",\"url\":\"https:\\/\\/getpacerai.com\\/\",\"name\":\"Pacer AI\",\"description\":\"The Daily Pacing Agent for Sales Leaders\",\"publisher\":{\"@id\":\"https:\\/\\/getpacerai.com\\/#organization\"},\"alternateName\":\"Daily Pacing Agent\",\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/getpacerai.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/getpacerai.com\\/#organization\",\"name\":\"Pacer AI\",\"url\":\"https:\\/\\/getpacerai.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https:\\/\\/getpacerai.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/i0.wp.com\\/getpacerai.com\\/wp-content\\/uploads\\/2025\\/11\\/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1\",\"contentUrl\":\"https:\\/\\/i0.wp.com\\/getpacerai.com\\/wp-content\\/uploads\\/2025\\/11\\/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1\",\"width\":512,\"height\":512,\"caption\":\"Pacer AI\"},\"image\":{\"@id\":\"https:\\/\\/getpacerai.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.linkedin.com\\/company\\/getpacerai\",\"https:\\/\\/www.youtube.com\\/@PacerAI\"]}]}</script>\n<!-- / Yoast SEO plugin. -->",
+  "yoast_head_json": {
+    "title": "Pricing \u2014 Pacer AI",
+    "description": "Pacer AI pricing \u2014 Revenue Under Analysis model. Analyze and automate reporting of $100M ARR for $2,000/month. Partner and volume discounts available.",
+    "robots": {
+      "index": "index",
+      "follow": "follow",
+      "max-snippet": "max-snippet:-1",
+      "max-image-preview": "max-image-preview:large",
+      "max-video-preview": "max-video-preview:-1"
+    },
+    "canonical": "https://getpacerai.com/?page_id=111",
+    "og_locale": "en_US",
+    "og_type": "article",
+    "og_title": "Pricing \u2014 Pacer AI",
+    "og_description": "Pacer AI pricing \u2014 Revenue Under Analysis model. Analyze and automate reporting of $100M ARR for $2,000/month. Partner and volume discounts available.",
+    "og_url": "https://getpacerai.com/?page_id=111",
+    "og_site_name": "Pacer AI",
+    "article_modified_time": "2026-10-06T10:00:32+00:00",
+    "twitter_card": "summary_large_image",
+    "twitter_misc": {
+      "Est. reading time": "1 minute"
+    },
+    "schema": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://getpacerai.com/?page_id=111",
+          "url": "https://getpacerai.com/?page_id=111",
+          "name": "Pricing \u2014 Pacer AI",
+          "isPartOf": {
+            "@id": "https://getpacerai.com/#website"
+          },
+          "datePublished": "2025-11-19T00:05:56+00:00",
+          "dateModified": "2026-10-06T10:00:32+00:00",
+          "description": "Pacer AI pricing \u2014 Revenue Under Analysis model. Analyze and automate reporting of $100M ARR for $2,000/month. Partner and volume discounts available.",
+          "breadcrumb": {
+            "@id": "https://getpacerai.com/?page_id=111#breadcrumb"
+          },
+          "inLanguage": "en-US",
+          "potentialAction": [
+            {
+              "@type": "ReadAction",
+              "target": [
+                "https://getpacerai.com/?page_id=111"
+              ]
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://getpacerai.com/?page_id=111#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://getpacerai.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Pricing"
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://getpacerai.com/#website",
+          "url": "https://getpacerai.com/",
+          "name": "Pacer AI",
+          "description": "The Daily Pacing Agent for Sales Leaders",
+          "publisher": {
+            "@id": "https://getpacerai.com/#organization"
+          },
+          "alternateName": "Daily Pacing Agent",
+          "potentialAction": [
+            {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://getpacerai.com/?s={search_term_string}"
+              },
+              "query-input": {
+                "@type": "PropertyValueSpecification",
+                "valueRequired": true,
+                "valueName": "search_term_string"
+              }
+            }
+          ],
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://getpacerai.com/#organization",
+          "name": "Pacer AI",
+          "url": "https://getpacerai.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "inLanguage": "en-US",
+            "@id": "https://getpacerai.com/#/schema/logo/image/",
+            "url": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2025/11/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1",
+            "contentUrl": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2025/11/cropped-Get-Pacer-AI-chevron-logo-v1-11.24.2025.png?fit=512%2C512&ssl=1",
+            "width": 512,
+            "height": 512,
+            "caption": "Pacer AI"
+          },
+          "image": {
+            "@id": "https://getpacerai.com/#/schema/logo/image/"
+          },
+          "sameAs": [
+            "https://www.linkedin.com/company/getpacerai",
+            "https://www.youtube.com/@PacerAI"
+          ]
+        }
+      ]
+    }
+  },
+  "jetpack_likes_enabled": true,
+  "jetpack_sharing_enabled": true,
+  "jetpack_shortlink": "https://wp.me/PgRFPe-1N",
+  "jetpack-related-posts": [
+    {
+      "id": 778,
+      "url": "https://getpacerai.com/resources/grow-nrr-101-to-105-case-study/",
+      "url_meta": {
+        "origin": 111,
+        "position": 0
+      },
+      "title": "How I Helped a Client Grow NRR from 101% to 105% in 6 Months",
+      "author": "Will Sullivan",
+      "date": "September 27, 2026",
+      "format": false,
+      "excerpt": "Pacer\u00a0AI Daily Pacing Agent Use Cases Team Pricing Resources Tear Sheet Log In Try the Demo Home / Resources / NRR Case Study ARR Snowballs How I Helped a Client Grow NRR from 101% to 105% in 6 Months Will Sullivan April 17, 2026 A healthcare software company was preparing\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "Pacer AI \u2014 The Daily Pacing Agent for sales leaders: pace to plan chart",
+        "src": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200",
+        "width": 350,
+        "height": 200,
+        "srcset": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200 1x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=525%2C300 1.5x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=700%2C400 2x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=1050%2C600 3x"
+      },
+      "classes": []
+    },
+    {
+      "id": 888,
+      "url": "https://getpacerai.com/semrush-adobe-acquisition-case-study/",
+      "url_meta": {
+        "origin": 111,
+        "position": 1
+      },
+      "title": "How Semrush Got Acquired by Adobe for a Premium Despite Declining Growth",
+      "author": "Will Sullivan",
+      "date": "June 8, 2026",
+      "format": false,
+      "excerpt": "Pacer\u00a0AI Daily Pacing Agent Use Cases Team Pricing Resources Tear Sheet Log In Try the Demo Home / Resources / Semrush \u00d7 Adobe M&A Case Study How Semrush Got Acquired by Adobe for a Premium Despite Declining Growth Will Sullivan June 2, 2026 Adobe agreed to acquire Semrush for $1.9B\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "Pacer AI \u2014 The Daily Pacing Agent for sales leaders: pace to plan chart",
+        "src": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200",
+        "width": 350,
+        "height": 200,
+        "srcset": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200 1x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=525%2C300 1.5x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=700%2C400 2x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=1050%2C600 3x"
+      },
+      "classes": []
+    },
+    {
+      "id": 230,
+      "url": "https://getpacerai.com/resources/",
+      "url_meta": {
+        "origin": 111,
+        "position": 2
+      },
+      "title": "Resources",
+      "author": "Will Sullivan",
+      "date": "January 12, 2026",
+      "format": false,
+      "excerpt": "Insights on ARR Snowball analysis, customer data infrastructure, RevOps transformation, and revenue intelligence for PE-backed SaaS companies.",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "Pacer AI \u2014 The Daily Pacing Agent for sales leaders: pace to plan chart",
+        "src": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200",
+        "width": 350,
+        "height": 200,
+        "srcset": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200 1x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=525%2C300 1.5x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=700%2C400 2x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=1050%2C600 3x"
+      },
+      "classes": []
+    },
+    {
+      "id": 781,
+      "url": "https://getpacerai.com/resources/board-quality-arr-snowballs/",
+      "url_meta": {
+        "origin": 111,
+        "position": 3
+      },
+      "title": "Board Quality ARR Snowballs: Understand Your ARR Growth Drivers Before Your Acquirers Do",
+      "author": "Will Sullivan",
+      "date": "April 17, 2026",
+      "format": false,
+      "excerpt": "Pacer\u00a0AI Daily Pacing Agent Use Cases Team Pricing Resources Tear Sheet Log In Try the Demo Home / Resources / Board Quality ARR Snowballs ARR Snowballs Board Quality ARR Snowballs: Understand Your ARR Growth Drivers Before Your Acquirers Do Will Sullivan April 17, 2026 Premium ARR multiples go to management\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "Pacer AI \u2014 The Daily Pacing Agent for sales leaders: pace to plan chart",
+        "src": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200",
+        "width": 350,
+        "height": 200,
+        "srcset": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200 1x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=525%2C300 1.5x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=700%2C400 2x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=1050%2C600 3x"
+      },
+      "classes": []
+    },
+    {
+      "id": 491,
+      "url": "https://getpacerai.com/resources/build-customer-data-cube-in-house-or-hire/",
+      "url_meta": {
+        "origin": 111,
+        "position": 4
+      },
+      "title": "Should I Build a Customer Data Cube In-House or Hire Someone?",
+      "author": "Will Sullivan",
+      "date": "April 3, 2026",
+      "format": false,
+      "excerpt": "Pacer\u00a0AI Daily Pacing Agent Use Cases Team Pricing Resources Tear Sheet Log In Try the Demo Home / Resources / Build vs. Hire ARR Snowballs Should I Build a Customer Data Cube In-House or Hire Someone? Will Sullivan April 3, 2026 Should you build a customer data cube in-house or\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "Pacer AI \u2014 The Daily Pacing Agent for sales leaders: pace to plan chart",
+        "src": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200",
+        "width": 350,
+        "height": 200,
+        "srcset": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200 1x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=525%2C300 1.5x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=700%2C400 2x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=1050%2C600 3x"
+      },
+      "classes": []
+    },
+    {
+      "id": 865,
+      "url": "https://getpacerai.com/resources/what-is-current-performance-obligation/",
+      "url_meta": {
+        "origin": 111,
+        "position": 5
+      },
+      "title": "What is cRPO? The Operator&#8217;s Guide to Current Remaining Performance Obligations",
+      "author": "Will Sullivan",
+      "date": "May 29, 2026",
+      "format": false,
+      "excerpt": "Pacer\u00a0AI Daily Pacing Agent Use Cases Team Pricing Resources Tear Sheet Log In Try the Demo Home / Resources / cRPO vs ARR Diligence What is cRPO? The Operator's Guide to Current Remaining Performance Obligations Will Sullivan May 28, 2026 cRPO \u2014 current Remaining Performance Obligations is the 12-month forward-bookings\u2026",
+      "rel": "",
+      "context": "Similar post",
+      "block_context": {
+        "text": "Similar post",
+        "link": ""
+      },
+      "img": {
+        "alt_text": "Pacer AI \u2014 The Daily Pacing Agent for sales leaders: pace to plan chart",
+        "src": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200",
+        "width": 350,
+        "height": 200,
+        "srcset": "https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=350%2C200 1x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=525%2C300 1.5x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=700%2C400 2x, https://i0.wp.com/getpacerai.com/wp-content/uploads/2026/10/pacer-ai-daily-pacing-agent-og.png?fit=1200%2C630&ssl=1&resize=1050%2C600 3x"
+      },
+      "classes": []
+    }
+  ],
+  "_links": {
+    "self": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/111",
+        "targetHints": {
+          "allow": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ]
+        }
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages"
+      }
+    ],
+    "about": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/types/page"
+      }
+    ],
+    "author": [
+      {
+        "embeddable": true,
+        "href": "https://getpacerai.com/wp-json/wp/v2/users/235927395"
+      }
+    ],
+    "replies": [
+      {
+        "embeddable": true,
+        "href": "https://getpacerai.com/wp-json/wp/v2/comments?post=111"
+      }
+    ],
+    "version-history": [
+      {
+        "count": 9,
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/111/revisions"
+      }
+    ],
+    "predecessor-version": [
+      {
+        "id": 200,
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/111/revisions/200"
+      }
+    ],
+    "wp:attachment": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/media?parent=111"
+      }
+    ],
+    "wp:action-publish": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/111"
+      }
+    ],
+    "wp:action-unfiltered-html": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/111"
+      }
+    ],
+    "wp:action-assign-author": [
+      {
+        "href": "https://getpacerai.com/wp-json/wp/v2/pages/111"
+      }
+    ],
+    "curies": [
+      {
+        "name": "wp",
+        "href": "https://api.w.org/{rel}",
+        "templated": true
+      }
+    ]
+  }
+}
