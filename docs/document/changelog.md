@@ -8,6 +8,57 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-13 — Website tracking: one Apollo tracker, GA4 events, first-touch attribution
+
+- **Status:** LIVE. Will approved each account change. Decisions, event dictionary and how-to:
+  [`docs/design/tracking/web-tracking.md`](../design/tracking/web-tracking.md).
+- **Code:**
+  - `src/wpcode/footer.js` section 0:
+    - GA4 events through Site Kit's `gtag`: `schedule_walkthrough`, `try_demo_click`, `tear_sheet_open`,
+      `whitepaper_download`, `demo_email_capture`, `research_waitlist`, plus the iframe bridge for `demo_signup`.
+    - First-touch attribution (30 days).
+    - The hero form hands the email over by `sessionStorage`, not `?email=`.
+    - Pasted into WPCode (sha `72287944edc8`). This also brought the long-unpasted hero-rotor section up to date.
+  - `pacer-demo-worker` (version `b7ad4085`):
+    - The widget forwards UTMs, landing page and page with the signup.
+    - The handler writes D1 `utm_*` and the real `page_url`, and adds a Slack "Came from" line.
+    - The widget posts `demo_signup` and `schedule_walkthrough` to the parent page.
+    - The homepage video sha is unchanged.
+  - New `scripts/check_trackers.mjs`: a clean headless-Chrome network check.
+- **Accounts:**
+  - Tag Manager version 7 removes the duplicate Apollo tag (appId `698cf85a…`, rejected by Apollo with HTTP 400)
+    and both Snitcher tags.
+  - WordPress.com's empty Google Analytics toggle is off.
+  - Apollo intent pages: `/pricing/`, `/demo-connect/` and `/contact/` high; `/resources/` low.
+- **Verified:**
+  - From a logged-out browser: Apollo loads once with appId `69cc4a06…`, GA4 still collects, and Snitcher is gone.
+  - The "missing the tracking ID" comment is gone.
+  - The new footer is on `/`, `/demo-connect/` and `/resources/`.
+- **Open:**
+  - Star `demo_signup`, `whitepaper_download` and `schedule_walkthrough` as GA4 key events once each fires.
+  - The HQ `website_visitors` tool.
+  - The pricing page (`docs/design/pricing/`, pending price approval).
+
+---
+
+## 2026-10-14 — Tracking: demo videos, jump links, Resources filters, GA4 user ID, dimensions, audiences
+
+- **Status:** LIVE. Full record: [`docs/design/tracking/web-tracking.md`](../design/tracking/web-tracking.md)
+  (D9–D11 and the change log).
+- **What changed:**
+  - Demo-video events come through a worker-side bridge (`src/video-bridge.ts`).
+  - `section_jump` and `resource_filter` are new footer events.
+  - A demo signup sets an opaque GA4 `user_id` (`pv_…`), which maps to the lead and Apollo contact through D1.
+  - GA4 has five new custom dimensions and five audiences: high intent, readers, LinkedIn, search engine, and AI assistant visitors.
+  - The 13 Snitcher dimensions are archived.
+- **Deployed:**
+  - Workers: production `e5c9a59d`, staging `7e2bd763`. The homepage video's hash is now `0a2983b38204`.
+  - WPCode footer: sha `2c98f687cc6c`.
+- **Test leads excluded:** `test@testco.com` was a tracking test, and its one sequence email went to a real
+  catch-all domain. It and `tester@testco.mail` are on HQ's never-a-lead list.
+
+---
+
 ## 2026-10-13 — /demo-connect: step screenshots re-shot at 2x
 
 - **Status:** LIVE. Page 983 deployed.

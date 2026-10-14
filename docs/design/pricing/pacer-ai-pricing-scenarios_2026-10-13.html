@@ -1,0 +1,345 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Pacer AI Pricing Scenarios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+/* Layout: centered signup column — scenario + billing controls, tier cards, shared services table below */
+:root{
+  --bg:#ffffff; --surface:#f6f8fb; --card:#ffffff; --line:#e3e8ef; --line-strong:#cfd7e3;
+  --fg:#0f1d33; --muted:#5a6a80; --navy:#1C3D6E; --teal:#27899A; --sage:#70C49C;
+  --accent:#1C3D6E; --accent-fg:#ffffff; --chip:#e6f3f0; --chip-fg:#1d6b55;
+  --hl:#eef4fb; --shadow:0 1px 2px rgba(15,29,51,.05),0 8px 24px rgba(15,29,51,.06);
+  --serif:Georgia,"Times New Roman",serif; --sans:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"DM Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1422; --surface:#111c2e; --card:#132034; --line:#22324a; --line-strong:#2e4260;
+  --fg:#e8eef7; --muted:#9aaac0; --navy:#8fb3e6; --teal:#5cc0cf; --sage:#86d4ae;
+  --accent:#8fb3e6; --accent-fg:#0c1422; --chip:#16352d; --chip-fg:#93dcb7;
+  --hl:#16263d; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1422; --surface:#111c2e; --card:#132034; --line:#22324a; --line-strong:#2e4260;
+  --fg:#e8eef7; --muted:#9aaac0; --navy:#8fb3e6; --teal:#5cc0cf; --sage:#86d4ae;
+  --accent:#8fb3e6; --accent-fg:#0c1422; --chip:#16352d; --chip-fg:#93dcb7;
+  --hl:#16263d; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:1120px;margin:0 auto}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:20px;border-bottom:1px solid var(--line)}
+.brand{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--navy);letter-spacing:-.01em}
+.brand span{color:var(--teal)}
+.draft{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+.hero{text-align:center;padding-block:48px 28px;display:grid;gap:12px;justify-items:center}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(28px,4.4vw,42px);line-height:1.15;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.hero p{margin:0;color:var(--muted);max-width:58ch;text-wrap:balance}
+
+.controls{display:flex;flex-wrap:wrap;gap:16px 24px;justify-content:center;align-items:center;margin-top:8px}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;gap:2px}
+.seg button{font:inherit;font-size:14px;font-weight:500;border:0;background:transparent;color:var(--muted);padding:8px 16px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--fg);box-shadow:0 1px 3px rgba(15,29,51,.12)}
+.seg button:focus-visible,.switch:focus-visible,.step button:focus-visible,input:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+.billing{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500}
+.billing .lbl{color:var(--muted);cursor:pointer}
+.billing .lbl.on{color:var(--fg)}
+.switch{width:44px;height:24px;border-radius:999px;border:0;background:var(--line-strong);position:relative;cursor:pointer;padding:0;transition:background .2s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.switch[aria-checked="true"]{background:var(--teal)}
+.switch[aria-checked="true"]::after{transform:translateX(20px)}
+.save{font-size:12px;font-weight:600;background:var(--chip);color:var(--chip-fg);padding:3px 9px;border-radius:999px}
+
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.tier{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:16px;min-width:0;position:relative}
+.tier.feature{border-color:var(--teal);box-shadow:var(--shadow)}
+.tier .tag{position:absolute;top:-11px;left:24px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--teal);color:#fff}
+.tier .tag.land{background:var(--navy);color:var(--accent-fg)}
+.tier h3{margin:0;font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.25}
+.tier .who{margin:4px 0 0;color:var(--muted);font-size:14px}
+.price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.price .amt{font-family:var(--mono);font-size:34px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.price .per{color:var(--muted);font-size:14px}
+.sub{font-size:13px;color:var(--muted);min-height:20px;margin-top:-10px}
+.sub b{font-family:var(--mono);font-weight:500;color:var(--fg)}
+.cta{font:inherit;font-weight:600;font-size:14px;border-radius:8px;padding:10px 14px;border:1px solid var(--line-strong);background:var(--card);color:var(--fg);cursor:pointer;text-align:center}
+.tier.feature .cta{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.cta:hover{border-color:var(--teal)}
+ul.feat{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14px}
+ul.feat li{display:grid;grid-template-columns:16px 1fr;gap:10px;align-items:start}
+ul.feat li::before{content:"";width:16px;height:16px;margin-top:2px;border-radius:50%;background:var(--chip) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.2 2.2 4.8-4.8' fill='none' stroke='%2327899A' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+ul.feat li.plus{font-weight:600}
+ul.feat li.plus::before{background-color:transparent;background-image:none;content:"+";color:var(--teal);font-weight:700;text-align:center;line-height:16px}
+.terms{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;display:grid;gap:4px}
+.terms div{display:flex;justify-content:space-between;gap:8px}
+.terms span:last-child{font-family:var(--mono);color:var(--fg)}
+
+section.block{margin-top:56px}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:8px;margin-bottom:16px}
+.sec-head h2{margin:0;font-family:var(--serif);font-weight:400;font-size:24px}
+.sec-head p{margin:0;color:var(--muted);font-size:14px}
+
+/* Scenario 2 */
+.teams{display:grid;gap:16px;grid-template-columns:1fr 1fr 1.05fr;align-items:start}
+@media (max-width:980px){.teams{grid-template-columns:1fr 1fr}.est{grid-column:1/-1}}
+@media (max-width:640px){.teams{grid-template-columns:1fr}}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--teal)}
+.est{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;gap:14px;min-width:0}
+.est h3{margin:0;font-family:var(--serif);font-size:18px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px}
+.row label{display:flex;align-items:center;gap:8px;cursor:pointer}
+.row input[type=checkbox]{width:16px;height:16px;accent-color:var(--teal)}
+.step{display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:8px;background:var(--card)}
+.step button{font:inherit;width:30px;height:30px;border:0;background:transparent;color:var(--fg);cursor:pointer;font-size:16px}
+.step output{min-width:30px;text-align:center;font-family:var(--mono);font-size:14px}
+.indent{padding-left:24px;color:var(--muted)}
+.total{border-top:1px solid var(--line-strong);padding-top:14px;display:grid;gap:6px}
+.total .big{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.total .big span:last-child{font-family:var(--mono);font-size:26px;font-weight:500}
+.total .small{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.total .small span:last-child{font-family:var(--mono);color:var(--fg)}
+.addons{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));margin-top:16px}
+.addon{border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:6px;background:var(--card)}
+.addon .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.addon h4{margin:0;font-size:15px;font-weight:600}
+.addon .p{font-family:var(--mono);font-size:14px;white-space:nowrap}
+.addon .usage{font-size:12px;font-weight:600;color:var(--chip-fg);background:var(--chip);padding:2px 8px;border-radius:999px;white-space:nowrap}
+.addon p{margin:0;font-size:13px;color:var(--muted)}
+
+/* Compare */
+.compare{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.cmp{border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:10px;background:var(--card)}
+.cmp h3{margin:0;font-size:15px;font-weight:600}
+.cmp .bar{height:10px;border-radius:999px;background:var(--surface);overflow:hidden;border:1px solid var(--line)}
+.cmp .bar i{display:block;height:100%;border-radius:999px;transition:width .3s}
+.cmp .val{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;color:var(--muted)}
+.cmp .val b{font-family:var(--mono);font-weight:500;font-size:20px;color:var(--fg)}
+.cmp p{margin:0;font-size:13px;color:var(--muted)}
+
+/* Services table */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line)}
+th{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--surface)}
+td.r,th.r{text-align:right}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+td .note{display:block;font-size:12px;color:var(--muted)}
+.foot{margin-top:28px;font-size:12px;color:var(--muted);text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">Pacer <span>AI</span></div>
+    <div class="draft">Pricing scenarios · draft</div>
+  </header>
+
+  <div class="hero">
+    <h1 id="headline">Revenue intelligence your board can trust</h1>
+    <p id="lede">Start with the agents your team needs today. Add planning, reporting and expert hours as the operating rhythm matures.</p>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Pricing scenario">
+        <button id="sc1" aria-pressed="true">Scenario 1 · Packages</button>
+        <button id="sc2" aria-pressed="false">Scenario 2 · By team</button>
+      </div>
+      <div class="billing">
+        <span class="lbl" id="lblM">Monthly</span>
+        <button class="switch" id="bill" role="switch" aria-checked="true" aria-label="Bill annually"></button>
+        <span class="lbl on" id="lblA">Annual</span>
+        <span class="save">Save up to 17%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario 1 -->
+  <div id="s1">
+    <div class="grid" id="pkgGrid"></div>
+  </div>
+
+  <!-- Scenario 2 -->
+  <div id="s2" hidden>
+    <div class="teams">
+      <div class="tier" id="pacingCard"></div>
+      <div class="tier" id="planningCard"></div>
+      <aside class="est" aria-label="Team estimate">
+        <div><div class="eyebrow">Estimate</div><h3>Build your team plan</h3></div>
+        <div class="row"><label><input type="checkbox" id="cPacing" checked> Pacing agent</label>
+          <div class="step"><button data-k="pu" data-d="-1" aria-label="Fewer sales users">−</button><output id="pu">5</output><button data-k="pu" data-d="1" aria-label="More sales users">+</button></div></div>
+        <div class="row indent" id="puNote">users</div>
+        <div class="row"><label><input type="checkbox" id="cPlanning" checked> Planning agent</label>
+          <div class="step"><button data-k="fu" data-d="-1" aria-label="Fewer finance users">−</button><output id="fu">5</output><button data-k="fu" data-d="1" aria-label="More finance users">+</button></div></div>
+        <div class="row indent" id="fuNote">users</div>
+        <div class="row"><label><input type="checkbox" id="cBench"> Benchmarking agent</label><span class="num">$200/mo</span></div>
+        <div class="row"><label><input type="checkbox" id="cBlock"> Monthly 5-hr block</label><span class="num">$1,500/mo</span></div>
+        <div class="row"><span>Integrations</span>
+          <div class="step"><button data-k="ig" data-d="-1" aria-label="Fewer integrations">−</button><output id="ig">1</output><button data-k="ig" data-d="1" aria-label="More integrations">+</button></div></div>
+        <div class="total">
+          <div class="big"><span id="estLbl">Per month</span><span id="estMo">$0</span></div>
+          <div class="small"><span id="estYrLbl">Billed annually</span><span id="estYr">$0</span></div>
+          <div class="small"><span>Installation &amp; integrations (one-time)</span><span id="estOne">$0</span></div>
+          <div class="small"><span>Prospecting agents</span><span>usage-based</span></div>
+        </div>
+      </aside>
+    </div>
+    <div class="sec-head" style="margin-top:32px"><h2>Add-on agents</h2><p>Attach to either team plan.</p></div>
+    <div class="addons">
+      <div class="addon"><div class="top"><h4>Prospecting agent</h4><span class="usage">Consumption</span></div><p>New-logo whitespace from look-alikes, new hires and market signals. Pay per credit used.</p></div>
+      <div class="addon"><div class="top"><h4>Advanced prospecting agent</h4><span class="usage">Consumption</span></div><p>Deeper signal coverage, including sibling-company and champion tracking. Pay per credit used.</p></div>
+      <div class="addon"><div class="top"><h4>Benchmarking agent</h4><span class="p">$200/mo</span></div><p>Compare growth, retention and efficiency against proprietary and aggregated peer sets.</p></div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="sec-head"><h2>Same customer, both models</h2><p id="cmpNote">Sales and finance team, annual contract, 5 users each.</p></div>
+    <div class="compare" id="compare"></div>
+  </section>
+
+  <section class="block">
+    <div class="sec-head"><h2>Professional services</h2><p>Same rates in both scenarios. Office hours are purchased, never bundled.</p></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Service</th><th>Detail</th><th class="r">Hours</th><th class="r">Rate</th><th class="r">Price</th></tr></thead>
+        <tbody>
+          <tr><td>Installation &amp; integrations</td><td>Each integration (CRM, EPM/ERP such as NetSuite)<span class="note">Scenario 1 packages include the first CRM integration</span></td><td class="r num">–</td><td class="r num">–</td><td class="r num">$3,500</td></tr>
+          <tr><td>Monthly 5-hr block</td><td>Recurring office hours with the Pacer team</td><td class="r num">5/mo</td><td class="r num">$300</td><td class="r num">$1,500/mo</td></tr>
+          <tr><td>5-hour block</td><td>One-time</td><td class="r num">5</td><td class="r num">$300</td><td class="r num">$1,500</td></tr>
+          <tr><td>20-hour block</td><td>One-time</td><td class="r num">20</td><td class="r num">$275</td><td class="r num">$5,500</td></tr>
+          <tr><td>40-hour block</td><td>One-time; requires an annual subscription</td><td class="r num">40</td><td class="r num">$250</td><td class="r num">$10,000</td></tr>
+          <tr><td>Additional users</td><td>Beyond the 5 included per package or agent</td><td class="r num">–</td><td class="r num">–</td><td class="r num">$50/user/mo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="foot">All prices in USD. Annual plans are billed yearly up front; monthly plans are month-to-month. Every plan includes documentation and Slack agent support.</p>
+</div>
+
+<script>
+(function(){
+  const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
+  let annual = true, scenario = 1;
+
+  const pkgs = [
+    {name:"Base", who:"Land: pacing and expansion for the revenue team", tag:"Start here", tagCls:"land", m:3600, a:3000,
+     feat:["Pacing agent","Expansion agent","5 users included","CRM integration included","Documentation + Slack agent support"]},
+    {name:"Base + 5-hr block", who:"Base with a monthly working session", m:5100, a:4500,
+     feat:["Everything in Base","+ 5 hrs/mo with the Pacer team"], plusIdx:[1]},
+    {name:"Base + Planning & Reporting", who:"Adds finance: plan, forecast and board reporting", m:7200, a:6000,
+     feat:["Everything in Base","+ Planning agent","+ Reporting agent","Board-ready ARR snowball"], plusIdx:[1,2]},
+    {name:"Expand", who:"Base + Planning & Reporting + 5-hr block", tag:"Recommended", feature:true, m:8700, a:7500,
+     feat:["Everything in Base + Planning & Reporting","+ 5 hrs/mo with the Pacer team","Monthly operating review support"], plusIdx:[1]},
+    {name:"Base + Planning & Reporting + Prospecting", who:"All agents, with credit-limited prospecting", m:7800, a:6500,
+     feat:["Everything in Base + Planning & Reporting","+ Prospecting agent","Included prospecting credits"], plusIdx:[1]},
+    {name:"Enterprise", who:"Sponsor-level and multi-entity deployments", m:12000, a:10000,
+     feat:["All agents, including Advanced Prospecting","10 users included","CRM + EPM/ERP integration","5 hrs/mo with the Pacer team"],
+     terms:[["12-month prepaid","$110,000"],["24-month","$9,000/mo"]]}
+  ];
+
+  function priceBlock(m,a){
+    const amt = annual ? a : m;
+    const sub = annual ? `<b>${fmt(a*12)}</b> billed yearly` : "Month-to-month, no annual commitment";
+    return `<div><div class="price"><span class="amt">${fmt(amt)}</span><span class="per">/mo</span></div></div><div class="sub">${sub}</div>`;
+  }
+
+  function renderPkgs(){
+    document.getElementById("pkgGrid").innerHTML = pkgs.map(p => `
+      <article class="tier${p.feature?" feature":""}">
+        ${p.tag?`<span class="tag ${p.tagCls||""}">${p.tag}</span>`:""}
+        <div><h3>${p.name}</h3><p class="who">${p.who}</p></div>
+        ${priceBlock(p.m,p.a)}
+        <button class="cta" type="button">${p.name==="Enterprise"?"Contact sales":"Choose plan"}</button>
+        <ul class="feat">${p.feat.map((f,i)=>`<li${(p.plusIdx||[]).includes(i)?' class="plus"':""}>${f.replace(/^\+ /,"")}</li>`).join("")}</ul>
+        ${p.terms?`<div class="terms">${p.terms.map(t=>`<div><span>${t[0]}</span><span>${t[1]}</span></div>`).join("")}</div>`:""}
+      </article>`).join("");
+  }
+
+  const agents = {
+    pacingCard:{eyebrow:"For sales teams", name:"Pacing agent", who:"Real-time pacing against the sales plan, and what it takes to close the gap.", m:1800, a:1500,
+      feat:["Pacing vs. plan by rep, team and segment","Gap-to-target actions","5 users included","+$50 per additional user/mo"]},
+    planningCard:{eyebrow:"For finance teams", name:"Planning agent", who:"Financial and sales planning models with a native Excel connection.", m:2800, a:2500,
+      feat:["Plan, forecast and scenario models","Native Excel workflow","5 users included","+$50 per additional user/mo"], feature:true}
+  };
+  function renderAgents(){
+    for (const id in agents){
+      const g = agents[id], el = document.getElementById(id);
+      el.className = "tier" + (g.feature ? " feature" : "");
+      el.innerHTML = `
+        <div><div class="eyebrow">${g.eyebrow}</div><h3 style="margin-top:4px">${g.name}</h3><p class="who">${g.who}</p></div>
+        ${priceBlock(g.m,g.a)}
+        <button class="cta" type="button">Choose ${g.name.toLowerCase()}</button>
+        <ul class="feat">${g.feat.map(f=>`<li>${f}</li>`).join("")}</ul>`;
+    }
+  }
+
+  const st = {pu:5, fu:5, ig:1};
+  const lim = {pu:[1,200], fu:[1,200], ig:[0,10]};
+  function estimate(){
+    const P = document.getElementById("cPacing").checked, F = document.getElementById("cPlanning").checked;
+    const B = document.getElementById("cBench").checked, K = document.getElementById("cBlock").checked;
+    const extra = n => Math.max(0, n-5) * 50;
+    let mo = 0;
+    if (P) mo += (annual ? 1500 : 1800) + extra(st.pu);
+    if (F) mo += (annual ? 2500 : 2800) + extra(st.fu);
+    if (B) mo += 200;
+    if (K) mo += 1500;
+    for (const k of ["pu","fu","ig"]) document.getElementById(k).textContent = st[k];
+    document.getElementById("puNote").textContent = st.pu>5 ? `${st.pu} users · ${st.pu-5} extra at $50` : `${st.pu} users · included`;
+    document.getElementById("fuNote").textContent = st.fu>5 ? `${st.fu} users · ${st.fu-5} extra at $50` : `${st.fu} users · included`;
+    document.getElementById("estMo").textContent = fmt(mo);
+    document.getElementById("estLbl").textContent = annual ? "Per month, annual contract" : "Per month, month-to-month";
+    document.getElementById("estYrLbl").textContent = annual ? "Billed annually" : "12 months at this rate";
+    document.getElementById("estYr").textContent = fmt(mo*12);
+    document.getElementById("estOne").textContent = fmt(st.ig*3500);
+  }
+  document.querySelectorAll(".step button").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.k, [lo,hi] = lim[k];
+    st[k] = Math.min(hi, Math.max(lo, st[k] + Number(b.dataset.d))); estimate();
+  }));
+  ["cPacing","cPlanning","cBench","cBlock"].forEach(id => document.getElementById(id).addEventListener("change", estimate));
+
+  function renderCompare(){
+    const s1 = annual ? 6000 : 7200, s2 = annual ? 1500+2500 : 1800+2800;
+    const s1b = s1 + 1500, s2b = s2 + 1500, max = Math.max(s1b, s2b);
+    const bar = (v,c) => `<div class="bar"><i style="width:${(v/max*100).toFixed(1)}%;background:${c}"></i></div>`;
+    const term = annual ? "Annual contract" : "Month-to-month";
+    document.getElementById("cmpNote").textContent = `Sales and finance team, ${annual?"annual contract":"month-to-month"}. Bars share one scale.`;
+    document.getElementById("compare").innerHTML = `
+      <div class="cmp"><h3>Scenario 1 · Base + Planning &amp; Reporting</h3>
+        <div class="val"><span>${term}</span><b>${fmt(s1)}/mo</b></div>${bar(s1,"var(--navy)")}
+        <p>${fmt(s1*12)} a year. One package with 5 users; includes Expansion and Reporting and the first CRM integration.</p></div>
+      <div class="cmp"><h3>Scenario 2 · Pacing + Planning agents</h3>
+        <div class="val"><span>${term}</span><b>${fmt(s2)}/mo</b></div>${bar(s2,"var(--teal)")}
+        <p>${fmt(s2*12)} a year, plus $3,500 installation. 5 users per agent, 10 in total.</p></div>
+      <div class="cmp"><h3>Either scenario with a monthly 5-hr block</h3>
+        <div class="val"><span>Scenario 1</span><b>${fmt(s1b)}/mo</b></div>${bar(s1b,"var(--navy)")}
+        <div class="val"><span>Scenario 2</span><b>${fmt(s2b)}/mo</b></div>${bar(s2b,"var(--teal)")}
+        <p>${fmt(s1b*12)} vs. ${fmt(s2b*12)} a year.</p></div>`;
+  }
+
+  function render(){
+    document.getElementById("bill").setAttribute("aria-checked", String(annual));
+    document.getElementById("lblA").classList.toggle("on", annual);
+    document.getElementById("lblM").classList.toggle("on", !annual);
+    document.getElementById("sc1").setAttribute("aria-pressed", String(scenario===1));
+    document.getElementById("sc2").setAttribute("aria-pressed", String(scenario===2));
+    document.getElementById("s1").hidden = scenario!==1;
+    document.getElementById("s2").hidden = scenario!==2;
+    document.getElementById("lede").textContent = scenario===1
+      ? "Start with the agents your team needs today. Add planning, reporting and expert hours as the operating rhythm matures."
+      : "Buy the agent each team uses. Sales gets pacing, finance gets planning, and add-ons attach to either.";
+    renderPkgs(); renderAgents(); estimate(); renderCompare();
+  }
+  document.getElementById("bill").addEventListener("click", () => { annual = !annual; render(); });
+  document.getElementById("lblA").addEventListener("click", () => { annual = true; render(); });
+  document.getElementById("lblM").addEventListener("click", () => { annual = false; render(); });
+  document.getElementById("sc1").addEventListener("click", () => { scenario = 1; render(); });
+  document.getElementById("sc2").addEventListener("click", () => { scenario = 2; render(); });
+  render();
+})();
+</script>
+
+</body></html>

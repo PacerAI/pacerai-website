@@ -294,6 +294,8 @@ Build a Claude Skill that:
 
 ## 7. Google Tag Manager & Analytics
 
+> **Superseded 2026-10-13** by [`docs/design/tracking/web-tracking.md`](../design/tracking/web-tracking.md) — what is actually installed, the event dictionary and the how-to. The text below is the original plan, kept for history.
+
 ### Current Setup
 - **Google Site Kit plugin** (v1.173.0) — connects Google Analytics and Search Console
 - **Head, Footer and Post Injections plugin** — can inject GTM/custom scripts into `<head>`, `<body>`, `<footer>`
@@ -319,6 +321,8 @@ Build a Claude Skill that:
 ---
 
 ## 8. Website Visitor Reporting & Notifications
+
+> **Superseded 2026-10-13** by [`docs/design/tracking/web-tracking.md`](../design/tracking/web-tracking.md) — what is actually installed, the event dictionary and the how-to. The text below is the original plan, kept for history.
 
 ### Visitor Intelligence Play
 Goal: Know who visits the site and what they looked at, even if they don't fill out a form.

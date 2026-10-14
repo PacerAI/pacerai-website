@@ -64,14 +64,15 @@ Changing either fragment means redeploying **every** page, not just one.
 
 ## WPCode snippets
 
-Three snippets are installed in WP Admin → WPCode. Nothing else in the repo lists them, and the mapping is not
+Three snippets are installed in WP Admin → WPCode (plus one plugin field, last row). Nothing else in the repo lists them, and the mapping is not
 guessable from the WordPress UI.
 
 | WP Admin location | Source file | State |
 |---|---|---|
 | Header & Footer → **Header** | `src/homepage/wpcode-homepage-css.css` | **Deliberately blank since v3.** The old 37K dark CSS lives in `docs/design/homepage/archive/` for rollback only. Leave it empty. |
-| Header & Footer → **Footer** | [`wpcode/footer.js`](wpcode/footer.js) | Live. All site-wide JS: the lead-capture form handler, hero rotor, logo marquee, mobile nav. |
+| Header & Footer → **Footer** | [`wpcode/footer.js`](wpcode/footer.js) | Live. All site-wide JS: GA4 events + first-touch attribution (section 0), the lead-capture form handler, hero rotor, logo marquee, mobile nav. |
 | Site Wide Header (HTML snippet) | pasted in [`../docs/deploy/wp-admin-actions.md`](../docs/deploy/wp-admin-actions.md) | Organization / Person JSON-LD. |
+| *(not WPCode)* Settings → **Head and Footer** (plugin "Head, Footer and Post Injections") | not in git | Tag Manager `GTM-PVJ33WB5` (head + body noscript) and the Apollo tracker (appId `69cc4a06…`). Full tag inventory and the analytics events: [`../docs/design/tracking/web-tracking.md`](../docs/design/tracking/web-tracking.md). |
 
 ### Pasting `footer.js` safely
 
