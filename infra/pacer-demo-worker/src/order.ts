@@ -451,7 +451,15 @@ ${table()}
         body: JSON.stringify(msg),
       });
       if (res.ok) out.push(`${label} sent`);
-      else { out.push(`${label} failed (${res.status})`); errors.push(`resend_${label}: ${res.status} ${(await res.text()).slice(0, 200)}`); }
+      else {
+        // Resend's own message goes to Slack: a 401 or 403 says "API key is invalid" or "domain is not
+        // verified", which is the fix (docs/deploy/order-email-setup.md).
+        const body = (await res.text()).slice(0, 300);
+        let why = "";
+        try { why = String((JSON.parse(body) as { message?: string }).message || "").slice(0, 120); } catch { /* not JSON */ }
+        out.push(`${label} failed (${res.status}${why ? `: ${why}` : ""})`);
+        errors.push(`resend_${label}: ${res.status} ${body}`);
+      }
     } catch (e: any) {
       out.push(`${label} failed`); errors.push(`resend_${label}: ${e?.message ?? "unknown"}`);
     }
