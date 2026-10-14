@@ -9,6 +9,9 @@
  *   pricing_estimate  1.5 s after the last toggle or − / + change   plan, billing, value, currency
  *   pricing_choose    a click on a Choose button                    plan, billing, value, currency,
  *                                                                    pacer_users, planning_users, hour_blocks
+ *   pricing_request   the order card saved the request and sent    plan, billing, value, currency
+ *                     the emails (postMessage from the Worker)
+ * The Worker's schedule_walkthrough from the order card is tracked by footer.js section 0 (it is allow-listed there).
  */
 (function () {
   if (window.__paPricing) return;
@@ -97,14 +100,60 @@
     root.querySelector('.js-lbl-a').addEventListener('click', function () { annual = true; changed(null); });
     root.querySelector('.js-lbl-m').addEventListener('click', function () { annual = false; changed(null); });
 
-    /* Choose: recorded in GA4 now; it opens the order card once that ships. */
+    /* Choose opens the order card: the Worker's /order page in a modal iframe (data-order-url). The URL
+     * carries the selection and first-touch attribution, never an email. Without data-order-url, Choose
+     * only records the click. */
+    var ORDER = cfg.orderUrl || '', modal = null, frame = null, ORIGIN = '';
+    /* window.URL, not URL: in an inline onerror handler, URL resolves to document.URL (a string). */
+    try { ORIGIN = ORDER ? new window.URL(ORDER).origin : ''; } catch (e) { ORDER = ''; }
+    function closeOrder() { if (modal) { modal.parentNode.removeChild(modal); modal = null; frame = null; } }
+    function openOrder(s) {
+      closeOrder();
+      var q = ['plan=' + s.plan, 'billing=' + s.billing, 'pu=' + s.pacer_users, 'fu=' + s.planning_users,
+               'hb=' + s.hour_blocks, 'pb=' + encodeURIComponent(cfg.priceBook || ''),
+               'page=' + encodeURIComponent(window.location.pathname)];
+      var at = {};
+      try { if (window.pacerAttr) at = window.pacerAttr() || {}; } catch (e) {}
+      ['utm_source', 'utm_medium', 'utm_campaign', 'landing'].forEach(function (k) {
+        if (at[k]) q.push(k + '=' + encodeURIComponent(String(at[k]).slice(0, 200)));
+      });
+      modal = document.createElement('div');
+      modal.className = 'order-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-label', 'Your selection');
+      var box = document.createElement('div'), x = document.createElement('button');
+      box.className = 'order-box';
+      x.className = 'order-close'; x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.innerHTML = '&times;';
+      frame = document.createElement('iframe');
+      frame.title = 'Your selection: email me this summary';
+      frame.src = ORDER + '?' + q.join('&');
+      box.appendChild(x); box.appendChild(frame); modal.appendChild(box);
+      document.getElementById('pacerai-homepage').appendChild(modal);
+      x.addEventListener('click', closeOrder);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeOrder(); });
+      x.focus();
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeOrder(); });
+    window.addEventListener('message', function (e) {
+      if (!ORIGIN || e.origin !== ORIGIN || !e.data || typeof e.data !== 'object') return;
+      if (e.data.type === 'pacer:resize' && frame) {
+        frame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 320), 1400) + 'px';
+      } else if (e.data.type === 'pacer:event' && e.data.name === 'pricing_request') {
+        var p = e.data.params || {};
+        track('pricing_request', { plan: String(p.plan || ''), billing: String(p.billing || ''),
+                                   value: Number(p.value) || 0, currency: 'USD', cta_location: 'order_card' });
+        if (window.pacerSetUser && p.user_id) window.pacerSetUser(String(p.user_id));
+      }
+    });
+
     root.querySelectorAll('.js-choose').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var t = btn.closest('.tier'), s = selection(t);
         track('pricing_choose', { plan: s.plan, billing: s.billing, value: s.value, currency: 'USD',
                                   pacer_users: s.pacer_users, planning_users: s.planning_users,
                                   hour_blocks: s.hour_blocks, cta_location: loc(t) });
-        if (typeof window.pacerOpenOrder === 'function') window.pacerOpenOrder(s, root.dataset.priceBook);
+        if (ORDER) openOrder(s);
       });
     });
 

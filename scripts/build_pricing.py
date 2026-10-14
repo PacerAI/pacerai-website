@@ -32,6 +32,9 @@ TEMPLATE = REPO / "src" / "pricing" / "pricing-template.html"
 JS = REPO / "src" / "pricing" / "pricing.js"
 OUT_HTML = REPO / "src" / "pricing" / "pricing-build.html"
 OUT_JSON = REPO / "infra" / "pacer-demo-worker" / "src" / "price-book.json"
+# Choose opens this order card (pacer-demo-worker GET /order). --no-order builds a page whose Choose only records
+# the click, for a page deploy that goes out before the Worker route does.
+ORDER_URL = "https://pacer-demo-worker.will-078.workers.dev/order"
 
 
 class PriceBookError(ValueError):
@@ -147,7 +150,7 @@ def inline_js(src: str) -> str:
     return js.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def render(pb: dict, template: str, js: str) -> str:
+def render(pb: dict, template: str, js: str, order_url: str = ORDER_URL) -> str:
     sp, pp, s = pb["packages"]["sales_pacing"], pb["packages"]["pacing_planning"], pb["services"]
     values = {
         "version": pb["version"], "included": pb["included_users"], "save_pct": save_pct(pb),
@@ -162,6 +165,7 @@ def render(pb: dict, template: str, js: str) -> str:
         "b20_fmt": fmt(s["block_20"]["price"]), "rate_b20_fmt": fmt(s["block_20"]["rate"]),
         "b40_fmt": fmt(s["block_40"]["price"]), "rate_b40_fmt": fmt(s["block_40"]["rate"]),
         "pricing_js": inline_js(js),
+        "order_url": order_url,
     }
     out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(values[m.group(1)]) if m.group(1) in values else m.group(0), template)
     left = re.findall(r"\{\{\w+\}\}", out)
@@ -174,13 +178,15 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--price-book", type=Path, default=PRICE_BOOK)
     ap.add_argument("--check", action="store_true", help="exit 1 if an output differs from a fresh build")
+    ap.add_argument("--no-order", action="store_true", help="Choose records the click only (no order card)")
     args = ap.parse_args()
     if not args.price_book.exists():
         print(f"✗ Price Book not found: {args.price_book}", file=sys.stderr)
         return 1
     try:
         pb = parse(args.price_book.read_text(encoding="utf-8"))
-        html = render(pb, TEMPLATE.read_text(encoding="utf-8"), JS.read_text(encoding="utf-8"))
+        html = render(pb, TEMPLATE.read_text(encoding="utf-8"), JS.read_text(encoding="utf-8"),
+                      "" if args.no_order else ORDER_URL)
     except PriceBookError as e:
         print(f"✗ {e}", file=sys.stderr)
         return 1

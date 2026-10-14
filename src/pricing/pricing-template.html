@@ -99,6 +99,11 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 #pacerai-homepage td.num{white-space:nowrap;font-weight:600;color:var(--ink)}
 #pacerai-homepage tr:last-child td{border-bottom:0}
 #pacerai-homepage td .note{display:block;font-size:12px;color:var(--muted)}
+#pacerai-homepage .order-modal{position:fixed;inset:0;z-index:200;background:rgba(15,25,45,.45);display:flex;align-items:flex-start;justify-content:center;padding:76px 16px 16px;overflow-y:auto}
+#pacerai-homepage .order-box{position:relative;width:100%;max-width:560px;background:var(--bone);border-radius:16px;box-shadow:0 30px 80px rgba(15,25,45,.25)}
+#pacerai-homepage .order-box iframe{display:block;width:100%;height:640px;border:0;border-radius:16px;background:var(--bone)}
+#pacerai-homepage .order-close{position:absolute;top:-14px;right:-10px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(15,25,45,.15)}
+#pacerai-homepage .order-close:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
 #pacerai-homepage .soon{margin-top:28px;text-align:center;font-weight:700;color:var(--teal)}
 #pacerai-homepage .foot{margin-top:20px;font-size:12px;color:var(--muted);text-align:center}
 @media (prefers-reduced-motion:reduce){#pacerai-homepage *{transition:none!important}}
@@ -167,7 +172,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   </div>
 </nav>
 
-<div class="wrap pricing-two-pack" data-section="pricing" data-price-book="{{version}}" data-seat-a="{{seat_a}}" data-seat-m="{{seat_m}}" data-included="{{included}}" data-block="{{block_mo}}" data-block-hours="5">
+<div class="wrap pricing-two-pack" data-section="pricing" data-price-book="{{version}}" data-seat-a="{{seat_a}}" data-seat-m="{{seat_m}}" data-included="{{included}}" data-block="{{block_mo}}" data-block-hours="5" data-order-url="{{order_url}}">
   <div class="hero">
     <div class="kick">Pricing</div>
     <h1>Know daily whether you&rsquo;ll make plan</h1>
