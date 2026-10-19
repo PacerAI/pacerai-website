@@ -29,7 +29,8 @@ import {
 export const PRICING_REQUEST_LIST = "Signal_CONTACT_Website_PricingRequest";
 const MAX_USERS = 200;
 const MAX_BLOCKS = 8;
-const WALKTHROUGH = "https://calendly.com/pacerai/demo-pacer-ai";
+// After a request is sent, the card offers the "Pacer AI - onboarding" Calendly event (Will, 2026-10-19).
+const ONBOARDING = "https://calendly.com/pacerai/pacer-ai-onboarding";
 
 type PlanKey = keyof typeof priceBook.packages;
 
@@ -192,7 +193,7 @@ function orderHtml(siteKey: string, q: Quote): string {
     <div class="kick">Sent</div>
     <h2>Your summary is on its way</h2>
     <p id="sentTo"></p>
-    <p>Prefer to talk it through first? <a href="${WALKTHROUGH}" target="_blank" rel="noopener" id="walk">Schedule a walkthrough</a>.</p>
+    <p>Ready to get started? <a href="${ONBOARDING}" target="_blank" rel="noopener" id="walk">Book your onboarding call</a>.</p>
   </div>
 </div>
 <script>
@@ -204,7 +205,7 @@ function orderHtml(siteKey: string, q: Quote): string {
   function post(msg){ try{ if(window.parent!==window){ window.parent.postMessage(msg,'https://getpacerai.com'); } }catch(e){} }
   function resize(){ post({type:'pacer:resize',height:document.documentElement.scrollHeight}); }
   function valid(e){ return /^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(e); }
-  document.getElementById('walk').addEventListener('click',function(){ post({type:'pacer:event',name:'schedule_walkthrough',params:{cta_location:'order_card'}}); });
+  document.getElementById('walk').addEventListener('click',function(){ post({type:'pacer:event',name:'schedule_walkthrough',params:{cta_location:'order_card_onboarding'}}); });
   (function go(){
     if(!window.turnstile){ setTimeout(go,200); return; }
     widgetId=window.turnstile.render('#cf',{ sitekey:SITEKEY, action:'pricing-request',
