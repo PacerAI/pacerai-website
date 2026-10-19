@@ -8,6 +8,16 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-19: order card links to the onboarding call
+
+- **Status:** LIVE (pacer-demo-worker `ae77a5b7`). Will asked for it.
+- **Change:** after a request is sent, the order card says "Ready to get started? Book your onboarding call."
+  The link goes to `https://calendly.com/pacerai/pacer-ai-onboarding` and replaces the demo walkthrough link.
+- **Tracking:** the click is still `schedule_walkthrough`, now with `cta_location: order_card_onboarding`.
+- **Open:** Will's second test (2026-10-19 23:06 UTC) also failed to email (401: API key is invalid). The
+  key upload put the key into the secret's name rather than its value. Fix steps in
+  `docs/deploy/order-email-setup.md`.
+
 ## 2026-10-14 (later): every Pricing link goes to /pricing/; Talk to Sales; order-email doc
 
 - **Status:** LIVE. Will asked for both changes: all pricing items should reach `/pricing/`, and the pricing
