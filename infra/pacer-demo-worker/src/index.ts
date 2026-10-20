@@ -8,6 +8,7 @@ import {
   type ApolloContact, type Env,
 } from "./shared";
 import { handlePricingRequest, orderPage } from "./order";
+import { handleDemoSignups } from "./signups";
 
 /**
  * pacer-demo-worker
@@ -51,6 +52,11 @@ export default {
         return json({ error: "method_not_allowed" }, 405);
       }
       return handlePricingRequest(request, env, ctx);
+    }
+
+    // The Daily Pace Briefing reads recent /demo-connect signups here (src/signups.ts; bearer token, read-only).
+    if (url.pathname === "/internal/demo-signups") {
+      return handleDemoSignups(request, env);
     }
 
     if (url.pathname === "/demo-signup") {
@@ -436,7 +442,7 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
     </div>
     <button id="continue">Continue</button>
     <div class="err" id="err1"></div>
-    <div class="muted-note">Runs on a synthetic company with fictional accounts. We&rsquo;ll email you occasionally about the demo &mdash; no spam.</div>
+    <div class="muted-note">Runs on a synthetic company with fictional accounts. We&rsquo;ll email you the demo&rsquo;s daily Pace briefing for the next 3 days, then occasionally about the demo &mdash; no spam.</div>
     <div class="walk"><span>Prefer to have someone walk you through it?</span><a class="btn-walk" href="https://calendly.com/pacerai/demo-pacer-ai" target="_blank" rel="noopener">Schedule a Walkthrough &rarr;</a></div>
   </div>
 

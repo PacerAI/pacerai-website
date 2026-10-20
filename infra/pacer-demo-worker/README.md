@@ -140,6 +140,19 @@ The full flow, the class → action table, the Apollo ids and the operating chec
 | `APOLLO_API_KEY` | `pacerai-gtm/.env` `APOLLO_API_KEY` | Apollo step skipped |
 | `APOLLO_EMAIL_ACCOUNT_ID` | `698cf8caac41ac000da4c9f9` (will@getpacerai.com) | list only, no email |
 | `APOLLO_SEQUENCE_ID_DEMO_SIGNUP` | `6ac6a3099f51790014977897` | list only, no email |
+| `BRIEFING_SIGNUPS_TOKEN` | a random token; the same value as `pacerai-demo-mcp`'s `BRIEFING_SIGNUPS_TOKEN` (Key Vault) | `/internal/demo-signups` returns 404 |
+
+## `GET /internal/demo-signups` — signups for the Daily Pace Briefing
+
+After the Apollo email, a /demo-connect signup gets the demo book's daily Pace briefing for the next 3 days
+(pacerai-platform-claude-native spec 023 §7.2). The briefing job on `pacerai-demo-mcp` reads the signups here at
+07:57 America/Denver: `GET /internal/demo-signups?since=YYYY-MM-DD` with `Authorization: Bearer <token>`.
+
+- **Returns** `{since, signups: [{email, company, lead_class, created_at}]}` from D1 `leads` (`source = 'demo'`): one
+  row per email at its **first** signup ever, so a repeat submit never restarts the 3 days. The briefing applies the
+  class rule (`valid_lead`, `personal_email`, `internal`) and counts the days.
+- **Read-only.** 404 when the token secret is unset, 401 on a wrong token, and `since` is clamped to the last 31 days.
+- **Code:** `src/signups.ts`.
 
 **Deploy caution:** `./promote.sh <slug> --deploy` ships whatever `src/index.ts` holds, so never promote a reel
 with a half-finished signup change in the tree. After any production deploy, check that `/signup` returns 200.
