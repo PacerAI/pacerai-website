@@ -1,8 +1,9 @@
 # Order emails: set up and test
 
 **For:** Will, setting up the email step of the `/pricing/` order capture and checking it end to end.
-**Status (2026-10-14):** Will's first test request saved correctly. It reached the database, Slack and Apollo,
-but both emails failed with **401**: Resend rejected the API key. Fix steps 1 and 2, then do step 3.
+**Status (2026-10-20):** the domain is set up: `mail.getpacerai.com` was created in Resend and its 4 DNS records were added
+through Auto configure. Requests save, and reach Slack and Apollo. Emails still fail with **401** until a live key
+is on the Worker, so do steps 1–2.
 
 When a visitor clicks **Choose** on getpacerai.com/pricing/, they enter a work email in the order card and the
 `pacer-demo-worker` sends two emails through Resend, from `orders@mail.getpacerai.com`:
@@ -16,31 +17,32 @@ Everything else about a request works without email: the database rows, the Slac
 
 ---
 
-## 1. Get a working API key, and prove it before using it
+## 1–2. Test the key, then upload that same value
 
-1. In Resend → **API Keys**, create a key with **Sending access**. Copy the whole value; it starts with `re_`.
-2. In your terminal, paste the key in place of `re_YOUR_KEY` and run:
+Do these in one terminal. The key is read into a shell variable without being shown or written to your
+history. The test and the upload then use the identical value, so a stale clipboard or a stray space can't
+slip in.
+
+1. In Resend → **API Keys**, create a key: **Sending access**, domain `mail.getpacerai.com`. Copy it; it
+   starts with `re_`.
+2. Read the key and test it. At the prompt, paste the key and press Enter:
    ```bash
-   curl -s https://api.resend.com/emails \
-     -H "Authorization: Bearer re_YOUR_KEY" -H "Content-Type: application/json" \
-     -d '{"from":"Pacer AI <orders@mail.getpacerai.com>","to":["will@getpacerai.com"],"subject":"Resend test","text":"test"}'
+   cd ~/Documents/pacerai/pacerai-website/infra/pacer-demo-worker
+   read -s "RK?Paste the Resend key: "; echo
+   curl -s https://api.resend.com/emails -H "Authorization: Bearer $RK" -H "Content-Type: application/json" \
+     -d '{"from":"Pacer AI <orders@mail.getpacerai.com>","to":["will@getpacerai.com"],"subject":"Resend key test","text":"The key and domain work."}'; echo
    ```
    | You see | It means |
    |---|---|
-   | `"statusCode":401` or `"API key is invalid"` | The key is wrong. Copy it again. |
-   | `"statusCode":403` and "domain is not verified" | **The key works.** The domain isn't verified yet; that's step 3. |
-   | `{"id":"…"}` | Key and domain both work, and a test email is on its way. |
-
-   Never paste the key into chat, a file or a commit.
-
-## 2. Put the key on the Worker
-
-```bash
-cd ~/Documents/pacerai/pacerai-website/infra/pacer-demo-worker && npx wrangler secret put RESEND_API_KEY
-```
-
-Paste the key at the prompt (it stays hidden) and press Enter. Use no quotes and no spaces. It takes effect at once;
-no redeploy is needed.
+   | `{"id":"…"}` | Key and domain both work, and a test email is on its way. Go to step 3. |
+   | `"statusCode":403` and "not verified" | The key works but the domain isn't verified yet. You can still upload it (step 3). |
+   | `"statusCode":401` / `"API key is invalid"` | Not a live key. It may be a deleted key or the wrong clipboard. Copy the new key again and repeat. |
+3. Upload that same value to the Worker:
+   ```bash
+   printf %s "$RK" | npx wrangler secret put RESEND_API_KEY --env="" && unset RK
+   ```
+   The last line must read `Success! Uploaded secret RESEND_API_KEY`. Never put the key in the command itself:
+   `wrangler secret put <key>` creates a secret *named* after the key (this happened on 2026-10-19).
 
 ## 3. Verify the sending domain
 

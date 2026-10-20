@@ -443,12 +443,16 @@ ${table()}
     text: text(about),
   };
 
+  // Trim: a key pasted with a space or newline is otherwise rejected as invalid. The shape note (never the
+  // key itself) tells Slack when the stored value is not a Resend key at all.
+  const key = (env.RESEND_API_KEY || "").trim();
+  const shape = /^re_[A-Za-z0-9_]{20,}$/.test(key) ? "" : "; the stored RESEND_API_KEY does not look like a Resend key (re_…)";
   const out: string[] = [];
   for (const [label, msg] of [["visitor", visitor], ["Will", internal]] as const) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
-        headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
         body: JSON.stringify(msg),
       });
       if (res.ok) out.push(`${label} sent`);
@@ -465,5 +469,5 @@ ${table()}
       out.push(`${label} failed`); errors.push(`resend_${label}: ${e?.message ?? "unknown"}`);
     }
   }
-  return out.join(", ");
+  return out.join(", ") + (out.some((o) => o.includes("401")) ? shape : "");
 }
