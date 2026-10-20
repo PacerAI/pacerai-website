@@ -199,6 +199,12 @@ A healthy page shows:
     `utm_medium=referral`.
 
 ## 7. Change log
+- **2026-10-20: key events marked.**
+  - Starred in GA4: `demo_signup`, `schedule_walkthrough` and `whitepaper_download` (D5).
+  - Key events now: those three plus the pre-existing `pricing_page_visit`.
+  - Still to star: `pricing_request`, once it appears under Admin → Events → Recent events. This GA4
+    interface can't create a key event by name before its first hit.
+  - `pricing_choose` checked in GA4 Realtime the same day: it arrives.
 - **2026-10-14: /pricing/ live.**
   - GA4 dimensions "Pricing plan" (`plan`) and "Billing" (`billing`).
   - Events `pricing_estimate` and `pricing_choose`, sent by the page script.
