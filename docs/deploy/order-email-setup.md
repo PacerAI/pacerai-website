@@ -1,9 +1,12 @@
 # Order emails: set up and test
 
 **For:** Will, setting up the email step of the `/pricing/` order capture and checking it end to end.
-**Status (2026-10-20):** the domain is set up: `mail.getpacerai.com` was created in Resend and its 4 DNS records were added
-through Auto configure. Requests save, and reach Slack and Apollo. Emails still fail with **401** until a live key
-is on the Worker, so do steps 1–2.
+**Status (2026-10-20): working.**
+- **Test.** Will's test at 14:21 UTC sent both emails from `orders@mail.getpacerai.com`, and Slack said "visitor sent, Will sent".
+- **Domain.** `mail.getpacerai.com` is verified in Resend; its 4 DNS records were added through Auto configure.
+- **Key.** The current `RESEND_API_KEY` was tested with curl before it was uploaded.
+
+Use this doc again to rotate the key or rebuild the setup.
 
 When a visitor clicks **Choose** on getpacerai.com/pricing/, they enter a work email in the order card and the
 `pacer-demo-worker` sends two emails through Resend, from `orders@mail.getpacerai.com`:

@@ -8,6 +8,21 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-20: order emails working; GA4 key events marked
+
+- **Emails:**
+  - `mail.getpacerai.com` is verified in Resend; the 4 DNS records were added via Auto configure.
+  - The new Sending-access key was tested with curl, then piped to `wrangler secret put`.
+  - Will's test (14:21 UTC) sent both emails, and Slack showed "visitor sent, Will sent".
+  - The misnamed secret (a key used as a secret *name*) was deleted from the Worker. The old key was
+    revoked in Resend.
+- **Worker:**
+  - `c91d6c52` trims the key, and Slack flags a stored value that isn't shaped like a Resend key.
+  - The live version is `d81fbbec`.
+- **GA4:**
+  - `demo_signup`, `schedule_walkthrough` and `whitepaper_download` are marked as key events.
+  - `pricing_request` is to be starred once it appears under Recent events.
+
 ## 2026-10-19: order card links to the onboarding call
 
 - **Status:** LIVE (pacer-demo-worker `ae77a5b7`). Will asked for it.
