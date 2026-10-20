@@ -23,6 +23,9 @@ export interface Env {
   RESEND_API_KEY?: string;
   ORDER_FROM?: string;       // e.g. "Pacer AI <orders@mail.getpacerai.com>" (a Resend-verified domain)
   ORDER_NOTIFY_TO?: string;  // will@getpacerai.com
+  // GET /internal/demo-signups (src/signups.ts), read by the Daily Pace Briefing on pacerai-demo-mcp
+  // (platform spec 023 §7.2). Unset = the route returns 404. Same value as that app's BRIEFING_SIGNUPS_TOKEN.
+  BRIEFING_SIGNUPS_TOKEN?: string;
 }
 
 export const APOLLO_API = "https://api.apollo.io";

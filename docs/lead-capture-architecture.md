@@ -94,7 +94,7 @@ They stay separate because the demo needs a bot gate and a secret to hand out, a
 Both Workers bind the same D1 database on purpose. A per-Worker table would mean two schemas, two query shapes, and no single answer to "how many emails did the site capture this week."
 
 Two related traps:
-- **KV `DEMO_SIGNUPS` is not a second source of truth.** It predates D1 and still receives demo signups, because it is what the `demo_users.yml` roster sync reads. Treat it as a legacy side-record; the `leads` table is canonical.
+- **KV `DEMO_SIGNUPS` is not a second source of truth.** It predates D1 and still receives demo signups. The `demo_users.yml` roster sync it was kept for was planned and never built (checked 2026-10-20). Treat it as a legacy side-record; the `leads` table is canonical. The Daily Pace Briefing reads signups from D1 through `GET /internal/demo-signups`, never from KV.
 - **Apollo is not the table of record either.** It is a downstream consumer. When Apollo returns 401 the row still lands with `apollo_contact_id = NULL` — that is the design, not a bug.
 
 ---
@@ -121,7 +121,7 @@ Two related traps:
 | Database | `pacerai-leads` · `e0d0228a-75a6-4eff-b2b0-9455623229d2` · region WNAM |
 | Schema | `pacerai-gtm/infra/whitepaper-worker/migrations/0001_leads.sql` |
 | Capture endpoint | `https://whitepaper-worker.will-078.workers.dev` (POST `/`) |
-| Demo endpoint | `https://pacer-demo-worker.will-078.workers.dev` (POST `/demo-signup`, widget at `/signup`) |
+| Demo endpoint | `https://pacer-demo-worker.will-078.workers.dev` (POST `/demo-signup`, widget at `/signup`; `GET /internal/demo-signups`, bearer token, read by the demo app's Daily Pace Briefing: platform spec 023 §7.2) |
 | Sequences | valid `69d83dab0a15420021ae717d` · non-lead `69e2577cfba82800152a99ab` · demo signup `6ac6a3099f51790014977897` · beta tester (manual) `6ac6a30bc4f8150018d90e12` |
 | Alert channel | `#website-leads` (`SLACK_WEBHOOK_URL_WEBSITE_LEADS`; the Worker secret drops the suffix) |
 
@@ -148,7 +148,7 @@ curl -sX POST https://whitepaper-worker.will-078.workers.dev \
 
 - **Capture never blocks on a side effect.** Both Workers return the visitor's 200 first and run Apollo / D1 / Slack inside `ctx.waitUntil`. Every side effect is individually try/caught into an `errors[]` array that lands in the structured log (`npx wrangler tail`). A D1 outage costs a row, never a download.
 - **Rows are append-only.** A repeat submit is a new row. Dedupe at read time — the 60-second KV idempotency window exists to stop double-submits, not to enforce uniqueness.
-- **PII lives in three places:** the `leads` table, Apollo, and KV `DEMO_SIGNUPS` (where the *key* is the email address, and entries have no TTL). Any deletion request has to touch all three.
+- **PII lives in four places:** the `leads` table, Apollo, KV `DEMO_SIGNUPS` (where the *key* is the email address, and entries have no TTL), and, for a signup who got the Daily Pace Briefing, `/home/data/briefing_sent.json` on `pacerai-demo-mcp` (sent keys and day counts by email). Any deletion request has to touch all four.
 - **Never author the demo widget in a page file.** WordPress strips inline `<script>`; the widget is served by the Worker and iframed so the access password never appears in page source.
 - 💰 D1 and Workers here sit inside free-tier limits. This is unrelated to the Fabric capacity guardrail.
 
