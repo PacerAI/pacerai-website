@@ -8,6 +8,25 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-10-21: one button on /demo-connect; connector sign-ins become leads (#45, not deployed)
+
+- **Status:** merged code only; nothing is deployed. Will's steps, in order:
+  [`docs/deploy/2026-10-21-demo-connect-one-button.md`](../deploy/2026-10-21-demo-connect-one-button.md).
+- **Why:** the signup card and the install button were two paths that didn't meet. A visitor who used only the button
+  hit a sign-in page asking for a password they never saw. Now the button is in the hero, and the connector's own
+  sign-in page asks for the work email (platform branch `feat/email-only-sign-in`).
+- **Page 983:**
+  - The hero carries **Add Pacer AI - Demo to Claude**, with two draft lines under it for Will's voice pass.
+  - The signup card is removed.
+  - Six steps instead of eight, with no password step; the HowTo JSON-LD matches.
+  - The server URL in the by-hand box is no longer turned into a link by WordPress.
+- **pacer-demo-worker:**
+  - New `POST /internal/connector-sign-in` (bearer token `CONNECTOR_SIGNIN_TOKEN`, not set yet).
+  - The lead recording moves to `src/demo-lead.ts`, shared with `/demo-signup`, which behaves the same as before.
+  - Connector sign-ins land in `leads` with `asset_slug = 'connector-sign-in'`.
+- **GA4:** new step event `install_click` with `cta_location` `hero` / `steps`. Footer paste sha `54ba22069572`, not pasted.
+  `demo_signup` stops firing on `/demo-connect/` once the page is deployed.
+
 ## 2026-10-20: order emails working; GA4 key events marked
 
 - **Emails:**

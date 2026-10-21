@@ -26,6 +26,9 @@ export interface Env {
   // GET /internal/demo-signups (src/signups.ts), read by the Daily Pace Briefing on pacerai-demo-mcp
   // (platform spec 023 §7.2). Unset = the route returns 404. Same value as that app's BRIEFING_SIGNUPS_TOKEN.
   BRIEFING_SIGNUPS_TOKEN?: string;
+  // POST /internal/connector-sign-in (src/connector-sign-in.ts): the connector's sign-in page on pacerai-demo-mcp
+  // sends each sign-in here. Unset = the route returns 503. Same value as that app's PACER_LEAD_SYNC_TOKEN.
+  CONNECTOR_SIGNIN_TOKEN?: string;
 }
 
 export const APOLLO_API = "https://api.apollo.io";
@@ -238,4 +241,15 @@ export async function enrich(
   } catch (e: any) {
     errors.push(`apollo_enrich: ${e?.message ?? "unknown"}`);
   }
+}
+
+// Bearer-token check for the /internal/* routes. Compares digests, so the check takes the same time whatever the
+// token's length or first wrong character.
+export async function sameSecret(given: string, expected: string): Promise<boolean> {
+  const enc = new TextEncoder();
+  const [a, b] = await Promise.all([
+    crypto.subtle.digest("SHA-256", enc.encode(given)),
+    crypto.subtle.digest("SHA-256", enc.encode(expected)),
+  ]);
+  return crypto.subtle.timingSafeEqual(a, b);
 }

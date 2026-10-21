@@ -75,6 +75,14 @@ HUMAN                       Will reads #website-leads and escalates a recognisab
 
 They stay separate because the demo needs a bot gate and a secret to hand out, and the resource path needs CORS and a fast redirect to a file. They write the same table so one query answers the whole funnel.
 
+**Since 2026-10-21 the demo path has a second door.** `/demo-connect` no longer shows the card: the hero button adds
+the connector in Claude, and the connector's own sign-in page on `pacerai-demo-mcp` asks for the work email (its own
+Turnstile check, no password). That app sends each sign-in to `POST /internal/connector-sign-in` (bearer token
+`CONNECTOR_SIGNIN_TOKEN`), and the Worker records it with the same code as a card signup (`src/demo-lead.ts`): KV,
+Apollo list + sequence, a `leads` row with `source = 'demo'` and `asset_slug = 'connector-sign-in'`, Slack on a new
+email. One difference: the caller is the Azure app, not the visitor's browser, so `as_org` is empty and the
+datacenter flag cannot apply. Rollout: [`deploy/2026-10-21-demo-connect-one-button.md`](deploy/2026-10-21-demo-connect-one-button.md).
+
 ---
 
 ## Where changes are made
@@ -121,7 +129,7 @@ Two related traps:
 | Database | `pacerai-leads` · `e0d0228a-75a6-4eff-b2b0-9455623229d2` · region WNAM |
 | Schema | `pacerai-gtm/infra/whitepaper-worker/migrations/0001_leads.sql` |
 | Capture endpoint | `https://whitepaper-worker.will-078.workers.dev` (POST `/`) |
-| Demo endpoint | `https://pacer-demo-worker.will-078.workers.dev` (POST `/demo-signup`, widget at `/signup`; `GET /internal/demo-signups`, bearer token, read by the demo app's Daily Pace Briefing: platform spec 023 §7.2) |
+| Demo endpoint | `https://pacer-demo-worker.will-078.workers.dev` (POST `/demo-signup`, widget at `/signup`; `GET /internal/demo-signups`, bearer token, read by the demo app's Daily Pace Briefing: platform spec 023 §7.2; `POST /internal/connector-sign-in`, bearer token, written by the demo app's sign-in page since 2026-10-21) |
 | Sequences | valid `69d83dab0a15420021ae717d` · non-lead `69e2577cfba82800152a99ab` · demo signup `6ac6a3099f51790014977897` · beta tester (manual) `6ac6a30bc4f8150018d90e12` |
 | Alert channel | `#website-leads` (`SLACK_WEBHOOK_URL_WEBSITE_LEADS`; the Worker secret drops the suffix) |
 

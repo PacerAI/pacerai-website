@@ -3,10 +3,9 @@ import { withVideoBridge } from "./video-bridge";
 
 // The homepage video, with the GA4 bridge added (src/video-bridge.ts) — computed once per isolate.
 const demoPage = withVideoBridge(demoHtml);
-import {
-  APOLLO_API, FRAME_HEADERS, addToList, classify, deriveWebsite, enrich, findContact, isHostingOrigin, json,
-  type ApolloContact, type Env,
-} from "./shared";
+import { FRAME_HEADERS, json, type Env } from "./shared";
+import { recordDemoLead } from "./demo-lead";
+import { handleConnectorSignIn } from "./connector-sign-in";
 import { handlePricingRequest, orderPage } from "./order";
 import { handleDemoSignups } from "./signups";
 
@@ -21,17 +20,12 @@ import { handleDemoSignups } from "./signups";
  * and serving the widget from the Worker keeps the shared password out of the page source —
  * it is only returned by POST /demo-signup AFTER Turnstile verifies (bots can't scrape it).
  *
+ * Since 2026-10-21 the connector's own sign-in page (pacerai-demo-mcp) also sends each sign-in to
+ * POST /internal/connector-sign-in, and both doors record the lead the same way (src/demo-lead.ts).
+ *
  * Framing: responses allow embedding ONLY by getpacerai.com (CSP frame-ancestors).
  */
 
-
-
-// Every demo signup lands on this Apollo list, which feeds the sequence of the
-// same name (pacerai-gtm/channels/data-model.md §6).
-const DEMO_SIGNUP_LIST = "Signal_CONTACT_DemoSignup_Triage";
-// Classes that get the follow-up email. competitor / suspicious / internal go
-// on the list only; disposable never reaches Apollo.
-const ENROLL_CLASSES = new Set(["valid_lead", "personal_email"]);
 
 
 const CONNECTOR_URL = "https://pacerai-demo-mcp.azurewebsites.net/mcp";
@@ -57,6 +51,12 @@ export default {
     // The Daily Pace Briefing reads recent /demo-connect signups here (src/signups.ts; bearer token, read-only).
     if (url.pathname === "/internal/demo-signups") {
       return handleDemoSignups(request, env);
+    }
+
+    // The connector's sign-in page on pacerai-demo-mcp sends each sign-in here, so it becomes a demo lead like a
+    // card signup (src/connector-sign-in.ts; bearer token, server to server).
+    if (url.pathname === "/internal/connector-sign-in") {
+      return handleConnectorSignIn(request, env, ctx);
     }
 
     if (url.pathname === "/demo-signup") {
@@ -139,149 +139,19 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
     return json({ error: "turnstile_failed" }, 403);
   }
 
-  const ts = new Date().toISOString();
-
-  // Track the email (KV is the live request list; synced to demo_users.yml on review).
-  // Check first so we Slack ONLY on a new email — a re-submit or a Turnstile token refresh never re-pings.
-  // `vid` is the visitor id GA4 gets as its user_id (opaque, never the email): stable per email, kept in this
-  // KV record and at the end of the D1 request_id, which carries apollo_contact_id. So a GA4 user_id
-  // pv_<vid> traces to the Apollo contact: SELECT apollo_contact_id FROM leads WHERE request_id LIKE '%_<vid>'.
-  let isNew = true;
-  let vid = crypto.randomUUID().replace(/-/g, "").slice(0, 16);
-  try {
-    const prev = await env.DEMO_SIGNUPS.get(email);
-    isNew = prev === null;
-    if (prev) {
-      try { const old = JSON.parse(prev) as { vid?: string }; if (old.vid && /^[0-9a-f]{16}$/.test(old.vid)) vid = old.vid; } catch { /* keep new */ }
-    }
-    await env.DEMO_SIGNUPS.put(email, JSON.stringify({ email, company, ip, ts, vid }));
-  } catch {
-    // Non-fatal: still grant access + notify.
-  }
-
-  const domain = email.split("@")[1] ?? "";
-  const asOrg = (request as any).cf?.asOrganization as string | undefined;
-  const leadClass = classify(domain, asOrg);
-  const requestId = `demo_${ts}_${vid}`;
-  const pageUrl = `https://getpacerai.com${attr.page || "/demo-connect/"}`;
-  const cameFrom = [attr.utm_source && `${attr.utm_source}${attr.utm_medium ? ` / ${attr.utm_medium}` : ""}`,
-                    attr.utm_campaign && `campaign ${attr.utm_campaign}`,
-                    attr.landing && `landed on ${attr.landing}`].filter(Boolean).join(" · ");
-  const website = deriveWebsite(domain, leadClass);
-
-  // Everything below is off the critical path — the visitor gets their password
-  // immediately and never waits on Apollo, Slack or D1.
-  ctx.waitUntil(
-    (async () => {
-      const errors: string[] = [];
-
-      // Apollo runs first so the D1 row and the Slack alert carry the outcome.
-      // Every submit runs it; each step is idempotent, so a repeat is harmless.
-      let apollo: ApolloResult;
-      try {
-        apollo = await syncApollo(env, email, leadClass, errors);
-      } catch (e: any) {
-        errors.push(`apollo: ${e?.message ?? "unknown"}`);
-        apollo = { contactId: null, enrolled: false, note: "failed — check logs" };
-      }
-
-      // D1: the table of record, shared with whitepaper-worker. Every submit is
-      // a row (repeats included) so the funnel stays auditable.
-      if (env.LEADS) {
-        try {
-          await env.LEADS.prepare(
-            `INSERT INTO leads (
-               request_id, email, email_domain, company, lead_class, source,
-               asset_slug, page_url, utm_source, utm_medium, utm_campaign,
-               ip, created_at, website, as_org, apollo_contact_id, enrolled_sequence
-             ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-          )
-            .bind(
-              requestId,
-              email,
-              domain,
-              company || null,
-              leadClass,
-              "demo",
-              "demo-access",
-              pageUrl,
-              attr.utm_source,
-              attr.utm_medium,
-              attr.utm_campaign,
-              ip || null,
-              ts,
-              website,
-              asOrg ?? null,
-              apollo.contactId,
-              apollo.enrolled ? DEMO_SIGNUP_LIST : null
-            )
-            .run();
-        } catch (e: any) {
-          errors.push(`d1_insert: ${e?.message ?? "unknown"}`);
-        }
-      }
-
-      // Slack #website-leads — one channel for every captured email, matching
-      // whitepaper-worker's format. Only on a genuinely new email.
-      if (isNew && env.SLACK_WEBHOOK_URL) {
-        const emoji =
-          leadClass === "valid_lead" ? ":fire:"
-          : leadClass === "internal" ? ":test_tube:"
-          : leadClass === "disposable" ? ":wastebasket:"
-          : leadClass === "suspicious" ? ":mag:"
-          : leadClass === "competitor" ? ":eyes:"
-          : ":warning:";
-        try {
-          await fetch(env.SLACK_WEBHOOK_URL, {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify({
-              text: [
-                `${emoji} *Demo access request — ${leadClass.replace("_", " ")}*`,
-                `*Email:* ${email}`,
-                ...(company ? [`*Company:* ${company}`] : []),
-                `*Classification:* ${leadClass}`,
-                ...(isHostingOrigin(asOrg) ? [`*:warning: Origin:* ${asOrg} (datacenter, not an office network)`] : []),
-                ...(website ? [`*Website:* ${website}`] : []),
-                `*Source:* demo`,
-                `*Page:* ${pageUrl}`,
-                ...(cameFrom ? [`*Came from:* ${cameFrom}`] : []),
-                `*Sequence:* ${apollo.enrolled ? DEMO_SIGNUP_LIST : `none — ${apollo.note}`}`,
-                `*Apollo:* ${apollo.contactId ? `https://app.apollo.io/#/people/${apollo.contactId}` : "(no contact)"}`,
-                `*Request:* ${requestId}`,
-              ].join("\n"),
-            }),
-          });
-        } catch (e: any) {
-          errors.push(`slack: ${e?.message ?? "unknown"}`);
-        }
-      }
-
-      console.log(
-        JSON.stringify({
-          ts,
-          request_id: requestId,
-          email,
-          email_domain: domain,
-          lead_class: leadClass,
-          source: "demo",
-          website,
-          as_org: asOrg ?? null,
-          hosting_origin: isHostingOrigin(asOrg),
-          is_new: isNew,
-          apollo: {
-            ok: !errors.some((e) => e.startsWith("apollo")),
-            contact_id: apollo.contactId,
-            enrolled: apollo.enrolled,
-            note: apollo.note,
-          },
-          d1: { ok: !errors.some((e) => e.startsWith("d1_")) },
-          slack: { ok: !errors.some((e) => e.startsWith("slack")) },
-          errors,
-        })
-      );
-    })()
-  );
+  // Record the lead: KV, then Apollo → D1 → Slack off the critical path (src/demo-lead.ts).
+  const { vid } = await recordDemoLead(env, ctx, {
+    email,
+    company,
+    ip,
+    asOrg: (request as any).cf?.asOrganization as string | undefined,
+    utm_source: attr.utm_source,
+    utm_medium: attr.utm_medium,
+    utm_campaign: attr.utm_campaign,
+    landing: attr.landing,
+    pageUrl: `https://getpacerai.com${attr.page || "/demo-connect/"}`,
+    assetSlug: "demo-access",
+  });
 
   // Reveal access. Password comes from a Worker secret (kept in sync with the Azure MCP).
   return json({
@@ -291,98 +161,6 @@ async function handleSignup(request: Request, env: Env, ctx: ExecutionContext): 
     visitor_id: `pv_${vid}`,   // GA4 user_id (see the KV comment above) — opaque, not personal data
   });
 }
-
-// ── Apollo: list + follow-up sequence ────────────────────────────────────────
-// Ported from pacerai-gtm: find-before-create and list-merge from
-// scripts/luma-to-apollo.py, enrich + enroll from infra/whitepaper-worker.
-
-interface ApolloResult {
-  contactId: string | null;
-  enrolled: boolean;
-  // Human-readable outcome for Slack when nobody was enrolled.
-  note: string;
-}
-
-
-async function syncApollo(
-  env: Env,
-  email: string,
-  leadClass: string,
-  errors: string[]
-): Promise<ApolloResult> {
-  if (leadClass === "disposable") return { contactId: null, enrolled: false, note: "disposable address, not sent to Apollo" };
-  if (!env.APOLLO_API_KEY) return { contactId: null, enrolled: false, note: "Apollo not configured" };
-  const headers = { "Content-Type": "application/json", "X-Api-Key": env.APOLLO_API_KEY };
-
-  // 1. Find before create. POST /v1/contacts does NOT dedupe on email, and a
-  //    homepage-hero visitor already got a contact from whitepaper-worker.
-  //    A failed lookup is "unknown", not "no match" — never create on it.
-  let contact: ApolloContact | null;
-  try {
-    contact = await findContact(env, email, headers);
-  } catch (e: any) {
-    errors.push(`apollo_lookup: ${e?.message ?? "unknown"}`);
-    return { contactId: null, enrolled: false, note: "Apollo lookup failed, add by hand" };
-  }
-
-  // 2. Get them on the list.
-  if (!contact) {
-    const res = await fetch(`${APOLLO_API}/v1/contacts`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ email, label_names: [DEMO_SIGNUP_LIST] }),
-    });
-    if (!res.ok) {
-      errors.push(`apollo_create_contact: ${res.status}`);
-      return { contactId: null, enrolled: false, note: "Apollo create failed" };
-    }
-    contact = ((await res.json()) as { contact?: ApolloContact }).contact ?? null;
-    if (!contact?.id) {
-      errors.push("apollo_create_contact: no id returned");
-      return { contactId: null, enrolled: false, note: "Apollo create failed" };
-    }
-  } else {
-    await addToList(contact, headers, errors, DEMO_SIGNUP_LIST);
-  }
-
-  // 3. Enrich. The email opens "Hi {{first_name}}", and contact create does
-  //    not enrich. Only when the name is missing — each match costs a credit.
-  if (!contact.first_name) await enrich(contact, email, headers, errors);
-
-  // 4. Enroll.
-  if (!ENROLL_CLASSES.has(leadClass)) return { contactId: contact.id, enrolled: false, note: `list only (${leadClass})` };
-  if (!env.APOLLO_SEQUENCE_ID_DEMO_SIGNUP || !env.APOLLO_EMAIL_ACCOUNT_ID) {
-    return { contactId: contact.id, enrolled: false, note: "list only (no sequence configured)" };
-  }
-  if (!contact.first_name) {
-    return { contactId: contact.id, enrolled: false, note: "no first name, enroll by hand" };
-  }
-  const seqId = env.APOLLO_SEQUENCE_ID_DEMO_SIGNUP;
-  const res = await fetch(`${APOLLO_API}/v1/emailer_campaigns/${seqId}/add_contact_ids`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      contact_ids: [contact.id],
-      emailer_campaign_id: seqId,
-      send_email_from_email_account_id: env.APOLLO_EMAIL_ACCOUNT_ID,
-    }),
-  });
-  if (!res.ok) {
-    errors.push(`apollo_enroll: ${res.status}`);
-    return { contactId: contact.id, enrolled: false, note: "Apollo enroll failed" };
-  }
-  // Apollo reports refusals here rather than as an error: already in the
-  // sequence, or a stage safeguard (e.g. contact stage "Interested").
-  const skipped = ((await res.json()) as { skipped_contact_ids?: Record<string, unknown> }).skipped_contact_ids ?? {};
-  if (Object.keys(skipped).length) {
-    errors.push(`apollo_enroll_skipped: ${JSON.stringify(skipped)}`);
-    return { contactId: contact.id, enrolled: false, note: `Apollo skipped: ${JSON.stringify(Object.values(skipped))}` };
-  }
-  return { contactId: contact.id, enrolled: true, note: "enrolled" };
-}
-
-
-
 
 function signupHtml(siteKey: string, prefillEmail = ""): string {
   // Only ever lands in a value="" attribute; escape the characters that could

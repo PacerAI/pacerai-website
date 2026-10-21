@@ -34,6 +34,11 @@ id = "105573715cf94372bd65e505caf5d845"
 #   APOLLO_SEQUENCE_ID_DEMO_SIGNUP — Signal_CONTACT_DemoSignup_Triage sequence, 6ac6a3099f51790014977897
 #   All three Apollo secrets are optional: unset = signups skip Apollo (key) or land
 #   on the list without the email (sequence id). See pacerai-gtm/tactics/website-visitor/docs/design/flow.md.
+#   BRIEFING_SIGNUPS_TOKEN — GET /internal/demo-signups bearer token; same value as pacerai-demo-mcp's
+#                            BRIEFING_SIGNUPS_TOKEN. Unset = that route returns 404.
+#   CONNECTOR_SIGNIN_TOKEN — POST /internal/connector-sign-in bearer token; same value as pacerai-demo-mcp's
+#                            PACER_LEAD_SYNC_TOKEN app setting. Unset = that route returns 503 and connector
+#                            sign-ins are not recorded as leads.
 
 # ── Staging: the dev half of the demo-reel pipeline ───────────────────────────
 # A SEPARATE worker (pacer-demo-worker-staging.will-078.workers.dev) that serves every

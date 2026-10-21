@@ -44,7 +44,10 @@ one worker with path routing.
 
 ```
 pacer-demo-worker/
-├── src/index.ts        PRODUCTION entrypoint — serves demo.html, iframe-friendly headers
+├── src/index.ts        PRODUCTION entrypoint — serves demo.html, iframe-friendly headers, routes
+├── src/demo-lead.ts    recordDemoLead(): KV → Apollo → D1 leads → Slack, shared by both demo-lead routes
+├── src/connector-sign-in.ts  POST /internal/connector-sign-in (the connector's sign-in page → a demo lead)
+├── src/signups.ts      GET /internal/demo-signups (the Daily Pace Briefing's signup feed)
 ├── src/staging.ts      STAGING entrypoint — serves src/variants/* at /v/{slug} + an index
 ├── src/demo.html       The promoted reel (written ONLY by promote.sh; a build artifact)
 ├── src/variants/       Staged reels, one .html per slug — the dev catalog
@@ -123,9 +126,11 @@ to `https://demo.getpacerai.com/`. Until then, the `workers.dev` URL is the reli
 
 ## `/signup` + `POST /demo-signup` — demo access and Apollo follow-up
 
-The same production Worker serves the `/demo-connect` signup widget (`/signup`, iframed by WP page 983). A submit
+The same production Worker serves the `/demo-connect` signup widget (`/signup`; WP page 983 iframed it until
+2026-10-21, when the page moved to the one-button install and the connector's email sign-in). A submit
 runs Turnstile → KV `DEMO_SIGNUPS` → returns the connector URL + password. Then, off the critical path:
-Apollo (`syncApollo()`) → D1 `leads` row → Slack `#website-leads`.
+Apollo (`syncApollo()`) → D1 `leads` row → Slack `#website-leads`. That recording lives in `src/demo-lead.ts`
+(`recordDemoLead()`), shared with `POST /internal/connector-sign-in` below.
 
 The full flow, the class → action table, the Apollo ids and the operating checks are in
 `pacerai-gtm/tactics/website-visitor/docs/design/flow.md`. Change that file when you change `syncApollo()`.
@@ -141,6 +146,29 @@ The full flow, the class → action table, the Apollo ids and the operating chec
 | `APOLLO_EMAIL_ACCOUNT_ID` | `698cf8caac41ac000da4c9f9` (will@getpacerai.com) | list only, no email |
 | `APOLLO_SEQUENCE_ID_DEMO_SIGNUP` | `6ac6a3099f51790014977897` | list only, no email |
 | `BRIEFING_SIGNUPS_TOKEN` | a random token; the same value as `pacerai-demo-mcp`'s `BRIEFING_SIGNUPS_TOKEN` (Key Vault) | `/internal/demo-signups` returns 404 |
+| `CONNECTOR_SIGNIN_TOKEN` | a random token (`openssl rand -hex 32`); the same value as `pacerai-demo-mcp`'s `PACER_LEAD_SYNC_TOKEN` app setting | `/internal/connector-sign-in` returns 503, so connector sign-ins are not recorded as leads |
+
+## `POST /internal/connector-sign-in` — a connector sign-in becomes a demo lead
+
+Since 2026-10-21 `/demo-connect` has one install path: the **Add Pacer AI - Demo to Claude** button in the hero. The
+connector's own sign-in page on `pacerai-demo-mcp` asks for a work email only (no password, with its own Turnstile
+check) and then sends each sign-in here, server to server. The signup card and its password are gone from the page;
+`/signup` and `POST /demo-signup` still work for anyone holding an old link.
+
+- **Request:** `POST /internal/connector-sign-in`, header `Authorization: Bearer <CONNECTOR_SIGNIN_TOKEN>`, JSON body
+  `{"email": "...", "client_id": "...", "book": "salesforce", "ip": "203.0.113.9"}`. Only `email` is required; `ip`
+  is the visitor's IP as the sign-in page saw it.
+- **Replies:** `200 {"ok": true, "lead_class": "valid_lead"}` · `400 {"ok": false, "error": "bad_request" | "invalid_email"}`
+  · `401` wrong or missing token · `405` not a POST · `503 {"ok": false, "error": "not configured"}` while the secret is unset.
+- **What it records:** exactly what a card signup records (`src/demo-lead.ts`, shared by both routes): KV
+  `DEMO_SIGNUPS`, the Apollo list and sequence, a D1 `leads` row with `source = 'demo'`, `asset_slug =
+  'connector-sign-in'`, `page_url = 'connector-sign-in'` and a `demo_` request id, and a Slack alert on a new email
+  (with a "Via: the connector's sign-in page" line). Every sign-in is a row; a repeat never re-alerts Slack. So
+  `/internal/demo-signups` and the platform's `demo_usage_report.py` count these people as signups.
+- **No datacenter flag here.** The flag and the `suspicious` downgrade read the visitor's network from Cloudflare, which
+  only knows it when the visitor's own browser calls the Worker. This call comes from the Azure app, so `as_org` is empty
+  and the class comes from the email domain alone. The sign-in page's Turnstile check is the bot gate.
+- **Code:** `src/connector-sign-in.ts`.
 
 ## `GET /internal/demo-signups` — signups for the Daily Pace Briefing
 
