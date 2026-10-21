@@ -463,8 +463,8 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
       <div class="pw" id="pw">&mdash;</div>
     </div>
     <ol>
-      <li><b>Browser:</b> open <a href="https://claude.ai/new?modal=add-custom-connector#customize/connectors" target="_blank" rel="noopener">claude.ai add-custom-connector</a>.</li>
-      <li>Name <b>Pacer AI - Demo</b> · URL <span class="mono">https://pacerai-demo-mcp.azurewebsites.net/mcp</span> &rarr; Continue &rarr; keep the defaults &rarr; Add.</li>
+      <li><b>Browser:</b> <a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fpacerai-demo-mcp.azurewebsites.net%2Fmcp" target="_blank" rel="noopener">Add Pacer AI - Demo to Claude</a>. The name and URL are filled in &rarr; Continue &rarr; keep the defaults &rarr; Add.</li>
+      <li>Or by hand: Name <b>Pacer AI - Demo</b> · URL <span class="mono">https://pacerai-demo-mcp.azurewebsites.net/mcp</span>.</li>
       <li>Sign in with your work email + the password above, set Tool permissions to <b>Always allow</b>, then type <span class="mono">pace</span>.</li>
     </ol>
     <div class="muted-note" id="emailNote"></div>
