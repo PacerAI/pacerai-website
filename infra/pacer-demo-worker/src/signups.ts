@@ -9,7 +9,7 @@
  * - Reads D1 `leads`, the table of record (source = 'demo'); never KV, never Apollo.
  * - `since` defaults to 7 days ago and is clamped to the last 31 days, so a stolen token reads a month at most.
  */
-import { json, type Env } from "./shared";
+import { json, sameSecret, type Env } from "./shared";
 
 const DEFAULT_DAYS = 7;
 const MAX_DAYS = 31;
@@ -46,14 +46,4 @@ export async function handleDemoSignups(request: Request, env: Env): Promise<Res
       ORDER BY l.created_at`
   ).bind(since).all();
   return json({ since, signups: rows.results ?? [] });
-}
-
-// Compare digests, so the check takes the same time whatever the token's length or first wrong character.
-async function sameSecret(given: string, expected: string): Promise<boolean> {
-  const enc = new TextEncoder();
-  const [a, b] = await Promise.all([
-    crypto.subtle.digest("SHA-256", enc.encode(given)),
-    crypto.subtle.digest("SHA-256", enc.encode(expected)),
-  ]);
-  return crypto.subtle.timingSafeEqual(a, b);
 }
