@@ -39,6 +39,8 @@
  *      (#1 typed-line stays for legacy pages; it exits if .typed-line is absent)
  *
  * HISTORY:
+ *   2026-10-21  Section 0: install_click, a click on the claude.ai Add custom connector link (/demo-connect hero
+ *               and step 1), with cta_location from the link's data-cta. A step, not a key event
  *   2026-10-14  Section 0: GA4 user_id after a demo signup (window.pacerSetUser); section_jump (in-page links, and a #hash on arrival), resource_filter
  *               (Resources category pills), and the demo-video bridge events (demo_video_complete,
  *               demo_video_replay, demo_video_review, try_demo_click from the video end card)
@@ -118,7 +120,10 @@ window.pacerAttr = window.pacerAttr || (function() {
     try { url = new URL(href, window.location.href); } catch (err) {}
     var samePage = url && url.hash.length > 1 && url.origin === window.location.origin &&
       url.pathname.replace(/\/$/, '') === window.location.pathname.replace(/\/$/, '');
-    if (href.indexOf('calendly.com') !== -1) name = 'schedule_walkthrough';
+    /* The claude.ai install link (/demo-connect hero and step 1): a step toward the connector sign-in, not a key
+     * event. cta_location comes from the link's data-cta ("hero" / "steps"). */
+    if (href.indexOf('claude.ai/customize/connectors') !== -1) { name = 'install_click'; extra.cta_location = a.getAttribute('data-cta') || 'unknown'; }
+    else if (href.indexOf('calendly.com') !== -1) name = 'schedule_walkthrough';
     else if (href.indexOf('/demo-connect') !== -1 && window.location.pathname.indexOf('/demo-connect') !== 0) name = 'try_demo_click';
     else if (href.indexOf('/tear-sheet') !== -1) name = 'tear_sheet_open';
     else if (a.getAttribute('data-filter')) { name = 'resource_filter'; extra.category = a.getAttribute('data-filter'); }

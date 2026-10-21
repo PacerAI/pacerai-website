@@ -80,7 +80,8 @@ Every event carries `page_path`. Click events also carry `cta_location`, `link_t
 
 | Event | Fires when | Coded in | Key event |
 |---|---|---|---|
-| `demo_signup` | The signup card returns the access password (bot check passed, email recorded) | Worker widget → postMessage → footer.js §0 | **Yes** |
+| `demo_signup` | The signup card returns the access password (bot check passed, email recorded). **The card leaves `/demo-connect` with the one-button page (2026-10-21)**, so this stops firing there once page 983 is deployed. A connector sign-in is recorded server-side (D1 `asset_slug = 'connector-sign-in'`), not in GA4 | Worker widget → postMessage → footer.js §0 | **Yes** |
+| `install_click` | A click on the claude.ai **Add Pacer AI - Demo to Claude** link (`claude.ai/customize/connectors`). `cta_location` is the link's `data-cta`: `hero` or `steps` (`unknown` when absent) | footer.js §0 (2026-10-21) | No: a step |
 | `whitepaper_download` | A white-paper form succeeds | footer.js §2 | **Yes** |
 | `schedule_walkthrough` | Any click on a `calendly.com` link, on the page or inside the signup card (`cta_location: signup_card` or `signup_card_reveal`) | footer.js §0 + Worker widget | **Yes** |
 | `pricing_page_visit` | A page view whose URL contains `getpacerai.com/pricing/` (created earlier in GA4) | GA4 configuration | Yes (fires once `/pricing/` is live) |
@@ -104,7 +105,8 @@ Every event carries `page_path`. Click events also carry `cta_location`, `link_t
 | **Try the Demo** / **try the demo free** (nav, posts, team, contact) | `try_demo_click` | 17 pages |
 | **Tear Sheet** (nav + footer) | `tear_sheet_open` | 18 pages |
 | **Schedule a Walkthrough / Demo**, **Book a 30-min diagnostic**, **Schedule a founder call**, **Request Demo** (any calendly.com link) | `schedule_walkthrough` | `/`, `/contact/`, `/demo-connect/`, one post |
-| Signup card: email submit → password shown; its Schedule a Walkthrough buttons | `demo_signup`, `schedule_walkthrough` (iframe bridge) | `/demo-connect/` |
+| Signup card: email submit → password shown; its Schedule a Walkthrough buttons. **Removed from `/demo-connect/` on 2026-10-21** | `demo_signup`, `schedule_walkthrough` (iframe bridge) | none once page 983 is deployed |
+| **Add Pacer AI - Demo to Claude** (hero `data-cta="hero"`, step 1 `data-cta="steps"`) | `install_click` (2026-10-21) | `/demo-connect/` |
 | White paper form (success) | `whitepaper_download` | 14 posts |
 | Homepage hero email form (success) | `demo_email_capture` | `/` |
 | Outside links: Log In (app.getpacerai.com), LinkedIn, claude.ai, SEC, partner sites | GA4 automatic `click` (outbound, with `link_url`) | 19 pages |
@@ -199,6 +201,16 @@ A healthy page shows:
     `utm_medium=referral`.
 
 ## 7. Change log
+- **2026-10-21: one-button `/demo-connect` (not deployed yet).**
+  - The signup card is removed; the hero carries the claude.ai install link, and the connector's own sign-in
+    page asks for the work email. Checklist: [`docs/deploy/2026-10-21-demo-connect-one-button.md`](../../deploy/2026-10-21-demo-connect-one-button.md).
+  - **footer.js** (sha `54ba22069572`, to paste): `install_click` with `cta_location` from `data-cta`. A step, not a
+    key event. Tested in headless Chrome with a stub `gtag`: hero → `hero`, step 1 → `steps`, a link without the
+    attribute → `unknown`; the Calendly links still send `schedule_walkthrough`.
+  - **What GA4 loses:** `demo_signup` stops firing on `/demo-connect/`, and with it the GA4 `user_id` set after a
+    signup. The sign-in itself happens on `pacerai-demo-mcp`, which has no GA4. The record of a signup is the D1
+    `leads` row (`asset_slug = 'connector-sign-in'`); `install_click` is the last step GA4 sees.
+  - The iframe allow-list needs no change: the homepage video still posts from the production Worker.
 - **2026-10-20: key events marked.**
   - Starred in GA4: `demo_signup`, `schedule_walkthrough` and `whitepaper_download` (D5).
   - Key events now: those three plus the pre-existing `pricing_page_visit`.
