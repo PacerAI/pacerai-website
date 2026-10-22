@@ -204,7 +204,7 @@ A healthy page shows:
 - **2026-10-21: one-button `/demo-connect` (not deployed yet).**
   - The signup card is removed; the hero carries the claude.ai install link, and the connector's own sign-in
     page asks for the work email. Checklist: [`docs/deploy/2026-10-21-demo-connect-one-button.md`](../../deploy/2026-10-21-demo-connect-one-button.md).
-  - **footer.js** (sha `54ba22069572`, to paste): `install_click` with `cta_location` from `data-cta`. A step, not a
+  - **footer.js** (sha `54ba22069572`, **live in WPCode 2026-10-22**): `install_click` with `cta_location` from `data-cta`. A step, not a
     key event. Tested in headless Chrome with a stub `gtag`: hero → `hero`, step 1 → `steps`, a link without the
     attribute → `unknown`; the Calendly links still send `schedule_walkthrough`.
   - **What GA4 loses:** `demo_signup` stops firing on `/demo-connect/`, and with it the GA4 `user_id` set after a
