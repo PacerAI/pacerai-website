@@ -28,7 +28,7 @@ import { handleDemoSignups } from "./signups";
 
 
 
-const CONNECTOR_URL = "https://pacerai-demo-mcp.azurewebsites.net/mcp";
+const CONNECTOR_URL = "https://demo.getpacerai.com/mcp";   // the HubSpot demo (pacerai-demo-hubspot-mcp), live once the domain is bound
 
 
 export default {
@@ -220,7 +220,7 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
     </div>
     <button id="continue">Continue</button>
     <div class="err" id="err1"></div>
-    <div class="muted-note">Runs on a synthetic company with fictional accounts. We&rsquo;ll email you the demo&rsquo;s daily Pace briefing for the next 3 days, then occasionally about the demo &mdash; no spam.</div>
+    <div class="muted-note">Runs on DemoCo.ai, a synthetic company with fictional customers, reps and deals in a live HubSpot portal. We&rsquo;ll email you the demo&rsquo;s daily Pace briefing for the next 3 days, then occasionally about the demo &mdash; no spam.</div>
     <div class="walk"><span>Prefer to have someone walk you through it?</span><a class="btn-walk" href="https://calendly.com/pacerai/demo-pacer-ai" target="_blank" rel="noopener">Schedule a Walkthrough &rarr;</a></div>
   </div>
 
@@ -241,8 +241,8 @@ function signupHtml(siteKey: string, prefillEmail = ""): string {
       <div class="pw" id="pw">&mdash;</div>
     </div>
     <ol>
-      <li><b>Browser:</b> <a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fpacerai-demo-mcp.azurewebsites.net%2Fmcp" target="_blank" rel="noopener">Add Pacer AI - Demo to Claude</a>. The name and URL are filled in &rarr; Continue &rarr; keep the defaults &rarr; Add.</li>
-      <li>Or by hand: Name <b>Pacer AI - Demo</b> · URL <span class="mono">https://pacerai-demo-mcp.azurewebsites.net/mcp</span>.</li>
+      <li><b>Browser:</b> <a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fdemo.getpacerai.com%2Fmcp" target="_blank" rel="noopener">Add Pacer AI - Demo to Claude</a>. The name and URL are filled in &rarr; Continue &rarr; keep the defaults &rarr; Add.</li>
+      <li>Or by hand: Name <b>Pacer AI - Demo</b> · URL <span class="mono">https://demo.getpacerai.com/mcp</span>.</li>
       <li>Sign in with your work email + the password above, set Tool permissions to <b>Always allow</b>, then type <span class="mono">pace</span>.</li>
     </ol>
     <div class="muted-note" id="emailNote"></div>

@@ -107,3 +107,47 @@ leaves visitors without a way in. The Worker route and `install_click` are harml
   password". The reel is generated in the platform repo's `demo-site/`; regenerate it there as a new version.
 - **The 3-day briefing test** in the platform's briefing rollout (section 4) says to sign up through the card. A
   connector sign-in now does the same job.
+
+## Next: point the button at the HubSpot demo (2026-10-22)
+
+**Why.** Will made the HubSpot demo the primary demo (2026-10-22): `https://demo.getpacerai.com/mcp`, the app
+`pacerai-demo-hubspot-mcp`, DemoCo.ai at $100M ARR in a live HubSpot portal. The Salesforce demo
+(`pacerai-demo-mcp`, about $7M) stays available on request. Branch `feat/demo-connect-hubspot` changes every
+prospect-facing connector URL on page 983 and in the Worker's `/signup` card to `https://demo.getpacerai.com/mcp`,
+and names DemoCo.ai in HubSpot in the page's copy. **Nothing changes for visitors until steps 6 and 7.**
+
+**State on 2026-10-22:** `demo.getpacerai.com` does not resolve (`getpacerai.com`'s DNS is on WordPress.com). The
+HubSpot app still has password sign-in and `PACER_OAUTH_ALLOWED_EMAILS` holding Will's address alone, and none of the
+step 4 settings above (setting names checked, values not read). Publishing the page before steps 1–3 would send
+prospects to a URL that doesn't answer, then to a sign-in page that refuses them.
+
+- [ ] **1. Bind `demo.getpacerai.com` to `pacerai-demo-hubspot-mcp`** (platform side, Will's go): the DNS records
+  Azure asks for at WordPress.com, then the custom domain and its certificate on the app. Then set
+  `PACER_PUBLIC_URL=https://demo.getpacerai.com` and add `demo.getpacerai.com` to `PACER_MCP_ALLOWED_HOSTS`; the
+  sign-in metadata's issuer comes from `PACER_PUBLIC_URL`. Check:
+  `curl -s https://demo.getpacerai.com/.well-known/oauth-authorization-server` names `demo.getpacerai.com` throughout.
+- [ ] **2. Bot check on the new host.** Add `demo.getpacerai.com` to the same Turnstile widget's hostnames (step 2
+  above).
+- [ ] **3. Email-only sign-in on the HubSpot app** (resource group `pacerai-demo-hubspot-rg`): the five settings of
+  step 4 above, with the same Key Vault references, **and remove `PACER_OAUTH_ALLOWED_EMAILS`**. While it is set,
+  every email but Will's is refused.
+- [ ] **4. Decide where the 3-day briefing comes from.** Only the Salesforce app reads the signup feed
+  (`BRIEFING_SIGNUPS_URL` / `BRIEFING_SIGNUPS_TOKEN`), and the feed doesn't separate the two books. Unless those
+  settings move to the HubSpot app, a prospect who signs in to the $100M HubSpot demo gets three briefings on the $7M
+  Salesforce book. Check `pacerai-platform-claude-native/docs/deploy/2026-10-20-daily-pace-briefing-rollout.md`
+  section 4 first: its "day 1 of 3" test is still open.
+- [ ] **5. End-to-end test** as step 7 above, on the HubSpot app, in an incognito window as **Will@getpacerai.com**:
+  the dialog shows `https://demo.getpacerai.com/mcp`, sign-in asks for the email only, `pace` answers from the
+  HubSpot portal, and `/demo-usage` shows the sign-in on the HubSpot app.
+- [ ] **6. Deploy the Worker** (Will's go): `cd infra/pacer-demo-worker && npm run deploy`, the same checks as step 5
+  above. This ships the `/signup` card's new URL. It also re-ships the card's line promising the daily Pace briefing
+  for 3 days, so do step 4 first.
+- [ ] **7. Deploy page 983** (Will's go): `python3 scripts/deploy.py 983`. Check the hero button opens claude.ai's
+  dialog with `https://demo.getpacerai.com/mcp` filled in.
+- [ ] **8. New screenshots.** Step 1's dialog screenshot (`pacer-ai-demo-connect-step-4-url-2x.png`) shows the old
+  URL, and step 6's (`pacer-ai-demo-connect-step-8-pace-2x.png`) shows the Salesforce book's numbers. The reel
+  (`/v/demo-connect` on the staging Worker) shows the old URL and the password; regenerate it in the platform repo's
+  `demo-site/`.
+
+**Rollback.** Restore page 983 from its deploy backup and roll the Worker back to the previous version (`npx wrangler
+rollback`). The HubSpot app settings can stay: the Salesforce app is untouched by this change.
