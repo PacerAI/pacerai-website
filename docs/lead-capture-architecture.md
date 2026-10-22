@@ -156,7 +156,16 @@ curl -sX POST https://whitepaper-worker.will-078.workers.dev \
 
 - **Capture never blocks on a side effect.** Both Workers return the visitor's 200 first and run Apollo / D1 / Slack inside `ctx.waitUntil`. Every side effect is individually try/caught into an `errors[]` array that lands in the structured log (`npx wrangler tail`). A D1 outage costs a row, never a download.
 - **Rows are append-only.** A repeat submit is a new row. Dedupe at read time — the 60-second KV idempotency window exists to stop double-submits, not to enforce uniqueness.
-- **PII lives in four places:** the `leads` table, Apollo, KV `DEMO_SIGNUPS` (where the *key* is the email address, and entries have no TTL), and, for a signup who got the Daily Pace Briefing, `/home/data/briefing_sent.json` on `pacerai-demo-mcp` (sent keys and day counts by email). Any deletion request has to touch all four.
+- **PII lives in six places.** Any deletion request has to touch all six:
+
+  | Place | What it holds |
+  |---|---|
+  | D1 `pacerai-leads` → `leads` | Every captured email, with class, source, page, UTM and IP |
+  | D1 `pacerai-leads` → `pricing_requests` | Every `/pricing/` order request: email, name, company, package, totals and attribution |
+  | Apollo | The contact |
+  | KV `DEMO_SIGNUPS` | Demo signups. The *key* is the email address, and entries have no TTL |
+  | `/home/data/briefing_sent.json` on `pacerai-demo-mcp` | For a signup who got the Daily Pace Briefing: sent keys and day counts by email |
+  | Resend's sent-email logs | Every email sent from `mail.getpacerai.com`: the order emails (`orders@`, this repo's Worker) and the briefings (`reports@`, the platform) |
 - **Never author the demo widget in a page file.** WordPress strips inline `<script>`; the widget is served by the Worker and iframed so the access password never appears in page source.
 - 💰 D1 and Workers here sit inside free-tier limits. This is unrelated to the Fabric capacity guardrail.
 

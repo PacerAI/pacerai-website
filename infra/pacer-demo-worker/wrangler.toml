@@ -39,6 +39,12 @@ id = "105573715cf94372bd65e505caf5d845"
 #   CONNECTOR_SIGNIN_TOKEN — POST /internal/connector-sign-in bearer token; same value as pacerai-demo-mcp's
 #                            PACER_LEAD_SYNC_TOKEN app setting. Unset = that route returns 503 and connector
 #                            sign-ins are not recorded as leads.
+#   RESEND_API_KEY         — Resend key "getPacerAI-send-access" for the /pricing order emails (src/order.ts).
+#                            Unset = the request is saved, no email goes out. Setup: docs/deploy/order-email-setup.md.
+#   ORDER_FROM             — optional sender override; default "Pacer AI <orders@mail.getpacerai.com>".
+#   ORDER_NOTIFY_TO        — optional; where Will's copy goes, default will@getpacerai.com.
+#   mail.getpacerai.com also sends the platform's Daily Pace Briefing (reports@, its own key):
+#   don't change that domain in Resend or its DNS records without checking both senders.
 
 # ── Staging: the dev half of the demo-reel pipeline ───────────────────────────
 # A SEPARATE worker (pacer-demo-worker-staging.will-078.workers.dev) that serves every

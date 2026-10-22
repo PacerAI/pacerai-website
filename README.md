@@ -18,6 +18,7 @@ If you're opening this repo for the first time: read `AGENTS.md` (OS-pointer blo
 | **Deploy runbook** | [`docs/deploy/runbook.md`](docs/deploy/runbook.md) | Read before any REST API push to WordPress |
 | **Page authoring + WPCode** | [`src/README.md`](src/README.md) | How a page is built, how nav/footer attach, and how to paste the WPCode footer without breaking the site |
 | **Lead-capture architecture** | [`docs/lead-capture-architecture.md`](docs/lead-capture-architecture.md) | Form → Worker → D1 `leads` → Slack → Apollo sequence; where to change each part |
+| **Order emails** | [`docs/deploy/order-email-setup.md`](docs/deploy/order-email-setup.md) | Set up, test or rotate the `/pricing/` order emails (Resend, from `orders@mail.getpacerai.com`). The sending domain is shared with the platform's Daily Pace Briefing — read it before touching Resend or the `mail.` DNS records |
 | **Capture goal + measures** | [`goals/email-capture.md`](goals/email-capture.md) | What the site optimises for and the SQL that measures it |
 | **Demo videos** | [`docs/design/demo-vids/`](docs/design/demo-vids/README.md) | Every homepage demo video served (live: `pacing-agent-v3`, user types `pace` then `gap`); how to rebuild, stage, promote, roll back |
 | **Seeds + plans** | [`docs/seed/`](docs/seed/) · [`docs/plan/`](docs/plan/) | The verbatim prompt behind a piece of work, and the plan that executed it (e.g. `2026-10-05-make-plan-messaging.md`) |
@@ -99,7 +100,7 @@ pacerai-website/
 │   ├── nav-headers.html                   # Shared nav fragment
 │   └── wpcode/                            # footer.js — source of truth for the WPCode Footer snippet
 ├── scripts/                               # preview.py + validate.py + deploy.py + build_seo_table.py + build_pacing_chart.py
-├── infra/pacer-demo-worker/               # Cloudflare Worker: homepage demo video (src/demo.html) + /demo-connect signup
+├── infra/pacer-demo-worker/               # Cloudflare Worker: homepage demo video (src/demo.html) + /demo-connect signup + /pricing order capture and Resend order emails (orders@) + /internal/demo-signups (read by the platform briefing)
 ├── docs/                                  # PDBRDD documentation
 │   ├── plan/                              # PRD, site tree, build prompts
 │   ├── design/                            # HTML mockups; demo-vids/ = every homepage demo video served
@@ -182,7 +183,7 @@ All 12 blog articles (bone + live under `/resources/`) plus slugs, parents, and 
 | `src/homepage/wpcode-homepage-css.css` | Archive | Pre-v3 externalized homepage CSS. The WPCode **Header** snippet is deliberately blank since v3 — leave it empty | `webdev-getpacerai` |
 | `scripts/deploy.py` | Tooling | WP REST API deploy with built-in validation + backup + verification | Operator |
 | `scripts/build_pacing_chart.py` | Tooling | Homepage "Why Pacer AI exists" chart: takes the demo video's `pace_annual.svg`, applies website tweaks, inlines into the homepage | Operator |
-| `infra/pacer-demo-worker/` | Infra | Cloudflare Worker serving the homepage demo video (`src/demo.html`, written only by `promote.sh`) and the `/demo-connect` signup | Operator (deploys gated on Will) |
+| `infra/pacer-demo-worker/` | Infra | Cloudflare Worker serving the homepage demo video (`src/demo.html`, written only by `promote.sh`), the `/demo-connect` signup, the `/pricing/` order capture (`/order` + `POST /pricing-request`) with its Resend order emails from `orders@mail.getpacerai.com` (setup: `docs/deploy/order-email-setup.md`), and `/internal/demo-signups`, which the platform's Daily Pace Briefing reads | Operator (deploys gated on Will) |
 | `docs/design/demo-vids/` | Archive | One folder per homepage demo video ever served, with transcript + README | Operator |
 | `scripts/validate.py` | Tooling | Char count + broken-link + footer/nav consistency; `--strict` is the Pre-Publish gate | Operator |
 | `scripts/preview.py` | Tooling | Local preview server — strips WP scripts, injects WPCode CSS to simulate render | Operator |
