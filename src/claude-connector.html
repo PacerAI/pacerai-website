@@ -145,9 +145,9 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 <section class="hero" data-section="claude-connector">
   <div class="kick">Pacer AI for Claude</div>
   <h1>Pacer AI in Claude</h1>
-  <p class="hero-sub">Ask Claude whether you are on pace to make plan for the month, the quarter and the year, how large the gap is, and where to close it. The connector answers from a demo: the CRM data of a synthetic recurring-revenue company with fictional accounts, reps and deals, updated every night.</p>
+  <p class="hero-sub">Ask Claude whether you are on pace to make plan for the month, the quarter and the year, how large the gap is, and where to close it. The connector answers from a demo: DemoCo.ai, a synthetic software company that ended 2025 at $100M in annual recurring revenue, with fictional customers, reps and deals in a live HubSpot portal, updated every night.</p>
   <div class="hero-cta">
-    <a class="btn-open" data-cta="hero" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fpacerai-demo-mcp.azurewebsites.net%2Fmcp" target="_blank" rel="noopener">Add Pacer AI &#45; Demo to Claude</a>
+    <a class="btn-open" data-cta="hero" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fdemo.getpacerai.com%2Fmcp" target="_blank" rel="noopener">Add Pacer AI &#45; Demo to Claude</a>
     <p class="hero-note">Free. You sign in with your work email; there is no password.</p>
   </div>
 </section>
@@ -155,27 +155,28 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 <div class="doc">
 
   <h2 data-section="what-it-does">What Pacer AI does in Claude</h2>
-  <p>Pacer AI is the Daily Pacing Agent for sales leaders. In Claude it answers from the demo company&rsquo;s CRM data, with tables and charts in the chat:</p>
+  <p>Pacer AI is the Daily Pacing Agent for sales leaders. In Claude it answers from the demo company&rsquo;s HubSpot data, with tables and charts in the chat:</p>
   <ul>
     <li><b>Are we on pace?</b> Bookings to date against the plan to date, for the month, the quarter and the year.</li>
     <li><b>What is the gap?</b> The target minus the forecast.</li>
-    <li><b>How do we close it?</b> The renewals to defend, the expansion to add and the new customers to find, with the reps and accounts behind each.</li>
+    <li><b>How do we close it?</b> The renewals to defend, the expansion to add and the new customers to find, with the reps, customers and deals behind each.</li>
   </ul>
   <p>The connector reads data and changes nothing. No real customer&rsquo;s data is in the demo.</p>
+  <p><b>Use Salesforce?</b> The same demo runs on a Salesforce version of DemoCo.ai, available on request: write to <a href="mailto:support@getpacerai.com">support@getpacerai.com</a>.</p>
   <div class="terms">
-    <p><b>Terms used on this page.</b> <b>Plan:</b> the company&rsquo;s target for the period. <b>Booked:</b> closed-won bookings so far. <b>Forecast:</b> booked plus open pipeline weighted by its probability of closing. <b>Pace:</b> booked compared with the plan to date. <b>Gap:</b> target minus forecast. <b>New Logo:</b> ARR from new customers. <b>Net Expansion:</b> upgrades from existing customers, less downsell and churn. <b>White space:</b> the ARR an existing account would add by buying every product for all of the seats on its subscription.</p>
+    <p><b>Terms used on this page.</b> <b>Plan:</b> the company&rsquo;s target for the period. <b>Booked:</b> closed-won bookings so far. <b>Forecast:</b> booked plus open pipeline weighted by its probability of closing. <b>Pace:</b> booked compared with the plan to date. <b>Gap:</b> target minus forecast. <b>New Logo:</b> ARR from new customers. <b>Net Expansion:</b> upgrades from existing customers, less downsell and churn. <b>White space:</b> the ARR an existing customer would add by buying every product for all of the seats on its subscription. <b>Movement type:</b> the label on every HubSpot deal (New Business, Upsell, Cross-sell, Downsell, Renewal or Churn), which says how the deal moved the customer&rsquo;s ARR.</p>
   </div>
 
   <h2 data-section="add">Add it to Claude</h2>
   <ol>
     <li><b>From Claude&rsquo;s connector directory</b> <span class="soon">after the listing is approved</span>: open <span class="mono">claude.ai/directory/connectors/pacer-ai</span> and click <b>Connect</b>.</li>
     <li><b>Or add it now as a custom connector.</b> Signed in to claude.ai in your browser, the button opens Claude&rsquo;s <b>Add custom connector</b> dialog with the name and server URL filled in. Click <b>Continue</b>, keep the defaults, then click <b>Add</b>.
-      <p style="margin-top:10px"><a class="btn-open" data-cta="steps" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fpacerai-demo-mcp.azurewebsites.net%2Fmcp" target="_blank" rel="noopener">Add Pacer AI &#45; Demo to Claude</a></p>
+      <p style="margin-top:10px"><a class="btn-open" data-cta="steps" href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fdemo.getpacerai.com%2Fmcp" target="_blank" rel="noopener">Add Pacer AI &#45; Demo to Claude</a></p>
       <p>In the Claude desktop app, or if the dialog opens empty, add it by hand: click <b>+</b> in the prompt box &rarr; <b>Connectors</b> &rarr; <b>Add connector</b> &rarr; <b>Add custom connector</b>, then paste these two values.</p>
       <p class="copy-label">Name</p>
       <code class="copy">Pacer AI &#45; Demo</code>
       <p class="copy-label">MCP server URL</p>
-      <code class="copy">https&#58;//pacerai-demo-mcp.azurewebsites.net/<wbr>mcp</code>
+      <code class="copy">https&#58;//demo.getpacerai.com/<wbr>mcp</code>
     </li>
     <li><b>On a Claude Team or Enterprise plan</b>, only an Owner can add a connector. Ask your Owner, or use a personal Claude account.</li>
   </ol>
@@ -186,7 +187,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   <p>Your email tells us who is using the demo, and we may follow up with you about Pacer AI. The <a href="/privacy/">privacy policy</a> sets out what the connector receives and what we keep.</p>
 
   <h2 data-section="commands">What you can ask Pacer</h2>
-  <p class="note-chg">This list may change slightly after review.</p>
+  <p class="note-chg">This list may change slightly before the connector is listed.</p>
   <p>Ask in plain English; Claude picks the command. Each command, and the question it answers:</p>
   <div class="tbl"><table>
     <tr><th>Command</th><th>What it answers</th></tr>
@@ -196,21 +197,22 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     <tr><td><span class="mono">pace_quarterly</span></td><td>Are we making the quarter? Quarter-to-date bookings against the quarter&rsquo;s target, with a forecast for the quarter end.</td></tr>
     <tr><td><span class="mono">pace_annual</span></td><td>Will we make the year? Year-to-date ARR against the plan line, the gap to the annual target and where the year lands.</td></tr>
     <tr><td><span class="mono">top_movers</span></td><td>What might we lose, what must we defend, and what can we add? The five largest churn risks, renewals and expansion deals still to come in the period.</td></tr>
-    <tr><td><span class="mono">rep_attainment</span></td><td>Who is carrying the number? Each rep&rsquo;s quota, attainment to date and projected attainment, with the activity behind it.</td></tr>
-    <tr><td><span class="mono">rep_pipeline</span></td><td>Is each rep&rsquo;s pipeline enough? Coverage of the quota still to book, pipeline by stage, stage conversion and time in stage.</td></tr>
-    <tr><td><span class="mono">rep_leads</span></td><td>How many leads is each rep getting, from which sources, and how many become deals?</td></tr>
-    <tr><td><span class="mono">renewals</span></td><td>Which accounts were up for renewal in the period, and how did each renewal go?</td></tr>
+    <tr><td><span class="mono">rep_attainment</span></td><td>Who is carrying the number? Each rep&rsquo;s quota, attainment to date and projected attainment, with a heat map by quarter.</td></tr>
+    <tr><td><span class="mono">deal_detail</span></td><td>What is in this deal? One deal in full, by its name or the customer&rsquo;s: movement type, stage, close date, ARR, the ARR it moved, and its line items.</td></tr>
+    <tr><td><span class="mono">movement_deals</span></td><td>Which deals of one movement type closed in a year? For example the cross-sell or churn deals, largest first, with a total.</td></tr>
+    <tr><td><span class="mono">renewals</span></td><td>Which customers were up for renewal in the period, and how did each renewal go?</td></tr>
     <tr><td><span class="mono">new_bookings</span></td><td>Which new-customer deals closed in the period: won, still open or lost?</td></tr>
-    <tr><td><span class="mono">new_logos</span></td><td>Where are the next new customers? Prospects that resemble current customers, and past champions who have moved to a prospect.</td></tr>
-    <tr><td><span class="mono">whitespace_list</span></td><td>Which accounts renewing in the period have the most room to expand, ranked by white space?</td></tr>
-    <tr><td><span class="mono">whitespace_detail</span></td><td>Product by product, how much white space does each renewing account have?</td></tr>
-    <tr><td><span class="mono">account_products</span></td><td>What does an account own, product by product, in a given period?</td></tr>
+    <tr><td><span class="mono">new_logos</span></td><td>Where are the next new customers? Prospects that resemble current customers.</td></tr>
+    <tr><td><span class="mono">whitespace_list</span></td><td>Which customers renewing in the period have the most room to expand, ranked by white space?</td></tr>
+    <tr><td><span class="mono">whitespace_detail</span></td><td>Product by product, how much white space does each renewing customer have?</td></tr>
+    <tr><td><span class="mono">account_products</span></td><td>What does a customer own, product by product, in a given period?</td></tr>
+    <tr><td><span class="mono">arr_waterfall_annual</span></td><td>How did ARR move each year? Beginning ARR, the movements in between and ending ARR, with gross and net revenue retention.</td></tr>
+    <tr><td><span class="mono">arr_product_waterfall</span></td><td>The same bridge by product, which separates upsell from cross-sell and lists the deals behind a bar.</td></tr>
     <tr><td><span class="mono">arr_chart_annual</span></td><td>What is our ARR, and how has it moved this year? ARR at each period end, with new-customer ARR shown on top.</td></tr>
     <tr><td><span class="mono">arr_chart_quarter</span></td><td>What is our ARR at each month end this quarter?</td></tr>
     <tr><td><span class="mono">metrics</span></td><td>Which metrics can Pacer report, and how is each one defined?</td></tr>
     <tr><td><span class="mono">dimensions</span></td><td>What can I cut the numbers by (market, segment, the year a customer joined), and how is ARR split across each?</td></tr>
-    <tr><td><span class="mono">demo_context</span></td><td>What company is this? What it sells, where and to whom, and what the labels Market A&ndash;C and Product A&ndash;C stand for.</td></tr>
-    <tr><td><span class="mono">data_quality</span></td><td>What is missing from the data, why, and whose job is it to fix it?</td></tr>
+    <tr><td><span class="mono">demo_context</span></td><td>What company is this? What DemoCo.ai sells, where and to whom, and what the labels Market A&ndash;C and Product A&ndash;C stand for.</td></tr>
     <tr><td><span class="mono">health</span></td><td>Is the demo running? Did last night&rsquo;s update run, and is the morning briefing sending?</td></tr>
   </table></div>
 
@@ -220,9 +222,9 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     <div class="p">gap</div>
     <div class="p">make plan</div>
     <div class="p">top movers</div>
-    <div class="p">rep attainment</div>
+    <div class="p">deal detail: Brightpath Financial &mdash; FY2025 Better</div>
   </div>
-  <p>Charts render in the chat on Claude web and desktop. Follow up in plain English: ask about a market, a rep, an account or a period.</p>
+  <p>Charts render in the chat on Claude web and desktop. Follow up in plain English: ask about a market, a rep, a customer, a deal or a period.</p>
 
   <h2 data-section="privacy-support">Privacy and support</h2>
   <ul>
