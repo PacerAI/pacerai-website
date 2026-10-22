@@ -22,7 +22,7 @@ Marketing website repo for [getpacerai.com](https://getpacerai.com). WordPress.c
 - **CMS:** WordPress.com (hosted, no SSH/WP-CLI access)
 - **Theme:** Twenty Twenty-Four (WordPress default — fully overridden by inline CSS)
 - **Deploy method:** WordPress REST API + Application Password (Python `requests` library)
-- **No build tools** for the pages — no npm, no bundler, no framework. Pure HTML/CSS, vanilla JS for mobile nav only. *(Exception: `infra/pacer-demo-worker/` is a self-contained Cloudflare Worker — its own npm + wrangler — that serves the homepage demo video (`pacing-agent-v3` since 2026-10-05) and the `/demo-connect` signup widget. It is website infra, isolated from page authoring; see its README and the demo-video section below.)*
+- **No build tools** for the pages — no npm, no bundler, no framework. Pure HTML/CSS, vanilla JS for mobile nav only. *(Exception: `infra/pacer-demo-worker/` is a self-contained Cloudflare Worker — its own npm + wrangler — that serves the homepage demo video (`pacing-agent-v3` since 2026-10-05), the `/demo-connect` signup widget, and the `/pricing/` order card (`/order` + `POST /pricing-request`), which sends the order emails through Resend from `orders@mail.getpacerai.com` (`docs/deploy/order-email-setup.md`). It is website infra, isolated from page authoring; see its README and the demo-video section below.)*
 - **Font loading:** Google Fonts loaded by WordPress — no `<link>` tags needed in page HTML.
 
 ## WordPress Page Registry
@@ -150,11 +150,12 @@ docs/
     ├── runbook.md                      # Deploy instructions
     ├── wp-admin-actions.md             # Organization/Person WPCode schema snippet + redirect runbook
     ├── order-email-setup.md            # /pricing/ order emails: Resend key + domain, end-to-end test, Slack outcomes
+    ├── 2026-10-21-demo-connect-one-button.md  # /demo-connect one-button install + connector sign-in → demo lead rollout
     └── yoast-worklist.md               # Per-page Yoast title/meta worklist (WP Admin only)
 
 docs/design/demo-vids/                  # Every homepage demo video served, one folder each (README = index)
 img/pacing/                             # Homepage "Why Pacer AI exists" chart (generated; see demo-video section)
-infra/pacer-demo-worker/                # Cloudflare Worker: homepage demo video + /demo-connect signup
+infra/pacer-demo-worker/                # Cloudflare Worker: homepage demo video + /demo-connect signup + /order, POST /pricing-request → Resend from orders@mail.getpacerai.com
 
 pacerai-context/
 ├── pacerai.md                          # Canonical company context (products, personas, differentiation)
@@ -419,3 +420,4 @@ ln -s ~/Documents/pacerai/pacerai-website/.claude/skills/tear-sheet ~/.claude/sk
 - New image assets that need uploading
 - Creating new WordPress pages (record ID in registry)
 - Plugin installation or theme changes
+- Worker secrets (`npx wrangler secret put` on `pacer-demo-worker`), Resend API keys, and the `mail.getpacerai.com` DNS records (`send.mail` MX + SPF TXT, `resend._domainkey.mail` DKIM). The domain also sends the platform's Daily Pace Briefing (`reports@`, its own key), so a domain or DNS change stops both senders; see `docs/deploy/order-email-setup.md`

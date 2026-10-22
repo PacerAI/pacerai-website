@@ -3,20 +3,39 @@
 **For:** Will, setting up the email step of the `/pricing/` order capture and checking it end to end.
 **Status (2026-10-20): working.**
 - **Test.** Will's test at 14:21 UTC sent both emails from `orders@mail.getpacerai.com`, and Slack said "visitor sent, Will sent".
-- **Domain.** `mail.getpacerai.com` is verified in Resend; its 4 DNS records were added through Auto configure.
-- **Key.** The current `RESEND_API_KEY` was tested with curl before it was uploaded.
+- **Domain.** `mail.getpacerai.com` is verified in Resend (2026-10-19); its 4 DNS records were added through Auto configure.
+  Open and click tracking are off. The domain is shared with the platform's Daily Pace Briefing: see
+  [Shared sending domain](#shared-sending-domain).
+- **Key.** The current `RESEND_API_KEY` is the Resend key named `getPacerAI-send-access`. It was tested with curl
+  before it was uploaded.
 
 Use this doc again to rotate the key or rebuild the setup.
 
 When a visitor clicks **Choose** on getpacerai.com/pricing/, they enter a work email in the order card and the
-`pacer-demo-worker` sends two emails through Resend, from `orders@mail.getpacerai.com`:
+`pacer-demo-worker` sends two emails through Resend, from `Pacer AI <orders@mail.getpacerai.com>`. That is the
+Worker's default sender; the `ORDER_FROM` setting overrides it (`src/order.ts`).
 
 | To | Subject | Reply goes to |
 |---|---|---|
 | The visitor | Your Pacer AI pricing summary: *package* | Will |
-| will@getpacerai.com | Pricing request: *company*, *package*, *ACV* | The visitor |
+| will@getpacerai.com (`ORDER_NOTIFY_TO` overrides it) | Pricing request: *company*, *package*, *ACV* | The visitor |
 
 Everything else about a request works without email: the database rows, the Slack post and the Apollo list.
+
+## Shared sending domain
+
+`mail.getpacerai.com` sends for two systems, each with its own Resend key:
+
+| Sender | Sent by | Resend key |
+|---|---|---|
+| `Pacer AI <orders@mail.getpacerai.com>` | This repo's Worker `pacer-demo-worker`: the order emails | `getPacerAI-send-access`, stored as the Worker secret `RESEND_API_KEY` |
+| `Pacer AI Reports <reports@mail.getpacerai.com>` | pacerai-platform-claude-native: the Daily Pace Briefing | Its own key, in Azure Key Vault as `RESEND-BRIEFING` |
+
+- **Rotate or revoke only the key you mean to.** Revoking `getPacerAI-send-access` stops the order emails only.
+- **Removing or re-verifying the domain in Resend, or editing its DNS records, breaks both senders.** The
+  "Verify the sending domain" section below is for a full rebuild only.
+- Deliverability for both senders (SPF, DKIM, DMARC, inbox placement):
+  `pacerai-platform-claude-native/docs/deploy/2026-10-22-email-deliverability.md`.
 
 ---
 
@@ -26,8 +45,9 @@ Do these in one terminal. The key is read into a shell variable without being sh
 history. The test and the upload then use the identical value, so a stale clipboard or a stray space can't
 slip in.
 
-1. In Resend → **API Keys**, create a key: **Sending access**, domain `mail.getpacerai.com`. Copy it; it
-   starts with `re_`.
+1. In Resend → **API Keys**, create a key named `getPacerAI-send-access`: **Sending access**, domain
+   `mail.getpacerai.com`. Copy it; it starts with `re_`. When rotating, revoke the old `getPacerAI-send-access`
+   key only after the upload below prints `Success!`, and leave the briefing's key alone.
 2. Read the key and test it. At the prompt, paste the key and press Enter:
    ```bash
    cd ~/Documents/pacerai/pacerai-website/infra/pacer-demo-worker
@@ -48,6 +68,9 @@ slip in.
    `wrangler secret put <key>` creates a secret *named* after the key (this happened on 2026-10-19).
 
 ## 3. Verify the sending domain
+
+Only for a full rebuild. The domain has been verified since 2026-10-19 and the Daily Pace Briefing sends from it too,
+so removing, re-adding or re-verifying it stops both senders (see [Shared sending domain](#shared-sending-domain)).
 
 1. Resend → **Domains** → **Add domain** → `mail.getpacerai.com`. Resend lists 3 DNS records:
    - an MX record on `send.mail`;
