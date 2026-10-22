@@ -420,4 +420,4 @@ ln -s ~/Documents/pacerai/pacerai-website/.claude/skills/tear-sheet ~/.claude/sk
 - New image assets that need uploading
 - Creating new WordPress pages (record ID in registry)
 - Plugin installation or theme changes
-- Worker secrets (`npx wrangler secret put` on `pacer-demo-worker`), Resend API keys, and the `mail.getpacerai.com` DNS records (`send.mail` MX + SPF TXT, `resend._domainkey.mail` DKIM). The domain also sends the platform's Daily Pace Briefing (`reports@`, its own key), so a domain or DNS change stops both senders; see `docs/deploy/order-email-setup.md`
+- Worker secrets (`npx wrangler secret put` on `pacer-demo-worker`), Resend API keys, and the `mail.getpacerai.com` DNS records (`send.mail` MX + SPF TXT, `resend._domainkey.mail` DKIM, `rsend.mail` CNAME). The domain also sends the platform's Daily Pace Briefing (`reports@`, its own key), so a domain or DNS change stops both senders; see `docs/deploy/order-email-setup.md`

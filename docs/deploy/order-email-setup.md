@@ -76,6 +76,7 @@ so removing, re-adding or re-verifying it stops both senders (see [Shared sendin
    - an MX record on `send.mail`;
    - an SPF TXT record on `send.mail`;
    - a DKIM TXT record on `resend._domainkey.mail`.
+   - a CNAME on `rsend.mail` → `send.forge.rmta.net` (Resend's fourth record, shown under SPF in its dashboard).
 2. Add them at WordPress.com → **Upgrades → Domains → getpacerai.com → DNS records**, or paste them to Claude,
    who adds them for you. They sit only under `mail.`; your Google Workspace mail on `getpacerai.com` is
    untouched.

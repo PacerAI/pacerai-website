@@ -131,7 +131,7 @@ WordPress.com-hosted, so confirm DNS first). If so: uncomment the `[[routes]]` b
 to `https://demo.getpacerai.com/`. Until then, the `workers.dev` URL is the reliable default.
 
 If the `getpacerai.com` DNS ever moves (to Cloudflare or anywhere else), the Resend records for `mail.` must move with
-it: `send.mail` MX + SPF TXT and `resend._domainkey.mail` DKIM. Otherwise both senders on that domain stop: the order
+it: `send.mail` MX + SPF TXT, `resend._domainkey.mail` DKIM and the `rsend.mail` CNAME. Otherwise both senders on that domain stop: the order
 emails from this Worker and the platform's Daily Pace Briefing.
 
 ## `/signup` + `POST /demo-signup` — demo access and Apollo follow-up
