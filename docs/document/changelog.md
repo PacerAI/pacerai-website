@@ -13,7 +13,7 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 - Deployed page 983 from main (`deploy.py 983`, backup `docs/review/pre-deploy-backup-983-20261022-1003.json`): the "Add Pacer AI - Demo to Claude" button in the hero, the signup card removed, six steps after the click.
 - `pacer-demo-worker` deployed (version `8147c653`): `POST /internal/connector-sign-in` (#45), plus the held briefing line and `/internal/demo-signups` feed (#43) and the card's prefilled install link (#44).
 - The connector's sign-in page is email-only on `pacerai-demo-mcp` (platform #104, #107).
-- Still to do: Will pastes the new `src/wpcode/footer.paste.txt` into WPCode (the `install_click` GA4 event).
+- WPCode Footer updated to `footer.paste.txt` sha `54ba22069572` (was `2c98f687cc6c`): the `install_click` GA4 event is live.
 
 ## 2026-10-21: one button on /demo-connect; connector sign-ins become leads (#45, not deployed)
 

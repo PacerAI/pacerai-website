@@ -77,12 +77,17 @@ Nothing is live until the steps below. Claude runs the commands on Will's go; th
   - _Passed 2026-10-22 09:30 MT: sign-in page email-only with the bot check; usage-log sign-in and two `pace` calls; D1 row `connector-sign-in` (class internal) linked to Apollo. No Slack alert, as designed: Will's address was already on record._
 - [x] **8. Voice pass** on the two lines under the hero button and on the steps (`src/demo-connect.html`).
   - _Done 2026-10-22: Will approved both hero lines as written._
-- [ ] **9. Deploy page 983 and paste the footer.**
+- [x] **9. Deploy page 983 and paste the footer.**
   - [x] `python3 scripts/deploy.py 983` (it keeps a backup in `docs/review/`). _Done 2026-10-22 10:03 MT; backup `docs/review/pre-deploy-backup-983-20261022-1003.json`. Live page checked: hero button above the screenshot, no card, no password text, URL box not a link._
-  - [ ] **Will:** paste `src/wpcode/footer.paste.txt` into WP Admin → WPCode → Header & Footer → Footer, then Save. The saved
+  - [x] Paste `src/wpcode/footer.paste.txt` into WP Admin → WPCode → Header & Footer → Footer, then Save. The saved
     field's SHA-256 must start `54ba22069572` (`shasum -a 256 src/wpcode/footer.paste.txt`).
   - Check: the live page shows the button above the hero screenshot at phone width; the step 1 URL box is plain
     text, not a link; clicking the hero button shows `install_click` with `cta_location: hero` in GA4 Realtime.
+  - _Done 2026-10-22 ~11:20 MT by Claude in Will's Chrome, at Will's ask. Before: the Footer field was `2c98f687cc6c`
+    (the previous version, `git show 9567749:src/wpcode/footer.paste.txt`, so that's the rollback). Pasted from the
+    clipboard, checked `54ba22069572` before saving, and again after the reload. Live: /demo-connect and the homepage
+    load the new script with no script errors (2 homepage CTA forms); a hero-button click sends `install_click` with
+    `cta_location: hero` (checked with a stand-in for GA4, so no test event reached analytics)._
 
 **Rollback.** Set `PACER_OAUTH_EMAIL_ONLY=false` on `pacerai-demo-mcp` (the password sign-in page returns) **and**
 restore page 983 from the deploy backup (the card and its password come back with it). Do both: either one alone
