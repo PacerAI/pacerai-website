@@ -17,12 +17,14 @@ Nothing is live until the steps below. Claude runs the commands on Will's go; th
 
 ## Checklist
 
-- [ ] **1. Merge both pull requests.** The platform one (connector email-only sign-in;
+- [x] **1. Merge both pull requests.** The platform one (connector email-only sign-in;
   `PacerAI/pacerai-platform-claude-native`, branch `feat/email-only-sign-in`) and this website one.
-- [ ] **2. Let the bot check run on the connector's sign-in page.** Cloudflare dashboard → Turnstile → the existing
+  - _Done 2026-10-21 (Will merged platform #104 and website #45)._
+- [x] **2. Let the bot check run on the connector's sign-in page.** Cloudflare dashboard → Turnstile → the existing
   demo-signup widget (site key `0x4AAAAAAFCmrSWLyo0ieLAF`) → Settings → Hostnames → add
   `pacerai-demo-mcp.azurewebsites.net` → Save.
-- [ ] **3. One shared token for the sign-in → lead hand-off.** The same value goes to the Worker secret
+  - _Done 2026-10-22. Will's dashboard save didn't take, so Claude added the hostname through Cloudflare's API (wrangler's sign-in has widget access); the widget's other settings were unchanged._
+- [x] **3. One shared token for the sign-in → lead hand-off.** The same value goes to the Worker secret
   `CONNECTOR_SIGNIN_TOKEN` and the Salesforce demo app's setting `PACER_LEAD_SYNC_TOKEN` (through Key Vault, like
   the briefing token). It is never printed:
   ```bash
@@ -30,7 +32,8 @@ Nothing is live until the steps below. Claude runs the commands on Will's go; th
   printf %s "$TOKEN" | az keyvault secret set --vault-name pacerai-demo-kv30208 --name CONNECTOR-SIGNIN-TOKEN --file /dev/stdin -o none
   cd ~/Documents/pacerai/pacerai-website/infra/pacer-demo-worker && printf %s "$TOKEN" | npx wrangler secret put CONNECTOR_SIGNIN_TOKEN --env="" && unset TOKEN
   ```
-- [ ] **4. Settings on the Salesforce demo app only** (`pacerai-demo-mcp`, resource group `pacerai-demo-rg`; the
+  - _Done 2026-10-22 ~08:48 MT, both tokens (this one and the briefing feed's `BRIEFING_SIGNUPS_TOKEN`)._
+- [x] **4. Settings on the Salesforce demo app only** (`pacerai-demo-mcp`, resource group `pacerai-demo-rg`; the
   HubSpot app keeps its current sign-in). First put the Turnstile widget's secret key in Key Vault (Cloudflare →
   Turnstile → the same widget → Settings → copy the secret key):
   ```bash
@@ -46,7 +49,8 @@ Nothing is live until the steps below. Claude runs the commands on Will's go; th
   ```
   The app ignores these until step 6 ships the code that reads them. In the portal, both Key Vault references
   should show Resolved.
-- [ ] **5. Deploy the Worker:** `cd ~/Documents/pacerai/pacerai-website/infra/pacer-demo-worker && npm run deploy`.
+  - _Done 2026-10-22, plus `BRIEFING_SIGNUPS_URL` / `BRIEFING_SIGNUPS_TOKEN` (briefing rollout section 4). All three Key Vault references Resolved. Will put the Turnstile secret in Key Vault himself._
+- [x] **5. Deploy the Worker:** `cd ~/Documents/pacerai/pacerai-website/infra/pacer-demo-worker && npm run deploy`.
   - This also ships the Worker changes already merged on main and held back: the 3-day briefing line and the
     `/internal/demo-signups` feed (website pull request #43), and the card's prefilled install link (website pull
     request #44). The 3-day briefing for signups only starts once `BRIEFING_SIGNUPS_TOKEN` is set, per
@@ -54,9 +58,11 @@ Nothing is live until the steps below. Claude runs the commands on Will's go; th
   - Check: `/signup` and `/health` return 200 (use a browser User-Agent), the homepage video's sha is unchanged, and
     `curl -s -o /dev/null -w '%{http_code}\n' -X POST https://pacer-demo-worker.will-078.workers.dev/internal/connector-sign-in`
     prints `401` (it prints `503` if step 3's Worker secret is missing).
-- [ ] **6. Redeploy the Salesforce demo app** from a fresh checkout of main: `pacerai-platform-claude-native`
+  - _Done 2026-10-22, Worker version `8147c653` from a clean copy of main (one network retry). Homepage video unchanged; `/signup` and `/health` 200; both internal routes 401 without a token._
+- [x] **6. Redeploy the Salesforce demo app** from a fresh checkout of main: `pacerai-platform-claude-native`
   `deploy/redeploy.sh`. Confirm with the connector's `health` tool. No reconnect is needed in Claude.
-- [ ] **7. End-to-end test** in an incognito window, signed in to Claude as **Will@getpacerai.com**. Any other domain
+  - _Done 2026-10-22 from clean copies of main (`e5191a8`, image `3dc8e977`); `health` confirmed. Redeployed again with platform #107 (`dff9f6b`, image `dd2d2d00`)._
+- [x] **7. End-to-end test** in an incognito window, signed in to Claude as **Will@getpacerai.com**. Any other domain
   is a real lead and gets the Apollo email. The hero button isn't live until step 9, so use the
   **Add Pacer AI - Demo to Claude** button in step 1 of the live page (the same link):
   - claude.ai's dialog opens with the name and URL filled in → Continue → Add → Connect.
@@ -68,10 +74,12 @@ Nothing is live until the steps below. Claude runs the commands on Will's go; th
       `npx wrangler d1 execute pacerai-leads --remote --command "SELECT request_id, email, lead_class, asset_slug, created_at FROM leads WHERE asset_slug = 'connector-sign-in' ORDER BY created_at DESC LIMIT 3"`;
     - Slack `#website-leads` shows the alert with "Via: the connector's sign-in page";
     - `/demo-usage` lists Will as a signup, not "stray".
-- [ ] **8. Voice pass** on the two lines under the hero button and on the steps (`src/demo-connect.html`).
+  - _Passed 2026-10-22 09:30 MT: sign-in page email-only with the bot check; usage-log sign-in and two `pace` calls; D1 row `connector-sign-in` (class internal) linked to Apollo. No Slack alert, as designed: Will's address was already on record._
+- [x] **8. Voice pass** on the two lines under the hero button and on the steps (`src/demo-connect.html`).
+  - _Done 2026-10-22: Will approved both hero lines as written._
 - [ ] **9. Deploy page 983 and paste the footer.**
-  - `python3 scripts/deploy.py 983` (it keeps a backup in `docs/review/`).
-  - Paste `src/wpcode/footer.paste.txt` into WP Admin → WPCode → Header & Footer → Footer, then Save. The saved
+  - [x] `python3 scripts/deploy.py 983` (it keeps a backup in `docs/review/`). _Done 2026-10-22 10:03 MT; backup `docs/review/pre-deploy-backup-983-20261022-1003.json`. Live page checked: hero button above the screenshot, no card, no password text, URL box not a link._
+  - [ ] **Will:** paste `src/wpcode/footer.paste.txt` into WP Admin → WPCode → Header & Footer → Footer, then Save. The saved
     field's SHA-256 must start `54ba22069572` (`shasum -a 256 src/wpcode/footer.paste.txt`).
   - Check: the live page shows the button above the hero screenshot at phone width; the step 1 URL box is plain
     text, not a link; clicking the hero button shows `install_click` with `cta_location: hero` in GA4 Realtime.
