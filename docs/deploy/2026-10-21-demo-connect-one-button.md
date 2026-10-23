@@ -121,29 +121,36 @@ HubSpot app still has password sign-in and `PACER_OAUTH_ALLOWED_EMAILS` holding 
 step 4 settings above (setting names checked, values not read). Publishing the page before steps 1–3 would send
 prospects to a URL that doesn't answer, then to a sign-in page that refuses them.
 
-- [ ] **1. Bind `demo.getpacerai.com` to `pacerai-demo-hubspot-mcp`** (platform side, Will's go): the DNS records
+- [x] **1. Bind `demo.getpacerai.com` to `pacerai-demo-hubspot-mcp`** (platform side, Will's go): the DNS records
   Azure asks for at WordPress.com, then the custom domain and its certificate on the app. Then set
   `PACER_PUBLIC_URL=https://demo.getpacerai.com` and add `demo.getpacerai.com` to `PACER_MCP_ALLOWED_HOSTS`; the
   sign-in metadata's issuer comes from `PACER_PUBLIC_URL`. Check:
   `curl -s https://demo.getpacerai.com/.well-known/oauth-authorization-server` names `demo.getpacerai.com` throughout.
-- [ ] **2. Bot check on the new host.** Add `demo.getpacerai.com` to the same Turnstile widget's hostnames (step 2
+  - _Done 2026-10-22: DNS via the WordPress.com connector on Will's approval; managed certificate bound (SNI, renews; first expiry 2027-04-22)._
+- [x] **2. Bot check on the new host.** Add `demo.getpacerai.com` to the same Turnstile widget's hostnames (step 2
   above).
-- [ ] **3. Email-only sign-in on the HubSpot app** (resource group `pacerai-demo-hubspot-rg`): the five settings of
+  - _Done 2026-10-22: the widget renders on `demo.getpacerai.com` (checked in a headless browser; no domain error)._
+- [x] **3. Email-only sign-in on the HubSpot app** (resource group `pacerai-demo-hubspot-rg`): the five settings of
   step 4 above, with the same Key Vault references, **and remove `PACER_OAUTH_ALLOWED_EMAILS`**. While it is set,
   every email but Will's is refused.
-- [ ] **4. Decide where the 3-day briefing comes from.** Only the Salesforce app reads the signup feed
+  - _Done 2026-10-22: email-only, Turnstile and lead sync copied from the Salesforce app; the allow-list removed; `PACER_PUBLIC_URL=https://demo.getpacerai.com`._
+- [x] **4. Decide where the 3-day briefing comes from.** Only the Salesforce app reads the signup feed
   (`BRIEFING_SIGNUPS_URL` / `BRIEFING_SIGNUPS_TOKEN`), and the feed doesn't separate the two books. Unless those
   settings move to the HubSpot app, a prospect who signs in to the $100M HubSpot demo gets three briefings on the $7M
   Salesforce book. Check `pacerai-platform-claude-native/docs/deploy/2026-10-20-daily-pace-briefing-rollout.md`
   section 4 first: its "day 1 of 3" test is still open.
-- [ ] **5. End-to-end test** as step 7 above, on the HubSpot app, in an incognito window as **Will@getpacerai.com**:
+  - _Done 2026-10-23: `BRIEFING_SIGNUPS_URL` / `TOKEN` moved to the HubSpot app and removed from the Salesforce app, so signups get the HubSpot book._
+- [x] **5. End-to-end test** as step 7 above, on the HubSpot app, in an incognito window as **Will@getpacerai.com**:
   the dialog shows `https://demo.getpacerai.com/mcp`, sign-in asks for the email only, `pace` answers from the
   HubSpot portal, and `/demo-usage` shows the sign-in on the HubSpot app.
-- [ ] **6. Deploy the Worker** (Will's go): `cd infra/pacer-demo-worker && npm run deploy`, the same checks as step 5
+  - _Done 2026-10-22/23: Will added the connector through the install link and signed in; `/demo-usage` shows the sign-in on the HubSpot app._
+- [x] **6. Deploy the Worker** (Will's go): `cd infra/pacer-demo-worker && npm run deploy`, the same checks as step 5
   above. This ships the `/signup` card's new URL. It also re-ships the card's line promising the daily Pace briefing
   for 3 days, so do step 4 first.
-- [ ] **7. Deploy page 983** (Will's go): `python3 scripts/deploy.py 983`. Check the hero button opens claude.ai's
+  - _Done 2026-10-23, version `c2ffc19e` from a clean copy of main (`1f48d6d`): homepage video unchanged; `/signup` and `/health` 200; both internal routes 401; the card hands out `demo.getpacerai.com`._
+- [x] **7. Deploy page 983** (Will's go): `python3 scripts/deploy.py 983`. Check the hero button opens claude.ai's
   dialog with `https://demo.getpacerai.com/mcp` filled in.
+  - _Done 2026-10-23 14:51 UTC; backup `docs/review/pre-deploy-backup-983-20261023-1451.json`. The live page links only `demo.getpacerai.com`._
 - [ ] **8. New screenshots.** Step 1's dialog screenshot (`pacer-ai-demo-connect-step-4-url-2x.png`) shows the old
   URL, and step 6's (`pacer-ai-demo-connect-step-8-pace-2x.png`) shows the Salesforce book's numbers. The reel
   (`/v/demo-connect` on the staging Worker) shows the old URL and the password; regenerate it in the platform repo's
