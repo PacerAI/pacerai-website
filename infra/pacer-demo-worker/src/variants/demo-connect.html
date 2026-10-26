@@ -1,221 +1,411 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pacer AI — connect the demo (add the connector → sign in → pace)</title>
+<title>Pacer AI — add the connector, sign in, ask “Are we on pace?”</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box}
-  body{margin:0;background:transparent;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    color:#1c1c1e;height:100vh;display:flex;flex-direction:column;justify-content:flex-end;
-    align-items:center;padding:22px 14px 12px}
-  #frame{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;
-    width:100%;max-width:1120px;margin:0 auto;background:#FAF9F5;border-radius:14px;overflow:hidden;
-    box-shadow:0 26px 70px rgba(4,10,24,.45);border:1px solid rgba(255,255,255,.55)}
-  #bar{display:flex;align-items:center;gap:8px;padding:11px 16px;background:#EFE9DF;border-bottom:1px solid #e4ddd0}
-  #bar .dot{width:11px;height:11px;border-radius:50%}
-  .r{background:#ff5f57}.y{background:#febc2e}.g{background:#28c840}
-  #bar b{margin-left:8px;font-size:13px;color:#3a3f47;font-weight:600}
-  #bar .conn{margin-left:auto;font-size:11.5px;color:#6b7280;display:flex;align-items:center;gap:6px}
-  #bar .conn i{width:7px;height:7px;border-radius:50%;background:#28c840;display:inline-block}
-  #stream{padding:22px clamp(24px,7%,96px);flex:1;min-height:0;overflow-y:auto}
-  .msg{margin:11px 0;display:flex}
-  .msg.user{justify-content:flex-end}
-  .bub{max-width:76%;padding:9px 13px;border-radius:13px;font-size:13.5px;line-height:1.5}
-  .user .bub{background:#1F3864;color:#fff;border-bottom-right-radius:4px}
-  .pacer .who{font-size:10px;font-weight:700;color:#1F3864;letter-spacing:.3px;margin:0 0 3px 2px}
-  .pacer .bub{background:#fff;color:#242832;border:1px solid #ece7dd;border-bottom-left-radius:4px;max-width:760px}
-  .plist{margin:7px 0 2px;padding-left:18px;font-size:12.5px}
-  .plist li{margin:3px 0;line-height:1.5}
-  .viz{margin:7px 0 4px;max-width:100%;zoom:.72}
-  .viz>div{box-shadow:0 2px 14px rgba(20,30,50,.08);border:1px solid #eceef1}
+  html,body{height:100%}
+  body{margin:0;background:transparent;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    color:#1c1c1e;display:flex;flex-direction:column;gap:10px;padding:12px 14px 12px;overflow:hidden}
+  /* the three steps */
+  #steps{display:flex;justify-content:center;gap:8px;flex:none}
+  .st{display:flex;align-items:center;gap:7px;padding:5px 12px 5px 6px;border-radius:999px;font-size:12.5px;
+    color:#6b7280;background:#efebe3;transition:background .3s,color .3s}
+  .st .n{width:20px;height:20px;border-radius:50%;background:#fff;color:#1F3864;font-weight:700;font-size:11px;
+    display:flex;align-items:center;justify-content:center}
+  .st.on{background:#1F3864;color:#fff}.st.done .n{background:#27899A;color:#fff}
+  .st .mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11.5px}
+  /* the browser window */
+  #win{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:1120px;
+    margin:0 auto;background:#FAF9F5;border-radius:12px;overflow:hidden;box-shadow:0 18px 50px rgba(4,10,24,.30);
+    border:1px solid #e4ddd0}
+  .chrome{display:flex;align-items:center;gap:7px;padding:8px 12px;background:#EFE9DF;border-bottom:1px solid #e4ddd0;flex:none}
+  .chrome i{width:11px;height:11px;border-radius:50%;display:inline-block;flex:none}
+  .chrome .r{background:#ff5f57}.chrome .y{background:#febc2e}.chrome .g{background:#28c840}
+  .addr{margin-left:10px;flex:1;min-width:0;background:#fff;border:1px solid #e4ddd0;border-radius:7px;padding:4px 11px;
+    font-size:11.5px;color:#4b5563;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .addr b{color:#1c1c1e;font-weight:600}
+  #view{position:relative;flex:1;min-height:0}
+  .scene{position:absolute;inset:0;opacity:0;transition:opacity .45s;pointer-events:none}
+  .scene.on{opacity:1}
+  /* scene 1: Claude settings → connectors, and the dialog */
+  #s-set{display:flex;background:#FAF9F5}
+  .side{width:190px;flex:none;background:#F0EEE6;border-right:1px solid #e7e2d6;padding:18px 12px;font-size:13px;color:#4b5563}
+  .side div{padding:7px 10px;border-radius:7px}.side .cur{background:#e5e0d3;color:#1c1c1e;font-weight:600}
+  .side .hd{font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:#9ca3af;padding:0 10px 8px}
+  .main{flex:1;min-width:0;padding:22px clamp(16px,4%,44px)}
+  .main h2{margin:0 0 4px;font-size:20px;color:#1c1c1e}.main .sub{font-size:13px;color:#6b7280;margin:0 0 16px}
+  .crow{display:flex;align-items:center;gap:12px;padding:11px 12px;border:1px solid #e7e2d6;background:#fff;border-radius:10px;
+    margin:0 0 8px;font-size:13.5px}
+  .crow .ic{width:30px;height:30px;border-radius:8px;background:#efebe3;color:#4b5563;font-weight:700;font-size:12px;
+    display:flex;align-items:center;justify-content:center;flex:none}
+  .crow .nm{flex:1;min-width:0}.crow .nm small{display:block;color:#8a8f98;font-size:11.5px;margin-top:2px;
+    font-family:"JetBrains Mono",ui-monospace,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .crow .tag{font-size:11.5px;color:#6b7280}
+  #row-pacer{opacity:0;max-height:0;padding-top:0;padding-bottom:0;margin:0;border-width:0;overflow:hidden;
+    transition:all .45s;border-color:#27899A}
+  #row-pacer.on{opacity:1;max-height:80px;padding-top:11px;padding-bottom:11px;margin:0 0 8px;border-width:1px}
+  #row-pacer .ic{background:#1F3864;color:#fff}
+  .btn{border:1px solid #d9d4c7;background:#fff;color:#1c1c1e;font-size:13px;font-weight:600;padding:7px 14px;border-radius:8px;
+    font-family:inherit;white-space:nowrap}
+  .btn.dark{background:#1c1c1e;color:#fff;border-color:#1c1c1e}
+  #b-connect.ok{background:#e7f4ee;border-color:#bfe3cf;color:#1a7f52}
+  #veil{position:absolute;inset:0;background:rgba(28,28,30,.38);opacity:0;transition:opacity .35s}
+  #veil.on{opacity:1}
+  #dlg{position:absolute;left:50%;top:50%;width:min(470px,calc(100% - 24px));max-height:calc(100% - 20px);overflow:hidden;
+    background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.25);padding:20px 22px 18px;
+    transform:translate(-50%,-46%) scale(.97);opacity:0;transition:all .35s}
+  #dlg.open{opacity:1;transform:translate(-50%,-50%)}
+  #dlg h3{margin:0 0 10px;font-size:21px;letter-spacing:-.2px;display:flex;justify-content:space-between}
+  #dlg h3 span{font-weight:400;color:#6b7280;font-size:18px}
+  #dlg p{margin:0 0 12px;font-size:13px;color:#3d3d3a;line-height:1.45}
+  #dlg p u{color:#1d4ed8;text-decoration-color:#93a8d8}
+  .fld{border:1px solid #d9d7d0;border-radius:10px;padding:9px 12px;font-size:13.5px;color:#1c1c1e;transition:box-shadow .3s;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hint{font-size:12px;color:#8a8a85;margin:5px 0 12px}
+  .ring{box-shadow:0 0 0 2.5px #27899A}
+  .warn{font-size:12px;color:#8a8a85;line-height:1.45;margin:2px 0 14px}
+  .acts{display:flex;justify-content:flex-end;gap:10px}
+  #p2{display:none}#dlg.p2 #p1{display:none}#dlg.p2 #p2{display:block}
+  .nm2{font-size:14.5px;font-weight:600;margin:0 0 2px}
+  .url2{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;color:#6b6b66;padding:0 0 10px;border-bottom:1px solid #eee;margin:0 0 10px}
+  .sec{font-size:14px;font-weight:600;margin:10px 0 6px}
+  .opt{display:flex;gap:10px;align-items:flex-start;padding:4px 6px;border-radius:9px;margin:0 0 3px;font-size:13px;transition:box-shadow .3s}
+  .opt .rd{width:16px;height:16px;border-radius:50%;border:1.5px solid #b9b9b4;flex:none;margin-top:1px}
+  .opt.sel .rd{border:5px solid #2563eb}
+  .opt small{display:block;color:#8a8a85;font-size:11.5px;line-height:1.35;margin-top:2px}
+  .det{background:#ececea;border-radius:5px;padding:1px 7px;font-size:11px;color:#4b5563;margin-left:6px}
+  /* scene 2: the sign-in window */
+  #pop{position:absolute;left:50%;top:50%;width:min(460px,calc(100% - 20px));background:#F4F1EA;border-radius:11px;overflow:hidden;
+    box-shadow:0 24px 70px rgba(0,0,0,.35);border:1px solid #d9d2c3;opacity:0;transform:translate(-50%,-47%) scale(.97);
+    transition:all .4s;pointer-events:none;z-index:5}
+  #pop.open{opacity:1;transform:translate(-50%,-50%)}
+  #pop .chrome{padding:6px 10px}#pop .addr{font-size:11px}
+  #fwrap{position:relative;overflow:hidden}
+  #frm{border:0;display:block;width:100%;transform-origin:0 0;pointer-events:none;background:#F4F1EA}
+  /* scene 3: the chat */
+  #s-chat{display:flex;flex-direction:column}
+  .cbar{display:flex;justify-content:flex-end;padding:9px 16px 0;flex:none}
+  .pill{font-size:11.5px;color:#4b5563;background:#fff;border:1px solid #e4e0d6;border-radius:999px;padding:3px 10px;
+    display:flex;align-items:center;gap:6px}
+  .pill i{width:7px;height:7px;border-radius:50%;background:#28c840;display:inline-block}
+  #stream{flex:1;min-height:0;overflow-y:auto;padding:6px clamp(14px,6%,80px) 34px;scrollbar-width:thin;pointer-events:auto}
+  .msg{margin:12px 0;display:flex}.msg.user{justify-content:flex-end}
+  .bub{max-width:76%;padding:9px 14px;border-radius:13px;font-size:14px;line-height:1.5;background:#1F3864;color:#fff;
+    border-bottom-right-radius:4px;font-family:"JetBrains Mono",ui-monospace,monospace}
+  .who{font-size:10px;font-weight:700;color:#1F3864;letter-spacing:.3px;margin:0 0 4px 2px}
+  .resp{max-width:780px;font-size:13.5px;line-height:1.55;color:#242832}
+  .resp p{margin:8px 0}.resp p.small{font-size:11.5px;color:#6b7280}
+  .resp p.note{color:#1F3864;background:#eef3f8;border-left:3px solid #27899A;padding:6px 10px;border-radius:0 6px 6px 0}
+  .resp h4{margin:16px 0 6px;font-size:14.5px;color:#1a202c}
+  .resp ul{margin:4px 0 8px;padding-left:20px}.resp li{margin:3px 0}
+  .resp code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;background:#f0eee9;padding:1px 4px;border-radius:4px}
+  .chip{display:inline-flex;align-items:center;gap:7px;margin:4px 0;padding:5px 11px;border-radius:8px;background:#fff;
+    border:1px solid #e4e0d6;font-size:12px;color:#4b5563;font-family:"JetBrains Mono",ui-monospace,monospace}
+  .chip .s{width:10px;height:10px;border-radius:50%;border:2px solid #c9ced6;border-top-color:#1F3864;animation:sp .7s linear infinite}
+  .chip .ok{color:#1a7f52;font-weight:700}.chip em{font-style:normal;color:#9aa1ad}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .viz{margin:6px 0 10px;background:#fff;border:1px solid #eceef1;border-radius:10px;overflow:hidden;box-shadow:0 2px 14px rgba(20,30,50,.08)}
+  .viz svg{display:block;width:100%;height:auto}
+  .tw{max-width:100%;overflow-x:auto}
+  .t{border-collapse:collapse;margin:6px 0 8px;font-size:12px;background:#fff;border:1px solid #eceae4}
+  .t th{text-align:left;font-weight:700;color:#1a202c;background:#f3f1ec;padding:6px 10px;border-bottom:1px solid #e4e0d6;white-space:nowrap}
+  .t td{padding:5px 10px;border-bottom:1px solid #f0eee9;white-space:nowrap}
+  .t .n{text-align:right;font-variant-numeric:tabular-nums}
+  .fade{animation:fi .45s ease both}
+  @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .typing{display:inline-flex;gap:4px;padding:12px 14px}
   .typing i{width:7px;height:7px;border-radius:50%;background:#b9c0cc;animation:bl 1s infinite}
   .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
   @keyframes bl{0%,60%,100%{opacity:.3}30%{opacity:1}}
-  .cur{border-right:2px solid #cfd6e0;animation:cur .7s step-end infinite}
-  @keyframes cur{50%{border-color:transparent}}
-  /* file drop-in */
-  .dropzone{margin:14px auto;max-width:560px;border:2px dashed #c9d2e0;border-radius:14px;
-    padding:16px;background:#fbfcfe;display:flex;align-items:center;justify-content:center;
-    min-height:96px;transition:border-color .3s, background .3s}
-  .dropzone.hot{border-color:#1F3864;background:#f2f6fd}
-  .dropzone.done{border-style:solid;border-color:#d8e0ec;background:#fff}
-  .filechip{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e4e7ec;
-    border-radius:11px;padding:11px 15px;box-shadow:0 8px 26px rgba(20,30,60,.14);
-    transform:translateY(-140px) scale(.92);opacity:0}
-  .filechip.in{animation:drop .85s cubic-bezier(.22,1.2,.36,1) forwards}
-  @keyframes drop{0%{transform:translateY(-140px) scale(.92);opacity:0}
-    70%{transform:translateY(6px) scale(1.02);opacity:1}100%{transform:none;opacity:1}}
-  .filechip .ico{width:34px;height:42px;border:1px solid #dfe3ea;border-radius:6px;display:flex;
-    align-items:center;justify-content:center;color:#2E7D32;font-size:17px;background:#F4FAF5}
-  .filechip .nm{font-size:13px;font-weight:600;color:#1c1c1e}
-  .filechip .mt{font-size:11px;color:#8a93a3;margin-top:2px}
-  .scanbar{height:3px;border-radius:2px;background:#eef1f6;margin-top:8px;overflow:hidden}
-  .scanbar i{display:block;height:100%;width:0;background:#1F3864;border-radius:2px}
-  .scanbar.go i{animation:scan 1.15s ease-out forwards}
-  @keyframes scan{to{width:100%}}
-  /* Excel tab strip */
-  #xltabs{display:flex;gap:2px;flex:0 0 auto;padding:6px 10px 0;background:#f2f1ee;
-    border-top:1px solid #d9dbdd;overflow-x:auto}
-  .xltab{padding:5px 12px;font-size:11.5px;color:#666;background:#e7e6e2;border:1px solid #cfd0cd;
-    border-bottom:none;border-radius:5px 5px 0 0;white-space:nowrap}
-  .xltab.on{background:#fff;color:#1F3864;font-weight:700;border-color:#c9cdd2}
-  #xloverlay{position:absolute;inset:0;z-index:45;background:#e9e8e4;opacity:0;
-    transform:scale(.985);transform-origin:center;transition:opacity .4s ease, transform .4s ease}
-  #xloverlay.show{opacity:1;transform:none}
-  /* the pan indicator — tells the viewer which way the sheet is being read */
-  #panhint{position:absolute;right:14px;bottom:44px;z-index:50;background:rgba(31,56,100,.92);
-    color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.05em;padding:5px 10px;
-    border-radius:20px;opacity:0;transition:opacity .3s}
-  #panhint.show{opacity:1}
-  .cursor{position:fixed;z-index:60;pointer-events:none;opacity:0;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));
-    transition:opacity .25s, left .9s cubic-bezier(.4,0,.2,1), top .9s cubic-bezier(.4,0,.2,1), transform .12s}
-  .cursor.click{transform:scale(.8)}
-  #dlbtn.press{transform:scale(.96);background:#eef2f8 !important}
-  .ripple{position:fixed;z-index:59;border-radius:50%;border:2px solid #3a6cf0;pointer-events:none;
-    animation:rip .55s ease-out forwards}
-  @keyframes rip{from{opacity:.6;transform:scale(.35)}to{opacity:0;transform:scale(1.7)}}
-  #ctl{position:sticky;bottom:0;display:flex;justify-content:center;gap:10px;padding:12px;
-    background:linear-gradient(#fff0,#fff 40%);border-top:1px solid #edf0f3}
-  #ctl button{border:1px solid #d7dce3;background:#fff;color:#1F3864;font-weight:600;font-size:13px;
-    padding:8px 16px;border-radius:8px;cursor:pointer}
-  #ctl button:hover{background:#f4f6f9}
+  .cur{border-right:2px solid #cfd6e0;animation:cb .7s step-end infinite}@keyframes cb{50%{border-color:transparent}}
+  /* the pointer */
+  #ptr{position:fixed;left:0;top:0;width:22px;height:22px;z-index:30;opacity:0;pointer-events:none;transition:opacity .3s}
+  #ptr.on{opacity:1}
+  #ptr .rip{position:absolute;left:-9px;top:-9px;width:22px;height:22px;border-radius:50%;background:rgba(39,137,154,.45);
+    transform:scale(0);opacity:0}
+  #ptr.down .rip{animation:rp .45s ease-out}
+  @keyframes rp{0%{transform:scale(.2);opacity:1}100%{transform:scale(1.6);opacity:0}}
+  /* end card + review bar */
+  #end{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;
+    background:rgba(250,249,245,.95);opacity:0;pointer-events:none;transition:opacity .5s}
+  #end.show{opacity:1;pointer-events:auto}
+  #end .card{text-align:center;padding:24px 28px;max-width:560px}
+  #end h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:32px;margin:0 0 8px;color:#1a202c;line-height:1.15}
+  #end p{margin:0 0 18px;color:#4b5563;font-size:14.5px}
+  #end a,#rbar a{display:inline-block;background:#1F3864;color:#fff;text-decoration:none;font-weight:700;padding:12px 22px;
+    border-radius:10px;font-size:15px}
+  #end .opts{display:flex;justify-content:center;gap:18px;margin-top:14px}
+  #end button,#rbar button{border:0;background:none;color:#1F3864;font-weight:600;font-size:13px;cursor:pointer;padding:4px 2px}
+  #end button:hover,#rbar button:hover{text-decoration:underline}
+  #rbar{position:absolute;left:0;right:0;bottom:0;z-index:30;display:none;align-items:center;justify-content:center;gap:14px;
+    padding:10px 14px;background:linear-gradient(rgba(250,249,245,0),#FAF9F5 45%);font-size:13px}
+  #rbar.show{display:flex}#rbar a{padding:8px 16px;font-size:13px}
   #vault{display:none}
-</style></head><body>
-<div id="frame">
-  <div id="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-    <b>Claude</b><span class="conn"><i></i>pacer-ai connected</span></div>
-  <div id="stream"></div>
-  <div id="ctl"><button id="replay">↺ Replay</button></div>
-</div>
-<div id="vault"><div data-frag="connector"><div style="max-width:960px;margin:0 auto;border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(10,20,40,.28);background:#202124"><div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#35363a"><span style="display:flex;gap:6px"><i style="width:11px;height:11px;border-radius:50%;background:#ff5f57;display:inline-block"></i><i style="width:11px;height:11px;border-radius:50%;background:#febc2e;display:inline-block"></i><i style="width:11px;height:11px;border-radius:50%;background:#28c840;display:inline-block"></i></span><div style="flex:1;background:#202124;color:#cfd2d6;border-radius:14px;padding:5px 14px;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">&#128274; claude.ai/new?modal=add-custom-connector#customize/connectors</div><span style="color:#9aa0a6;font-size:11.5px;border:1px solid #5f6368;border-radius:12px;padding:3px 10px">Incognito</span></div><div style="background:#f3f4f6;padding:26px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><div style="width:470px;background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:24px 26px;box-shadow:0 10px 34px rgba(20,30,60,.12)"><div style="font-size:18px;font-weight:800;color:#2B2A26;margin:0 0 4px">Add custom connector</div><div style="font-size:12.5px;color:#6b7280;margin:0 0 18px">Connect a remote MCP server to Claude.</div><div style="margin:0 0 14px"><div style="font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.6px;margin:0 0 5px">Name</div><div style="border:1px solid #cbd2d9;border-radius:8px;padding:10px 12px;font-size:13px;font-family:-apple-system,Segoe UI,sans-serif;color:#2B2A26;background:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Pacer AI Demo</div></div><div style="margin:0 0 14px"><div style="font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.6px;margin:0 0 5px">Remote MCP server URL</div><div style="border:1px solid #cbd2d9;border-radius:8px;padding:10px 12px;font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#2B2A26;background:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">https://pacerai-demo-mcp.azurewebsites.net/mcp</div></div><div style="display:flex;gap:14px;font-size:12px;color:#4b5563;margin:2px 0 18px"><span style="color:#2E7D32">&#10003;</span> Sign in now<span style="color:#2E7D32">&#10003;</span> Register automatically</div><div style="background:#1F3864;color:#fff;text-align:center;font-weight:600;font-size:14px;padding:11px;border-radius:9px">Add</div></div></div></div></div><div data-frag="login"><div style="max-width:960px;margin:0 auto;border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(10,20,40,.28);background:#202124"><div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#35363a"><span style="display:flex;gap:6px"><i style="width:11px;height:11px;border-radius:50%;background:#ff5f57;display:inline-block"></i><i style="width:11px;height:11px;border-radius:50%;background:#febc2e;display:inline-block"></i><i style="width:11px;height:11px;border-radius:50%;background:#28c840;display:inline-block"></i></span><div style="flex:1;background:#202124;color:#cfd2d6;border-radius:14px;padding:5px 14px;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">&#128274; pacerai-demo-mcp.azurewebsites.net/pacer-login</div><span style="color:#9aa0a6;font-size:11.5px;border:1px solid #5f6368;border-radius:12px;padding:3px 10px">Incognito</span></div><div style="background:#F4F1EA;padding:30px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><div style="width:360px;background:#fff;border:1px solid #e7e9ec;border-radius:14px;padding:30px 28px;box-shadow:0 2px 10px rgba(0,0,0,.06)"><div style="font-size:12px;letter-spacing:2px;color:#27899A;font-weight:700;text-transform:uppercase">Pacer AI &middot; Demo</div><div style="font-family:Georgia,serif;color:#1F3864;font-size:24px;margin:4px 0 6px">Pacer AI Demo</div><div style="color:#6b7280;font-size:13px;margin:0 0 18px">Enter your email and the access password to start your demo.</div><div style="border:1px solid #cbd2d9;border-radius:8px;padding:11px 12px;font-size:14px;color:#2B2A26;margin:0 0 12px">nick@westlink.com</div><div style="border:1px solid #cbd2d9;border-radius:8px;padding:12px;font-size:16px;color:#9aa3b2;letter-spacing:3px;margin:0 0 14px">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</div><div style="background:#1F3864;color:#fff;text-align:center;font-weight:600;font-size:15px;padding:11px;border-radius:8px">Start the demo</div></div></div></div></div><div data-frag="pace"><div style="max-width:620px;margin:0 auto;background:#fff;border:1px solid #e4e7ec;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(20,30,60,.10)"><div style="background:#1F3864;color:#fff;padding:11px 16px;font-size:13px;font-weight:700">&#10003; Connected to Pacer AI &mdash; live $100M demo book</div><div style="padding:16px 18px"><div style="font-size:12px;color:#6b7280;margin:0 0 4px">You typed</div><div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;color:#2B2A26;font-weight:700;margin:0 0 12px">pace</div><div style="font-size:13px;color:#2B2A26;line-height:1.6;margin:0 0 12px">Booked <b>$1.8M</b> MTD vs the <b>$1.0M</b> month target &mdash; <b style="color:#2E7D32">on track</b> to make the month (EOM forecast $1.8M).</div><svg viewBox="0 0 520 150" style="width:100%;max-width:520px;display:block"><line x1="8" y1="70.0" x2="512" y2="70.0" stroke="#E2E8F0"/><text x="512" y="66.0" text-anchor="end" font-size="9" fill="#718096">target $1.0M</text><polyline points="8.0,126.1 24.8,124.3 41.6,122.4 58.4,120.5 75.2,118.6 92.0,116.8 108.8,114.9 125.6,113.0 142.4,111.2 159.2,109.3 176.0,107.4 192.8,105.5 209.6,103.7 226.4,101.8 243.2,99.9 260.0,98.1 276.8,96.2 293.6,94.3 310.4,92.5 327.2,90.6 344.0,88.7 360.8,86.8 377.6,85.0 394.4,83.1 411.2,81.2 428.0,79.4 444.8,77.5 461.6,75.6 478.4,73.7 495.2,71.9 512.0,70.0" fill="none" stroke="#718096" stroke-width="1.6" stroke-dasharray="5 4"/><polyline points="8.0,124.0 24.8,120.0 41.6,116.0 58.4,111.9 75.2,107.9 92.0,103.9 108.8,99.9 125.6,95.9 142.4,91.9 159.2,87.8 176.0,83.8 192.8,79.8 209.6,75.8 226.4,71.8 243.2,67.8 260.0,63.8 276.8,59.7 293.6,55.7 310.4,51.7 327.2,47.7 344.0,43.7 360.8,39.7 377.6,35.6 394.4,31.6 411.2,27.6 428.0,23.6" fill="none" stroke="#1F3864" stroke-width="2.6"/><circle cx="428.0" cy="23.6" r="3.5" fill="#1F3864"/><text x="8" y="144" font-size="9" fill="#718096">Aug 1</text><text x="512" y="144" text-anchor="end" font-size="9" fill="#718096">Aug 31</text></svg><div style="font-size:12px;color:#6b7280;margin:12px 0 0">Now ask <b>gap</b>, <b>pace this quarter</b>, or <b>annual pace</b> &mdash; charts render right in the chat.</div></div></div></div><div data-frag="xlwin"><div style="display:flex;flex-direction:column;height:100%;background:#f2f1ee"><div style="background:#217346;color:#fff;padding:9px 15px;font-weight:600;font-size:13px;display:flex;align-items:center;gap:9px"><span style="display:inline-flex;gap:6px"><span style="width:11px;height:11px;border-radius:50%;background:#ff5f57;display:inline-block"></span><span style="width:11px;height:11px;border-radius:50%;background:#febc2e;display:inline-block"></span><span style="width:11px;height:11px;border-radius:50%;background:#28c840;display:inline-block"></span></span><span style="margin-left:5px">▦ Excel &nbsp;—&nbsp; </span></div><div id="xlscroll" style="flex:1;overflow:auto;background:#fff;padding:16px 18px"><div id="xlcontent"></div></div><div id="xltabs"></div></div></div></div>
-<script>
-const BEATS = [{"u": "How do I try the Pacer AI demo?", "p": "Add it to Claude as a custom connector &mdash; paste the URL, keep the detected defaults, and click Add. Two minutes, nothing to install:", "list": ["<b>Browser (recommended):</b> open claude.ai/new?modal=add-custom-connector#customize/connectors", "<b>Mobile:</b> tap the <b>+</b> in the prompt area &rarr; Connectors &rarr; Manage connectors &rarr; Add", "<b>Desktop:</b> click the <b>+</b> in the prompt area &rarr; Connectors &rarr; Manage connectors &rarr; Add", "Name <b>Pacer AI Demo</b> &middot; URL https://pacerai-demo-mcp.azurewebsites.net/mcp", "Keep <b>Sign in now</b> + <b>Register automatically</b> &rarr; Add"], "v": "connector"}, {"u": "It's asking me to sign in.", "p": "That's the <b>Pacer AI Demo</b> screen. Enter your work email and the access password your Pacer contact shared &mdash; there's no account to create, the password is the key:", "v": "login"}, {"u": "pace", "p": "You're connected to the live $100M demo book. Type <b>pace</b> and Pacer reads where you are against the number, with the chart right in the chat:", "v": "pace"}];
-const CYCLE = [];
-const CLOSING = "";
-
-const stream = document.getElementById('stream'), vault = document.getElementById('vault');
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-function scroll(){ stream.scrollTop = stream.scrollHeight; }
-async function type(el, text){
-  el.classList.add('cur');
-  for(let i=0;i<text.length;i++){ el.textContent = text.slice(0,i+1); scroll(); await sleep(15 + Math.random()*22); }
-  el.classList.remove('cur');
-}
-function bubble(role, who){
-  const m = document.createElement('div'); m.className = 'msg ' + role;
-  const b = document.createElement('div'); b.className='bub';
-  if(who){ const inner = document.createElement('div');
-    const w = document.createElement('div'); w.className='who'; w.textContent = who;
-    inner.appendChild(w); inner.appendChild(b); m.appendChild(inner);
-  } else { m.appendChild(b); }
-  stream.appendChild(m); scroll(); return b;
-}
-function reveal(key){
-  const src = vault.querySelector('[data-frag="'+key+'"]');
-  const viz = document.createElement('div'); viz.className='viz'; viz.innerHTML = src.innerHTML;
-  stream.appendChild(viz); scroll(); return viz;
-}
-async function typingDots(){
-  const m = document.createElement('div'); m.className='msg pacer';
-  const t = document.createElement('div'); t.className='typing'; t.innerHTML='<i></i><i></i><i></i>';
-  m.appendChild(t); stream.appendChild(m); scroll(); await sleep(750); m.remove();
-}
-/* the file lands in the chat, then gets read */
-async function fileDrop(name, meta){
-  const zone = document.createElement('div'); zone.className='dropzone';
-  const chip = document.createElement('div'); chip.className='filechip';
-  chip.innerHTML = '<div class="ico">&#9636;</div><div><div class="nm">'+name+'</div>'
-    + '<div class="mt">'+meta+'</div><div class="scanbar"><i></i></div></div>';
-  zone.appendChild(chip); stream.appendChild(zone); scroll();
-  await sleep(120); zone.classList.add('hot'); chip.classList.add('in');
-  await sleep(880);
-  chip.querySelector('.scanbar').classList.add('go');
-  await sleep(1250);
-  zone.classList.remove('hot'); zone.classList.add('done');
-  await sleep(320);
-}
-/* pan a sheet: 'x' reads a wide schedule across, 'y' reads a tall sheet down */
-async function pan(el, dur, axis){
-  const maxY = el.scrollHeight - el.clientHeight;
-  const maxX = el.scrollWidth  - el.clientWidth;
-  const max = axis === 'x' ? maxX : maxY;
-  if(max <= 2){ await sleep(Math.min(dur, 1200)); return; }
-  return new Promise(res => {
-    let t0 = null;
-    function frame(t){ if(t0 === null) t0 = t; const k = Math.min(1, (t - t0) / dur);
-      const e = k < .5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2)/2;
-      if(axis === 'x') el.scrollLeft = max * e; else el.scrollTop = max * e;
-      if(k < 1) requestAnimationFrame(frame); else res(); }
-    requestAnimationFrame(frame);
-  });
-}
-async function finale(){
-  const btn = document.getElementById('dlbtn'); if(!btn) return;
-  const frame = document.getElementById('frame');
-  const cur = document.createElement('div'); cur.className='cursor';
-  cur.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 2 L4 20 L9 15 L12 22 '
-    + 'L15 21 L12 14 L20 14 Z" fill="#141414" stroke="#fff" stroke-width="1.3" stroke-linejoin="round"/></svg>';
-  document.body.appendChild(cur);
-  const at = () => { const r = btn.getBoundingClientRect(); return [r.left + r.width/2 - 4, r.top + r.height/2, r]; };
-  let [x, y] = at();
-  cur.style.left = (x - 170) + 'px'; cur.style.top = (y + 130) + 'px'; cur.style.opacity = '1';
-  await sleep(280);
-  [x, y] = at(); cur.style.left = x + 'px'; cur.style.top = y + 'px';
-  await sleep(980);
-  cur.classList.add('click'); btn.classList.add('press');
-  const r = btn.getBoundingClientRect(), s = Math.max(r.width, r.height);
-  const rp = document.createElement('div'); rp.className = 'ripple';
-  rp.style.left = (r.left + r.width/2 - s/2) + 'px'; rp.style.top = (r.top + r.height/2 - s/2) + 'px';
-  rp.style.width = s + 'px'; rp.style.height = s + 'px'; document.body.appendChild(rp);
-  await sleep(520); btn.classList.remove('press'); cur.classList.remove('click'); rp.remove();
-  cur.style.opacity = '0'; setTimeout(() => cur.remove(), 300);
-  await sleep(250);
-  const ov = document.createElement('div'); ov.id = 'xloverlay';
-  ov.innerHTML = vault.querySelector('[data-frag="xlwin"]').innerHTML;
-  frame.appendChild(ov);
-  const hint = document.createElement('div'); hint.id='panhint'; ov.appendChild(hint);
-  requestAnimationFrame(() => ov.classList.add('show'));
-  await sleep(520);
-  const content = ov.querySelector('#xlcontent'), scroller = ov.querySelector('#xlscroll');
-  for(const [frag, tab, axis] of CYCLE){
-    content.innerHTML = vault.querySelector('[data-frag="'+frag+'"]').innerHTML;
-    ov.querySelectorAll('#xltabs .xltab').forEach(el => el.classList.toggle('on', el.dataset.tab === String(tab)));
-    scroller.scrollTop = 0; scroller.scrollLeft = 0;
-    await sleep(120);
-    const wide = axis === 'x' && (scroller.scrollWidth - scroller.clientWidth) > 2;
-    hint.textContent = wide ? 'READING ACROSS  \u2192' : 'READING DOWN  \u2193';
-    hint.classList.add('show');
-    await sleep(620);
-    await pan(scroller, wide ? 3400 : 3000, wide ? 'x' : 'y');
-    await sleep(560); hint.classList.remove('show'); await sleep(220);
+  @media (max-width:640px){
+    body{padding:8px 8px 8px;gap:8px}
+    .st{padding:4px 6px;font-size:11.5px}.st:not(.on) .l{display:none}
+    .side{display:none}.main{padding:16px 12px}
+    #dlg{padding:16px 14px 14px}#dlg h3{font-size:18px}.warn{display:none}
+    #end h2{font-size:25px}#end .card{padding:16px}
   }
-  await sleep(420);
-  ov.classList.remove('show'); await sleep(430); ov.remove();
-  const ub = bubble('user'); await type(ub, CLOSING);
-  await sleep(300);
+</style></head><body>
+<div id="steps">
+  <div class="st" id="st1"><span class="n">1</span><span class="l">Add the connector</span></div>
+  <div class="st" id="st2"><span class="n">2</span><span class="l">Sign in with your work email</span></div>
+  <div class="st" id="st3"><span class="n">3</span><span class="l">Ask <span class="mono">Are we on pace?</span></span></div>
+</div>
+<div id="win">
+  <div class="chrome"><i class="r"></i><i class="y"></i><i class="g"></i><div class="addr" id="addr"></div></div>
+  <div id="view">
+    <div class="scene" id="s-set">
+      <div class="side"><div class="hd">Settings</div><div>General</div><div>Account</div><div>Privacy</div>
+        <div>Billing</div><div>Capabilities</div><div class="cur">Connectors</div></div>
+      <div class="main">
+        <h2>Connectors</h2><p class="sub">Allow Claude to reference other apps and services for more context.</p>
+        <div class="crow" id="row-pacer"><span class="ic">P</span><span class="nm">Pacer AI - Demo<small>https://demo.getpacerai.com/mcp</small></span>
+          <span class="tag">Custom</span><span class="btn dark" id="b-connect">Connect</span></div>
+        <div class="crow"><span class="ic">G</span><span class="nm">Gmail</span><span class="btn">Configure</span></div>
+        <div class="crow"><span class="ic">C</span><span class="nm">Google Calendar</span><span class="btn">Configure</span></div>
+        <div class="crow"><span class="ic">S</span><span class="nm">Slack</span><span class="btn">Configure</span></div>
+      </div>
+      <div id="veil"></div>
+      <div id="dlg">
+        <div id="p1">
+          <h3>Add custom connector <span>&times;</span></h3>
+          <p>Connect Claude to your data and tools. <u>Learn more about connectors</u> or get started with <u>pre-built ones</u>.</p>
+          <div class="fld" id="f-name">Pacer AI - Demo</div><div class="hint">Shown in the connectors list.</div>
+          <div class="fld" id="f-url">https://demo.getpacerai.com/mcp</div>
+          <div class="hint">The HTTPS address where the server accepts MCP requests.</div>
+          <div class="warn">Only use connectors from developers you trust. Anthropic does not control which tools developers make available and cannot verify that they will work as intended or that they won’t change.</div>
+          <div class="acts"><span class="btn">Cancel</span><span class="btn dark" id="b-continue">Continue</span></div>
+        </div>
+        <div id="p2">
+          <h3>Add custom connector <span>&times;</span></h3>
+          <div class="nm2">Pacer AI - Demo</div><div class="url2">https://demo.getpacerai.com/mcp</div>
+          <div class="sec">Authentication</div>
+          <div class="opt sel" id="o-signin"><span class="rd"></span><span>Sign in now<span class="det">Detected</span>
+            <small>Each user signs in through the server’s OAuth flow before they can use any tools or resources.</small></span></div>
+          <div class="opt"><span class="rd"></span><span>Sign in when needed</span></div>
+          <div class="opt"><span class="rd"></span><span>No sign-in</span></div>
+          <div class="sec">OAuth client</div>
+          <div class="opt"><span class="rd"></span><span>Use Claude’s published identity</span></div>
+          <div class="opt sel" id="o-reg"><span class="rd"></span><span>Register automatically<span class="det">Detected</span>
+            <small>Claude registers OAuth clients with the server as users connect.</small></span></div>
+          <div class="acts" style="margin-top:12px"><span class="btn">Back</span><span class="btn dark" id="b-add">Add</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="scene" id="s-chat">
+      <div class="cbar"><span class="pill"><i></i>Pacer AI - Demo &middot; connected</span></div>
+      <div id="stream"></div>
+    </div>
+    <div id="pop">
+      <div class="chrome"><i class="r"></i><i class="y"></i><i class="g"></i><div class="addr">&#128274; <b>demo.getpacerai.com</b>/pacer-login</div></div>
+      <div id="fwrap"><iframe id="frm" title="Pacer AI Demo sign-in" tabindex="-1" srcdoc="&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&lt;title&gt;Pacer AI Demo&lt;/title&gt;
+&lt;style&gt;*,*:before,*:after{box-sizing:border-box}
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#F4F1EA;color:#1c1c1e;
+display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0;padding:16px}
+.box{background:#fff;border:1px solid #e7e9ec;border-radius:14px;padding:34px 30px;width:100%;max-width:420px;
+box-shadow:0 2px 10px rgba(0,0,0,.06)}
+@media (max-width:400px){body{padding:8px}.box{padding:28px 16px}}
+.k{font-size:12px;letter-spacing:2px;color:#27899A;font-weight:700;text-transform:uppercase}
+h1{font-family:Georgia,serif;color:#1B365D;font-size:24px;margin:4px 0 6px}
+p{color:#6b7280;font-size:13px;margin:0 0 18px}
+input{width:100%;padding:11px 12px;border:1px solid #cbd2d9;border-radius:8px;font-size:15px;margin-bottom:12px}
+button{width:100%;padding:11px;background:#1B365D;color:#fff;border:0;border-radius:8px;font-size:15px;
+font-weight:600;cursor:pointer}.err{color:#b00020;font-size:13px;margin-bottom:10px}
+.cf-turnstile{margin-bottom:12px}.note{font-size:12px;margin:14px 0 0}&lt;/style&gt;&lt;style&gt;
+.ts{display:flex;align-items:center;justify-content:space-between;height:65px;padding:0 12px;border:1px solid #e0e0e0;
+  border-radius:4px;background:#fafafa;font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#232323}
+.ts-l{display:flex;align-items:center;gap:12px;font-size:14px}
+.ts-cb{width:26px;height:26px;border:2px solid #6b6b6b;border-radius:4px;background:#fff;display:flex;
+  align-items:center;justify-content:center;flex:none}
+.ts.busy .ts-cb{border:3px solid #d6d6d6;border-top-color:#1e7e34;border-radius:50%;animation:tsp .8s linear infinite}
+.ts.ok .ts-cb{border:0;border-radius:50%;background:#1e7e34;color:#fff;font-size:16px;font-weight:700}
+.ts.ok .ts-cb:after{content:&quot;\2713&quot;}
+@keyframes tsp{to{transform:rotate(360deg)}}
+.ts-r{text-align:right;line-height:1.25}.ts-r b{font-size:10px;letter-spacing:.6px;color:#f38020}
+.ts-r span{display:block;font-size:8.5px;color:#6b6b6b}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;&lt;form class=&quot;box&quot; method=&quot;post&quot; action=&quot;/pacer-login&quot; onsubmit=&quot;var b=this.querySelector(&#x27;button&#x27;);if(b.disabled)return false;b.disabled=true;b.textContent=&#x27;Signing in…&#x27;;&quot;&gt;
+&lt;div class=&quot;k&quot;&gt;Pacer AI &amp;middot; Demo&lt;/div&gt;&lt;h1&gt;Pacer AI Demo&lt;/h1&gt;
+&lt;p&gt;Enter your work email to start your demo of live pacing data.&lt;/p&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;txn&quot; value=&quot;&quot;&gt;
+&lt;input type=&quot;email&quot; name=&quot;email&quot; placeholder=&quot;Work email&quot; autocomplete=&quot;email&quot; required&gt;
+&lt;div class=&quot;cf-turnstile&quot; data-sitekey=&quot;reel&quot; data-size=&quot;flexible&quot;&gt;&lt;div class=&quot;ts&quot;&gt;&lt;span class=&quot;ts-l&quot;&gt;&lt;span class=&quot;ts-cb&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ts-lbl&quot;&gt;Verify you are human&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ts-r&quot;&gt;&lt;b&gt;CLOUDFLARE&lt;/b&gt;&lt;span&gt;Privacy &amp;middot; Terms&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;button type=&quot;submit&quot;&gt;Start the demo&lt;/button&gt;&lt;p class=&quot;note&quot;&gt;Runs on a synthetic company with fictional accounts. We&amp;rsquo;ll email you the demo&amp;rsquo;s daily Pace briefing for the next 3 days, then occasionally about the demo &amp;mdash; no spam.&lt;/p&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div>
+    </div>
+  </div>
+  <div id="end"><div class="card">
+    <h2>Ask “Are we on pace?” in your own Claude</h2>
+    <p>Add the connector in two minutes. Sign in with your work email; there is no password.</p>
+    <a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fdemo.getpacerai.com%2Fmcp" target="_blank" rel="noopener">Add Pacer AI - Demo to Claude</a>
+    <div class="opts"><button id="review">Review the answer</button><button id="replay">&#8634; Replay</button></div>
+  </div></div>
+  <div id="rbar"><span style="color:#6b7280">Scroll to review the answer</span>
+    <a href="https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fdemo.getpacerai.com%2Fmcp" target="_blank" rel="noopener">Add Pacer AI - Demo to Claude</a><button id="replay2">&#8634; Replay</button></div>
+</div>
+<svg id="ptr" viewBox="0 0 22 22"><g><path d="M3 2 L3 18 L7.5 14 L10.5 20.5 L13 19.4 L10.1 13 L16 13 Z" fill="#1c1c1e" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></g><circle class="rip" cx="11" cy="11" r="11"/></svg>
+<div id="vault"><div data-frag="pace"><svg viewBox="0 0 960 1300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fff;font-family:'DM Sans',-apple-system,Segoe UI,Roboto,sans-serif"><svg x="0" y="0" width="960" height="420" viewBox="0 0 960 420"><rect width="960" height="420" fill="#FFFFFF"/><text x="70" y="30" font-size="11" letter-spacing="2.5" fill="#27899A" font-weight="700">PACING AGENT · MONTH-TO-DATE</text><text x="70" y="60" font-size="30" font-family="'Cormorant Garamond',Georgia,'Times New Roman',serif" font-weight="700" fill="#1A202C">Pace to the month — Oct 2026 (day 21 of 31)</text><text x="70" y="82" font-size="13" fill="#718096">Booked <tspan fill="#1A202C" font-weight="700">$950K</tspan> vs plan $1.3M (<tspan fill="#C05621" font-weight="700">$348K behind</tspan>) · EOM forecast $1.4M vs $1.9M target</text><rect x="212.9" y="96" width="12" height="12" rx="2" fill="#27899A" opacity="0.30"/><text x="230.9" y="106" font-size="11" fill="#1A202C">New logos $202K</text><rect x="351.4" y="96" width="12" height="12" rx="2" fill="#2B4A7A" opacity="0.18"/><text x="369.4" y="106" font-size="11" fill="#1A202C">Net expansion (existing) $748K</text><line x1="584.4" y1="102" x2="596.4" y2="102" stroke="#718096" stroke-width="2" stroke-dasharray="5 4"/><text x="602.4" y="106" font-size="11" fill="#1A202C">Plan</text><line x1="653.6" y1="102" x2="665.6" y2="102" stroke="#27899A" stroke-width="2" stroke-dasharray="5 4"/><text x="671.6" y="106" font-size="11" fill="#1A202C">EOM forecast</text><line x1="70" y1="368.0" x2="916" y2="368.0" stroke="#E2E8F0"/><text x="60" y="372.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$0K</text><line x1="70" y1="308.0" x2="916" y2="308.0" stroke="#E2E8F0"/><text x="60" y="312.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$551K</text><line x1="70" y1="248.0" x2="916" y2="248.0" stroke="#E2E8F0"/><text x="60" y="252.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$1.1M</text><line x1="70" y1="188.0" x2="916" y2="188.0" stroke="#E2E8F0"/><text x="60" y="192.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$1.7M</text><line x1="70" y1="128.0" x2="916" y2="128.0" stroke="#E2E8F0"/><text x="60" y="132.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$2.2M</text><text x="70.0" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">1</text><text x="154.6" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">4</text><text x="239.2" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">7</text><text x="323.8" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">10</text><text x="408.4" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">13</text><text x="493.0" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">16</text><text x="577.6" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">19</text><text x="662.2" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">22</text><text x="746.8" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">25</text><text x="831.4" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">28</text><text x="916.0" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">31</text><polygon points="70.0,367.9 98.2,369.6 126.4,370.6 154.6,361.5 182.8,356.2 211.0,339.3 239.2,337.8 267.4,332.3 295.6,337.4 323.8,333.6 352.0,334.4 380.2,336.7 408.4,326.9 436.6,312.7 464.8,308.3 493.0,300.0 521.2,289.3 549.4,283.2 577.6,269.6 605.8,268.4 634.0,264.5 634.0,368.0 605.8,368.0 577.6,368.0 549.4,368.0 521.2,368.0 493.0,368.0 464.8,368.0 436.6,368.0 408.4,368.0 380.2,368.0 352.0,368.0 323.8,368.0 295.6,368.0 267.4,368.0 239.2,368.0 211.0,368.0 182.8,368.0 154.6,368.0 126.4,368.0 98.2,368.0 70.0,368.0" fill="#2B4A7A" opacity="0.18"/><polygon points="70.0,368.0 98.2,360.9 126.4,346.0 154.6,346.0 182.8,346.0 211.0,346.0 239.2,346.0 267.4,346.0 295.6,346.0 323.8,346.0 352.0,346.0 380.2,346.0 408.4,346.0 436.6,346.0 464.8,346.0 493.0,346.0 521.2,346.0 549.4,346.0 577.6,346.0 605.8,346.0 634.0,346.0 634.0,368.0 605.8,368.0 577.6,368.0 549.4,368.0 521.2,368.0 493.0,368.0 464.8,368.0 436.6,368.0 408.4,368.0 380.2,368.0 352.0,368.0 323.8,368.0 295.6,368.0 267.4,368.0 239.2,368.0 211.0,368.0 182.8,368.0 154.6,368.0 126.4,368.0 98.2,368.0 70.0,368.0" fill="#27899A" opacity="0.30"/><polyline points="70.0,361.3 98.2,354.5 126.4,347.8 154.6,341.1 182.8,334.3 211.0,327.6 239.2,320.9 267.4,314.1 295.6,307.4 323.8,300.7 352.0,293.9 380.2,287.2 408.4,280.5 436.6,273.8 464.8,267.0 493.0,260.3 521.2,253.6 549.4,246.8 577.6,240.1 605.8,233.4 634.0,226.6 662.2,219.9 690.4,213.2 718.6,206.4 746.8,199.7 775.0,193.0 803.2,186.2 831.4,179.5 859.6,172.8 887.8,166.0 916.0,159.3" fill="none" stroke="#718096" stroke-width="2" stroke-dasharray="6 5"/><circle cx="916.0" cy="159.3" r="3.5" fill="#718096"/><text x="954" y="151.3" font-size="11" fill="#718096" text-anchor="end">target $1.9M</text><polyline points="70.0,367.9 98.2,369.6 126.4,370.6 154.6,361.5 182.8,356.2 211.0,339.3 239.2,337.8 267.4,332.3 295.6,337.4 323.8,333.6 352.0,334.4 380.2,336.7 408.4,326.9 436.6,312.7 464.8,308.3 493.0,300.0 521.2,289.3 549.4,283.2 577.6,269.6 605.8,268.4 634.0,264.5" fill="none" stroke="#1B365D" stroke-width="3"/><circle cx="634.0" cy="264.5" r="4.5" fill="#1B365D"/><polyline points="634.0,264.5 662.2,260.4 690.4,250.2 718.6,247.9 746.8,236.9 775.0,233.8 803.2,229.6 831.4,226.6 859.6,222.8 887.8,219.3 916.0,211.5" fill="none" stroke="#27899A" stroke-width="2.5" stroke-dasharray="7 5"/><circle cx="916.0" cy="211.5" r="4" fill="#27899A"/></svg><svg x="0" y="430" width="960" height="420" viewBox="0 0 960 420"><rect width="960" height="420" fill="#FFFFFF"/><text x="70" y="30" font-size="11" letter-spacing="2.5" fill="#27899A" font-weight="700">PACING AGENT · QUARTER-TO-DATE</text><text x="70" y="60" font-size="30" font-family="'Cormorant Garamond',Georgia,'Times New Roman',serif" font-weight="700" fill="#1A202C">Q4 2026 — day 21 of 92</text><text x="70" y="82" font-size="13" fill="#718096">Booked <tspan fill="#1A202C" font-weight="700">$950K</tspan> vs plan $1.3M (<tspan fill="#C05621" font-weight="700">$362K behind</tspan>) · EOQ forecast $3.8M vs $5.7M target</text><rect x="212.9" y="96" width="12" height="12" rx="2" fill="#27899A" opacity="0.30"/><text x="230.9" y="106" font-size="11" fill="#1A202C">New logos $202K</text><rect x="351.4" y="96" width="12" height="12" rx="2" fill="#2B4A7A" opacity="0.18"/><text x="369.4" y="106" font-size="11" fill="#1A202C">Net expansion (existing) $748K</text><line x1="584.4" y1="102" x2="596.4" y2="102" stroke="#718096" stroke-width="2" stroke-dasharray="5 4"/><text x="602.4" y="106" font-size="11" fill="#1A202C">Plan</text><line x1="653.6" y1="102" x2="665.6" y2="102" stroke="#27899A" stroke-width="2" stroke-dasharray="5 4"/><text x="671.6" y="106" font-size="11" fill="#1A202C">EOQ forecast</text><line x1="70" y1="368.0" x2="916" y2="368.0" stroke="#E2E8F0"/><text x="60" y="372.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$0K</text><line x1="70" y1="308.0" x2="916" y2="308.0" stroke="#E2E8F0"/><text x="60" y="312.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$1.7M</text><line x1="70" y1="248.0" x2="916" y2="248.0" stroke="#E2E8F0"/><text x="60" y="252.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$3.3M</text><line x1="70" y1="188.0" x2="916" y2="188.0" stroke="#E2E8F0"/><text x="60" y="192.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$5.0M</text><line x1="70" y1="128.0" x2="916" y2="128.0" stroke="#E2E8F0"/><text x="60" y="132.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$6.6M</text><text x="70.0" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">1</text><text x="153.7" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">10</text><text x="237.3" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">19</text><text x="321.0" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">28</text><text x="404.7" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">37</text><text x="488.4" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">46</text><text x="572.0" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">55</text><text x="655.7" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">64</text><text x="739.4" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">73</text><text x="823.0" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">82</text><text x="906.7" y="388" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">91</text><polyline points="70.0,365.7 79.3,363.5 88.6,361.2 97.9,358.9 107.2,356.7 116.5,354.4 125.8,352.1 135.1,349.9 144.4,347.6 153.7,345.3 163.0,343.0 172.3,340.8 181.6,338.5 190.9,336.2 200.2,334.0 209.5,331.7 218.7,329.4 228.0,327.2 237.3,324.9 246.6,322.6 255.9,320.4 265.2,318.1 274.5,315.8 283.8,313.6 293.1,311.3 302.4,309.0 311.7,306.8 321.0,304.5 330.3,302.2 339.6,299.9 348.9,297.7 358.2,295.4 367.5,293.1 376.8,290.9 386.1,288.6 395.4,286.3 404.7,284.1 414.0,281.8 423.3,279.5 432.6,277.3 441.9,275.0 451.2,272.7 460.5,270.5 469.8,268.2 479.1,265.9 488.4,263.7 497.6,261.4 506.9,259.1 516.2,256.8 525.5,254.6 534.8,252.3 544.1,250.0 553.4,247.8 562.7,245.5 572.0,243.2 581.3,241.0 590.6,238.7 599.9,236.4 609.2,234.2 618.5,231.9 627.8,229.6 637.1,227.4 646.4,225.1 655.7,222.8 665.0,220.6 674.3,218.3 683.6,216.0 692.9,213.7 702.2,211.5 711.5,209.2 720.8,206.9 730.1,204.7 739.4,202.4 748.7,200.1 758.0,197.9 767.3,195.6 776.5,193.3 785.8,191.1 795.1,188.8 804.4,186.5 813.7,184.3 823.0,182.0 832.3,179.7 841.6,177.5 850.9,175.2 860.2,172.9 869.5,170.6 878.8,168.4 888.1,166.1 897.4,163.8 906.7,161.6 916.0,159.3" fill="none" stroke="#718096" stroke-width="2" stroke-dasharray="6 5"/><circle cx="916.0" cy="159.3" r="3.5" fill="#718096"/><text x="954" y="151.3" font-size="11" fill="#718096" text-anchor="end">target $5.7M</text><polygon points="70.0,368.0 79.3,368.5 88.6,368.9 97.9,365.8 107.2,364.1 116.5,358.4 125.8,357.9 135.1,356.1 144.4,357.8 153.7,356.5 163.0,356.8 172.3,357.6 181.6,354.3 190.9,349.6 200.2,348.1 209.5,345.3 218.7,341.8 228.0,339.7 237.3,335.2 246.6,334.8 255.9,333.5 255.9,368.0 246.6,368.0 237.3,368.0 228.0,368.0 218.7,368.0 209.5,368.0 200.2,368.0 190.9,368.0 181.6,368.0 172.3,368.0 163.0,368.0 153.7,368.0 144.4,368.0 135.1,368.0 125.8,368.0 116.5,368.0 107.2,368.0 97.9,368.0 88.6,368.0 79.3,368.0 70.0,368.0" fill="#2B4A7A" opacity="0.18"/><polygon points="70.0,368.0 79.3,365.6 88.6,360.7 97.9,360.7 107.2,360.7 116.5,360.7 125.8,360.7 135.1,360.7 144.4,360.7 153.7,360.7 163.0,360.7 172.3,360.7 181.6,360.7 190.9,360.7 200.2,360.7 209.5,360.7 218.7,360.7 228.0,360.7 237.3,360.7 246.6,360.7 255.9,360.7 255.9,368.0 246.6,368.0 237.3,368.0 228.0,368.0 218.7,368.0 209.5,368.0 200.2,368.0 190.9,368.0 181.6,368.0 172.3,368.0 163.0,368.0 153.7,368.0 144.4,368.0 135.1,368.0 125.8,368.0 116.5,368.0 107.2,368.0 97.9,368.0 88.6,368.0 79.3,368.0 70.0,368.0" fill="#27899A" opacity="0.30"/><polyline points="70.0,368.0 79.3,368.5 88.6,368.9 97.9,365.8 107.2,364.1 116.5,358.4 125.8,357.9 135.1,356.1 144.4,357.8 153.7,356.5 163.0,356.8 172.3,357.6 181.6,354.3 190.9,349.6 200.2,348.1 209.5,345.3 218.7,341.8 228.0,339.7 237.3,335.2 246.6,334.8 255.9,333.5" fill="none" stroke="#1B365D" stroke-width="3"/><circle cx="255.9" cy="333.5" r="4.5" fill="#1B365D"/><polyline points="255.9,333.5 265.2,332.1 274.5,328.7 283.8,328.0 293.1,324.3 302.4,323.3 311.7,321.9 321.0,320.9 330.3,319.6 339.6,318.4 348.9,315.8 358.2,315.6 367.5,316.0 376.8,316.2 386.1,313.5 395.4,311.1 404.7,310.5 414.0,309.2 423.3,306.6 432.6,305.2 441.9,302.7 451.2,303.8 460.5,303.4 469.8,301.6 479.1,299.6 488.4,298.9 497.6,293.8 506.9,291.8 516.2,290.1 525.5,291.0 534.8,286.0 544.1,283.3 553.4,288.6 562.7,286.3 572.0,282.5 581.3,279.8 590.6,275.1 599.9,272.5 609.2,272.4 618.5,271.0 627.8,268.6 637.1,269.0 646.4,267.8 655.7,265.1 665.0,263.2 674.3,262.5 683.6,260.6 692.9,261.4 702.2,259.9 711.5,258.8 720.8,252.2 730.1,253.1 739.4,252.2 748.7,250.4 758.0,250.0 767.3,250.8 776.5,251.4 785.8,250.5 795.1,248.0 804.4,245.3 813.7,244.9 823.0,242.4 832.3,244.5 841.6,242.1 850.9,240.3 860.2,238.7 869.5,236.2 878.8,233.7 888.1,232.7 897.4,231.7 906.7,231.7 916.0,230.8" fill="none" stroke="#27899A" stroke-width="2.5" stroke-dasharray="7 5"/><circle cx="916.0" cy="230.8" r="4" fill="#27899A"/></svg><svg x="0" y="860" width="960" height="440" viewBox="0 0 960 440"><rect width="960" height="440" fill="#FFFFFF"/><text x="70" y="30" font-size="11" letter-spacing="2.5" fill="#27899A" font-weight="700">PACING AGENT · ANNUAL</text><text x="70" y="60" font-size="30" font-family="'Cormorant Garamond',Georgia,'Times New Roman',serif" font-weight="700" fill="#1A202C">Pace to plan — Oct 2026</text><text x="70" y="82" font-size="13" fill="#718096">Booked <tspan fill="#1A202C" font-weight="700">$118.5M</tspan> vs plan $118.5M · <tspan fill="#C05621" font-weight="700">$32K behind plan</tspan> · target $123.0M · forecast $121.3M</text><rect x="175.1" y="96" width="12" height="12" rx="2" fill="#27899A" opacity="0.30"/><text x="193.1" y="106" font-size="11" fill="#1A202C">New logos $4.7M</text><rect x="313.6" y="96" width="12" height="12" rx="2" fill="#2B4A7A" opacity="0.18"/><text x="331.6" y="106" font-size="11" fill="#1A202C">Net expansion (existing) $13.8M</text><line x1="552.9" y1="102" x2="564.9" y2="102" stroke="#718096" stroke-width="2" stroke-dasharray="5 4"/><text x="570.9" y="106" font-size="11" fill="#1A202C">Plan (even monthly)</text><line x1="716.5" y1="102" x2="728.5" y2="102" stroke="#27899A" stroke-width="2" stroke-dasharray="5 4"/><text x="734.5" y="106" font-size="11" fill="#1A202C">Forecast</text><line x1="70" y1="388.0" x2="916" y2="388.0" stroke="#E2E8F0"/><text x="60" y="392.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$95M</text><line x1="70" y1="336.0" x2="916" y2="336.0" stroke="#E2E8F0"/><text x="60" y="340.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$101M</text><line x1="70" y1="284.0" x2="916" y2="284.0" stroke="#E2E8F0"/><text x="60" y="288.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$107M</text><line x1="70" y1="232.0" x2="916" y2="232.0" stroke="#E2E8F0"/><text x="60" y="236.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$113M</text><line x1="70" y1="180.0" x2="916" y2="180.0" stroke="#E2E8F0"/><text x="60" y="184.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$119M</text><line x1="70" y1="128.0" x2="916" y2="128.0" stroke="#E2E8F0"/><text x="60" y="132.0" font-size="11" fill="#718096" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" text-anchor="end">$125M</text><text x="70.0" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">Jan</text><text x="146.9" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">Feb</text><text x="223.8" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">Mar</text><text x="300.7" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">Apr</text><text x="377.6" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">May</text><text x="454.5" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">Jun</text><text x="531.5" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">Jul</text><text x="608.4" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">Aug</text><text x="685.3" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">Sep</text><text x="762.2" y="408" font-size="10" fill="#718096" font-weight="700" text-anchor="middle">Oct</text><text x="839.1" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">Nov</text><text x="916.0" y="408" font-size="10" fill="#718096" font-weight="400" text-anchor="middle">Dec</text><polygon points="70.0,329.2 146.9,316.7 223.8,300.5 300.7,282.7 377.6,267.6 454.5,251.4 531.5,232.2 608.4,211.7 685.3,192.4 762.2,184.2 762.2,344.7 685.3,344.7 608.4,344.7 531.5,344.7 454.5,344.7 377.6,344.7 300.7,344.7 223.8,344.7 146.9,344.7 70.0,344.7" fill="#2B4A7A" opacity="0.18"/><polygon points="70.0,341.3 146.9,339.2 223.8,334.0 300.7,328.9 377.6,325.3 454.5,320.3 531.5,314.4 608.4,309.1 685.3,305.8 762.2,304.0 762.2,344.7 685.3,344.7 608.4,344.7 531.5,344.7 454.5,344.7 377.6,344.7 300.7,344.7 223.8,344.7 146.9,344.7 70.0,344.7" fill="#27899A" opacity="0.30"/><polyline points="70.0,328.1 146.9,311.5 223.8,294.8 300.7,278.2 377.6,261.6 454.5,245.0 531.5,228.4 608.4,211.8 685.3,195.2 762.2,178.6 839.1,162.0 916.0,145.3" fill="none" stroke="#718096" stroke-width="2" stroke-dasharray="6 5"/><polyline points="70.0,329.2 146.9,316.7 223.8,300.5 300.7,282.7 377.6,267.6 454.5,251.4 531.5,232.2 608.4,211.7 685.3,192.4 762.2,184.2" fill="none" stroke="#1B365D" stroke-width="3"/><line x1="762.2" y1="184.2" x2="762.2" y2="183.9" stroke="#C05621" stroke-width="2"/><circle cx="762.2" cy="184.2" r="4.5" fill="#1B365D"/><text x="754.2" y="176.2" font-size="12" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace" font-weight="700" fill="#1B365D" text-anchor="end">$118.5M</text><polyline points="762.2,184.2 762.2,184.2 762.2,183.9 762.2,183.9 762.2,183.1 762.2,183.1 762.2,182.9 762.2,182.9 762.2,182.0 762.2,182.0 762.2,181.8 762.2,181.8 762.2,181.4 762.2,181.4 762.2,181.2 762.2,181.2 762.2,180.9 762.2,180.9 762.2,180.6 762.2,180.6 762.2,180.0 764.7,180.0 764.7,179.9 767.3,179.9 767.3,180.0 769.9,180.0 769.9,180.1 772.4,180.1 772.4,179.4 775.0,179.4 775.0,178.8 777.6,178.8 777.6,178.7 780.1,178.7 780.1,178.4 782.7,178.4 782.7,177.8 785.3,177.8 785.3,177.4 787.8,177.4 787.8,176.9 790.4,176.9 790.4,177.1 792.9,177.1 792.9,177.0 795.5,177.0 795.5,176.6 798.1,176.6 798.1,176.1 800.6,176.1 800.6,175.9 803.2,175.9 803.2,174.7 805.8,174.7 805.8,174.2 808.3,174.2 808.3,173.8 810.9,173.8 810.9,174.0 813.5,174.0 813.5,172.9 816.0,172.9 816.0,172.2 818.6,172.2 818.6,173.5 821.1,173.5 821.1,172.9 823.7,172.9 823.7,172.0 826.3,172.0 826.3,171.4 828.8,171.4 828.8,170.3 831.4,170.3 831.4,169.6 834.0,169.6 834.0,169.6 836.5,169.6 836.5,169.3 839.1,169.3 839.1,168.7 841.6,168.7 841.6,168.8 844.1,168.8 844.1,168.5 846.5,168.5 846.5,167.9 849.0,167.9 849.0,167.4 851.5,167.4 851.5,167.2 854.0,167.2 854.0,166.8 856.5,166.8 856.5,167.0 858.9,167.0 858.9,166.6 861.4,166.6 861.4,166.4 863.9,166.4 863.9,164.8 866.4,164.8 866.4,165.0 868.9,165.0 868.9,164.8 871.3,164.8 871.3,164.4 873.8,164.4 873.8,164.3 876.3,164.3 876.3,164.5 878.8,164.5 878.8,164.6 881.3,164.6 881.3,164.4 883.7,164.4 883.7,163.8 886.2,163.8 886.2,163.1 888.7,163.1 888.7,163.1 891.2,163.1 891.2,162.5 893.7,162.5 893.7,162.9 896.1,162.9 896.1,162.4 898.6,162.4 898.6,162.0 901.1,162.0 901.1,161.6 903.6,161.6 903.6,161.0 906.1,161.0 906.1,160.4 908.6,160.4 908.6,160.1 911.0,160.1 911.0,159.9 916.0,159.9 916.0,159.7" fill="none" stroke="#27899A" stroke-width="2.5" stroke-dasharray="7 5"/><circle cx="916.0" cy="159.7" r="4" fill="#27899A"/><circle cx="916.0" cy="145.3" r="3.5" fill="#718096"/><text x="954" y="137.3" font-size="11" fill="#718096" text-anchor="end">target $123.0M</text><text x="954" y="177.7" font-size="11" fill="#27899A" font-weight="700" text-anchor="end">forecast $121.3M</text></svg></svg></div></div>
+<script>
+const BLOCKS = [{"k": "chip", "t": "pace"}, {"k": "viz", "key": "pace", "stops": [0.0, 0.33076923076923076, 0.6615384615384615]}, {"k": "h", "t": "Pace — FY2026 · as of Oct 21, 2026"}, {"k": "p", "h": "As of October 21, 2026, the year is on plan to within $32K, but the month and the quarter are behind, and the forecast lands <b>$1.7M<\/b> short of the FY2026 target. The shortfall is <b>New Logo<\/b>; Net Expansion is on pace."}, {"k": "table", "h": "<div class=\"tw\"><table class=\"t\"><thead><tr><th>Horizon<\/th><th class=\"n\">Booked<\/th><th class=\"n\">Plan to date<\/th><th class=\"n\">Pace<\/th><th class=\"n\">Forecast<\/th><th class=\"n\">Target<\/th><th class=\"n\">Gap to target<\/th><\/tr><\/thead><tbody><tr><td>Month — Oct 2026 (day 21 of 31)<\/td><td class=\"n\">$950K<\/td><td class=\"n\">$1.3M<\/td><td class=\"n\">−$348K<\/td><td class=\"n\">$1.4M<\/td><td class=\"n\">$1.9M<\/td><td class=\"n\">$479K<\/td><\/tr><tr><td>Quarter — Q4 2026 (day 21 of 92)<\/td><td class=\"n\">$950K<\/td><td class=\"n\">$1.3M<\/td><td class=\"n\">−$362K<\/td><td class=\"n\">$3.8M<\/td><td class=\"n\">$5.7M<\/td><td class=\"n\">$2.0M<\/td><\/tr><tr><td>Year — FY2026<\/td><td class=\"n\">$18.5M<\/td><td class=\"n\">$18.5M<\/td><td class=\"n\">−$32K<\/td><td class=\"n\">$21.3M<\/td><td class=\"n\">$23.0M<\/td><td class=\"n\">$1.7M<\/td><\/tr><\/tbody><\/table><\/div>", "rows": 3}, {"k": "p", "h": "<i>Net new ARR in every row.<\/i> <i><b>Pace<\/b> = booked − plan to date. <b>Forecast<\/b> = booked + open pipeline × probability (an open churn counts as a likely loss). <b>Gap to target<\/b> = target − forecast — the Go-Get. A motion is <b>on pace<\/b> when its forecast reaches its plan. <b>New Logo<\/b> = won New Business; <b>Net Expansion<\/b> = upgrades − downsell − churn. Monthly and quarterly plans are an even split of the year's.<\/i>", "small": true, "note": false}, {"k": "p", "h": "<b>Gap to target (the Go-Get): $1.7M<\/b> — the FY2026 target $123.0M − forecast $121.3M.", "small": false, "note": false}, {"k": "p", "h": "<b>Plan:<\/b> FY2026 net new $23.0M = <b>New Logo $6.6M<\/b> + <b>Net Expansion $16.4M<\/b> <i>(split by the three years of booking history before the plan)<\/i>.", "small": false, "note": false}, {"k": "list", "h": "<ul><li><b>New Logo<\/b> — we expect <b>$6.6M<\/b>; forecast $4.9M (booked $4.7M + weighted pipeline $234K) — 🔴 <b>off pace<\/b> — $1.7M short.<\/li><li><b>Net Expansion<\/b> — we expect <b>$16.4M<\/b>; forecast $16.4M (booked $13.8M + expected $2.6M) — ✅ <b>on pace<\/b> (+$22K).<\/li><\/ul>"}, {"k": "h", "t": "Why — Net Expansion (renewals, expansion, downsell, churn)"}, {"k": "p", "h": "<b>Largest booked<\/b> (2187 movements):", "small": false, "note": false}, {"k": "table", "h": "<div class=\"tw\"><table class=\"t\"><thead><tr><th>Company<\/th><th>Movement<\/th><th class=\"n\">ARR change<\/th><th>Date<\/th><\/tr><\/thead><tbody><tr><td>Stonegate Services (#200302)<\/td><td>Churn<\/td><td class=\"n\">−$148K<\/td><td>07-20<\/td><\/tr><tr><td>Ironwood Software (#200684)<\/td><td>Churn<\/td><td class=\"n\">−$133K<\/td><td>06-24<\/td><\/tr><tr><td>Anchor Capital (#200432)<\/td><td>Churn<\/td><td class=\"n\">−$123K<\/td><td>04-19<\/td><\/tr><tr><td>Windward Robotics (#200856)<\/td><td>Churn<\/td><td class=\"n\">−$118K<\/td><td>08-25<\/td><\/tr><tr><td>Glenwood Digital (#200619)<\/td><td>Churn<\/td><td class=\"n\">−$116K<\/td><td>01-23<\/td><\/tr><\/tbody><\/table><\/div>", "rows": 5}, {"k": "p", "h": "<b>Still to come<\/b> (536 open) — Low +$502K · Base +$2.6M · Best +$7.8M", "small": false, "note": false}, {"k": "h", "t": "Why — New Logos"}, {"k": "p", "h": "<b>Largest open<\/b> (9 deals):", "small": false, "note": false}, {"k": "table", "h": "<div class=\"tw\"><table class=\"t\"><thead><tr><th>Company<\/th><th class=\"n\">New ARR<\/th><th class=\"n\">Prob.<\/th><th class=\"n\">Weighted<\/th><th>Close<\/th><\/tr><\/thead><tbody><tr><td>Bramley Analytics (#203456)<\/td><td class=\"n\">$81K<\/td><td class=\"n\">85%<\/td><td class=\"n\">$69K<\/td><td>12-10<\/td><\/tr><tr><td>Greenleaf Capital (#203463)<\/td><td class=\"n\">$93K<\/td><td class=\"n\">65%<\/td><td class=\"n\">$60K<\/td><td>12-10<\/td><\/tr><tr><td>Trinity Technologies (#203459)<\/td><td class=\"n\">$27K<\/td><td class=\"n\">85%<\/td><td class=\"n\">$23K<\/td><td>10-30<\/td><\/tr><tr><td>Bellhaven Technologies (#203457)<\/td><td class=\"n\">$25K<\/td><td class=\"n\">85%<\/td><td class=\"n\">$21K<\/td><td>10-29<\/td><\/tr><tr><td>Wrenfield Software (#203460)<\/td><td class=\"n\">$29K<\/td><td class=\"n\">65%<\/td><td class=\"n\">$19K<\/td><td>10-31<\/td><\/tr><\/tbody><\/table><\/div>", "rows": 5}, {"k": "p", "h": "<i>+ 4 more open, $43K weighted (average $11K).<\/i>", "small": false, "note": false}, {"k": "p", "h": "<i>In your own Pacer, each name links to the record in your HubSpot.<\/i>", "small": false, "note": true}, {"k": "p", "h": "Want to see it <b>by rep<\/b>, <b>by market<\/b>, or <b>how to bridge the gap<\/b>?"}], INSTALL = "https://claude.ai/customize/connectors?modal=add-custom-connector&connectorName=Pacer%20AI%20-%20Demo&connectorUrl=https%3A%2F%2Fdemo.getpacerai.com%2Fmcp", Q = "Are we on pace?", EMAIL = "you@yourcompany.com";
+const $ = s => document.querySelector(s);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+let gen = 0;
+// every pause checks the run it belongs to, so Replay never leaves an old run playing alongside
+const wait = async ms => { const g = gen; await sleep(ms); if (g !== gen) throw 'stop'; };
+const stream = $('#stream'), frm = $('#frm'), ptr = $('#ptr');
+let fdoc = null, fscale = 1;
+
+function steps(n){ for (let i = 1; i <= 3; i++){ const s = $('#st' + i);
+  s.classList.toggle('on', i === n); s.classList.toggle('done', i < n); } }
+function addr(h){ $('#addr').innerHTML = '&#128274; ' + h; }
+function scene(id){ document.querySelectorAll('.scene').forEach(s => s.classList.toggle('on', s.id === id)); }
+function fitFrame(){                 // size the sign-in page to its card, scaled down if the window is short
+  if (!fdoc) return;
+  const box = fdoc.querySelector('.box'); if (!box) return;
+  const w = $('#pop').clientWidth, need = box.offsetHeight + 34;
+  const room = $('#view').clientHeight - 64;
+  fscale = Math.min(1, room / need);
+  frm.style.width = (w / fscale) + 'px'; frm.style.height = need + 'px';
+  frm.style.transform = 'scale(' + fscale + ')';
+  $('#fwrap').style.height = (need * fscale) + 'px';
+}
+function at(el){                      // an element's centre on screen, inside the sign-in frame too
+  const r = el.getBoundingClientRect();
+  if (el.ownerDocument === document) return [r.left + r.width / 2, r.top + r.height / 2];
+  const f = frm.getBoundingClientRect();
+  return [f.left + (r.left + r.width / 2) * fscale, f.top + (r.top + r.height / 2) * fscale];
+}
+async function moveTo(el, ms){
+  const [x, y] = at(el);
+  ptr.classList.add('on'); ptr.style.transition = 'opacity .3s, transform ' + ms + 'ms cubic-bezier(.45,.05,.25,1)';
+  ptr.style.transform = 'translate(' + (x - 3) + 'px,' + (y - 2) + 'px)';
+  await wait(ms + 60);
+}
+async function click(){ ptr.classList.remove('down'); void ptr.offsetWidth; ptr.classList.add('down'); await wait(260); }
+function park(){ ptr.style.transition = 'none';
+  ptr.style.transform = 'translate(' + (innerWidth * .72) + 'px,' + (innerHeight * .78) + 'px)'; }
+async function typeInto(el, text, prop){
+  for (let i = 1; i <= text.length; i++){ el[prop] = text.slice(0, i); await wait(55 + Math.random() * 45); }
+}
+function smoothTo(y, dur){
+  const y0 = stream.scrollTop, dy = Math.max(0, Math.min(y, stream.scrollHeight - stream.clientHeight)) - y0;
+  // timer-stepped, not requestAnimationFrame: rAF pauses while the iframe is offscreen
+  return new Promise(res => { const t0 = Date.now();
+    (function f(){ const k = Math.min(1, (Date.now() - t0) / dur);
+      stream.scrollTop = y0 + dy * (k < .5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2)/2);
+      if (k < 1) setTimeout(f, 16); else res(); })(); });
+}
+let follow = true;
+function toBottom(){ if (follow) stream.scrollTop = stream.scrollHeight; }
+async function showAt(y, hold){ follow = false; await smoothTo(y, 600); await wait(hold); follow = true; }
+async function streamHTML(el, h){
+  const parts = h.match(/<[^>]+>|[^<\s]+\s*|\s+/g) || [];
+  let out = '';
+  for (const p of parts){ out += p; el.innerHTML = out; toBottom(); if (p[0] !== '<') await wait(24); }
+}
+
+function reset(){
+  $('#end').classList.remove('show'); $('#rbar').classList.remove('show');
+  $('#dlg').className = ''; $('#veil').classList.remove('on'); $('#row-pacer').classList.remove('on');
+  const bc = $('#b-connect'); bc.textContent = 'Connect'; bc.className = 'btn dark';
+  ['#f-url', '#o-signin', '#o-reg'].forEach(s => $(s).classList.remove('ring'));
+  $('#pop').classList.remove('open'); stream.innerHTML = ''; stream.scrollTop = 0; stream.style.paddingBottom = '';
+  if (fdoc){ const i = fdoc.querySelector('input[type=email]'); i.value = ''; i.style.boxShadow = '';
+    fdoc.querySelector('.ts').className = 'ts'; fdoc.querySelector('.ts-lbl').textContent = 'Verify you are human';
+    const b = fdoc.querySelector('button[type=submit]'); b.textContent = 'Start the demo'; b.disabled = false; }
+  ptr.classList.remove('on'); park(); steps(0);
+}
+
+async function connect(){
+  steps(1); scene('s-set');
+  addr('<b>claude.ai</b>/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fdemo.getpacerai.com%2Fmcp');
+  await wait(500);
+  $('#veil').classList.add('on'); $('#dlg').classList.add('open'); await wait(700);
+  $('#f-url').classList.add('ring'); await wait(2400);
+  await moveTo($('#b-continue'), 900); await click(); $('#f-url').classList.remove('ring');
+  $('#dlg').classList.add('p2'); await wait(500);
+  $('#o-signin').classList.add('ring'); $('#o-reg').classList.add('ring'); await wait(2300);
+  await moveTo($('#b-add'), 800); await click();
+  $('#dlg').classList.remove('open'); $('#veil').classList.remove('on'); $('#row-pacer').classList.add('on');
+  addr('<b>claude.ai</b>/settings/connectors'); await wait(1000);
+  await moveTo($('#b-connect'), 800); await click(); await wait(200);
+}
+async function signIn(){
+  steps(2); fitFrame(); $('#pop').classList.add('open'); await wait(800);
+  const inp = fdoc.querySelector('input[type=email]'), ts = fdoc.querySelector('.ts'),
+        cb = fdoc.querySelector('.ts-cb'), btn = fdoc.querySelector('button[type=submit]');
+  await moveTo(inp, 600); await click();
+  inp.style.boxShadow = '0 0 0 2px rgba(31,56,100,.35)'; await typeInto(inp, EMAIL, 'value');
+  inp.style.boxShadow = ''; await wait(300);
+  await moveTo(cb, 700); await click();
+  ts.classList.add('busy'); fdoc.querySelector('.ts-lbl').textContent = 'Verifying…'; await wait(1300);
+  ts.className = 'ts ok'; fdoc.querySelector('.ts-lbl').textContent = 'Success!'; await wait(800);
+  await moveTo(btn, 650); await click();
+  btn.disabled = true; btn.textContent = 'Signing in…'; await wait(1100);   // the page's own onsubmit text
+  $('#pop').classList.remove('open'); ptr.classList.remove('on');
+  const bc = $('#b-connect'); bc.textContent = '✓ Connected'; bc.className = 'btn ok'; await wait(1600);
+}
+async function ask(){
+  steps(3); scene('s-chat'); addr('<b>claude.ai</b>/new'); await wait(500);
+  const m = document.createElement('div'); m.className = 'msg user';
+  const b = document.createElement('div'); b.className = 'bub cur'; m.appendChild(b); stream.appendChild(m);
+  await typeInto(b, Q, 'textContent'); b.classList.remove('cur'); await wait(450);
+  const t = document.createElement('div'); t.className = 'msg';
+  t.innerHTML = '<div class="typing"><i></i><i></i><i></i></div>'; stream.appendChild(t); toBottom();
+  await wait(800); t.remove();
+  const wrap = document.createElement('div');
+  wrap.innerHTML = '<div class="who">CLAUDE · PACER AI</div><div class="resp"></div>';
+  stream.appendChild(wrap); const resp = wrap.querySelector('.resp');
+  for (const bl of BLOCKS){
+    if (bl.k === 'chip'){
+      const c = document.createElement('div'); c.className = 'chip fade';
+      c.innerHTML = '<span class="s"></span><span>Running <b>' + bl.t + '</b> <em>· Pacer AI - Demo</em></span>';
+      resp.appendChild(c); toBottom(); await wait(1000);
+      c.innerHTML = '<span class="ok">&#10003;</span><span>Ran <b>' + bl.t + '</b> <em>· Pacer AI - Demo</em></span>';
+    } else if (bl.k === 'viz'){
+      const v = document.createElement('div'); v.className = 'viz fade';
+      v.innerHTML = $('#vault [data-frag="' + bl.key + '"]').innerHTML; resp.appendChild(v);
+      for (const s of bl.stops){ await showAt(v.offsetTop + s * v.offsetHeight - 8, 1900); }
+    } else if (bl.k === 'h'){
+      const h = document.createElement('h4'); h.className = 'fade'; h.textContent = bl.t; resp.appendChild(h);
+      toBottom(); await wait(250);
+    } else if (bl.k === 'p'){
+      const p = document.createElement('p'); if (bl.small) p.className = 'small'; if (bl.note) p.className = 'note fade';
+      resp.appendChild(p);
+      if (bl.small || bl.note){ p.innerHTML = bl.h; toBottom(); await wait(bl.note ? 1800 : 500); }
+      else { await streamHTML(p, bl.h); await wait(300); }
+    } else if (bl.k === 'table' || bl.k === 'list'){
+      const d = document.createElement('div'); d.className = 'fade'; d.innerHTML = bl.h; resp.appendChild(d);
+      if (d.offsetHeight > stream.clientHeight * .5){ await showAt(d.offsetTop - 40, 1100 + (bl.rows || 2) * 130); }
+      else { toBottom(); await wait(700 + (bl.rows || 2) * 120); }
+    }
+  }
+  await wait(1800);
 }
 async function play(){
-  stream.innerHTML = '';
-  for(const beat of BEATS){
-    if(beat.drop){ await fileDrop(beat.drop.name, beat.drop.meta); }
-    const ub = bubble('user'); await type(ub, beat.u); await sleep(500);
-    await typingDots();
-    const pb = bubble('pacer','PACER AI');
-    if(beat.list){
-      const intro = document.createElement('div'); pb.appendChild(intro);
-      intro.innerHTML = beat.p; scroll(); await sleep(450);
-      const ol = document.createElement('ol'); ol.className='plist'; pb.appendChild(ol);
-      for(const it of beat.list){ const li = document.createElement('li'); ol.appendChild(li);
-        li.innerHTML = it; scroll(); await sleep(620); }
-    } else {
-      pb.innerHTML = beat.p; scroll(); await sleep(700);
-    }
-    if(beat.v){ reveal(beat.v); await sleep(400); }
-    await sleep(1500);
-  }
-  await finale();
+  gen++; reset();
+  try { await wait(400); await connect(); await signIn(); await ask(); $('#end').classList.add('show'); }
+  catch (e) { if (e !== 'stop') throw e; }
 }
-document.getElementById('replay').onclick = play;
-play();
-
+async function review(){
+  $('#end').classList.remove('show'); $('#rbar').classList.add('show');
+  stream.style.paddingBottom = '70px'; await smoothTo(0, 900);
+}
+$('#replay').onclick = play; $('#replay2').onclick = play; $('#review').onclick = review;
+addEventListener('resize', fitFrame);
+// start once the sign-in page is ready and the reel is on screen (it sits low on /demo-connect)
+new Promise(r => { if (frm.contentDocument && frm.contentDocument.readyState === 'complete' && frm.contentDocument.querySelector('.box')) r(); else frm.addEventListener('load', r, {once: true}); })
+  .then(() => { fdoc = frm.contentDocument; fitFrame(); park();
+    let started = false; const go = () => { if (!started){ started = true; play(); } };
+    if ('IntersectionObserver' in window){
+      new IntersectionObserver((es, io) => { if (es.some(e => e.isIntersecting)){ io.disconnect(); go(); } },
+                               {threshold: .35}).observe($('#win'));
+      setTimeout(() => { if (document.visibilityState === 'visible' && window.parent === window) go(); }, 1500);
+    } else go(); });
 </script></body></html>

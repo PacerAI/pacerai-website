@@ -9,6 +9,14 @@ any version can be replayed or restored. They are served by the `pacer-demo-work
 | [`planning-agent_2026_10_04/`](planning-agent_2026_10_04/) | `cro-arr-v1` | Planning Agent: "$100M ARR in 2025 → $150M in 2027", ends in the Excel workbook | `dda61798b1b9…` | On the homepage 2026-07-22 → 2026-10-05; now staging only, kept for cross-sell |
 | [`pacing-agent_2026_10_04/`](pacing-agent_2026_10_04/) | `pacing-agent-v3` | Pacing Agent: user types `pace`, then `gap`; end card Try the Demo Free · Review the output · Replay | `9237422ce272…` | **On the homepage** (v2 live earlier on 2026-10-05; v3 adds the white-space ACCOUNT header) |
 
+**The /demo-connect reel** ("See it in action" on page 983) is served from the staging Worker, not the homepage, so it
+has no folder here; both versions stay in `infra/pacer-demo-worker/src/variants/`:
+
+| Worker variant | What it shows | sha256 | Status |
+|---|---|---|---|
+| `demo-connect` | The HubSpot demo: the prefilled Add custom connector dialog (`https://demo.getpacerai.com/mcp`), the email-only sign-in, then "Are we on pace?" answered by the real `pace` tool with plain company names. Built by `pacerai-platform-claude-native/demo-site/build_demo_connect_reel.py`; stills in that repo's `demo-site/out/demo-connect/frames/` | `2cde8729f2fc…` | Staged 2026-10-26; live on page 983 after the next staging deploy |
+| `demo-connect-v1` | The September reel: the Salesforce demo's Azure URL and the password sign-in. Built by pacerai-content `collateral/demo_reels/_generators/build_authored_reels.py` | `8676fb7e971e…` | On page 983 2026-09-24 → the next staging deploy; kept for rollback |
+
 **Go-to-market fit:** the homepage video lands the **Pacing Agent** (watch → give a work email on `/demo-connect` →
 try it free). The **Planning Agent** video is the cross-sell follow-up.
 
