@@ -129,7 +129,7 @@ Two related traps:
 | Database | `pacerai-leads` · `e0d0228a-75a6-4eff-b2b0-9455623229d2` · region WNAM |
 | Schema | `pacerai-gtm/infra/whitepaper-worker/migrations/0001_leads.sql` |
 | Capture endpoint | `https://whitepaper-worker.will-078.workers.dev` (POST `/`) |
-| Demo endpoint | `https://pacer-demo-worker.will-078.workers.dev` (POST `/demo-signup`, widget at `/signup`; `GET /internal/demo-signups`, bearer token, read by the demo app's Daily Pace Briefing: platform spec 023 §7.2; `POST /internal/connector-sign-in`, bearer token, written by the demo app's sign-in page since 2026-10-21) |
+| Demo endpoint | `https://pacer-demo-worker.will-078.workers.dev` (POST `/demo-signup`, widget at `/signup`; `GET /internal/demo-signups`, bearer token, read by the demo app's Daily Pace Briefing: platform spec 023 §7.2; `POST /internal/connector-sign-in`, bearer token, written by the demo app's sign-in page since 2026-10-21; `GET` + `POST /internal/optouts`, the same bearer token as `/internal/demo-signups`, the email opt-out list in D1 `email_optouts`) |
 | Sequences | valid `69d83dab0a15420021ae717d` · non-lead `69e2577cfba82800152a99ab` · demo signup `6ac6a3099f51790014977897` · beta tester (manual) `6ac6a30bc4f8150018d90e12` |
 | Alert channel | `#website-leads` (`SLACK_WEBHOOK_URL_WEBSITE_LEADS`; the Worker secret drops the suffix) |
 
@@ -156,12 +156,13 @@ curl -sX POST https://whitepaper-worker.will-078.workers.dev \
 
 - **Capture never blocks on a side effect.** Both Workers return the visitor's 200 first and run Apollo / D1 / Slack inside `ctx.waitUntil`. Every side effect is individually try/caught into an `errors[]` array that lands in the structured log (`npx wrangler tail`). A D1 outage costs a row, never a download.
 - **Rows are append-only.** A repeat submit is a new row. Dedupe at read time — the 60-second KV idempotency window exists to stop double-submits, not to enforce uniqueness.
-- **PII lives in six places.** Any deletion request has to touch all six:
+- **PII lives in seven places.** Any deletion request has to touch all seven:
 
   | Place | What it holds |
   |---|---|
   | D1 `pacerai-leads` → `leads` | Every captured email, with class, source, page, UTM and IP |
   | D1 `pacerai-leads` → `pricing_requests` | Every `/pricing/` order request: email, name, company, package, totals and attribution |
+  | D1 `pacerai-leads` → `email_optouts` | Every address that asked to stop getting Pacer AI email, with how and when (`infra/pacer-demo-worker/migrations/0004_email_optouts.sql`). A deletion request that removes this row lets the briefing email that address again |
   | Apollo | The contact |
   | KV `DEMO_SIGNUPS` | Demo signups. The *key* is the email address, and entries have no TTL |
   | `/home/data/briefing_sent.json` on `pacerai-demo-mcp` | For a signup who got the Daily Pace Briefing: sent keys and day counts by email |

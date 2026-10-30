@@ -11,7 +11,8 @@ export interface Env {
   SLACK_WEBHOOK_URL?: string;
   PACER_DEMO_PASSWORD?: string;
   // Shared with whitepaper-worker (pacerai-gtm) — one `leads` table for every
-  // email captured on getpacerai.com. Schema lives in that repo's migrations/.
+  // email captured on getpacerai.com. Schema lives in that repo's migrations/, except
+  // `email_optouts`, which this Worker owns: migrations/0004_email_optouts.sql here.
   LEADS?: D1Database;
   // Apollo follow-up. All optional: no key → the Apollo step is skipped; no
   // sequence id → signups land on the list but nobody is enrolled.
@@ -24,7 +25,8 @@ export interface Env {
   ORDER_FROM?: string;       // e.g. "Pacer AI <orders@mail.getpacerai.com>" (a Resend-verified domain)
   ORDER_NOTIFY_TO?: string;  // will@getpacerai.com
   // GET /internal/demo-signups (src/signups.ts), read by the Daily Pace Briefing on pacerai-demo-mcp
-  // (platform spec 023 §7.2). Unset = the route returns 404. Same value as that app's BRIEFING_SIGNUPS_TOKEN.
+  // (platform spec 023 §7.2), and GET + POST /internal/optouts (src/optouts.ts), the email opt-out list.
+  // Unset = both routes return 404. Same value as that app's BRIEFING_SIGNUPS_TOKEN.
   BRIEFING_SIGNUPS_TOKEN?: string;
   // POST /internal/connector-sign-in (src/connector-sign-in.ts): the connector's sign-in page on pacerai-demo-mcp
   // sends each sign-in here. Unset = the route returns 503. Same value as that app's PACER_LEAD_SYNC_TOKEN.

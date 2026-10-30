@@ -8,6 +8,7 @@ import { recordDemoLead } from "./demo-lead";
 import { handleConnectorSignIn } from "./connector-sign-in";
 import { handlePricingRequest, orderPage } from "./order";
 import { handleDemoSignups } from "./signups";
+import { handleOptouts } from "./optouts";
 
 /**
  * pacer-demo-worker
@@ -51,6 +52,12 @@ export default {
     // The Daily Pace Briefing reads recent /demo-connect signups here (src/signups.ts; bearer token, read-only).
     if (url.pathname === "/internal/demo-signups") {
       return handleDemoSignups(request, env);
+    }
+
+    // The email opt-out list (src/optouts.ts): the briefing reads it before each send; the briefing's one-click
+    // unsubscribe and pacerai-gtm's nightly reply detector add to it. Same bearer token as /internal/demo-signups.
+    if (url.pathname === "/internal/optouts") {
+      return handleOptouts(request, env);
     }
 
     // The connector's sign-in page on pacerai-demo-mcp sends each sign-in here, so it becomes a demo lead like a
