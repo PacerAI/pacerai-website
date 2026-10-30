@@ -12,7 +12,9 @@ has gained since is a getpacerai.com surface. Co-located with the site's other d
   (`<iframe src="https://pacer-demo-worker.will-078.workers.dev/">`).
 - **Also serves:** the `/demo-connect` signup (`/signup`, `POST /demo-signup`); the `/pricing/` order card and its
   emails (`/order`, `POST /pricing-request`, code `src/order.ts`; see [Order routes](#order-routes-order--post-pricing-request));
-  and two server-to-server routes for the demo app, `GET /internal/demo-signups` and `POST /internal/connector-sign-in`.
+  and server-to-server routes, all behind a bearer token: `GET /internal/demo-signups` and `POST /internal/connector-sign-in`
+  for the demo app, and `GET` + `POST /internal/optouts`, the email opt-out list (see
+  [the opt-out list](#get--post-internaloptouts--the-email-opt-out-list)).
 - **Demo source of truth:** `pacerai-platform-claude-native/demo-site/demo-video-by-claude.html`
   → copied to `src/demo.html` (refresh with `./sync.sh`).
 - **Process doc + reel catalog:** `pacerai-content/collateral/demo_reels/` (README + registry).
@@ -51,6 +53,7 @@ pacer-demo-worker/
 ├── src/demo-lead.ts    recordDemoLead(): KV → Apollo → D1 leads → Slack, shared by both demo-lead routes
 ├── src/connector-sign-in.ts  POST /internal/connector-sign-in (the connector's sign-in page → a demo lead)
 ├── src/signups.ts      GET /internal/demo-signups (the Daily Pace Briefing's signup feed)
+├── src/optouts.ts      GET + POST /internal/optouts (the email opt-out list, D1 `email_optouts`)
 ├── src/order.ts        GET /order (the /pricing/ order card) + POST /pricing-request → D1, Apollo, Slack, Resend emails
 ├── src/shared.ts       The Env type (every binding and secret) + helpers shared by index.ts and order.ts
 ├── src/price-book.json Prices for the order card; written by scripts/build_pricing.py, never hand-edited
@@ -58,6 +61,7 @@ pacer-demo-worker/
 ├── src/demo.html       The promoted reel (written ONLY by promote.sh; a build artifact)
 ├── src/variants/       Staged reels, one .html per slug — the dev catalog
 ├── src/html.d.ts       Text-module type shim
+├── migrations/         D1 migrations for the tables this Worker owns (0004_email_optouts.sql); 0001–0003 are in pacerai-gtm
 ├── wrangler.toml       CF config (name, Text rule for *.html, workers_dev, [env.staging])
 ├── package.json        Local wrangler (no global install)
 ├── tsconfig.json       Strict TS
@@ -155,7 +159,7 @@ The full flow, the class → action table, the Apollo ids and the operating chec
 | `APOLLO_API_KEY` | `pacerai-gtm/.env` `APOLLO_API_KEY` | Apollo step skipped |
 | `APOLLO_EMAIL_ACCOUNT_ID` | `698cf8caac41ac000da4c9f9` (will@getpacerai.com) | list only, no email |
 | `APOLLO_SEQUENCE_ID_DEMO_SIGNUP` | `6ac6a3099f51790014977897` | list only, no email |
-| `BRIEFING_SIGNUPS_TOKEN` | a random token; the same value as `pacerai-demo-mcp`'s `BRIEFING_SIGNUPS_TOKEN` (Key Vault) | `/internal/demo-signups` returns 404 |
+| `BRIEFING_SIGNUPS_TOKEN` | a random token; the same value as `pacerai-demo-mcp`'s `BRIEFING_SIGNUPS_TOKEN` (Key Vault). Also the token for `/internal/optouts` | `/internal/demo-signups` and `/internal/optouts` return 404 |
 | `CONNECTOR_SIGNIN_TOKEN` | a random token (`openssl rand -hex 32`); the same value as `pacerai-demo-mcp`'s `PACER_LEAD_SYNC_TOKEN` app setting | `/internal/connector-sign-in` returns 503, so connector sign-ins are not recorded as leads |
 | `RESEND_API_KEY` | the Resend key named `getPacerAI-send-access` (sending access, domain `mail.getpacerai.com`); set and test it with `docs/deploy/order-email-setup.md` | the order request is saved, and no email goes out |
 | `ORDER_FROM` | optional sender override | the order emails come from `Pacer AI <orders@mail.getpacerai.com>` |
@@ -195,6 +199,34 @@ per pacerai-platform-claude-native spec 023 §7.2 (not live yet: `BRIEFING_SIGNU
   class rule (`valid_lead`, `personal_email`, `internal`) and counts the days.
 - **Read-only.** 404 when the token secret is unset, 401 on a wrong token, and `since` is clamped to the last 31 days.
 - **Code:** `src/signups.ts`.
+
+## `GET` + `POST /internal/optouts` — the email opt-out list
+
+One list of every address that asked to stop getting Pacer AI email, kept in D1 `pacerai-leads` beside `leads`, so
+every sender reads and writes the same list:
+
+| Caller | Does | `source` |
+|---|---|---|
+| The Daily Pace Briefing (`pacerai-platform-claude-native`) | Reads the list before each send and skips every address on it; adds an address when a recipient uses the briefing's one-click unsubscribe | `one_click` |
+| The nightly reply detector on Will's Mac (`pacerai-gtm`) | Adds an address when a reply asks to stop | `reply_stop` |
+| By hand | Adds an address | `manual` |
+
+- **Auth:** the same bearer check as `/internal/demo-signups`, with the same secret: `Authorization: Bearer
+  <BRIEFING_SIGNUPS_TOKEN>`. 404 while the secret is unset; 401 on a missing or wrong token.
+- **`GET /internal/optouts`** → `200 {"optouts": [{"email", "source", "created_at"}]}`: every row, oldest first.
+- **`POST /internal/optouts`** with JSON `{"email": "...", "source": "one_click" | "reply_stop" | "manual", "detail"?: "..."}`:
+  - `200 {"ok": true, "new": true}` when the address is added;
+  - `200 {"ok": true, "new": false}` when it is already on the list. The first row is kept as it was, with its
+    `source`, `created_at` and `detail`;
+  - `400 {"ok": false, "error": "bad_request" | "invalid_email" | "invalid_source" | "invalid_detail"}`.
+- **Other replies:** `405` for any other method; `503 {"ok": false, "error": "d1_error"}` when the query fails, for
+  example before the migration has run.
+- **The table:** `email_optouts` (`email` primary key, lower-cased · `source` · `created_at`, ISO UTC · `detail`,
+  optional, cut to 1,000 characters). Schema and apply command: `migrations/0004_email_optouts.sql`. Migrations
+  0001–0003 of the same database are in `pacerai-gtm/infra/whitepaper-worker/migrations/`.
+- **No delete route.** Taking an address off the list is a deliberate `DELETE` by hand.
+- `/internal/demo-signups` does not filter by this list; the briefing does.
+- **Code:** `src/optouts.ts`.
 
 ## Order routes: `/order` + `POST /pricing-request`
 

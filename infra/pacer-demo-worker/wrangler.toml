@@ -34,8 +34,8 @@ id = "105573715cf94372bd65e505caf5d845"
 #   APOLLO_SEQUENCE_ID_DEMO_SIGNUP — Signal_CONTACT_DemoSignup_Triage sequence, 6ac6a3099f51790014977897
 #   All three Apollo secrets are optional: unset = signups skip Apollo (key) or land
 #   on the list without the email (sequence id). See pacerai-gtm/tactics/website-visitor/docs/design/flow.md.
-#   BRIEFING_SIGNUPS_TOKEN — GET /internal/demo-signups bearer token; same value as pacerai-demo-mcp's
-#                            BRIEFING_SIGNUPS_TOKEN. Unset = that route returns 404.
+#   BRIEFING_SIGNUPS_TOKEN — bearer token for GET /internal/demo-signups and GET + POST /internal/optouts;
+#                            same value as pacerai-demo-mcp's BRIEFING_SIGNUPS_TOKEN. Unset = those routes return 404.
 #   CONNECTOR_SIGNIN_TOKEN — POST /internal/connector-sign-in bearer token; same value as pacerai-demo-mcp's
 #                            PACER_LEAD_SYNC_TOKEN app setting. Unset = that route returns 503 and connector
 #                            sign-ins are not recorded as leads.
@@ -75,7 +75,8 @@ enabled = true
 
 # D1 — shared `leads` table (created in pacerai-gtm/infra/whitepaper-worker,
 # schema at migrations/0001_leads.sql there). Both Workers write to it so demo
-# signups and resource downloads land in one place.
+# signups and resource downloads land in one place. The `email_optouts` table in
+# the same database belongs to this Worker: migrations/0004_email_optouts.sql here.
 [[d1_databases]]
 binding = "LEADS"
 database_name = "pacerai-leads"
