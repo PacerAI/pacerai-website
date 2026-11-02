@@ -26,7 +26,6 @@ DEFAULT_FILES = [
     "src/team/team-page.html",
     "src/team/contact.html",
     "src/demo-connect.html",
-    "src/pricing/pricing-build.html",
 ]
 
 

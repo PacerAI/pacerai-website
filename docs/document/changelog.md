@@ -8,6 +8,15 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-11-02: prices off the site
+
+- Homepage: both prices removed from the pricing section and the FAQ, including its structured copy. New button: Schedule a Call with Sales (Calendly `demo-pacer-ai`).
+- `/pricing/`: Redirection rule 5 turned back on, now 302, to `/#pricing`. Page 111 moved to draft.
+- Worker: `/order` redirects to `/#pricing`; `/pricing-request` returns 410.
+- All source Pricing links now `/#pricing`. Only the homepage was redeployed; other live pages keep `/pricing/` until their next deploy, and the redirect covers them.
+
+---
+
 ## 2026-10-22: /demo-connect one-button page LIVE (page 983)
 
 - Deployed page 983 from main (`deploy.py 983`, backup `docs/review/pre-deploy-backup-983-20261022-1003.json`): the "Add Pacer AI - Demo to Claude" button in the hero, the signup card removed, six steps after the click.

@@ -175,6 +175,10 @@ def render(pb: dict, template: str, js: str, order_url: str = ORDER_URL) -> str:
 
 
 def main() -> int:
+    # Retired 2026-11-02: prices are off the site (/pricing/ redirects to /#pricing, page 111 is a draft).
+    # Sources stay for rollback; delete this guard and restore page 111 in deploy.py and validate.py to bring it back.
+    print("build_pricing.py is retired: getpacerai.com publishes no prices. See CLAUDE.md.", file=sys.stderr)
+    return 1
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--price-book", type=Path, default=PRICE_BOOK)
     ap.add_argument("--check", action="store_true", help="exit 1 if an output differs from a fresh build")

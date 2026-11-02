@@ -59,7 +59,7 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 | **About** | 374 | `about` | 366 | `src/team/about.html` *(legacy — 301 → `/#about`)* |
 | **Contact** | 375 | `contact` | — | `src/team/contact.html` *(bone; moved to top-level `/contact/`; was parent 366)* |
 | **Demo Connect** | 983 | `demo-connect` | — | `src/demo-connect.html` *(bone; spec 011 AC-1 demo onboarding; LIVE 2026-09-22; embeds the demo-connect reel from the staging Worker)* |
-| **Pricing** | 111 | `pricing` | — | `src/pricing/pricing-build.html` *(built by `scripts/build_pricing.py` from the foundation Price Book; never hand-edit. Source: `pricing-template.html` + `pricing.js`. **LIVE 2026-10-14**; the Redirection rule `/pricing/` → `/#pricing` is disabled, not deleted, so re-enabling it is the rollback)* |
+| **Pricing** | 111 | `pricing` | — | **Draft since 2026-11-02; the site publishes no prices.** `/pricing/` is a 302 (Redirection rule 5) to the homepage `/#pricing` section, whose button is Schedule a Call with Sales. `src/pricing/*`, `scripts/build_pricing.py` and the Worker's `src/order.ts` are retired and kept for rollback. Never add a price to a page; see Linear project Pricing. |
 | Login | 134 | `login` | — | *(legacy — not managed by this repo)* |
 
 **Blog articles (all 13 bone + live, parent 230; deploy with `--force` — pre-existing prose voice-debt trips `validate.py`):**

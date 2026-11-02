@@ -6,7 +6,6 @@ const demoPage = withVideoBridge(demoHtml);
 import { FRAME_HEADERS, json, type Env } from "./shared";
 import { recordDemoLead } from "./demo-lead";
 import { handleConnectorSignIn } from "./connector-sign-in";
-import { handlePricingRequest, orderPage } from "./order";
 import { handleDemoSignups } from "./signups";
 import { handleOptouts } from "./optouts";
 
@@ -41,12 +40,9 @@ export default {
     }
 
     // Self-serve signup POST (from the /signup widget, same-origin — no CORS needed).
-    // Order capture from getpacerai.com/pricing/ (src/order.ts): the card, then its POST.
+    // Retired 2026-11-02: prices are off the site. src/order.ts stays for rollback.
     if (url.pathname === "/pricing-request") {
-      if (request.method !== "POST") {
-        return json({ error: "method_not_allowed" }, 405);
-      }
-      return handlePricingRequest(request, env, ctx);
+      return json({ error: "gone" }, 410);
     }
 
     // The Daily Pace Briefing reads recent /demo-connect signups here (src/signups.ts; bearer token, read-only).
@@ -88,9 +84,9 @@ export default {
       });
     }
 
-    // The order card (iframed by getpacerai.com/pricing/ when a visitor clicks Choose).
+    // Retired 2026-11-02: a saved order-card link goes to the Schedule a Call section.
     if (url.pathname === "/order") {
-      return orderPage(url, env);
+      return Response.redirect("https://getpacerai.com/#pricing", 302);
     }
 
     // The demo video (iframed by the homepage).
