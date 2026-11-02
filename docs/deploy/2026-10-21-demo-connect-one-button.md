@@ -151,10 +151,31 @@ prospects to a URL that doesn't answer, then to a sign-in page that refuses them
 - [x] **7. Deploy page 983** (Will's go): `python3 scripts/deploy.py 983`. Check the hero button opens claude.ai's
   dialog with `https://demo.getpacerai.com/mcp` filled in.
   - _Done 2026-10-23 14:51 UTC; backup `docs/review/pre-deploy-backup-983-20261023-1451.json`. The live page links only `demo.getpacerai.com`._
-- [ ] **8. New screenshots.** Step 1's dialog screenshot (`pacer-ai-demo-connect-step-4-url-2x.png`) shows the old
-  URL, and step 6's (`pacer-ai-demo-connect-step-8-pace-2x.png`) shows the Salesforce book's numbers. The reel
-  (`/v/demo-connect` on the staging Worker) shows the old URL and the password; regenerate it in the platform repo's
-  `demo-site/`.
+- [ ] **8. New screenshots and reel.**
+  - [ ] Screenshots. Step 1's dialog screenshot (`pacer-ai-demo-connect-step-4-url-2x.png`) shows the old URL, and
+    step 6's (`pacer-ai-demo-connect-step-8-pace-2x.png`) shows the Salesforce book's numbers.
+  - [x] Reel regenerated and staged. _2026-10-26: built by `demo-site/build_demo_connect_reel.py` in
+    pacerai-platform-claude-native (pull request #120) and copied to `src/variants/demo-connect.html` here (branch
+    `feat/demo-connect-reel-hubspot`). The September reel stays at `/v/demo-connect-v1`. Stills:
+    `demo-site/out/demo-connect/frames/` in the platform repo._
+  - [ ] **Deploy the staging Worker** (Will's go), from a clean copy of main once both pull requests are merged:
+    `cd infra/pacer-demo-worker && npm run deploy:staging`. Page 983 iframes `/v/demo-connect` on the staging
+    Worker, so this is the step that changes the page. `npm run deploy` (production) does not serve this reel and is
+    not needed. Checks:
+    - `https://pacer-demo-worker-staging.will-078.workers.dev/health` returns 200.
+    - `curl -s -A Mozilla/5.0 https://pacer-demo-worker-staging.will-078.workers.dev/v/demo-connect | grep -c demo.getpacerai.com/mcp`
+      prints 3, and the same with `grep -c azurewebsites` prints 0.
+    - `/v/demo-connect-v1` and `/v/pacing-agent-v3` return 200.
+    - The homepage video is untouched: production was not deployed, so
+      `curl -s -A Mozilla/5.0 https://pacer-demo-worker.will-078.workers.dev/ | shasum -a 256` is the same before and after.
+    - On getpacerai.com/demo-connect, scroll to "See it in action": the reel starts as it comes into view and
+      shows `https://demo.getpacerai.com/mcp`, the email-only sign-in, and the answer with plain company names.
+    - Rollback: copy `src/variants/demo-connect-v1.html` over `src/variants/demo-connect.html` and deploy staging
+      again.
+  - [ ] After the deploy, record it in pacerai-content `collateral/demo_reels/registry.yaml`: the `demo-connect`
+    entry's sha256 (`2cde8729f2fc07ff…`), its generator (now the platform repo's `demo-site/build_demo_connect_reel.py`)
+    and stage, plus a `demo-connect-v1` entry. The answer is tool output; the connector dialog and the bot check are
+    drawn.
 
 **Rollback.** Restore page 983 from its deploy backup and roll the Worker back to the previous version (`npx wrangler
 rollback`). The HubSpot app settings can stay: the Salesforce app is untouched by this change.
