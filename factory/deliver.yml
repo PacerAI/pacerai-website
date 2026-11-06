@@ -1,0 +1,49 @@
+# What /factory needs to know about this product. The plugin (pacerai-factory) holds none of this.
+# Registered 2026-11-06. The workflow that points here is pacerai-factory/workflows/website.yml.
+
+product: Pacer AI website
+owner: Will
+
+base: main
+worktrees: ../pacerai-website-worktrees   # Beside this repo, never inside it: a worktree inside would be
+                                          # picked up by validate.py's own src/ glob and checked twice.
+
+checks: bash factory/checks.sh
+tests: [tests/]
+review_rules: factory/review-rules.md
+
+tracker:
+  ready: [Ready]
+
+concurrency: 3        # Jobs at once, across every repo the factory builds.
+
+# No `routing:` block. This repo serves no MCP tools, so there is no tool surface and nothing to re-test.
+
+# The code reviewer always runs. `ui` is added to every job because on a marketing site the layout, the
+# type and the colour _are_ the product: a page that reads badly converts badly, and nothing else catches it.
+always: [code, ui]
+
+reviewers:            # More reviewers, by Linear's Touches labels.
+  Numbers: numbers    # Pricing figures, case-study metrics, anything a buyer could check.
+  Security: security  # The demo Worker: signups, orders, the opt-out list.
+  Chart: ui
+
+# What the approver may merge on its own. It decides merge or escalate; these are the gates underneath that call.
+#
+# auto_merge is off to start with. Everything in src/ is external copy published under Will's name, and
+# first_principles.md §4 keeps the final voice pass on external content with him. Merging here does not
+# deploy — scripts/deploy.py is a separate, deliberate run — so the cost of holding merges is one click,
+# not a delay to anything live. Flip this to true when the voice pass has a check behind it.
+auto_merge: false
+protected_paths:      # A diff touching any of these escalates instead, even once auto_merge is on.
+  - factory/checks.sh                    # What decides whether a change passes.
+  - factory/deliver.yml                  # This file, including the list below.
+  - factory/review-rules.md              # What the reviewers read.
+  - scripts/validate.py                  # The pre-publish validator. CI re-baselines every page when it changes.
+  - scripts/deploy.py                    # Writes to the live WordPress site.
+  - scripts/tear_sheet.py                # Publishes and rolls back the live tear-sheet PDF.
+  - scripts/build_pricing.py             # Retired 2026-11-02 and kept for rollback. The site publishes no
+  - src/pricing/                         # prices, so putting either of these back is Will's call, not a job's.
+  - infra/pacer-demo-worker/             # Signups, orders and the opt-out list: live traffic and personal data.
+  - .github/workflows/                   # The cloud-side gates.
+  - .gitmodules                          # The foundation pin, which is where the voice and pricing rules come from.
