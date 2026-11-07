@@ -1,5 +1,5 @@
-# What /factory needs to know about this product. The plugin (pacerai-factory) holds none of this.
-# Registered 2026-11-06. The workflow that points here is pacerai-factory/workflows/website.yml.
+# What /factory needs to know about this product. The factory repo (ai-factory) holds none of this.
+# Registered 2026-11-06. The workflow that points here is ai-factory/workflows/website.yml.
 
 product: Pacer AI website
 owner: Will
