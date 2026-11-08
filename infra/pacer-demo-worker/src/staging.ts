@@ -7,13 +7,16 @@
 import croArrV1 from "./variants/cro-arr-v1.html";
 import { withVideoBridge } from "./video-bridge";
 import demoConnect from "./variants/demo-connect.html";
+import demoConnectV1 from "./variants/demo-connect-v1.html";
 import pacingAgentV1 from "./variants/pacing-agent-v1.html";
 import pacingAgentV2 from "./variants/pacing-agent-v2.html";
 import pacingAgentV3 from "./variants/pacing-agent-v3.html";
 
 const VARIANTS: Record<string, { html: string; title: string }> = {
   "cro-arr-v1": { html: croArrV1, title: "CRO ARR Planning — $100M to $150M" },
-  "demo-connect": { html: demoConnect, title: "Connect the demo — add the connector, sign in, type pace" },
+  // /v/demo-connect is iframed by getpacerai.com/demo-connect (page 983): deploying staging changes that page.
+  "demo-connect": { html: demoConnect, title: "Connect the demo — HubSpot demo: add the connector, sign in with a work email, ask Are we on pace?" },
+  "demo-connect-v1": { html: demoConnectV1, title: "Connect the demo — September version (old Azure URL, password sign-in)" },
   "pacing-agent-v1": { html: pacingAgentV1, title: "Pacing Agent — type pace, then gap (illustrative data, 20 Sep 2026)" },
   "pacing-agent-v2": { html: pacingAgentV2, title: "Pacing Agent — pace, then gap; end card adds Review the output" },
   "pacing-agent-v3": { html: pacingAgentV3, title: "Pacing Agent — white-space chart gains an ACCOUNT column header" },

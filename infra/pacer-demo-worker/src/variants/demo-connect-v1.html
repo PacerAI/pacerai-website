@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pacer AI — connect the demo (add the connector → sign in → pace)</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:transparent;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:#1c1c1e;height:100vh;display:flex;flex-direction:column;justify-content:flex-end;
+    align-items:center;padding:22px 14px 12px}
+  #frame{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;
+    width:100%;max-width:1120px;margin:0 auto;background:#FAF9F5;border-radius:14px;overflow:hidden;
+    box-shadow:0 26px 70px rgba(4,10,24,.45);border:1px solid rgba(255,255,255,.55)}
+  #bar{display:flex;align-items:center;gap:8px;padding:11px 16px;background:#EFE9DF;border-bottom:1px solid #e4ddd0}
+  #bar .dot{width:11px;height:11px;border-radius:50%}
+  .r{background:#ff5f57}.y{background:#febc2e}.g{background:#28c840}
+  #bar b{margin-left:8px;font-size:13px;color:#3a3f47;font-weight:600}
+  #bar .conn{margin-left:auto;font-size:11.5px;color:#6b7280;display:flex;align-items:center;gap:6px}
+  #bar .conn i{width:7px;height:7px;border-radius:50%;background:#28c840;display:inline-block}
+  #stream{padding:22px clamp(24px,7%,96px);flex:1;min-height:0;overflow-y:auto}
+  .msg{margin:11px 0;display:flex}
+  .msg.user{justify-content:flex-end}
+  .bub{max-width:76%;padding:9px 13px;border-radius:13px;font-size:13.5px;line-height:1.5}
+  .user .bub{background:#1F3864;color:#fff;border-bottom-right-radius:4px}
+  .pacer .who{font-size:10px;font-weight:700;color:#1F3864;letter-spacing:.3px;margin:0 0 3px 2px}
+  .pacer .bub{background:#fff;color:#242832;border:1px solid #ece7dd;border-bottom-left-radius:4px;max-width:760px}
+  .plist{margin:7px 0 2px;padding-left:18px;font-size:12.5px}
+  .plist li{margin:3px 0;line-height:1.5}
+  .viz{margin:7px 0 4px;max-width:100%;zoom:.72}
+  .viz>div{box-shadow:0 2px 14px rgba(20,30,50,.08);border:1px solid #eceef1}
+  .typing{display:inline-flex;gap:4px;padding:12px 14px}
+  .typing i{width:7px;height:7px;border-radius:50%;background:#b9c0cc;animation:bl 1s infinite}
+  .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+  @keyframes bl{0%,60%,100%{opacity:.3}30%{opacity:1}}
+  .cur{border-right:2px solid #cfd6e0;animation:cur .7s step-end infinite}
+  @keyframes cur{50%{border-color:transparent}}
+  /* file drop-in */
+  .dropzone{margin:14px auto;max-width:560px;border:2px dashed #c9d2e0;border-radius:14px;
+    padding:16px;background:#fbfcfe;display:flex;align-items:center;justify-content:center;
+    min-height:96px;transition:border-color .3s, background .3s}
+  .dropzone.hot{border-color:#1F3864;background:#f2f6fd}
+  .dropzone.done{border-style:solid;border-color:#d8e0ec;background:#fff}
+  .filechip{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e4e7ec;
+    border-radius:11px;padding:11px 15px;box-shadow:0 8px 26px rgba(20,30,60,.14);
+    transform:translateY(-140px) scale(.92);opacity:0}
+  .filechip.in{animation:drop .85s cubic-bezier(.22,1.2,.36,1) forwards}
+  @keyframes drop{0%{transform:translateY(-140px) scale(.92);opacity:0}
+    70%{transform:translateY(6px) scale(1.02);opacity:1}100%{transform:none;opacity:1}}
+  .filechip .ico{width:34px;height:42px;border:1px solid #dfe3ea;border-radius:6px;display:flex;
+    align-items:center;justify-content:center;color:#2E7D32;font-size:17px;background:#F4FAF5}
+  .filechip .nm{font-size:13px;font-weight:600;color:#1c1c1e}
+  .filechip .mt{font-size:11px;color:#8a93a3;margin-top:2px}
+  .scanbar{height:3px;border-radius:2px;background:#eef1f6;margin-top:8px;overflow:hidden}
+  .scanbar i{display:block;height:100%;width:0;background:#1F3864;border-radius:2px}
+  .scanbar.go i{animation:scan 1.15s ease-out forwards}
+  @keyframes scan{to{width:100%}}
+  /* Excel tab strip */
+  #xltabs{display:flex;gap:2px;flex:0 0 auto;padding:6px 10px 0;background:#f2f1ee;
+    border-top:1px solid #d9dbdd;overflow-x:auto}
+  .xltab{padding:5px 12px;font-size:11.5px;color:#666;background:#e7e6e2;border:1px solid #cfd0cd;
+    border-bottom:none;border-radius:5px 5px 0 0;white-space:nowrap}
+  .xltab.on{background:#fff;color:#1F3864;font-weight:700;border-color:#c9cdd2}
+  #xloverlay{position:absolute;inset:0;z-index:45;background:#e9e8e4;opacity:0;
+    transform:scale(.985);transform-origin:center;transition:opacity .4s ease, transform .4s ease}
+  #xloverlay.show{opacity:1;transform:none}
+  /* the pan indicator — tells the viewer which way the sheet is being read */
+  #panhint{position:absolute;right:14px;bottom:44px;z-index:50;background:rgba(31,56,100,.92);
+    color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.05em;padding:5px 10px;
+    border-radius:20px;opacity:0;transition:opacity .3s}
+  #panhint.show{opacity:1}
+  .cursor{position:fixed;z-index:60;pointer-events:none;opacity:0;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));
+    transition:opacity .25s, left .9s cubic-bezier(.4,0,.2,1), top .9s cubic-bezier(.4,0,.2,1), transform .12s}
+  .cursor.click{transform:scale(.8)}
+  #dlbtn.press{transform:scale(.96);background:#eef2f8 !important}
+  .ripple{position:fixed;z-index:59;border-radius:50%;border:2px solid #3a6cf0;pointer-events:none;
+    animation:rip .55s ease-out forwards}
+  @keyframes rip{from{opacity:.6;transform:scale(.35)}to{opacity:0;transform:scale(1.7)}}
+  #ctl{position:sticky;bottom:0;display:flex;justify-content:center;gap:10px;padding:12px;
+    background:linear-gradient(#fff0,#fff 40%);border-top:1px solid #edf0f3}
+  #ctl button{border:1px solid #d7dce3;background:#fff;color:#1F3864;font-weight:600;font-size:13px;
+    padding:8px 16px;border-radius:8px;cursor:pointer}
+  #ctl button:hover{background:#f4f6f9}
+  #vault{display:none}
+</style></head><body>
+<div id="frame">
+  <div id="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <b>Claude</b><span class="conn"><i></i>pacer-ai connected</span></div>
+  <div id="stream"></div>
+  <div id="ctl"><button id="replay">↺ Replay</button></div>
+</div>
+<div id="vault"><div data-frag="connector"><div style="max-width:960px;margin:0 auto;border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(10,20,40,.28);background:#202124"><div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#35363a"><span style="display:flex;gap:6px"><i style="width:11px;height:11px;border-radius:50%;background:#ff5f57;display:inline-block"></i><i style="width:11px;height:11px;border-radius:50%;background:#febc2e;display:inline-block"></i><i style="width:11px;height:11px;border-radius:50%;background:#28c840;display:inline-block"></i></span><div style="flex:1;background:#202124;color:#cfd2d6;border-radius:14px;padding:5px 14px;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">&#128274; claude.ai/new?modal=add-custom-connector#customize/connectors</div><span style="color:#9aa0a6;font-size:11.5px;border:1px solid #5f6368;border-radius:12px;padding:3px 10px">Incognito</span></div><div style="background:#f3f4f6;padding:26px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><div style="width:470px;background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:24px 26px;box-shadow:0 10px 34px rgba(20,30,60,.12)"><div style="font-size:18px;font-weight:800;color:#2B2A26;margin:0 0 4px">Add custom connector</div><div style="font-size:12.5px;color:#6b7280;margin:0 0 18px">Connect a remote MCP server to Claude.</div><div style="margin:0 0 14px"><div style="font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.6px;margin:0 0 5px">Name</div><div style="border:1px solid #cbd2d9;border-radius:8px;padding:10px 12px;font-size:13px;font-family:-apple-system,Segoe UI,sans-serif;color:#2B2A26;background:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Pacer AI Demo</div></div><div style="margin:0 0 14px"><div style="font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.6px;margin:0 0 5px">Remote MCP server URL</div><div style="border:1px solid #cbd2d9;border-radius:8px;padding:10px 12px;font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#2B2A26;background:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">https://pacerai-demo-mcp.azurewebsites.net/mcp</div></div><div style="display:flex;gap:14px;font-size:12px;color:#4b5563;margin:2px 0 18px"><span style="color:#2E7D32">&#10003;</span> Sign in now<span style="color:#2E7D32">&#10003;</span> Register automatically</div><div style="background:#1F3864;color:#fff;text-align:center;font-weight:600;font-size:14px;padding:11px;border-radius:9px">Add</div></div></div></div></div><div data-frag="login"><div style="max-width:960px;margin:0 auto;border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(10,20,40,.28);background:#202124"><div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#35363a"><span style="display:flex;gap:6px"><i style="width:11px;height:11px;border-radius:50%;background:#ff5f57;display:inline-block"></i><i style="width:11px;height:11px;border-radius:50%;background:#febc2e;display:inline-block"></i><i style="width:11px;height:11px;border-radius:50%;background:#28c840;display:inline-block"></i></span><div style="flex:1;background:#202124;color:#cfd2d6;border-radius:14px;padding:5px 14px;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">&#128274; pacerai-demo-mcp.azurewebsites.net/pacer-login</div><span style="color:#9aa0a6;font-size:11.5px;border:1px solid #5f6368;border-radius:12px;padding:3px 10px">Incognito</span></div><div style="background:#F4F1EA;padding:30px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><div style="width:360px;background:#fff;border:1px solid #e7e9ec;border-radius:14px;padding:30px 28px;box-shadow:0 2px 10px rgba(0,0,0,.06)"><div style="font-size:12px;letter-spacing:2px;color:#27899A;font-weight:700;text-transform:uppercase">Pacer AI &middot; Demo</div><div style="font-family:Georgia,serif;color:#1F3864;font-size:24px;margin:4px 0 6px">Pacer AI Demo</div><div style="color:#6b7280;font-size:13px;margin:0 0 18px">Enter your email and the access password to start your demo.</div><div style="border:1px solid #cbd2d9;border-radius:8px;padding:11px 12px;font-size:14px;color:#2B2A26;margin:0 0 12px">nick@westlink.com</div><div style="border:1px solid #cbd2d9;border-radius:8px;padding:12px;font-size:16px;color:#9aa3b2;letter-spacing:3px;margin:0 0 14px">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</div><div style="background:#1F3864;color:#fff;text-align:center;font-weight:600;font-size:15px;padding:11px;border-radius:8px">Start the demo</div></div></div></div></div><div data-frag="pace"><div style="max-width:620px;margin:0 auto;background:#fff;border:1px solid #e4e7ec;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(20,30,60,.10)"><div style="background:#1F3864;color:#fff;padding:11px 16px;font-size:13px;font-weight:700">&#10003; Connected to Pacer AI &mdash; live $100M demo book</div><div style="padding:16px 18px"><div style="font-size:12px;color:#6b7280;margin:0 0 4px">You typed</div><div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;color:#2B2A26;font-weight:700;margin:0 0 12px">pace</div><div style="font-size:13px;color:#2B2A26;line-height:1.6;margin:0 0 12px">Booked <b>$1.8M</b> MTD vs the <b>$1.0M</b> month target &mdash; <b style="color:#2E7D32">on track</b> to make the month (EOM forecast $1.8M).</div><svg viewBox="0 0 520 150" style="width:100%;max-width:520px;display:block"><line x1="8" y1="70.0" x2="512" y2="70.0" stroke="#E2E8F0"/><text x="512" y="66.0" text-anchor="end" font-size="9" fill="#718096">target $1.0M</text><polyline points="8.0,126.1 24.8,124.3 41.6,122.4 58.4,120.5 75.2,118.6 92.0,116.8 108.8,114.9 125.6,113.0 142.4,111.2 159.2,109.3 176.0,107.4 192.8,105.5 209.6,103.7 226.4,101.8 243.2,99.9 260.0,98.1 276.8,96.2 293.6,94.3 310.4,92.5 327.2,90.6 344.0,88.7 360.8,86.8 377.6,85.0 394.4,83.1 411.2,81.2 428.0,79.4 444.8,77.5 461.6,75.6 478.4,73.7 495.2,71.9 512.0,70.0" fill="none" stroke="#718096" stroke-width="1.6" stroke-dasharray="5 4"/><polyline points="8.0,124.0 24.8,120.0 41.6,116.0 58.4,111.9 75.2,107.9 92.0,103.9 108.8,99.9 125.6,95.9 142.4,91.9 159.2,87.8 176.0,83.8 192.8,79.8 209.6,75.8 226.4,71.8 243.2,67.8 260.0,63.8 276.8,59.7 293.6,55.7 310.4,51.7 327.2,47.7 344.0,43.7 360.8,39.7 377.6,35.6 394.4,31.6 411.2,27.6 428.0,23.6" fill="none" stroke="#1F3864" stroke-width="2.6"/><circle cx="428.0" cy="23.6" r="3.5" fill="#1F3864"/><text x="8" y="144" font-size="9" fill="#718096">Aug 1</text><text x="512" y="144" text-anchor="end" font-size="9" fill="#718096">Aug 31</text></svg><div style="font-size:12px;color:#6b7280;margin:12px 0 0">Now ask <b>gap</b>, <b>pace this quarter</b>, or <b>annual pace</b> &mdash; charts render right in the chat.</div></div></div></div><div data-frag="xlwin"><div style="display:flex;flex-direction:column;height:100%;background:#f2f1ee"><div style="background:#217346;color:#fff;padding:9px 15px;font-weight:600;font-size:13px;display:flex;align-items:center;gap:9px"><span style="display:inline-flex;gap:6px"><span style="width:11px;height:11px;border-radius:50%;background:#ff5f57;display:inline-block"></span><span style="width:11px;height:11px;border-radius:50%;background:#febc2e;display:inline-block"></span><span style="width:11px;height:11px;border-radius:50%;background:#28c840;display:inline-block"></span></span><span style="margin-left:5px">▦ Excel &nbsp;—&nbsp; </span></div><div id="xlscroll" style="flex:1;overflow:auto;background:#fff;padding:16px 18px"><div id="xlcontent"></div></div><div id="xltabs"></div></div></div></div>
+<script>
+const BEATS = [{"u": "How do I try the Pacer AI demo?", "p": "Add it to Claude as a custom connector &mdash; paste the URL, keep the detected defaults, and click Add. Two minutes, nothing to install:", "list": ["<b>Browser (recommended):</b> open claude.ai/new?modal=add-custom-connector#customize/connectors", "<b>Mobile:</b> tap the <b>+</b> in the prompt area &rarr; Connectors &rarr; Manage connectors &rarr; Add", "<b>Desktop:</b> click the <b>+</b> in the prompt area &rarr; Connectors &rarr; Manage connectors &rarr; Add", "Name <b>Pacer AI Demo</b> &middot; URL https://pacerai-demo-mcp.azurewebsites.net/mcp", "Keep <b>Sign in now</b> + <b>Register automatically</b> &rarr; Add"], "v": "connector"}, {"u": "It's asking me to sign in.", "p": "That's the <b>Pacer AI Demo</b> screen. Enter your work email and the access password your Pacer contact shared &mdash; there's no account to create, the password is the key:", "v": "login"}, {"u": "pace", "p": "You're connected to the live $100M demo book. Type <b>pace</b> and Pacer reads where you are against the number, with the chart right in the chat:", "v": "pace"}];
+const CYCLE = [];
+const CLOSING = "";
+
+const stream = document.getElementById('stream'), vault = document.getElementById('vault');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function scroll(){ stream.scrollTop = stream.scrollHeight; }
+async function type(el, text){
+  el.classList.add('cur');
+  for(let i=0;i<text.length;i++){ el.textContent = text.slice(0,i+1); scroll(); await sleep(15 + Math.random()*22); }
+  el.classList.remove('cur');
+}
+function bubble(role, who){
+  const m = document.createElement('div'); m.className = 'msg ' + role;
+  const b = document.createElement('div'); b.className='bub';
+  if(who){ const inner = document.createElement('div');
+    const w = document.createElement('div'); w.className='who'; w.textContent = who;
+    inner.appendChild(w); inner.appendChild(b); m.appendChild(inner);
+  } else { m.appendChild(b); }
+  stream.appendChild(m); scroll(); return b;
+}
+function reveal(key){
+  const src = vault.querySelector('[data-frag="'+key+'"]');
+  const viz = document.createElement('div'); viz.className='viz'; viz.innerHTML = src.innerHTML;
+  stream.appendChild(viz); scroll(); return viz;
+}
+async function typingDots(){
+  const m = document.createElement('div'); m.className='msg pacer';
+  const t = document.createElement('div'); t.className='typing'; t.innerHTML='<i></i><i></i><i></i>';
+  m.appendChild(t); stream.appendChild(m); scroll(); await sleep(750); m.remove();
+}
+/* the file lands in the chat, then gets read */
+async function fileDrop(name, meta){
+  const zone = document.createElement('div'); zone.className='dropzone';
+  const chip = document.createElement('div'); chip.className='filechip';
+  chip.innerHTML = '<div class="ico">&#9636;</div><div><div class="nm">'+name+'</div>'
+    + '<div class="mt">'+meta+'</div><div class="scanbar"><i></i></div></div>';
+  zone.appendChild(chip); stream.appendChild(zone); scroll();
+  await sleep(120); zone.classList.add('hot'); chip.classList.add('in');
+  await sleep(880);
+  chip.querySelector('.scanbar').classList.add('go');
+  await sleep(1250);
+  zone.classList.remove('hot'); zone.classList.add('done');
+  await sleep(320);
+}
+/* pan a sheet: 'x' reads a wide schedule across, 'y' reads a tall sheet down */
+async function pan(el, dur, axis){
+  const maxY = el.scrollHeight - el.clientHeight;
+  const maxX = el.scrollWidth  - el.clientWidth;
+  const max = axis === 'x' ? maxX : maxY;
+  if(max <= 2){ await sleep(Math.min(dur, 1200)); return; }
+  return new Promise(res => {
+    let t0 = null;
+    function frame(t){ if(t0 === null) t0 = t; const k = Math.min(1, (t - t0) / dur);
+      const e = k < .5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2)/2;
+      if(axis === 'x') el.scrollLeft = max * e; else el.scrollTop = max * e;
+      if(k < 1) requestAnimationFrame(frame); else res(); }
+    requestAnimationFrame(frame);
+  });
+}
+async function finale(){
+  const btn = document.getElementById('dlbtn'); if(!btn) return;
+  const frame = document.getElementById('frame');
+  const cur = document.createElement('div'); cur.className='cursor';
+  cur.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 2 L4 20 L9 15 L12 22 '
+    + 'L15 21 L12 14 L20 14 Z" fill="#141414" stroke="#fff" stroke-width="1.3" stroke-linejoin="round"/></svg>';
+  document.body.appendChild(cur);
+  const at = () => { const r = btn.getBoundingClientRect(); return [r.left + r.width/2 - 4, r.top + r.height/2, r]; };
+  let [x, y] = at();
+  cur.style.left = (x - 170) + 'px'; cur.style.top = (y + 130) + 'px'; cur.style.opacity = '1';
+  await sleep(280);
+  [x, y] = at(); cur.style.left = x + 'px'; cur.style.top = y + 'px';
+  await sleep(980);
+  cur.classList.add('click'); btn.classList.add('press');
+  const r = btn.getBoundingClientRect(), s = Math.max(r.width, r.height);
+  const rp = document.createElement('div'); rp.className = 'ripple';
+  rp.style.left = (r.left + r.width/2 - s/2) + 'px'; rp.style.top = (r.top + r.height/2 - s/2) + 'px';
+  rp.style.width = s + 'px'; rp.style.height = s + 'px'; document.body.appendChild(rp);
+  await sleep(520); btn.classList.remove('press'); cur.classList.remove('click'); rp.remove();
+  cur.style.opacity = '0'; setTimeout(() => cur.remove(), 300);
+  await sleep(250);
+  const ov = document.createElement('div'); ov.id = 'xloverlay';
+  ov.innerHTML = vault.querySelector('[data-frag="xlwin"]').innerHTML;
+  frame.appendChild(ov);
+  const hint = document.createElement('div'); hint.id='panhint'; ov.appendChild(hint);
+  requestAnimationFrame(() => ov.classList.add('show'));
+  await sleep(520);
+  const content = ov.querySelector('#xlcontent'), scroller = ov.querySelector('#xlscroll');
+  for(const [frag, tab, axis] of CYCLE){
+    content.innerHTML = vault.querySelector('[data-frag="'+frag+'"]').innerHTML;
+    ov.querySelectorAll('#xltabs .xltab').forEach(el => el.classList.toggle('on', el.dataset.tab === String(tab)));
+    scroller.scrollTop = 0; scroller.scrollLeft = 0;
+    await sleep(120);
+    const wide = axis === 'x' && (scroller.scrollWidth - scroller.clientWidth) > 2;
+    hint.textContent = wide ? 'READING ACROSS  \u2192' : 'READING DOWN  \u2193';
+    hint.classList.add('show');
+    await sleep(620);
+    await pan(scroller, wide ? 3400 : 3000, wide ? 'x' : 'y');
+    await sleep(560); hint.classList.remove('show'); await sleep(220);
+  }
+  await sleep(420);
+  ov.classList.remove('show'); await sleep(430); ov.remove();
+  const ub = bubble('user'); await type(ub, CLOSING);
+  await sleep(300);
+}
+async function play(){
+  stream.innerHTML = '';
+  for(const beat of BEATS){
+    if(beat.drop){ await fileDrop(beat.drop.name, beat.drop.meta); }
+    const ub = bubble('user'); await type(ub, beat.u); await sleep(500);
+    await typingDots();
+    const pb = bubble('pacer','PACER AI');
+    if(beat.list){
+      const intro = document.createElement('div'); pb.appendChild(intro);
+      intro.innerHTML = beat.p; scroll(); await sleep(450);
+      const ol = document.createElement('ol'); ol.className='plist'; pb.appendChild(ol);
+      for(const it of beat.list){ const li = document.createElement('li'); ol.appendChild(li);
+        li.innerHTML = it; scroll(); await sleep(620); }
+    } else {
+      pb.innerHTML = beat.p; scroll(); await sleep(700);
+    }
+    if(beat.v){ reveal(beat.v); await sleep(400); }
+    await sleep(1500);
+  }
+  await finale();
+}
+document.getElementById('replay').onclick = play;
+play();
+
+</script></body></html>
