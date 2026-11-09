@@ -275,6 +275,38 @@ POSTS = [
             },
         ],
     },
+    {
+        # Locally-authored (content-what-a-day-1-brief-contains.html). Not deployed: no WP page yet (PAC-221).
+        # The page is built by hand from a current bone shell, not by main(); see docs/plan/2026-11-08-day-1-brief-post-spec.md.
+        "id": "what-a-day-1-brief-contains",
+        "title": "What a Day 1 Brief Contains",
+        "title_short": "Day 1 Brief",
+        "category": "RevOps",
+        "date": "November 8, 2026",
+        "date_iso": "2026-11-08",
+        "faq": [
+            {
+                "q": "What is a Day 1 brief?",
+                "a": "A Day 1 brief is a 13-slide review of the month that just closed, built on the first day of the next month. It shows Net New ARR against plan by motion, market, segment and rep, explains the biggest movements, and looks ahead to the pipe the team carries into the new month."
+            },
+            {
+                "q": "Are the numbers in the October deck real?",
+                "a": "No. They are the demo book's, which is a fictional company's data. The 20% miss, the reps and the accounts are sample data and are not a customer's."
+            },
+            {
+                "q": "Why do some figures print in millions and others in thousands?",
+                "a": "Figures at or above $1M print in millions to two decimals, such as $1.53M. Figures under $1M print in thousands with no decimals, such as $386K. Rep quotas, rep bookings and single-deal values always print in thousands."
+            },
+            {
+                "q": "How do I know the numbers add up?",
+                "a": "The brief checks itself before it goes out. Markets sum to the company ($950K + $407K + $173K is $1.53M), segments sum to the company ($1.08M + $373K + $78K), the bridge's +$2.68M less $1.15M equals the $1.53M of Net New ARR, each top-movers card sums to its rows, and the reps account for every quota-carrying account executive."
+            },
+            {
+                "q": "Can I send the deck to my RevOps lead?",
+                "a": "Yes. The October deck is a free 13-page PDF, and this post walks through each slide so the reader knows what to look for."
+            },
+        ],
+    },
 ]
 
 
