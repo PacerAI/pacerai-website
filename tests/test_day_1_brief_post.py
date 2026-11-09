@@ -237,6 +237,12 @@ def test_units_rule_states_the_threshold_and_shows_both_sides(article, example):
     assert example in article.section(r"\bunits?\b").text
 
 
+def test_units_rule_does_not_claim_the_deck_never_breaks_it(article):
+    # The deck's chart axes, its slide 4 table in $M and its one-decimal forecast and pipe lines depart from the rule.
+    claims = re.findall(r"\b(?:never|always|no exceptions?)\b", article.section(r"\bunits?\b").text, re.IGNORECASE)
+    assert not claims, f"The units section states the rule as absolute ({claims}), and the PDF has exceptions."
+
+
 def test_no_figure_under_a_million_prints_in_millions(published_text):
     wrong = re.findall(r"\$0\.\d+M", published_text)
     assert not wrong, f"The units rule prints these in $K: {wrong}"

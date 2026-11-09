@@ -295,7 +295,7 @@ POSTS = [
             },
             {
                 "q": "Why do some figures print in millions and others in thousands?",
-                "a": "Figures at or above $1M print in millions to two decimals, such as $1.53M. Figures under $1M print in thousands with no decimals, such as $386K. Rep quotas, rep bookings and single-deal values always print in thousands."
+                "a": "Headline figures for the company, markets and segments at or above $1M print in millions to two decimals, such as $1.53M, and figures under $1M print in thousands with no decimals, such as $386K. Rep quotas, rep bookings and single-deal values print in thousands. A few places differ, such as chart axes, the waterfall table in millions, and the one-decimal full-year forecast and pipe figures."
             },
             {
                 "q": "How do I know the numbers add up?",
