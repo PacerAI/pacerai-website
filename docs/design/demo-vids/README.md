@@ -14,7 +14,7 @@ has no folder here; both versions stay in `infra/pacer-demo-worker/src/variants/
 
 | Worker variant | What it shows | sha256 | Status |
 |---|---|---|---|
-| `demo-connect` | The HubSpot demo: the prefilled Add custom connector dialog (`https://demo.getpacerai.com/mcp`), the email-only sign-in, then "Are we on pace?" answered by the real `pace` tool with plain company names. Built by `pacerai-platform-claude-native/demo-site/build_demo_connect_reel.py`; stills in that repo's `demo-site/out/demo-connect/frames/` | `2cde8729f2fc…` | Staged 2026-10-26; live on page 983 after the next staging deploy |
+| `demo-connect` | The HubSpot demo: the prefilled Add custom connector dialog (`https://demo.getpacerai.com/mcp`), the email-only sign-in, then "Are we on pace?" answered by the real `pace` tool as it reads on 2026-11-09 (it leads with the gap and the motion behind it), with plain company names; about 45 seconds. Built by `pacerai-platform-claude-native/demo-site/build_demo_connect_reel.py` at `804ee0c`; stills in that repo's `demo-site/out/demo-connect/frames/` | `8bcf930d6be4ab64…` | Rebuilt 2026-11-09; live on page 983 after the next staging deploy |
 | `demo-connect-v1` | The September reel: the Salesforce demo's Azure URL and the password sign-in. Built by pacerai-content `collateral/demo_reels/_generators/build_authored_reels.py` | `8676fb7e971e…` | On page 983 2026-09-24 → the next staging deploy; kept for rollback |
 
 **Go-to-market fit:** the homepage video lands the **Pacing Agent** (watch → give a work email on `/demo-connect` →
