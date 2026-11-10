@@ -112,14 +112,14 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContext):
     else if (repeat) mail = "not sent: repeat request within 10 minutes";
     else mail = await sendPdfLink(env, email, errors);
 
-    // A repeat within the window is saved but doesn't ping Slack again.
-    if (env.SLACK_WEBHOOK_URL && !repeat) {
+    // Every accepted request pings Slack; only the email is held back for a repeat, which the alert says.
+    if (env.SLACK_WEBHOOK_URL) {
       try {
         await fetch(env.SLACK_WEBHOOK_URL, {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ text: [
-            `${leadClass === "valid_lead" ? ":page_facing_up:" : leadClass === "internal" ? ":test_tube:" : ":warning:"} *Day 1 brief PDF request — ${leadClass.replace("_", " ")}*`,
+            `${leadClass === "valid_lead" ? ":page_facing_up:" : leadClass === "internal" ? ":test_tube:" : ":warning:"} *Day 1 brief PDF request${repeat ? " (repeat request, no email sent)" : ""} — ${leadClass.replace("_", " ")}*`,
             `*Email:* ${email}`,
             `*Company:* ${company}`,
             `*Classification:* ${leadClass}`,

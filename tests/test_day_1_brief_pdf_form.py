@@ -92,6 +92,34 @@ def test_post_frames_the_widget_and_has_no_form_of_its_own():
     assert "<form" not in post, "The form lives in the Worker's widget, not the post (PAC-221's rule)."
 
 
+BUILD = REPO / "src" / "blog" / "posts" / "what-a-day-1-brief-contains-build.html"
+PHONE_HEIGHT = 600  # The widget stacks email and company below 420px and comes to about 560-580px there.
+
+
+@pytest.mark.parametrize("page", [POST, BUILD], ids=["content", "build"])
+def test_the_frame_is_tall_enough_for_the_widget_on_a_phone(page):
+    tag = re.search(r'<iframe\b[^>]*src="[^"]*day-1-brief-pdf"[^>]*>', page.read_text(encoding="utf-8"))
+    assert tag, f"{page.name} doesn't frame the PDF widget."
+    height = int(re.search(r'\sheight="(\d+)"', tag.group(0)).group(1))
+    assert height >= PHONE_HEIGHT, (
+        f"{page.name} frames the widget at {height}px, so on a phone the check, the send button and the status "
+        f"text fall below the frame. It needs {PHONE_HEIGHT}px or more."
+    )
+
+
+def test_the_build_page_keeps_the_phone_height_and_shortens_only_wider_screens():
+    css = BUILD.read_text(encoding="utf-8")
+    rules = re.findall(r'iframe\[src\*="day-1-brief-pdf"\]\s*\{([^}]*)\}', css)
+    assert rules, "No CSS sizes the PDF frame, so the height attribute alone decides."
+    base = int(re.search(r"height:\s*(\d+)px", rules[0]).group(1))
+    assert base >= PHONE_HEIGHT, f"The frame's base height is {base}px, which cuts the widget off on a phone."
+    wide = re.search(r"@media \(min-width:\s*(\d+)px\)\s*\{\s*[^{]*iframe\[src\*=\"day-1-brief-pdf\"\]\s*\{[^}]*height:\s*(\d+)px",
+                     css)
+    assert wide, "The frame isn't shortened for wide screens by a min-width rule."
+    assert int(wide.group(1)) >= 481, "The wide-screen height starts below 481px, which includes phones."
+    assert "<form" not in BUILD.read_text(encoding="utf-8")
+
+
 # ---------------------------------------------------------------- a request
 
 
@@ -158,6 +186,16 @@ def test_a_repeat_within_ten_minutes_sends_once_and_logs_both():
     assert [r["status"] for r in run["responses"]] == [200, 200]
     assert len(sends(run, to=BUYER["email"])) == 1, "A repeat request within 10 minutes sent a second email."
     assert len(pdf_rows(run)) == 2, "Every request gets its row, repeats included."
+
+
+def test_a_repeat_still_posts_to_slack_and_is_marked_as_one():
+    run = worker([submit(BUYER), submit(BUYER)])
+    alerts = slack(run)
+    assert len(alerts) == 2, f"Every accepted request posts to Slack, repeats included. Got {len(alerts)}."
+    first, repeat = (json.loads(a)["text"] for a in alerts)
+    assert BUYER["email"] in repeat and BUYER["company"] in repeat
+    assert "repeat request, no email sent" in repeat, "The repeat's alert doesn't say it is a repeat."
+    assert "repeat" not in first.lower(), "The first request's alert is marked as a repeat."
 
 
 def test_an_opted_out_address_gets_no_email_and_the_answer_does_not_say_so():

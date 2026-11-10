@@ -533,6 +533,12 @@ html, body, .wp-site-blocks {
     #pacerai-post .footer-brand { grid-column: 1 / -1; }
     #pacerai-post footer { padding: 60px 24px 32px; }
   }
+/* The PDF form is framed from the Worker. Below 420px (its own width) it stacks email and company, so the
+     frame is tall enough for that on a phone and shorter where it doesn't stack. */
+  #pacerai-post .post-content iframe[src*="day-1-brief-pdf"] { display: block; width: 100%; max-width: 560px; height: 600px; border: 0; }
+  @media (min-width: 481px) {
+    #pacerai-post .post-content iframe[src*="day-1-brief-pdf"] { height: 470px; }
+  }
 #pacerai-post h1,#pacerai-post h2,#pacerai-post h3,#pacerai-post h4,#pacerai-post h5,#pacerai-post .nav-logo{font-family:'DM Sans',system-ui,-apple-system,sans-serif !important}
 </style>
 
@@ -754,7 +760,7 @@ html, body, .wp-site-blocks {
 
 <p>Prefer to have it in your inbox? Give us your work email and company, and we will send October&rsquo;s brief as a PDF.</p>
 
-<iframe src="https://pacer-demo-worker.will-078.workers.dev/day-1-brief-pdf" title="Send me October&rsquo;s brief as a PDF" width="100%" height="470" style="border:0;max-width:560px" loading="lazy" referrerpolicy="no-referrer"></iframe>
+<iframe src="https://pacer-demo-worker.will-078.workers.dev/day-1-brief-pdf" title="Send me October&rsquo;s brief as a PDF" width="100%" height="600" style="border:0;max-width:560px" loading="lazy" referrerpolicy="no-referrer"></iframe>
 
 <h2>Build your own Day 1 brief</h2>
 
