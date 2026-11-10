@@ -36,7 +36,8 @@
  *   0. Analytics — window.pacerTrack (GA4 events via Site Kit's gtag), first-touch
  *      attribution (window.pacerAttr: UTMs / referrer / landing page, 30 days),
  *      delegated CTA click events, and the pacer:event postMessage bridge for
- *      Worker-served iframes (demo signup, pricing estimator)
+ *      Worker-served iframes (demo signup, pricing estimator), and the visitor's tag carried
+ *      into the claude.ai add-connector links (window.pacerConnectorHref)
  *   1. Homepage hero typed-line animation (.typed-line, .type-cursor)
  *   2. White paper CTA form handler (.wp-cta-form)
  *      - POSTs to Cloudflare Worker → Apollo contact + sequence + Slack
@@ -53,6 +54,9 @@
  *      (#1 typed-line stays for legacy pages; it exits if .typed-line is absent)
  *
  * HISTORY:
+ *   2026-11-10  Section 0: window.pacerConnectorHref, and every claude.ai add-connector link on the page is rewritten
+ *               with it, so the visitor's utm_source / utm_medium / utm_campaign ride into the connector URL (PAC-105).
+ *               2b also fills the Day 1 brief PDF form's frame with the visitor's attribution
  *   2026-10-21  Section 0: install_click, a click on the claude.ai Add custom connector link (/demo-connect hero
  *               and step 1), with cta_location from the link's data-cta. A step, not a key event
  *   2026-10-14  Section 0: GA4 user_id after a demo signup (window.pacerSetUser); section_jump (in-page links, and a #hash on arrival), resource_filter
@@ -115,6 +119,33 @@ window.pacerAttr = window.pacerAttr || (function() {
     };
   };
 })();
+
+/* The visitor's tag, carried into the connector. `href` is a claude.ai add-connector link; the result is the same
+ * link with the visitor's utm_source / utm_medium / utm_campaign (from pacerAttr) added to the query of its
+ * connectorUrl, which is the URL claude.ai's dialog shows. Every other parameter stays byte for byte as written, and a
+ * visitor with no tag (or a link with no connectorUrl) gets `href` back unchanged. */
+window.pacerConnectorHref = window.pacerConnectorHref || function(href) {
+  try {
+    var q = href.indexOf('?');
+    if (q === -1) return href;
+    var parts = href.slice(q + 1).split('&'), at = window.pacerAttr(), tagged = false;
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i].indexOf('connectorUrl=') !== 0) continue;
+      var target = new URL(decodeURIComponent(parts[i].slice('connectorUrl='.length)));
+      ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function(k) {
+        if (at[k]) { target.searchParams.set(k, at[k]); tagged = true; }
+      });
+      if (!tagged) return href;
+      parts[i] = 'connectorUrl=' + encodeURIComponent(target.href);
+      return href.slice(0, q + 1) + parts.join('&');
+    }
+  } catch (e) {}
+  return href;
+};
+Array.prototype.forEach.call(document.querySelectorAll('a[href*="claude.ai/customize/connectors"]'), function(a) {
+  var href = a.getAttribute('href'), tagged = window.pacerConnectorHref(href);
+  if (tagged !== href) a.setAttribute('href', tagged);
+});
 
 (function() {
   if (window.__pacerClicks) return; window.__pacerClicks = 1;
@@ -304,7 +335,7 @@ window.pacerAttr = window.pacerAttr || (function() {
    * cross-origin (Worker-served), so the parent cannot fill it directly; the Worker reads
    * the params and prefills / records them server-side instead. */
   (function() {
-    var frames = document.querySelectorAll('iframe[src*="/signup"]');
+    var frames = document.querySelectorAll('iframe[src*="/signup"], iframe[src*="/day-1-brief-pdf"]');
     if (!frames.length) return;
     var em = '';
     try { em = window.sessionStorage.getItem('pacer_email') || ''; } catch (e) {}
