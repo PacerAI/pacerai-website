@@ -160,6 +160,9 @@ def validate_file(filepath, strict=False, voice_rules=None):
     """Run all validation checks on a single file. Returns (passes, warnings, failures)."""
     rel = os.path.relpath(filepath, REPO)
     is_homepage = rel == HOMEPAGE_FILE
+    # A blog post body (src/blog/posts/content-*.html) is pasted into WordPress, which supplies the nav and
+    # footer, so it is checked as copy (voice, prices, IDs) but not for the page's nav and footer.
+    is_post_body = bool(re.fullmatch(r"src/blog/posts/content-[^/]+\.html", rel))
 
     with open(filepath) as f:
         content = f.read()
@@ -218,7 +221,9 @@ def validate_file(filepath, strict=False, voice_rules=None):
     # Subtract CSS definition occurrences (look for rules not HTML)
     css_refs = len(re.findall(r'\.footer-col-head\s*\{', content))
     html_cols = footer_cols - css_refs
-    if html_cols < 3:
+    if is_post_body:
+        pass
+    elif html_cols < 3:
         warnings.append(f"FOOTER: Only {html_cols} column headers (expected >=3; v3 bone footer: Product, Use Cases, Resources)")
     else:
         passes.append(f"FOOTER: {html_cols} columns (OK)")
@@ -234,7 +239,9 @@ def validate_file(filepath, strict=False, voice_rules=None):
                 passes.append(f"INLINE CSS: {css_size:,} chars (OK)")
 
     # 9. Check for empty/missing footer
-    if "<footer>" not in content:
+    if is_post_body:
+        passes.append("FOOTER/NAV: post body, supplied by WordPress (not checked)")
+    elif "<footer>" not in content:
         failures.append("FOOTER MISSING: No <footer> tag found")
     elif "</footer>" not in content:
         failures.append("FOOTER BROKEN: <footer> found but no </footer>")
@@ -242,7 +249,9 @@ def validate_file(filepath, strict=False, voice_rules=None):
         passes.append("FOOTER STRUCTURE: OK")
 
     # 10. Check for empty/missing nav
-    if "<nav>" not in content:
+    if is_post_body:
+        pass
+    elif "<nav>" not in content:
         failures.append("NAV MISSING: No <nav> tag found")
     else:
         passes.append("NAV STRUCTURE: OK")
