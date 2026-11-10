@@ -8,6 +8,7 @@ import { recordDemoLead } from "./demo-lead";
 import { handleConnectorSignIn } from "./connector-sign-in";
 import { handleDemoSignups } from "./signups";
 import { handleOptouts } from "./optouts";
+import { handleDay1BriefPdf } from "./day-1-brief-pdf";
 
 /**
  * pacer-demo-worker
@@ -19,6 +20,9 @@ import { handleOptouts } from "./optouts";
  * Why the signup lives here and not on the WordPress page: WordPress strips inline <script>,
  * and serving the widget from the Worker keeps the shared password out of the page source —
  * it is only returned by POST /demo-signup AFTER Turnstile verifies (bots can't scrape it).
+ *
+ * Since 2026-11-10 it also serves the Day 1 brief PDF form at `/day-1-brief-pdf`, which the PAC-221 post frames, and
+ * handles its POST: a lead row, one email with the PDF's short link, a Slack alert (src/day-1-brief-pdf.ts).
  *
  * Since 2026-10-21 the connector's own sign-in page (pacerai-demo-mcp) also sends each sign-in to
  * POST /internal/connector-sign-in, and both doors record the lead the same way (src/demo-lead.ts).
@@ -60,6 +64,12 @@ export default {
     // card signup (src/connector-sign-in.ts; bearer token, server to server).
     if (url.pathname === "/internal/connector-sign-in") {
       return handleConnectorSignIn(request, env, ctx);
+    }
+
+    // "Send me October's brief as a PDF" (src/day-1-brief-pdf.ts): the form, framed by the PAC-221 post, and its POST.
+    // Not demo access, so it never touches DEMO_SIGNUPS.
+    if (url.pathname === "/day-1-brief-pdf") {
+      return handleDay1BriefPdf(request, env, ctx);
     }
 
     if (url.pathname === "/demo-signup") {
