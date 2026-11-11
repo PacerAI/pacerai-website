@@ -14,7 +14,8 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 - Headline slide uploaded to WordPress media (item 1161).
 - Page 983 deployed from main (`deploy.py 983`, backup `docs/review/pre-deploy-backup-983-20261110-1000.json`): the hero leads with "Build my Day 1 brief" and the headline slide.
 - **Not done yet (Will):** WPCode Footer paste of `footer.paste.txt` (sha `30b1e81659090701`); the `@getpacerai.com` test request; the cold test of both links; the Redirection entry for `/day-1-brief-pdf/`, which returns 404 until the PAC-221 post ships, so the PDF email's link is dead until then.
-- Follow-up (not deployed yet): step 6 and its HowTo step said "Ask *Are we on pace?*", which contradicted the hero. They now say "Build my Day 1 brief".
+- Step 6 and its HowTo step said "Ask *Are we on pace?*", which contradicted the hero. They now say "Build my Day 1 brief" (#61). Page 983 redeployed from main at 13:21 (backup `docs/review/pre-deploy-backup-983-20261110-1321.json`).
+- Will's remaining steps, in order: [`docs/plan/2026-11-10-day-1-brief-setup.md`](../plan/2026-11-10-day-1-brief-setup.md). Visual walkthrough: [`docs/plan/2026-11-10-day-1-brief-walkthrough.html`](../plan/2026-11-10-day-1-brief-walkthrough.html).
 
 ---
 
