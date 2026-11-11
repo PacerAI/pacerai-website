@@ -117,6 +117,10 @@ jobs:
                 # — NAV MISSING / FOOTER MISSING — which a fragment can never satisfy.
                 # Excluded so the gate keeps its meaning for real pages.
                 src/homepage/demo/*) ;;
+                # The canonical nav and footer sources are reference fragments that
+                # pages copy from, never deployed on their own, so the same
+                # whole-page rules can't apply to them.
+                src/nav-headers.html|src/footer/footer.html) ;;
                 *.html) existing+="$f " ;;
               esac
             done <<< "$src_changed"

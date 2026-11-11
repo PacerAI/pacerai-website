@@ -174,6 +174,11 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   #pacerai-homepage th:nth-child(3),#pacerai-homepage td:nth-child(3),#pacerai-homepage th:nth-child(4),#pacerai-homepage td:nth-child(4){display:none}
   #pacerai-homepage th,#pacerai-homepage td{padding:12px}
 }
+#pacerai-homepage .faq-block{margin-top:56px !important}
+#pacerai-homepage .faq-block h2{font-weight:800;font-size:clamp(24px,3.4vw,30px);letter-spacing:-.4px;color:var(--ink);margin:0 0 8px !important}
+#pacerai-homepage .faq-list details{border-top:1px solid var(--line);padding:14px 0 !important}
+#pacerai-homepage .faq-list summary{font-weight:700;cursor:pointer;color:var(--ink)}
+#pacerai-homepage .faq-list details p{margin-top:8px !important;color:var(--ink-mid);font-size:15px;line-height:1.55}
 </style>
 <div id="pacerai-homepage">
 <nav>
@@ -181,10 +186,10 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
   </a>
   <ul class="nav-links">
-    <li><a href="/#revenue-modeling-agent">Daily Pacing Agent</a></li>
+    <li><a href="/bottom-up-sales-forecasting/">Forecasting</a></li>
     <li><a href="/#use-cases">Use Cases</a></li>
     <li><a href="/#team">Team</a></li>
-    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/pricing/">Pricing</a></li>
     <li><a href="/resources/">Resources</a></li>
     <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
   </ul>
@@ -214,7 +219,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
       <div class="price"><span class="amt" data-m="{{rep_m}}" data-a="{{rep_a}}">{{rep_m_fmt}}</span><span class="per">/user/mo</span></div>
       <div class="sub">Connects to <b>{{rep_connects}}</b></div>
       <ul class="feat">
-        <li>Daily pace to plan for their own book</li>
+        <li>Pace to plan, in real time, for their own book</li>
         <li>Their deals in the pipe, with the play for each</li>
         <li>Upsell and cross-sell white space at their accounts</li>
       </ul>
@@ -290,6 +295,17 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     <a class="btn-sales" href="https://calendly.com/pacerai/demo-pacer-ai" target="_blank" rel="noopener">Talk to Sales &rarr;</a>
   </section>
 
+<section class="faq-block" data-section="pricing-faq">
+    <h2>Pricing questions</h2>
+    <div class="faq-list">
+      <details><summary>How is Pacer AI priced?</summary><p>Rep pacing is {{rep_m_fmt}} per user a month. Manager pacing is {{manager_m_fmt}} per user a month. SLT pacing and planning is {{slt_m_fmt}} per user a month. A 12-month contract bills ten months of the monthly price: {{rep_a_fmt}} per Rep user, {{manager_a_fmt}} per Manager user, and {{slt_a_fmt}} per SLT user. SLT pacing and planning adds a {{setup_slt_fmt}} one-time installation.</p></details>
+      <details><summary>Which seats can I buy?</summary><p>Rep, Manager and SLT. Rep pacing connects to CRM. Manager pacing connects to CRM and Excel. SLT pacing and planning connects to CRM, EPM and Excel. You choose the count. The page opens on one Rep seat and one Manager seat.</p></details>
+      <details><summary>What do services cost?</summary><p>Services start at {{services_from_fmt}}. That covers AI engineering, planning and reporting, and M&amp;A services. Scope sets the final price. The {{setup_slt_fmt}} installation is separate, and only for SLT pacing and planning.</p></details>
+      <details><summary>Who is it for?</summary><p>CROs, VP Sales, RevOps and CFOs at B2B companies with complex GTM motions. The forecast and the plan are bottom-up, updated in real time, and reconciled to Finance.</p></details>
+    </div>
+  </section>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://getpacerai.com/pricing/#webpage","url":"https://getpacerai.com/pricing/","name":"Pricing — Bottom-Up Forecasting | Pacer AI","description":"Rep pacing $100, Manager pacing $500, and SLT pacing and planning $1,000 per user a month. SLT installation $5,000. Services from $15,000."},{"@type":"FAQPage","@id":"https://getpacerai.com/pricing/#faq","mainEntity":[{"@type":"Question","name":"How is Pacer AI priced?","acceptedAnswer":{"@type":"Answer","text":"Rep pacing is {{rep_m_fmt}} per user a month. Manager pacing is {{manager_m_fmt}} per user a month. SLT pacing and planning is {{slt_m_fmt}} per user a month. A 12-month contract bills ten months of the monthly price: {{rep_a_fmt}} per Rep user, {{manager_a_fmt}} per Manager user, and {{slt_a_fmt}} per SLT user. SLT pacing and planning adds a {{setup_slt_fmt}} one-time installation."}},{"@type":"Question","name":"Which seats can I buy?","acceptedAnswer":{"@type":"Answer","text":"Rep, Manager and SLT. Rep pacing connects to CRM. Manager pacing connects to CRM and Excel. SLT pacing and planning connects to CRM, EPM and Excel. You choose the count. The page opens on one Rep seat and one Manager seat."}},{"@type":"Question","name":"What do services cost?","acceptedAnswer":{"@type":"Answer","text":"Services start at {{services_from_fmt}}. Scope sets the final price. The {{setup_slt_fmt}} installation is separate, and only for SLT pacing and planning."}},{"@type":"Question","name":"Who is it for?","acceptedAnswer":{"@type":"Answer","text":"CROs, VP Sales, RevOps and CFOs at B2B companies with complex GTM motions. The forecast and the plan are bottom-up, updated in real time, and reconciled to Finance."}}]},{"@type":"Product","name":"Rep pacing","description":"Rep pacing seat. Connects to CRM.","brand":{"@type":"Brand","name":"Pacer AI"},"offers":[{"@type":"Offer","price":"{{rep_m}}","priceCurrency":"USD","description":"{{rep_m_fmt}} per user a month, month to month"},{"@type":"Offer","price":"{{rep_a}}","priceCurrency":"USD","description":"{{rep_a_fmt}} per user on a 12-month contract, billed monthly"}]},{"@type":"Product","name":"Manager pacing","description":"Manager pacing seat. Connects to CRM and Excel.","brand":{"@type":"Brand","name":"Pacer AI"},"offers":[{"@type":"Offer","price":"{{manager_m}}","priceCurrency":"USD","description":"{{manager_m_fmt}} per user a month, month to month"},{"@type":"Offer","price":"{{manager_a}}","priceCurrency":"USD","description":"{{manager_a_fmt}} per user on a 12-month contract, billed monthly"}]},{"@type":"Product","name":"SLT pacing and planning","description":"SLT pacing and planning seat. Connects to CRM, EPM and Excel.","brand":{"@type":"Brand","name":"Pacer AI"},"offers":[{"@type":"Offer","price":"{{slt_m}}","priceCurrency":"USD","description":"{{slt_m_fmt}} per user a month, month to month"},{"@type":"Offer","price":"{{slt_a}}","priceCurrency":"USD","description":"{{slt_a_fmt}} per user on a 12-month contract, billed monthly"},{"@type":"Offer","name":"SLT installation","price":"{{setup_slt}}","priceCurrency":"USD","description":"{{setup_slt_fmt}} one-time installation for SLT pacing and planning"}]},{"@type":"Offer","name":"Services","price":"{{services_from}}","priceCurrency":"USD","description":"Services from {{services_from_fmt}}. Scope sets the final price."}]}</script>
+
   <p class="foot">All prices in USD. Month to month is the default. A 12-month contract bills ten months of the monthly price, spread monthly. Price Book {{version}}.</p>
 </div>
 
@@ -299,15 +315,15 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
       <a href="/" class="nav-logo" style="font-size:17px">Pacer <span style="color:var(--teal)">AI</span>
         <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
       </a>
-      <p>The Daily Pacing Agent for Sales Leaders. Reconciled to Finance, built on Microsoft Fabric.</p>
+      <p>Bottom-up sales forecasting and planning for sales leaders. Reconciled to Finance.</p>
     </div>
     <div class="footer-col">
       <div class="footer-col-head">Product</div>
       <ul>
-        <li><a href="/#revenue-modeling-agent">Daily Pacing Agent</a></li>
+        <li><a href="/bottom-up-sales-forecasting/">Forecasting</a></li>
+        <li><a href="/bottom-up-sales-planning/">Planning</a></li>
         <li><a href="/#how-it-works">How It Works</a></li>
-        <li><a href="/#integrations">Integrations</a></li>
-        <li><a href="/#security">Security</a></li>
+        <li><a href="/compare/">Compare</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -316,7 +332,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
         <li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
         <li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
         <li><a href="/#case-studies">Case Studies</a></li>
-        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/pricing/">Pricing</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -324,7 +340,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
       <ul>
         <li><a href="/team/">Team</a></li>
         <li><a href="/team/#partners">Partners</a></li>
-        <li><a href="/#how-it-works">Platform</a></li>
+        <li><a href="/#security">Security</a></li>
         <li><a href="/contact/">Contact</a></li>
       </ul>
     </div>
@@ -333,7 +349,6 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
       <ul>
         <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
         <li><a href="/resources/">Blog</a></li>
-        <li><a href="/research/">Research</a></li>
         <li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
       </ul>
