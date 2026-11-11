@@ -1,107 +1,97 @@
-/* /pricing/ page behaviour: the Monthly | Annual toggle, the − / + steppers, the running totals, and
- * the GA4 events. WordPress strips <script> from page content, so scripts/build_pricing.py inlines this
- * file into an <img onerror> at the end of the page (the homepage uses the same injector).
+/* /pricing/ page behaviour (Price Book v2.0): the Month to month | 12 months toggle, the seat steppers on
+ * the three license cards, the team total, and the GA4 events. WordPress strips <script> from page
+ * content, so scripts/build_pricing.py inlines this file into an <img onerror> at the end of the page.
  *
  * No price lives in this file. Every number is read from data- attributes that build_pricing.py writes
- * from the Price Book (foundation/pricing/product-pricing-price-book.md).
+ * from the Price Book (foundation/pricing/product-pricing-price-book.md): each card's .amt carries
+ * data-m (per user a month) and data-a (per user, 12-month contract). Seats are pure: installation and
+ * services are priced separately and never enter the total.
  *
  * GA4 (through window.pacerTrack from WPCode footer.js section 0):
- *   pricing_estimate  1.5 s after the last toggle or − / + change   plan, billing, value, currency
- *   pricing_choose    a click on a Choose button                    plan, billing, value, currency,
- *                                                                    pacer_users, planning_users, hour_blocks
- *   pricing_request   the order card saved the request and sent    plan, billing, value, currency
+ *   pricing_estimate  1.5 s after the last toggle or seat change     plan, billing, value, currency, seats
+ *   pricing_choose    a click on Purchase                            plan, billing, value, currency, seats
+ *   pricing_request   the order card saved the request and sent      plan, billing, value, currency
  *                     the emails (postMessage from the Worker)
- * The Worker's schedule_walkthrough from the order card is tracked by footer.js section 0 (it is allow-listed there).
+ * value is the monthly total on month to month and the 12-month total on a 12-month contract.
  */
 (function () {
   if (window.__paPricing) return;
   function start() {
-    var root = document.querySelector('#pacerai-homepage .pricing-two-pack');
+    var root = document.querySelector('#pacerai-homepage .pricing-seats');
     if (!root || window.__paPricing) return;
     window.__paPricing = 1;
 
-    var cfg = root.dataset;
-    var SEAT_A = +cfg.seatA, SEAT_M = +cfg.seatM, INCLUDED = +cfg.included, BLOCK = +cfg.block;
-    var BLOCK_HOURS = +cfg.blockHours, MAXU = 200, MAXB = 8;
-    var annual = true, timer = null;
-    var tiers = [].slice.call(root.querySelectorAll('.tier'));
+    var cfg = root.dataset, MAX = 500;
+    var annual = false, timer = null;
+    var cards = [].slice.call(root.querySelectorAll('.tier[data-seat]'));
 
     function fmt(n) { return '$' + Number(n).toLocaleString('en-US'); }
-    /* cta_location = the card's price- class (price-sales-pacing / price-pacing-planning). */
-    function loc(t) { return [].filter.call(t.classList, function (c) { return c.indexOf('price-') === 0; })[0] || ''; }
     function track(name, params) {
       try { if (window.pacerTrack) window.pacerTrack(name, params); } catch (e) {}
     }
 
-    /* The selection for one package card: what the visitor would pay each month. */
-    function selection(t) {
-      var amt = t.querySelector('.amt');
-      var s = { plan: t.dataset.plan, billing: annual ? 'annual' : 'monthly',
-                value: Number(annual ? amt.dataset.a : amt.dataset.m),
-                pacer_users: 0, planning_users: 0, hour_blocks: 0, extra_users: 0 };
-      t.querySelectorAll('.opts .blocks').forEach(function (r) {
-        var n = Number(r.dataset.n);
-        if (r.dataset.kind === 'block') { s.hour_blocks = n; s.value += n * BLOCK; return; }
-        if (r.dataset.agent === 'planning') s.planning_users = n; else s.pacer_users = n;
-        var add = Math.max(0, n - INCLUDED);
-        s.extra_users += add;
-        s.value += add * (annual ? SEAT_A : SEAT_M);
+    /* The team: seats per license and what it costs on the chosen term. */
+    function team() {
+      var s = { plan: 'seats', billing: annual ? 'annual' : 'monthly', value: 0, seats: 0,
+                rep_seats: 0, manager_seats: 0, slt_seats: 0 };
+      cards.forEach(function (c) {
+        var n = Number(c.querySelector('.blocks').dataset.n), amt = c.querySelector('.amt');
+        s[c.dataset.seat + '_seats'] = n;
+        s.seats += n;
+        s.value += n * Number(annual ? amt.dataset.a : amt.dataset.m);
       });
       return s;
     }
 
     function render() {
-      root.querySelectorAll('.seatp').forEach(function (e) { e.textContent = fmt(annual ? SEAT_A : SEAT_M); });
       root.querySelector('.js-bill').setAttribute('aria-checked', String(annual));
       root.querySelector('.js-lbl-a').classList.toggle('on', annual);
       root.querySelector('.js-lbl-m').classList.toggle('on', !annual);
-      tiers.forEach(function (t) {
-        t.querySelectorAll('.opts .blocks').forEach(function (r) {
-          var n = Number(r.dataset.n), max = r.dataset.kind === 'block' ? MAXB : MAXU;
-          r.querySelector('output').textContent = n;
-          var b = r.querySelectorAll('.step button');
-          b[0].disabled = n <= Number(r.dataset.min);
-          b[1].disabled = n >= max;
-        });
-        var s = selection(t), notes = [];
-        t.querySelector('.amt').textContent = fmt(s.value);
-        if (s.extra_users) notes.push(s.extra_users + ' additional user' + (s.extra_users > 1 ? 's' : ''));
-        if (s.hour_blocks) notes.push(s.hour_blocks * BLOCK_HOURS + ' hrs/mo');
-        var tail = notes.length ? ' &middot; includes ' + notes.join(' + ') : '';
-        t.querySelector('.sub').innerHTML = annual
-          ? '<b>' + fmt(s.value * 12) + '</b> Annual contract billed monthly' + tail
-          : 'Month-to-month, no annual commitment' + tail;
+      cards.forEach(function (c) {
+        var amt = c.querySelector('.amt'), r = c.querySelector('.blocks'), n = Number(r.dataset.n);
+        amt.textContent = fmt(annual ? amt.dataset.a : amt.dataset.m);
+        c.querySelector('.price .per').textContent = annual ? '/user/yr' : '/user/mo';
+        r.querySelector('output').textContent = n;
+        var b = r.querySelectorAll('.step button');
+        b[0].disabled = n <= Number(r.dataset.min);
+        b[1].disabled = n >= MAX;
       });
+      var s = team(), sub = annual ? '12-month contract, billed monthly' : 'Month to month';
+      root.querySelector('.js-seats').innerHTML = s.rep_seats + ' Rep &middot; ' + s.manager_seats +
+        ' Manager &middot; ' + s.slt_seats + ' SLT';
+      root.querySelector('.js-total').textContent = fmt(s.value);
+      root.querySelector('.js-per').textContent = annual ? '/yr' : '/mo';
+      root.querySelector('.js-total-sub').innerHTML = sub;
+      root.querySelector('.js-choose').disabled = s.seats === 0;
     }
 
-    /* One pricing_estimate per burst of changes, for the card the visitor last touched. */
-    function changed(t) {
+    function params(s) {
+      return { plan: s.plan, billing: s.billing, value: s.value, currency: 'USD', rep_seats: s.rep_seats,
+               manager_seats: s.manager_seats, slt_seats: s.slt_seats, cta_location: 'pricing_team' };
+    }
+
+    /* One pricing_estimate per burst of changes. */
+    function changed() {
       render();
       clearTimeout(timer);
-      timer = setTimeout(function () {
-        [].concat(t ? [t] : tiers).forEach(function (x) {
-          var s = selection(x);
-          track('pricing_estimate', { plan: s.plan, billing: s.billing, value: s.value, currency: 'USD',
-                                      cta_location: loc(x) });
-        });
-      }, 1500);
+      timer = setTimeout(function () { track('pricing_estimate', params(team())); }, 1500);
     }
 
-    root.querySelectorAll('.opts .blocks').forEach(function (r) {
+    cards.forEach(function (c) {
+      var r = c.querySelector('.blocks');
       r.querySelectorAll('.step button').forEach(function (b) {
         b.addEventListener('click', function () {
-          var max = r.dataset.kind === 'block' ? MAXB : MAXU;
-          r.dataset.n = Math.min(max, Math.max(Number(r.dataset.min), Number(r.dataset.n) + Number(b.dataset.d)));
-          changed(r.closest('.tier'));
+          r.dataset.n = Math.min(MAX, Math.max(Number(r.dataset.min), Number(r.dataset.n) + Number(b.dataset.d)));
+          changed();
         });
       });
     });
-    root.querySelector('.js-bill').addEventListener('click', function () { annual = !annual; changed(null); });
-    root.querySelector('.js-lbl-a').addEventListener('click', function () { annual = true; changed(null); });
-    root.querySelector('.js-lbl-m').addEventListener('click', function () { annual = false; changed(null); });
+    root.querySelector('.js-bill').addEventListener('click', function () { annual = !annual; changed(); });
+    root.querySelector('.js-lbl-a').addEventListener('click', function () { annual = true; changed(); });
+    root.querySelector('.js-lbl-m').addEventListener('click', function () { annual = false; changed(); });
 
-    /* Choose opens the order card: the Worker's /order page in a modal iframe (data-order-url). The URL
-     * carries the selection and first-touch attribution, never an email. Without data-order-url, Choose
+    /* Purchase opens the order card: the Worker's /order page in a modal iframe (data-order-url). The URL
+     * carries the seats and first-touch attribution, never an email. Without data-order-url, Purchase
      * only records the click. */
     var ORDER = cfg.orderUrl || '', modal = null, frame = null, ORIGIN = '';
     /* window.URL, not URL: in an inline onerror handler, URL resolves to document.URL (a string). */
@@ -109,8 +99,8 @@
     function closeOrder() { if (modal) { modal.parentNode.removeChild(modal); modal = null; frame = null; } }
     function openOrder(s) {
       closeOrder();
-      var q = ['plan=' + s.plan, 'billing=' + s.billing, 'pu=' + s.pacer_users, 'fu=' + s.planning_users,
-               'hb=' + s.hour_blocks, 'pb=' + encodeURIComponent(cfg.priceBook || ''),
+      var q = ['billing=' + s.billing, 'rep=' + s.rep_seats, 'mgr=' + s.manager_seats, 'slt=' + s.slt_seats,
+               'pb=' + encodeURIComponent(cfg.priceBook || ''),
                'page=' + encodeURIComponent(window.location.pathname)];
       var at = {};
       try { if (window.pacerAttr) at = window.pacerAttr() || {}; } catch (e) {}
@@ -121,12 +111,12 @@
       modal.className = 'order-modal';
       modal.setAttribute('role', 'dialog');
       modal.setAttribute('aria-modal', 'true');
-      modal.setAttribute('aria-label', 'Your selection');
+      modal.setAttribute('aria-label', 'Your order');
       var box = document.createElement('div'), x = document.createElement('button');
       box.className = 'order-box';
       x.className = 'order-close'; x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.innerHTML = '&times;';
       frame = document.createElement('iframe');
-      frame.title = 'Your selection: email me this summary';
+      frame.title = 'Your order';
       frame.src = ORDER + '?' + q.join('&');
       box.appendChild(x); box.appendChild(frame); modal.appendChild(box);
       document.getElementById('pacerai-homepage').appendChild(modal);
@@ -138,7 +128,7 @@
     window.addEventListener('message', function (e) {
       if (!ORIGIN || e.origin !== ORIGIN || !e.data || typeof e.data !== 'object') return;
       if (e.data.type === 'pacer:resize' && frame) {
-        frame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 320), 1400) + 'px';
+        frame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 320), 1800) + 'px';
       } else if (e.data.type === 'pacer:event' && e.data.name === 'pricing_request') {
         var p = e.data.params || {};
         track('pricing_request', { plan: String(p.plan || ''), billing: String(p.billing || ''),
@@ -147,14 +137,11 @@
       }
     });
 
-    root.querySelectorAll('.js-choose').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var t = btn.closest('.tier'), s = selection(t);
-        track('pricing_choose', { plan: s.plan, billing: s.billing, value: s.value, currency: 'USD',
-                                  pacer_users: s.pacer_users, planning_users: s.planning_users,
-                                  hour_blocks: s.hour_blocks, cta_location: loc(t) });
-        if (ORDER) openOrder(s);
-      });
+    root.querySelector('.js-choose').addEventListener('click', function () {
+      var s = team();
+      if (!s.seats) return;
+      track('pricing_choose', params(s));
+      if (ORDER) openOrder(s);
     });
 
     render();

@@ -12,11 +12,16 @@ Writes src/pricing/pricing-build.html            the page: src/pricing/pricing-t
        infra/pacer-demo-worker/src/price-book.json the same prices for the Worker. Phase 2's order capture
                                                   recomputes totals server-side from this file.
 
-Fails loudly in four cases, so a typo in the Price Book never reaches the site:
+Fails loudly, so a typo in the Price Book never reaches the site, when:
   - a table or row it needs is missing;
-  - a package price is not the sum of its agents;
-  - an annual contract value is not 12 × the 12-month price;
+  - a 12-month price is not ten months of the monthly price (seats, Startup, Advisor, package bands);
+  - the services do not share one "from" price;
   - a {{placeholder}} is left unfilled.
+
+Price Book v2.0 (2026-11-10, PAC-164): the page shows the three per-seat licenses and the services
+(installation, then the three from $15,000). Seats are pure: installation is a service. Company-size bands,
+Startup, Advisor, bulk rates, the small team rate and the pilot program are sales-led and stay off the page
+(Will, 2026-11-10); price-book.json still carries them for the Worker.
 """
 from __future__ import annotations
 
@@ -32,8 +37,8 @@ TEMPLATE = REPO / "src" / "pricing" / "pricing-template.html"
 JS = REPO / "src" / "pricing" / "pricing.js"
 OUT_HTML = REPO / "src" / "pricing" / "pricing-build.html"
 OUT_JSON = REPO / "infra" / "pacer-demo-worker" / "src" / "price-book.json"
-# Choose opens this order card (pacer-demo-worker GET /order). --no-order builds a page whose Choose only records
-# the click, for a page deploy that goes out before the Worker route does.
+# Purchase opens this order card (pacer-demo-worker GET /order). --no-order builds a page whose Purchase only
+# records the click, for a page deploy that goes out before the Worker route does.
 ORDER_URL = "https://pacer-demo-worker.will-078.workers.dev/order"
 
 
@@ -61,6 +66,10 @@ def table(md: str, heading: str) -> list[dict[str, str]]:
     return [dict(zip(head, cells(r))) for r in rows[2:]]
 
 
+SEATS = (("rep", "Rep pacing"), ("manager", "Manager pacing"), ("slt", "SLT pacing and planning"))
+BANDS = ("Under $100M", "$100M to $500M", "$500M and up")
+
+
 def parse(md: str) -> dict:
     version = re.search(r"\*\*Version:\*\*\s*(v[\d.]+)", md)
     if not version:
@@ -68,77 +77,64 @@ def parse(md: str) -> dict:
     prices = table(md, "Price list")
     packages = table(md, "Packages")
 
-    def price(offering: str, term: str) -> int:
+    def row(offering: str, term: str) -> dict:
         hits = [r for r in prices if r["Offering"] == offering and r["Contract term"] == term]
         if len(hits) != 1:
             raise PriceBookError(f"expected one Price list row for {offering} / {term}, found {len(hits)}")
-        return money(hits[0]["Price"])
+        return hits[0]
 
-    def rate(offering: str, term: str) -> int:
-        row = next(r for r in prices if r["Offering"] == offering and r["Contract term"] == term)
-        m = re.search(r"\$([\d,]+)/hr", row["Notes"])
-        if not m:
-            raise PriceBookError(f"no $/hr rate in the Notes for {offering} / {term}")
-        return int(m.group(1).replace(",", ""))
+    def term_pair(offering: str) -> dict:
+        m, a = money(row(offering, "1 month")["Price"]), money(row(offering, "12 months")["Price"])
+        if a != 10 * m:
+            raise PriceBookError(f"{offering}: the 12-month price {a} is not ten months of {m}")
+        return {"m": m, "a": a}
 
-    def package(name: str) -> dict:
-        row = next((r for r in packages if r["Package"] == name), None)
-        if row is None:
+    seats = {}
+    for key, name in SEATS:
+        connects = row(name, "1 month")["Notes"]
+        if not connects.startswith("Connects to "):
+            raise PriceBookError(f"{name}: Notes should say 'Connects to ...', found {connects!r}")
+        seats[key] = {"name": name, "connects": connects[len("Connects to "):], **term_pair(name)}
+
+    services = {}
+    for key, name in (("planning_reporting", "Planning & Reporting"),
+                      ("ai", "AI Engineering, Agents & AI Transformation"), ("ma", "M&A Services")):
+        r = next((r for r in prices if r["Offering"] == name), None)
+        if r is None:
+            raise PriceBookError(f"service {name!r} not in the Price list")
+        services[key] = {"name": name, "from": money(r["Price"]), "term": r["Contract term"]}
+    froms = {s["from"] for s in services.values()}
+    if len(froms) != 1:
+        raise PriceBookError(f"services start at different prices {sorted(froms)}; the page says one 'from' price")
+
+    bands = []
+    for name in BANDS:
+        r = next((r for r in packages if r["Package"] == name), None)
+        if r is None:
             raise PriceBookError(f"package {name!r} not in the Packages table")
-        return {"m": money(row["1 month"]), "a": money(row["12 months"]), "acv": money(row["Annual contract value"])}
+        if "talk to sales" in r["1 month"].lower():
+            bands.append({"name": name, "talk": True})
+            continue
+        lo, hi = [int(x.replace(",", "")) for x in re.findall(r"\$([\d,]+)", r["1 month"])]
+        alo, ahi = [int(x.replace(",", "")) for x in re.findall(r"\$([\d,]+)", r["Annual contract value"])]
+        if (alo, ahi) != (10 * lo, 10 * hi):
+            raise PriceBookError(f"{name}: annual contract value {alo}-{ahi} is not ten months of {lo}-{hi}")
+        bands.append({"name": name, "talk": False, "m_lo": lo, "m_hi": hi, "acv_lo": alo, "acv_hi": ahi})
 
-    included = re.search(r"(\d+) users included", next(r["Notes"] for r in prices if r["Offering"] == "Pacing Agent"))
-    if not included:
-        raise PriceBookError("'N users included' not found in the Pacing Agent notes")
-
-    pb = {
+    return {
         "version": version.group(1),
-        "included_users": int(included.group(1)),
-        "agents": {
-            "pacing": {"m": price("Pacing Agent", "1 month"), "a": price("Pacing Agent", "12 months")},
-            "planning": {"m": price("Planning Agent", "1 month"), "a": price("Planning Agent", "12 months")},
-        },
-        "user_license": {"m": price("User license", "1 month"), "a": price("User license", "12 months")},
-        "packages": {
-            "sales_pacing": {"name": "Sales Pacing", "agents": ["pacing"], **package("Sales Pacing")},
-            "pacing_planning": {"name": "Sales Pacing & Planning", "agents": ["pacing", "planning"],
-                                **package("Sales Pacing & Planning")},
-        },
-        "services": {
-            "integration": price("Installation & integration", "One-time"),
-            "monthly_block": {"m": price("Monthly 5-hr block", "1 month"), "a": price("Monthly 5-hr block", "12 months"),
-                              "hours": 5, "rate": rate("Monthly 5-hr block", "1 month")},
-            "block_5": {"price": price("5-hr block", "One-time"), "hours": 5, "rate": rate("5-hr block", "One-time")},
-            "block_20": {"price": price("20-hr block", "One-time"), "hours": 20, "rate": rate("20-hr block", "One-time")},
-            "block_40": {"price": price("40-hr block", "One-time"), "hours": 40, "rate": rate("40-hr block", "One-time")},
-        },
+        "seats": seats,
+        "setup": {"slt": money(row("Initial setup, SLT pacing and planning", "One-time")["Price"])},
+        "startup": term_pair("Startup"),
+        "advisor": term_pair("Advisor"),
+        "services": services,
+        "services_from": froms.pop(),
+        "bands": bands,
     }
-    for key, pkg in pb["packages"].items():
-        for term in ("m", "a"):
-            agents = sum(pb["agents"][a][term] for a in pkg["agents"])
-            if pkg[term] != agents:
-                raise PriceBookError(f"{pkg['name']} {term} price {pkg[term]} is not the sum of its agents ({agents})")
-        if pkg["acv"] != pkg["a"] * 12:
-            raise PriceBookError(f"{pkg['name']} annual contract value {pkg['acv']} is not 12 x {pkg['a']}")
-    mb = pb["services"]["monthly_block"]
-    if mb["m"] != mb["a"] or mb["m"] != mb["hours"] * mb["rate"]:
-        raise PriceBookError("the monthly 5-hr block must cost hours x rate on both terms (the page shows one price)")
-    for b in ("block_5", "block_20", "block_40"):
-        s = pb["services"][b]
-        if s["price"] != s["hours"] * s["rate"]:
-            raise PriceBookError(f"{b} price {s['price']} is not {s['hours']} x ${s['rate']}")
-    return pb
 
 
 def fmt(n: int) -> str:
     return f"${n:,}"
-
-
-def save_pct(pb: dict) -> int:
-    pcts = {round(100 * (p["m"] - p["a"]) / p["m"]) for p in pb["packages"].values()}
-    if len(pcts) != 1:
-        raise PriceBookError(f"the packages save different amounts on annual ({sorted(pcts)}%); the toggle shows one")
-    return pcts.pop()
 
 
 def inline_js(src: str) -> str:
@@ -150,23 +146,21 @@ def inline_js(src: str) -> str:
     return js.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+# The selection the page opens with: one Rep pacing seat and one Manager pacing seat, month to month.
+DEFAULT = {"rep": 1, "manager": 1, "slt": 0}
+
+
 def render(pb: dict, template: str, js: str, order_url: str = ORDER_URL) -> str:
-    sp, pp, s = pb["packages"]["sales_pacing"], pb["packages"]["pacing_planning"], pb["services"]
+    seats = pb["seats"]
     values = {
-        "version": pb["version"], "included": pb["included_users"], "save_pct": save_pct(pb),
-        "seat_a": pb["user_license"]["a"], "seat_m": pb["user_license"]["m"],
-        "seat_a_fmt": fmt(pb["user_license"]["a"]), "seat_m_fmt": fmt(pb["user_license"]["m"]),
-        "sp_a": sp["a"], "sp_m": sp["m"], "sp_a_fmt": fmt(sp["a"]), "sp_acv_fmt": fmt(sp["acv"]),
-        "pp_a": pp["a"], "pp_m": pp["m"], "pp_a_fmt": fmt(pp["a"]), "pp_acv_fmt": fmt(pp["acv"]),
-        "block_mo": s["monthly_block"]["a"], "block_mo_fmt": fmt(s["monthly_block"]["a"]),
-        "rate_block_mo_fmt": fmt(s["monthly_block"]["rate"]),
-        "integration_fmt": fmt(s["integration"]),
-        "b5_fmt": fmt(s["block_5"]["price"]), "rate_b5_fmt": fmt(s["block_5"]["rate"]),
-        "b20_fmt": fmt(s["block_20"]["price"]), "rate_b20_fmt": fmt(s["block_20"]["rate"]),
-        "b40_fmt": fmt(s["block_40"]["price"]), "rate_b40_fmt": fmt(s["block_40"]["rate"]),
-        "pricing_js": inline_js(js),
-        "order_url": order_url,
+        "version": pb["version"], "pricing_js": inline_js(js), "order_url": order_url,
+        "setup_slt_fmt": fmt(pb["setup"]["slt"]),
+        "services_from_fmt": fmt(pb["services_from"]),
+        "default_total_fmt": fmt(sum(DEFAULT[k] * seats[k]["m"] for k in seats)),
     }
+    for k, s in seats.items():
+        values.update({f"{k}_m": s["m"], f"{k}_a": s["a"], f"{k}_m_fmt": fmt(s["m"]), f"{k}_a_fmt": fmt(s["a"]),
+                       f"{k}_connects": s["connects"].replace("&", "&amp;"), f"{k}_n": DEFAULT[k]})
     out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(values[m.group(1)]) if m.group(1) in values else m.group(0), template)
     left = re.findall(r"\{\{\w+\}\}", out)
     if left:
@@ -175,10 +169,6 @@ def render(pb: dict, template: str, js: str, order_url: str = ORDER_URL) -> str:
 
 
 def main() -> int:
-    # Retired 2026-11-02: prices are off the site (/pricing/ redirects to /#pricing, page 111 is a draft).
-    # Sources stay for rollback; delete this guard and restore page 111 in deploy.py and validate.py to bring it back.
-    print("build_pricing.py is retired: getpacerai.com publishes no prices. See CLAUDE.md.", file=sys.stderr)
-    return 1
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--price-book", type=Path, default=PRICE_BOOK)
     ap.add_argument("--check", action="store_true", help="exit 1 if an output differs from a fresh build")

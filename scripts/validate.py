@@ -26,6 +26,7 @@ DEFAULT_FILES = [
     "src/team/team-page.html",
     "src/team/contact.html",
     "src/demo-connect.html",
+    "src/pricing/pricing-build.html",
 ]
 
 
@@ -123,14 +124,31 @@ def validate_voice(content, voice_rules):
 
 PRICE_BOOK = "foundation/pricing/product-pricing-price-book.md"
 
+# Sales-led offerings in Price Book v2.0. A public page may show the three seat licenses and the
+# services only. "Advisor" is the package name, so "Advisors" (the team) is not a hit.
+HIDDEN_OFFERINGS = (
+    (re.compile(r"\bStartup\b"), "Startup"),
+    (re.compile(r"\bAdvisor\b"), "Advisor"),
+    (re.compile(r"small[- ]team rate", re.I), "the small-team rate"),
+    (re.compile(r"pilot (?:program|customers)", re.I), "the pilot program"),
+    (re.compile(r"\bbulk rates?\b", re.I), "Rep bulk rates"),
+    (re.compile(r"most teams spend", re.I), "a company-size anchor"),
+    (re.compile(r"Under \$100M"), "a company-size band"),
+    (re.compile(r"\$100M to \$500M"), "a company-size band"),
+    (re.compile(r"\$500M and up"), "a company-size band"),
+)
+
 
 def validate_foundation(content):
-    """Verify price mentions match the Price Book (foundation/pricing/product-pricing-price-book.md).
+    """Verify published prices match Price Book v2.0 and that other packages stay off the page.
 
     Every page: any $X/mo, $X/user/mo, $X/year mention must appear verbatim in the Price Book.
     A page built from the Price Book (it carries data-price-book, i.e. /pricing/): EVERY $ amount on it
     must appear there, so a hand edit to a one-time price is caught too. Other pages quote dollar figures
-    that are not prices ($100M of ARR), so they get the narrower check.
+    that are not prices ($100M of ARR), so they get the narrower check. A pricing band
+    (data-section="pricing") is prices even when the amounts have no /mo suffix, as on the homepage.
+    Startup, Advisor, company-size bands, the small-team rate, the pilot program and Rep bulk rates
+    must not appear.
     A missing Price Book is a failure: the check used to pass silently when its file was gone.
     """
     failures = []
@@ -144,15 +162,27 @@ def validate_foundation(content):
 
     recurring = r'\$[\d,]+(?:\.\d+)?[KkMm]?/(?:user/)?(?:mo|month|year|yr|annum)'
     any_amount = r'\$[\d,]+(?:\.\d+)?[KkMm]?'
-    pattern = any_amount if "data-price-book=" in content else recurring
+    from_book = "data-price-book=" in content
+    pattern = any_amount if from_book else recurring
     book = {p.lower() for p in re.findall(recurring, pricing_text)} | {p.lower() for p in re.findall(any_amount, pricing_text)}
     text = _strip_html(content)
-    drifted = sorted(p for p in set(re.findall(pattern, text)) if p.lower() not in book)
+    checked = set(re.findall(pattern, text))
+    if not from_book:
+        band = re.search(r'data-section="pricing"(.*?)(?:</section>|$)', content, re.S)
+        if band:
+            checked |= set(re.findall(any_amount, _strip_html(band.group(0))))
+    drifted = sorted(p for p in checked if p.lower() not in book)
     if drifted:
         failures.append(
             f"FOUNDATION: price(s) not in {PRICE_BOOK}: {drifted}. "
             f"Either update the Price Book first, or correct the page to match it."
         )
+    for offering, name in HIDDEN_OFFERINGS:
+        if offering.search(text):
+            failures.append(
+                f"FOUNDATION: this page advertises {name}. "
+                f"Public prices are Price Book v2.0 seats and services only."
+            )
     return failures
 
 

@@ -237,11 +237,11 @@ every sender reads and writes the same list:
 
 ## Order routes: `/order` + `POST /pricing-request`
 
-When a visitor clicks **Choose** on getpacerai.com/pricing/ (WP page 111), the page opens `GET /order`, the order card,
-in a modal iframe. The card posts a work email to `POST /pricing-request`, which recomputes the totals from
-`src/price-book.json` (the page's numbers are never trusted), saves the request in D1 (a `leads` row with
-`source = 'pricing'` and a `pricing_requests` row), adds the contact to the Apollo list
-`Signal_CONTACT_Website_PricingRequest`, posts to Slack `#website-leads`, and sends two emails through Resend:
+When a visitor clicks **Purchase** on getpacerai.com/pricing/ (WP page 111; built, not deployed), the page opens `GET /order`, the confirm screen,
+in a modal iframe. The card collects the billing details and posts them to `POST /pricing-request`, which recomputes the totals from
+`src/price-book.json` (a total from the page is rejected when it disagrees), saves the order in D1 (a `leads` row with
+`source = 'pricing'` and a `pricing_requests` row at status `submitted`; billing columns need migration `0006_orders.sql`, not applied), adds the contact to the Apollo list
+`Signal_CONTACT_Website_PricingRequest`, posts to Slack, and sends two emails through Resend. The buyer's subject is `Your Pacer AI order: {seats}` and the button is Book your kickoff (`https://calendly.com/pacerai/pacer-ai-onboarding`).
 
 | To | Reply goes to |
 |---|---|

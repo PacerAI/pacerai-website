@@ -8,6 +8,13 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-11-11: Price Book v2.0 prices in source, and the purchase confirm screen (PAC-164, not deployed)
+
+- **Nothing is live.** Page 111 stays Draft. Redirection rule 5 still sends `/pricing/` to `/#pricing`. Migrations 0005 and 0006 are not applied to remote D1. The Worker is not deployed.
+- Public prices in source match Price Book v2.0 (foundation pin `d64c94ac`, already current main): Rep pacing $100/user/mo, Manager pacing $500/user/mo, SLT pacing and planning $1,000/user/mo, services from $15,000. Startup, Advisor, company-size bands, the small-team rate, the pilot program and Rep bulk rates stay off the pages. `factory/review-rules.md` and `CLAUDE.md` now say that, in place of the 2026-11-02 no-prices rule.
+- Purchase (steps 2 and 3): the pricing button reads Purchase. The Worker confirm screen collects company legal name, billing email, billing address, an optional PO number and the Order Terms checkbox. The order total is recomputed from `price-book.json`; a total that does not match is rejected. The confirmation email subject is `Your Pacer AI order: {seats}` and includes Book your kickoff (`https://calendly.com/pacerai/pacer-ai-onboarding`, name, email and the order id in `utm_content`). Migration `0006_orders.sql` adds the billing columns. The Order Terms name the MSA; the link waits on the MSA draft.
+- The $5,000 SLT installation row is unchanged on the services table. PAC-164's original text said it stays off the page and appears on the invoice. Left for Will.
+
 ## 2026-11-10: Day 1 brief on /demo-connect (PAC-105, #59)
 
 - `pacer-demo-worker` deployed from main (version `4714166a`): `GET`/`POST /day-1-brief-pdf`, the PDF request form. No page frames it yet; it waits on the PAC-221 post.

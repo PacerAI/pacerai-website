@@ -1,63 +1,74 @@
 {
-  "version": "v1.0",
-  "included_users": 5,
-  "agents": {
-    "pacing": {
-      "m": 1800,
-      "a": 1500
+  "version": "v2.0",
+  "seats": {
+    "rep": {
+      "name": "Rep pacing",
+      "connects": "CRM",
+      "m": 100,
+      "a": 1000
     },
-    "planning": {
-      "m": 1800,
-      "a": 1500
+    "manager": {
+      "name": "Manager pacing",
+      "connects": "CRM + Excel",
+      "m": 500,
+      "a": 5000
+    },
+    "slt": {
+      "name": "SLT pacing and planning",
+      "connects": "CRM + EPM + Excel",
+      "m": 1000,
+      "a": 10000
     }
   },
-  "user_license": {
-    "m": 60,
-    "a": 50
+  "setup": {
+    "slt": 5000
   },
-  "packages": {
-    "sales_pacing": {
-      "name": "Sales Pacing",
-      "agents": [
-        "pacing"
-      ],
-      "m": 1800,
-      "a": 1500,
-      "acv": 18000
-    },
-    "pacing_planning": {
-      "name": "Sales Pacing & Planning",
-      "agents": [
-        "pacing",
-        "planning"
-      ],
-      "m": 3600,
-      "a": 3000,
-      "acv": 36000
-    }
+  "startup": {
+    "m": 600,
+    "a": 6000
+  },
+  "advisor": {
+    "m": 250,
+    "a": 2500
   },
   "services": {
-    "integration": 3500,
-    "monthly_block": {
-      "m": 1500,
-      "a": 1500,
-      "hours": 5,
-      "rate": 300
+    "planning_reporting": {
+      "name": "Planning & Reporting",
+      "from": 15000,
+      "term": "Per plan or report"
     },
-    "block_5": {
-      "price": 1500,
-      "hours": 5,
-      "rate": 300
+    "ai": {
+      "name": "AI Engineering, Agents & AI Transformation",
+      "from": 15000,
+      "term": "Per service"
     },
-    "block_20": {
-      "price": 5500,
-      "hours": 20,
-      "rate": 275
-    },
-    "block_40": {
-      "price": 10000,
-      "hours": 40,
-      "rate": 250
+    "ma": {
+      "name": "M&A Services",
+      "from": 15000,
+      "term": "Per engagement"
     }
-  }
+  },
+  "services_from": 15000,
+  "bands": [
+    {
+      "name": "Under $100M",
+      "talk": false,
+      "m_lo": 5000,
+      "m_hi": 8000,
+      "acv_lo": 50000,
+      "acv_hi": 80000
+    },
+    {
+      "name": "$100M to $500M",
+      "talk": false,
+      "m_lo": 8000,
+      "m_hi": 12000,
+      "acv_lo": 80000,
+      "acv_hi": 120000
+    },
+    {
+      "name": "$500M and up",
+      "talk": true
+    }
+  ]
 }
