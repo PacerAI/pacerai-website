@@ -61,6 +61,7 @@
         ' Manager &middot; ' + s.slt_seats + ' SLT';
       root.querySelector('.js-total').textContent = fmt(s.value);
       root.querySelector('.js-per').textContent = annual ? '/yr' : '/mo';
+      if (s.slt_seats > 0) sub += ' &middot; plus ' + root.querySelector('.team').dataset.setup + ' one-time SLT installation';
       root.querySelector('.js-total-sub').innerHTML = sub;
       root.querySelector('.js-choose').disabled = s.seats === 0;
     }

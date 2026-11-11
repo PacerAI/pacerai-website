@@ -244,7 +244,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
       <span class="tag">Leadership</span>
       <div><h2>SLT pacing and planning</h2><p class="who">The company operates with bottom-up plans and forecasts to hit sales targets and operating model goals.</p></div>
       <div class="price"><span class="amt" data-m="{{slt_m}}" data-a="{{slt_a}}">{{slt_m_fmt}}</span><span class="per">/user/mo</span></div>
-      <div class="sub">Connects to <b>{{slt_connects}}</b></div>
+      <div class="sub">Connects to <b>{{slt_connects}}</b><br>Plus <b>{{setup_slt_fmt}}</b> one-time installation</div>
       <ul class="feat">
         <li>Month, quarter and year pace to plan, by motion</li>
         <li>The plan by quarter or month, and over 3&ndash;5 years</li>
@@ -258,7 +258,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     </article>
   </div>
 
-  <section class="team" data-section="your-team" aria-live="polite">
+  <section class="team" data-section="your-team" data-setup="{{setup_slt_fmt}}" aria-live="polite">
     <div>
       <div class="team-lab">Your team</div>
       <div class="team-seats js-seats">{{rep_n}} Rep &middot; {{manager_n}} Manager &middot; {{slt_n}} SLT</div>
