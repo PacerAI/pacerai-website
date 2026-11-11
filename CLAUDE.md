@@ -93,6 +93,22 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 - https://getpacerai.com/team/
 - https://getpacerai.com/contact/
 
+## Draft pages (2026-11-11, not created in WordPress, not deployed)
+
+Source is in the repo. No WP ID until someone creates the page. Do not publish from this note.
+
+| Page | Slug | Source |
+|---|---|---|
+| Bottom-up sales forecasting | `bottom-up-sales-forecasting` | `src/forecasting/bottom-up-sales-forecasting.html` |
+| Bottom-up sales planning | `bottom-up-sales-planning` | `src/planning/bottom-up-sales-planning.html` |
+| Compare | `compare` | `src/compare/index.html` |
+| Pacer AI vs Clari Forecast | `pacer-ai-vs-clari` | `src/compare/pacer-ai-vs-clari.html` |
+| Pacer AI vs Gong Forecast | `pacer-ai-vs-gong-forecast` | `src/compare/pacer-ai-vs-gong-forecast.html` |
+| Pacer AI vs Anaplan | `pacer-ai-vs-anaplan` | `src/compare/pacer-ai-vs-anaplan.html` |
+| SaaS Metrics Glossary | `glossary` | `src/glossary/index.html` (live page has no H1; this source adds one) |
+
+Target `llms.txt`: `src/seo/llms.txt`. Yoast titles and metas: `docs/deploy/yoast-worklist.md` (2026-11-11 section).
+
 ## Environment Variables (Required for REST API deploys)
 
 ```bash

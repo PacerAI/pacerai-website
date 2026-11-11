@@ -1,3 +1,33 @@
+# 2026-11-11 — bottom-up forecasting and planning (do these first)
+
+Yoast title, meta, Open Graph and Twitter are not writable from this repo. Paste each row in WP Admin → page → Yoast SEO. Set the Social tab title and description to the same strings. Titles ≤60, metas ≤155. Do not publish new pages from this worklist until Will says so.
+
+Open Graph title = SEO title. Open Graph description = meta description. Twitter title and description match those two. `og:site_name` stays Pacer AI.
+
+Organization JSON-LD (WPCode) and `src/seo/llms.txt` use the same positioning. Live `llms.txt` is Yoast-generated; replace its description with the file in `src/seo/llms.txt` when you publish.
+
+| Page | URL | SEO title | Meta description | H1 in source |
+|---|---|---|---|---|
+| Home | `/` | Pacer AI — Bottom-Up Sales Forecasting (38) | Pacer AI is a bottom-up sales forecasting and planning agent for sales leaders. Make plan with confidence. The forecast updates in real time. (141) | Pacer AI helps Sales Leaders / make plan with confidence. |
+| Pricing | `/pricing/` | Pricing — Bottom-Up Forecasting \| Pacer AI (42) | Rep pacing $100, Manager pacing $500, and SLT pacing and planning $1,000 per user a month. SLT installation $5,000. Services from $15,000. (138) | Bottom-up Forecasting to hit sales targets with confidence |
+| Forecasting | `/bottom-up-sales-forecasting/` | Bottom-Up Sales Forecasting \| Pacer AI (38) | Bottom-up sales forecasting for CROs, VP Sales, RevOps and CFOs. Built from the accounts, updated in real time, and reconciled to Finance. (138) | Bottom-up sales forecasting |
+| Planning | `/bottom-up-sales-planning/` | Bottom-Up Sales Planning \| Pacer AI (35) | Bottom-up sales planning for sales leaders. The plan is built from the accounts, updated in real time, and reconciled to Finance. (129) | Bottom-up sales planning |
+| Compare | `/compare/` | Compare Forecasting Tools \| Pacer AI (36) | Pacer AI compared with Clari, Gong Forecast and Anaplan. Bottom-up forecasting and planning, updated in real time. Last reviewed Nov 2026. (138) | Compare bottom-up forecasting |
+| vs Clari | `/compare/pacer-ai-vs-clari/` | Pacer AI vs Clari Forecast \| Pacer AI (37) | Pacer AI vs Clari Forecast, now part of Salesloft. A bottom-up forecast from the accounts, reconciled to Finance. Last reviewed Nov 2026. (137) | Pacer AI vs Clari Forecast |
+| vs Gong | `/compare/pacer-ai-vs-gong-forecast/` | Pacer AI vs Gong Forecast \| Pacer AI (36) | Pacer AI vs Gong Forecast. Pacer builds the number from bookings and pipeline. Gong rolls up submitted forecast numbers. Last reviewed Nov 2026. (144) | Pacer AI vs Gong Forecast |
+| vs Anaplan | `/compare/pacer-ai-vs-anaplan/` | Pacer AI vs Anaplan \| Pacer AI (30) | Pacer AI vs Anaplan. Pacer is a bottom-up sales forecasting and planning agent. Anaplan is enterprise connected planning. Last reviewed Nov 2026. (145) | Pacer AI vs Anaplan |
+| Glossary | `/glossary/` | SaaS Metrics Glossary \| Pacer AI (32) | A plain-English glossary of SaaS revenue metrics: ARR waterfall, ARR snowball and cRPO, for sales leaders and finance. (118) | SaaS Metrics Glossary |
+| Resources | `/resources/` | Resources — Forecasting and Planning \| Pacer AI (47) | Guides on bottom-up forecasting, planning and ARR waterfalls for CROs, VP Sales, RevOps and CFOs. (97) | Pacer AI Resources |
+| Team | `/team/` | Team — Pacer AI \| The Operator Behind the Agent (47) | Pacer AI is founder-led by Will Sullivan, a former PwC M&A advisor and West Point graduate. The operator behind bottom-up forecasting. (134) | unchanged |
+| Contact | `/contact/` | Contact Pacer AI — Talk to Will (31) | Book a demo with Will Sullivan. See a bottom-up forecast, the gap to plan and how to close it. (94) | Let's talk. |
+| Demo | `/demo-connect/` | Try the Pacer AI Demo Free \| Pacer AI (37) | Connect the Pacer AI demo in Claude and see a bottom-up forecast: pace to plan, the gap and how to close it. No credit card. (124) | Get your Day 1 brief in Claude |
+
+Sitemap: `https://getpacerai.com/pricing/` is already in the live Yoast page sitemap (checked 2026-11-11). New URLs join it when those pages are published. This repo change does not publish them and does not turn auto-merge on.
+
+Retired prices must not return to the pricing meta: no $1,500/mo Sales Pacing, no $3,000/mo Sales Pacing & Planning, no "five users included."
+
+---
+
 # 2026-10-05 — "Daily Pacing Agent" rename (do these first)
 
 The on-page copy says "Daily Pacing Agent" since 2026-10-05; these Yoast fields still carry the old

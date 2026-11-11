@@ -15,6 +15,14 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 - Purchase (steps 2 and 3): the pricing button reads Purchase. The Worker confirm screen collects company legal name, billing email, billing address, an optional PO number and the Order Terms checkbox. The order total is recomputed from `price-book.json`; a total that does not match is rejected. The confirmation email subject is `Your Pacer AI order: {seats}` and includes Book your kickoff (`https://calendly.com/pacerai/pacer-ai-onboarding`, name, email and the order id in `utm_content`). Migration `0006_orders.sql` adds the billing columns. The Order Terms name the MSA; the link waits on the MSA draft.
 - The $5,000 SLT installation row is unchanged on the services table. PAC-164's original text said it stays off the page and appears on the invoice. Left for Will.
 
+## 2026-11-11: SEO/AEO positioning draft (not deployed, not published)
+
+- Source only. No WordPress deploy, no Yoast write, no llms.txt overwrite on the live site, auto-merge left off.
+- Positioning in the pages this change edits: bottom-up sales forecasting and bottom-up planning for sales leaders. Make plan with confidence. Updated in real time. Reconciled to Finance. No Microsoft Fabric claim and no "your cloud / your tenant / your data never leaves" claim on those pages.
+- New draft pages (no WP IDs yet): `/bottom-up-sales-forecasting/`, `/bottom-up-sales-planning/`, `/compare/`, `/compare/pacer-ai-vs-clari/`, `/compare/pacer-ai-vs-gong-forecast/`, `/compare/pacer-ai-vs-anaplan/`, `/glossary/` source with an H1. Titles, metas and H1s are in `docs/deploy/yoast-worklist.md` (2026-11-11 section). Target `llms.txt` is `src/seo/llms.txt`.
+- `/pricing/` meta in that worklist replaces the retired $1,500 / $3,000 / five-users description. The page source now has an FAQ and Product/Offer schema for the prices on the page. Header Pricing links go to `/pricing/`. The live Yoast sitemap already lists `/pricing/` (checked 2026-11-11).
+- Left unchanged on purpose: blog post HTML (voice lint fails the whole file), retired `/solutions/*` and `/platform/overview/` sources (301, and the same lint), archive HTML, and the $5,000 SLT installation line.
+
 ## 2026-11-10: Day 1 brief on /demo-connect (PAC-105, #59)
 
 - `pacer-demo-worker` deployed from main (version `4714166a`): `GET`/`POST /day-1-brief-pdf`, the PDF request form. No page frames it yet; it waits on the PAC-221 post.

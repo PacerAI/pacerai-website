@@ -15,7 +15,7 @@ See the **SEO Messaging Table** artifact (current → recommended for every page
 
 **Step A (in Yoast, free) — fix the `sameAs` at the source:** Yoast → **Settings → Site representation → Organization → Social profiles**. Set LinkedIn to `https://www.linkedin.com/company/getpacerai` (the live schema currently emits the wrong `/company/pacer-ai`) and YouTube to `https://www.youtube.com/@PacerAI`. This makes Yoast's own Organization node agree with the snippet below.
 
-**Updated 2026-10-05 (Daily Pacing Agent rename):** `alternateName` and `description` below are the target values; the live snippet still has the old ones until it is edited in WPCode.
+**Updated 2026-11-11 (bottom-up forecasting):** `alternateName` and `description` below are the target values. The live WPCode snippet still has the previous wording until it is edited in WP Admin. Do not publish from this file.
 
 **Step B — add this WPCode snippet** (WPCode → **+ Add Snippet → HTML Snippet**; Location: **Site Wide Header**; or a JavaScript/PHP snippet if you prefer). It uses the **same `@id`** as Yoast's Organization node (`…/#organization`) so Google *merges* the extra properties into the existing node instead of creating a duplicate:
 
@@ -26,9 +26,9 @@ See the **SEO Messaging Table** artifact (current → recommended for every page
   "@type": "Organization",
   "@id": "https://getpacerai.com/#organization",
   "name": "Pacer AI",
-  "alternateName": ["Daily Pacing Agent", "ARR Modeling Agent"],
+  "alternateName": ["Bottom-up sales forecasting agent", "Bottom-up planning agent"],
   "url": "https://getpacerai.com/",
-  "description": "Pacer AI is the Daily Pacing Agent for CROs and sales leaders: it shows every day whether you will make plan, the gap to close, and how to close it, inside Claude.",
+  "description": "Pacer AI is a bottom-up sales forecasting and bottom-up planning agent for sales leaders. Make plan with confidence. Forecasts and plans update in real time and reconcile to Finance.",
   "foundingDate": "2023-05",
   "logo": {
     "@type": "ImageObject",

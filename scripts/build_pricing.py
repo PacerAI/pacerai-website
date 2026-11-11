@@ -154,8 +154,8 @@ def render(pb: dict, template: str, js: str, order_url: str = ORDER_URL) -> str:
     seats = pb["seats"]
     values = {
         "version": pb["version"], "pricing_js": inline_js(js), "order_url": order_url,
-        "setup_slt_fmt": fmt(pb["setup"]["slt"]),
-        "services_from_fmt": fmt(pb["services_from"]),
+        "setup_slt": pb["setup"]["slt"], "setup_slt_fmt": fmt(pb["setup"]["slt"]),
+        "services_from": pb["services_from"], "services_from_fmt": fmt(pb["services_from"]),
         "default_total_fmt": fmt(sum(DEFAULT[k] * seats[k]["m"] for k in seats)),
     }
     for k, s in seats.items():
