@@ -8,6 +8,15 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-11-11: /pricing/ is live (PAC-164)
+
+- Remote D1 `pacerai-leads`: migrations 0006, then 0005, applied (the `--file` import of 0005 hit a Cloudflare auth error, so its four `ALTER TABLE` statements ran with `--command`).
+- `pacer-demo-worker` deployed to production from main + the footer fix: version `1b6e5fa1` (rollback: `4714166a`). `/`, `/signup` and `/order` return 200; the order card shows the $5,000 SLT installation; `POST /pricing-request` validates. Staging (`9f722bdb`) also deployed; it serves the videos only.
+- Page 111 deployed (backup `pre-deploy-backup-111-20261111-1125.json`) and published. Redirection rule 5 (`/pricing/` 302 → `/#pricing`) disabled via the Redirection REST API. `/pricing/` returns 200.
+- Homepage (25) deployed (backup `pre-deploy-backup-25-20261111-1126.json`): per-seat price line and See Pricing → `/pricing/`.
+- The $5,000 SLT installation shows on the SLT card, the Your team line, the order card and the buyer email (PR #66). The `/research/` footer link (404) is removed from the pricing page.
+- Live checks: `/`, `/pricing/`, `/resources/`, `/team/`, `/contact/`, `/demo-connect/` all 200.
+
 ## 2026-11-11: Price Book v2.0 prices in source, and the purchase confirm screen (PAC-164, not deployed)
 
 - **Nothing is live.** Page 111 stays Draft. Redirection rule 5 still sends `/pricing/` to `/#pricing`. Migrations 0005 and 0006 are not applied to remote D1. The Worker is not deployed.

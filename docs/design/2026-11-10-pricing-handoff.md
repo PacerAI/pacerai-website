@@ -4,7 +4,7 @@
 **Issues:** [PAC-164](https://linear.app/getpacerai/issue/PAC-164/update-website-pricing-products-and-services-to-price-book-v20) (pricing page v2.0), [PAC-260](https://linear.app/getpacerai/issue/PAC-260/purchase-flow-send-msa-mnda-and-stripe-invoice-when-the-kickoff-is) (Stripe, SignWell, approval; Spec review)
 **Specs:** `docs/design/purchase_process.md` (+ `.html`), mockup `docs/design/pricing/pricing-v2_2026-11-10.html`
 
-Purchase steps 2 and 3 are on this branch and are not deployed. The next session is the go-live sequence, and each step still asks Will first.
+**LIVE 2026-11-11.** PRs #64 and #66 merged; go-live steps 1 to 8 done (see `docs/document/changelog.md`). What remains is Will's to-dos and PAC-260.
 
 ## Where it stands
 

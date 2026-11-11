@@ -20,7 +20,7 @@ Worker's default sender; the `ORDER_FROM` setting overrides it (`src/order.ts`).
 | The visitor | Your Pacer AI pricing summary: *package* | Will |
 | will@getpacerai.com (`ORDER_NOTIFY_TO` overrides it) | Pricing request: *company*, *package*, *ACV* | The visitor |
 
-The live Worker still sends those subjects. The PAC-164 branch (not deployed) replaces them: the buyer gets `Your Pacer AI order: {seats}` with a Book your kickoff button, and Will's subject starts `Order:`. Apply migrations 0005 and 0006 before that Worker is deployed.
+Since 2026-11-11 (Worker version `1b6e5fa1`, PAC-164) the subjects are: the buyer gets `Your Pacer AI order: {seats}` with a Book your kickoff button, and Will's subject starts `Order:`. Migrations 0005 and 0006 are applied to remote D1. The table above shows the subjects before that deploy.
 
 Everything else about a request works without email: the database rows, the Slack post and the Apollo list.
 
