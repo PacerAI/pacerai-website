@@ -105,10 +105,10 @@ By hand at first, in the platform repo. Each paid order creates a Slack reminder
 
 | Piece | Where | When |
 |---|---|---|
-| Purchase button | `src/pricing/pricing-template.html`, `src/pricing/pricing.js` | With the page launch (PAC-164) |
-| Confirm screen: billing fields, PO, Order Terms checkbox | `infra/pacer-demo-worker/src/order.ts` | With the page launch |
-| Order confirmation email with the Book your kickoff link | `src/order.ts` `sendEmails` | With the page launch |
-| D1: status `submitted`, legal name, billing email and address, PO, terms accepted | `migrations/0006_orders.sql` | With the page launch |
+| Purchase button | `src/pricing/pricing-template.html`, `src/pricing/pricing.js` | Built on the PAC-164 branch. Not deployed. |
+| Confirm screen: billing fields, PO, Order Terms checkbox | `infra/pacer-demo-worker/src/order.ts` | Built on the PAC-164 branch. Not deployed. |
+| Order confirmation email with the Book your kickoff link | `src/order.ts` `sendEmails` | Built on the PAC-164 branch. Not deployed. |
+| D1: status `submitted`, legal name, billing email and address, PO, terms accepted | `migrations/0006_orders.sql` | Written. Not applied to remote D1. |
 | Scheduling webhook, approve and decline routes | new Worker routes | PAC-260 |
 | SignWell send for the mNDA and MSA | new Worker module | PAC-260 |
 | Stripe: Customer, Subscription, installation item, Tax, webhooks with idempotency | new Worker module | PAC-260 |

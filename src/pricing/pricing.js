@@ -9,7 +9,7 @@
  *
  * GA4 (through window.pacerTrack from WPCode footer.js section 0):
  *   pricing_estimate  1.5 s after the last toggle or seat change     plan, billing, value, currency, seats
- *   pricing_choose    a click on Choose these seats                  plan, billing, value, currency, seats
+ *   pricing_choose    a click on Purchase                            plan, billing, value, currency, seats
  *   pricing_request   the order card saved the request and sent      plan, billing, value, currency
  *                     the emails (postMessage from the Worker)
  * value is the monthly total on month to month and the 12-month total on a 12-month contract.
@@ -90,8 +90,8 @@
     root.querySelector('.js-lbl-a').addEventListener('click', function () { annual = true; changed(); });
     root.querySelector('.js-lbl-m').addEventListener('click', function () { annual = false; changed(); });
 
-    /* Choose opens the order card: the Worker's /order page in a modal iframe (data-order-url). The URL
-     * carries the seats and first-touch attribution, never an email. Without data-order-url, Choose
+    /* Purchase opens the order card: the Worker's /order page in a modal iframe (data-order-url). The URL
+     * carries the seats and first-touch attribution, never an email. Without data-order-url, Purchase
      * only records the click. */
     var ORDER = cfg.orderUrl || '', modal = null, frame = null, ORIGIN = '';
     /* window.URL, not URL: in an inline onerror handler, URL resolves to document.URL (a string). */
@@ -111,12 +111,12 @@
       modal.className = 'order-modal';
       modal.setAttribute('role', 'dialog');
       modal.setAttribute('aria-modal', 'true');
-      modal.setAttribute('aria-label', 'Your selection');
+      modal.setAttribute('aria-label', 'Your order');
       var box = document.createElement('div'), x = document.createElement('button');
       box.className = 'order-box';
       x.className = 'order-close'; x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.innerHTML = '&times;';
       frame = document.createElement('iframe');
-      frame.title = 'Your selection: email me this summary';
+      frame.title = 'Your order';
       frame.src = ORDER + '?' + q.join('&');
       box.appendChild(x); box.appendChild(frame); modal.appendChild(box);
       document.getElementById('pacerai-homepage').appendChild(modal);
@@ -128,7 +128,7 @@
     window.addEventListener('message', function (e) {
       if (!ORIGIN || e.origin !== ORIGIN || !e.data || typeof e.data !== 'object') return;
       if (e.data.type === 'pacer:resize' && frame) {
-        frame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 320), 1400) + 'px';
+        frame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 320), 1800) + 'px';
       } else if (e.data.type === 'pacer:event' && e.data.name === 'pricing_request') {
         var p = e.data.params || {};
         track('pricing_request', { plan: String(p.plan || ''), billing: String(p.billing || ''),

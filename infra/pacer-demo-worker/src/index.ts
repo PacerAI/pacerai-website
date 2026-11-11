@@ -45,7 +45,7 @@ export default {
     }
 
     // Self-serve signup POST (from the /signup widget, same-origin — no CORS needed).
-    // The /pricing/ order card's POST (src/order.ts; Price Book v2.0 seats since 2026-11-10).
+    // The /pricing/ order card's POST (src/order.ts). Purchase recomputes the total and confirms the order.
     if (url.pathname === "/pricing-request") {
       return handlePricingRequest(request, env, ctx);
     }
@@ -95,7 +95,7 @@ export default {
       });
     }
 
-    // The /pricing/ order card, iframed by the page when a visitor chooses seats (src/order.ts).
+    // The /pricing/ confirm screen, iframed when a visitor clicks Purchase (src/order.ts).
     if (url.pathname === "/order") {
       return orderPage(url, env);
     }

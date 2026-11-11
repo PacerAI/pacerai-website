@@ -42,8 +42,8 @@ protected_paths:      # A diff touching any of these escalates instead, even onc
   - scripts/validate.py                  # The pre-publish validator. CI re-baselines every page when it changes.
   - scripts/deploy.py                    # Writes to the live WordPress site.
   - scripts/tear_sheet.py                # Publishes and rolls back the live tear-sheet PDF.
-  - scripts/build_pricing.py             # Retired 2026-11-02 and kept for rollback. The site publishes no
-  - src/pricing/                         # prices, so putting either of these back is Will's call, not a job's.
+  - scripts/build_pricing.py             # Writes public prices from Price Book v2.0. Changing what is
+  - src/pricing/                         # published is Will's call, not a job's. Page 111 stays Draft.
   - infra/pacer-demo-worker/             # Signups, orders and the opt-out list: live traffic and personal data.
   - .github/workflows/                   # The cloud-side gates.
   - .gitmodules                          # The foundation pin, which is where the voice and pricing rules come from.

@@ -48,9 +48,9 @@ echo "[checks] pages validate."
 # The footer paste is built from the nav and footer that every page shares. A stale one ships a footer
 # that disagrees with the site, and it never shows up in a diff review.
 #
-# scripts/build_pricing.py is deliberately NOT run here. The site has published no prices since
-# 2026-11-02; /pricing/ is a 302 to the homepage and the script is retired, kept only for rollback.
-# `--check` exits 1 by design, so running it would fail every job.
+# scripts/build_pricing.py --check is not part of this gate (PAC-164). validate.py checks every
+# published dollar figure against Price Book v2.0 and rejects the packages that stay off the site.
+# Run the generator by hand when the Price Book or the pricing template changes, then commit both outputs.
 "$PYTHON" scripts/build_footer_paste.py --check
 echo "[checks] footer paste is current."
 

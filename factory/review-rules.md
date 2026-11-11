@@ -7,11 +7,13 @@ this when something reaches `main`, or the live site, that a rule would have cau
 ## Code
 
 - **The spec is the source of truth.** If code and spec disagree, that's a finding, whichever is right.
-- **The site publishes no prices, and a job never adds one.** Since 2026-11-02 `/pricing/` is a 302 to the
-  homepage's `#pricing` section, whose button is Schedule a Call with Sales. `src/pricing/*`,
-  `scripts/build_pricing.py` and the Worker's `src/order.ts` are retired and kept only for rollback. A
-  seat rate, a bulk tier or a package price appearing on any page is a finding, however well sourced.
-  Un-retiring pricing is Will's decision, not a job's. (`CLAUDE.md` line 62, 2026-11-02)
+- **Public prices match Price Book v2.0, and no other package appears.** The figures are the three
+  seat licenses (Rep pacing, Manager pacing, SLT pacing and planning) and the services. Startup, Advisor,
+  company-size bands, the small-team rate, the pilot program and Rep bulk rates are a finding on any page.
+  A dollar amount that is not in `foundation/pricing/product-pricing-price-book.md` is a finding.
+  `scripts/build_pricing.py` writes `/pricing/` and the Worker's `price-book.json` from that file.
+  Publishing the page is still Will's: page 111 stays Draft and `/pricing/` still redirects until he says
+  otherwise. (`CLAUDE.md` Pricing row, PAC-164)
 - **Nav, footer and base CSS are duplicated across every page file.** A change to one of them that isn't
   applied to all of them ships a site that disagrees with itself. (`CLAUDE.md`, Critical Rules)
 - **A page stays under the character limit.** `validate.py` caps at 67,000, a 1K buffer under WordPress's
@@ -54,8 +56,8 @@ this when something reaches `main`, or the live site, that a rule would have cau
 
 ## Numbers
 
-- **There is no price on any page.** See the Code rules: pricing is retired. The Price Book is not a licence
-  to publish a figure here, and a diff that adds one is a finding even when the figure is correct.
+- **A published dollar figure is a Price Book v2.0 seat or service price.** See the Code rules. A figure
+  that is not in the Price Book, or a package the book keeps off the site, is a finding.
 - **A metric in a case study is cited, not summarised.** The claim names the period and what moved — "NRR
   101% to 105% over six months" — and nothing on the page rounds it in the buyer's favour.
 - **No invented numbers.** A customer count, a percentage or a dollar figure a buyer could check has a

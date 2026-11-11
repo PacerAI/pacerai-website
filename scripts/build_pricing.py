@@ -37,8 +37,8 @@ TEMPLATE = REPO / "src" / "pricing" / "pricing-template.html"
 JS = REPO / "src" / "pricing" / "pricing.js"
 OUT_HTML = REPO / "src" / "pricing" / "pricing-build.html"
 OUT_JSON = REPO / "infra" / "pacer-demo-worker" / "src" / "price-book.json"
-# Choose opens this order card (pacer-demo-worker GET /order). --no-order builds a page whose Choose only records
-# the click, for a page deploy that goes out before the Worker route does.
+# Purchase opens this order card (pacer-demo-worker GET /order). --no-order builds a page whose Purchase only
+# records the click, for a page deploy that goes out before the Worker route does.
 ORDER_URL = "https://pacer-demo-worker.will-078.workers.dev/order"
 
 
