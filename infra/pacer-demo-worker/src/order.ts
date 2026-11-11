@@ -105,11 +105,12 @@ export function summaryRows(q: Quote): [string, string][] {
     ["Contract", annual ? "12 months, billed monthly (two months free)" : "Month to month"],
     ...q.lines.map((l): [string, string] => [l.name, `${l.n} × ${usd(l.price)}/user/${annual ? "yr" : "mo"}`]),
     annual ? ["12-month total", usd(q.value)] : ["Monthly total", `${usd(q.value)}/mo`],
+    ...(q.setup_fee > 0 ? [["SLT installation", `${usd(q.setup_fee)} one-time, on the first invoice`] as [string, string]] : []),
   ];
   return rows;
 }
 
-const NOTE = `Installation and services are priced separately. Prices from Price Book ${priceBook.version}.`;
+const NOTE = `Services are priced separately. Prices from Price Book ${priceBook.version}.`;
 const REVIEW = "Will reviews every order. Your MSA, mutual NDA and invoice arrive before your kickoff.";
 const PAY_NOTE = `No payment is taken here. ${REVIEW}`;
 
@@ -457,7 +458,6 @@ export async function handlePricingRequest(request: Request, env: Env, ctx: Exec
             `*Billing email:* ${billingEmail}`,
             `*Billing address:* ${[street, city, region, postal, country].join(", ")}`,
             `*PO number:* ${po || "—"}`,
-            ...(q.setup_fee > 0 ? [`*SLT installation:* ${usd(q.setup_fee)} on the first invoice, not in the seat total`] : []),
             `*Classification:* ${leadClass}`,
             ...(isHostingOrigin(asOrg) ? [`*:warning: Origin:* ${asOrg} (datacenter, not an office network)`] : []),
             ...summaryRows(q).map(([k, v]) => `*${k}:* ${v}`),
@@ -557,7 +557,6 @@ ${kickoffButton}
   const about: [string, string][] = [
     ["Email", who.email], ["Name", who.name || "—"], ["Company legal name", who.company],
     ["Billing email", who.billingEmail], ["Billing address", addressLine(who)], ["PO number", who.po || "—"],
-    ...(q.setup_fee > 0 ? [["SLT installation", `${usd(q.setup_fee)} on the first invoice, not in the seat total`] as [string, string]] : []),
     ["Kickoff", who.kickoff],
     ["Classification", who.leadClass],
     ["Came from", who.cameFrom || "—"], ["Page", who.pageUrl],
