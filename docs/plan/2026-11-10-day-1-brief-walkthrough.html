@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 1 Brief DM Flow</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a vertical storyboard. Each stage is a row: the screen the visitor sees on the left, what Pacer records on the right. Brand tokens from the v3 bone site. */
+:root{
+  --bg:#F5F4EF; --surface:#FAFAF7; --card:#FFFFFF; --ink:#20242B; --muted:#5F5A50; --line:#E6E1D6;
+  --navy:#1F3864; --navy-ink:#FFFFFF; --teal:#2E7D74; --teal-soft:#E3EFEC;
+  --ok:#2E7D74; --ok-bg:#E3EFEC; --wait:#8A5A0B; --wait-bg:#F6EBD3; --gap:#A63D2A; --gap-bg:#F6E0DA;
+  --chrome:#ECE9E1; --shadow:0 1px 2px rgba(32,36,43,.06),0 8px 24px rgba(32,36,43,.06);
+  --sans:"DM Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#14171C; --surface:#1A1E24; --card:#20252C; --ink:#ECE9E1; --muted:#A9A397; --line:#2F353D;
+  --navy:#9DB4E0; --navy-ink:#14171C; --teal:#70C49C; --teal-soft:#1D3530;
+  --ok:#70C49C; --ok-bg:#1D3530; --wait:#E3B04B; --wait-bg:#3A2F17; --gap:#EE917C; --gap-bg:#3D2420;
+  --chrome:#262B32; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14171C; --surface:#1A1E24; --card:#20252C; --ink:#ECE9E1; --muted:#A9A397; --line:#2F353D;
+  --navy:#9DB4E0; --navy-ink:#14171C; --teal:#70C49C; --teal-soft:#1D3530;
+  --ok:#70C49C; --ok-bg:#1D3530; --wait:#E3B04B; --wait-bg:#3A2F17; --gap:#EE917C; --gap-bg:#3D2420;
+  --chrome:#262B32; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto;padding-block:40px 64px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-weight:800;letter-spacing:-.015em;text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.1}
+h2{font-size:22px;line-height:1.2}
+h3{font-size:15px}
+p{margin:0}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.lede{color:var(--muted);max-width:68ch;font-size:16px}
+
+header{display:flex;flex-direction:column;gap:14px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted);align-items:center}
+
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:4px;white-space:nowrap}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.chip.ok{color:var(--ok);background:var(--ok-bg)}
+.chip.wait{color:var(--wait);background:var(--wait-bg)}
+.chip.gap{color:var(--gap);background:var(--gap-bg)}
+
+/* route strip */
+.route{overflow-x:auto;border:1px solid var(--line);background:var(--surface);border-radius:8px}
+.route ol{list-style:none;margin:0;padding:14px 16px;display:flex;gap:6px;min-width:max-content;align-items:center}
+.route li{display:flex;align-items:center;gap:6px;font-size:13px}
+.route a{color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px}
+.route a:hover,.route a:focus-visible{background:var(--teal-soft);outline:none}
+.route .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.route .dot{width:8px;height:8px;border-radius:50%}
+.route .dot.ok{background:var(--ok)}.route .dot.wait{background:var(--wait)}.route .dot.gap{background:var(--gap)}
+.route .arrow{color:var(--muted)}
+.route .branch{border-left:1px solid var(--line);padding-left:10px;margin-left:6px}
+
+/* stage rows */
+.stage{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:start;padding-top:32px;border-top:1px solid var(--line);scroll-margin-top:16px}
+.stage-head{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 14px}
+.stage-num{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.notes{display:flex;flex-direction:column;gap:18px;min-width:0}
+.notes h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px}
+.notes ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.callout{border-radius:6px;padding:12px 14px;font-size:14px;display:flex;flex-direction:column;gap:6px}
+.callout.wait{background:var(--wait-bg)}.callout.gap{background:var(--gap-bg)}.callout.ok{background:var(--ok-bg)}
+.callout strong{color:var(--ink)}
+
+/* screen frames */
+.screen{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;min-width:0}
+.bar{background:var(--chrome);display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line)}
+.lights{display:flex;gap:5px}.lights i{width:9px;height:9px;border-radius:50%;background:var(--line);display:block}
+.url{flex:1;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:4px 9px;font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap;overflow-x:auto}
+.url b{color:var(--ink);font-weight:500}
+.url .tag{color:var(--teal)}
+.app-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.body{padding:20px;display:flex;flex-direction:column;gap:14px}
+
+/* DM */
+.dm{display:flex;flex-direction:column;gap:10px}
+.msg{max-width:88%;padding:10px 13px;border-radius:12px;font-size:14px}
+.msg.me{align-self:flex-end;background:var(--navy);color:var(--navy-ink);border-bottom-right-radius:3px}
+.msg.them{align-self:flex-start;background:var(--chrome);border-bottom-left-radius:3px}
+.linkcard{align-self:flex-end;width:88%;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.linkcard img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.linkcard div{padding:9px 12px;font-size:13px}
+.linkcard small{display:block;color:var(--muted);font-size:12px}
+.draft{font-size:12px;color:var(--muted);font-style:italic;text-align:right}
+
+/* demo-connect hero mock */
+.hero-mock{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:center}
+.hero-mock h4{margin:0;font-size:22px;font-weight:800;line-height:1.15;letter-spacing:-.015em}
+.hero-mock p{font-size:13px;color:var(--muted)}
+.prompt{border:1px dashed var(--teal);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.prompt small{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.prompt span{font-weight:700;font-size:15px}
+.btn{display:inline-flex;justify-content:center;align-items:center;font-family:inherit;font-weight:700;font-size:14px;padding:10px 14px;border-radius:6px;border:1px solid var(--navy);background:var(--navy);color:var(--navy-ink);cursor:default}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.fine{font-size:11.5px;color:var(--muted)}
+.slide{width:100%;display:block;border-radius:6px;border:1px solid var(--line);aspect-ratio:16/9;object-fit:cover}
+.hl{outline:2px solid var(--teal);outline-offset:3px}
+
+/* dialog */
+.dialog{max-width:420px;margin:8px auto;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:18px;display:flex;flex-direction:column;gap:12px}
+.dialog h4{margin:0;font-size:16px;font-weight:700}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:12px;font-weight:700;color:var(--muted)}
+.field .val{border:1px solid var(--line);border-radius:6px;padding:7px 9px;font-family:var(--mono);font-size:11.5px;background:var(--card);overflow-x:auto;white-space:nowrap}
+.dialog .row{display:flex;justify-content:flex-end;gap:8px}
+.toggle{display:flex;gap:4px;padding:3px;border:1px solid var(--line);border-radius:7px;background:var(--surface);width:max-content;max-width:100%;flex-wrap:wrap}
+.toggle button{font-family:inherit;font-size:12.5px;font-weight:700;border:0;background:transparent;color:var(--muted);padding:6px 10px;border-radius:5px;cursor:pointer}
+.toggle button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.toggle button:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+
+/* sign-in */
+.signin{max-width:340px;margin:8px auto;display:flex;flex-direction:column;gap:12px}
+.signin .brand{font-weight:800;font-size:17px}
+.input{border:1px solid var(--line);border-radius:6px;padding:9px 10px;font-size:14px;background:var(--surface);color:var(--muted)}
+.turnstile{border:1px solid var(--line);border-radius:6px;padding:9px 10px;font-size:13px;display:flex;align-items:center;gap:8px;background:var(--surface)}
+.turnstile i{width:16px;height:16px;border-radius:50%;border:2px solid var(--ok);display:block;position:relative}
+.turnstile i::after{content:"";position:absolute;left:3px;top:0;width:4px;height:8px;border:solid var(--ok);border-width:0 2px 2px 0;transform:rotate(45deg)}
+
+/* chat */
+.chat{display:flex;flex-direction:column;gap:12px}
+.chat .user{align-self:flex-end;background:var(--chrome);border-radius:12px;padding:9px 13px;font-size:14px;font-weight:500}
+.chat .tool{font-size:12px;color:var(--muted);font-family:var(--mono);border:1px solid var(--line);border-radius:6px;padding:6px 9px;width:max-content;max-width:100%}
+.chat .reply{display:flex;flex-direction:column;gap:10px;font-size:14px}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.thumbs span{aspect-ratio:16/9;border:1px solid var(--line);border-radius:4px;background:var(--surface);font-size:10px;color:var(--muted);display:flex;align-items:flex-end;padding:4px 5px;line-height:1.2}
+
+/* email + slack */
+.mail{display:flex;flex-direction:column;gap:10px;font-size:14px}
+.mail dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;margin:0;font-size:13px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.mail dt{color:var(--muted)}.mail dd{margin:0;overflow-wrap:anywhere}
+.mail a{color:var(--navy);overflow-wrap:anywhere}
+.slack{border-left:3px solid var(--teal);padding:8px 12px;font-size:13px;background:var(--surface);border-radius:0 6px 6px 0;display:flex;flex-direction:column;gap:2px}
+.slack b{font-weight:700}
+
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.form-mock{display:flex;flex-direction:column;gap:10px}
+.form-mock h4{margin:0;font-size:17px;font-weight:800}
+
+/* checklist */
+.todo{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.todo ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px}
+.todo li::marker{font-family:var(--mono);color:var(--muted)}
+.todo li span.chip{margin-left:6px;vertical-align:1px}
+.foot{font-size:12.5px;color:var(--muted)}
+
+/* part headers */
+.part{display:flex;flex-direction:column;gap:8px;padding-top:8px}
+.part h2{font-size:clamp(22px,3vw,28px)}
+
+/* done strip */
+.done{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.done div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;font-size:13.5px;min-width:0}
+.done b{font-size:14px}
+.done small{color:var(--muted);font-family:var(--mono);font-size:11.5px;overflow-wrap:anywhere}
+
+/* setup steps */
+.setup{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;counter-reset:s}
+.task{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px}
+.task.is-done{opacity:.62}
+.task .tick{grid-row:1/span 3;display:flex;flex-direction:column;align-items:center;gap:6px;padding-top:2px}
+.task .tick input{width:20px;height:20px;accent-color:var(--teal);cursor:pointer}
+.task .tick span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.task-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px}
+.task-head h3{font-size:17px}
+.task-body{display:flex;flex-direction:column;gap:10px;font-size:14.5px;min-width:0}
+.task-body ol,.task-body ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0;font-size:13.5px;align-items:baseline}
+.kv dt{color:var(--muted);font-weight:700}
+.kv dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.cmd{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:6px;background:var(--surface);min-width:0}
+.cmd pre{margin:0;padding:9px 11px;font-family:var(--mono);font-size:12px;overflow-x:auto;flex:1;min-width:0;white-space:pre}
+.cmd button{font-family:var(--sans);font-size:12px;font-weight:700;border:0;border-left:1px solid var(--line);background:transparent;color:var(--teal);padding:0 12px;cursor:pointer;border-radius:0 6px 6px 0}
+.cmd button:hover{background:var(--teal-soft)}
+.cmd button:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+.expect{font-size:13.5px;color:var(--muted)}
+.expect b{color:var(--ink)}
+.progress{font-size:13px;color:var(--muted)}
+
+@media (max-width:820px){
+  .stage{grid-template-columns:minmax(0,1fr)}
+  .hero-mock,.split{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Lead magnet · walkthrough</span>
+    <h1>The Day 1 brief, from setup to a CRO's first brief</h1>
+    <p class="lede">Part 1 is your setup, in order, with the exact values and a check for each step. Part 2 is what a CRO sees after clicking the link in your DM, and what Pacer records at each step. Status as of 10 Nov 2026, 13:21 MT.</p>
+    <div class="legend">
+      <span class="chip ok">Live</span>
+      <span class="chip wait">Waiting on you</span>
+      <span class="chip gap">Gap: breaks or loses data today</span>
+    </div>
+  </header>
+
+  <section class="part" aria-labelledby="done-h">
+    <span class="eyebrow">Already live</span>
+    <h2 id="done-h">Deployed today</h2>
+  </section>
+  <div class="done">
+    <div><b>PDF request form</b><span>Demo Worker, <code>/day-1-brief-pdf</code></span><small>version 4714166a</small></div>
+    <div><b>/demo-connect/ hero</b><span>"Build my Day 1 brief" and the headline slide</span><small>page 983 · media 1161</small></div>
+    <div><b>Step 6 matches the hero</b><span>PR #61, redeployed 13:21</span><small>backup …983-20261110-1321.json</small></div>
+    <div><b>October PDF in media</b><span>Same size as the repo copy</span><small>media 1160 · 3,728,234 bytes</small></div>
+  </div>
+
+  <section class="part" aria-labelledby="setup-h">
+    <span class="eyebrow">Part 1 · yours, about 30 minutes</span>
+    <h2 id="setup-h">Set it up</h2>
+    <p class="lede">Do these in order. Steps 1 to 3 are WP Admin. Tick each as you go; the ticks stay in this browser only.</p>
+    <p class="progress" id="progress" aria-live="polite">0 of 6 done</p>
+  </section>
+
+  <ol class="setup">
+    <li class="task" id="t1">
+      <label class="tick"><input type="checkbox" id="c1" aria-label="Step 1 done"><span>1</span></label>
+      <div class="task-head"><h3>Add the redirect for the PDF link</h3><span class="chip gap">Email link is dead until this</span></div>
+      <div class="task-body">
+        <p>The PDF email links <code>getpacerai.com/day-1-brief-pdf/</code>, which returns 404 today. This is also step 2 of the PAC-221 post's deploy, so doing it now covers that.</p>
+        <p>WP Admin → Tools → Redirection → Add new:</p>
+        <dl class="kv">
+          <dt>Source URL</dt><dd><code>/day-1-brief-pdf/</code>, with Ignore Slash on</dd>
+          <dt>Target URL</dt><dd><code>https://getpacerai.com/wp-content/uploads/2026/11/pacer-ai-day-1-sales-review-october-2026.pdf</code></dd>
+          <dt>HTTP code</dt><dd>302, like the Tear Sheet's, so a new month's PDF can take the same link</dd>
+        </dl>
+        <p class="expect"><b>Check:</b> a 302 whose location is the PDF.</p>
+        <div class="cmd"><pre>curl -sI https://getpacerai.com/day-1-brief-pdf/ | grep -iE '^HTTP|^location'</pre><button type="button">Copy</button></div>
+      </div>
+    </li>
+
+    <li class="task" id="t2">
+      <label class="tick"><input type="checkbox" id="c2" aria-label="Step 2 done"><span>2</span></label>
+      <div class="task-head"><h3>Save the current WPCode Footer</h3><span class="chip wait">Your rollback</span></div>
+      <div class="task-body">
+        <p>WP Admin → Code Snippets → Header &amp; Footer. Click in the Footer box, select all, copy. Then save the clipboard to a file:</p>
+        <div class="cmd"><pre>pbpaste &gt; ~/Documents/pacerai/pacerai-website/docs/review/wpcode-footer-before-20261110.txt && shasum -a 256 ~/Documents/pacerai/pacerai-website/docs/review/wpcode-footer-before-20261110.txt | cut -c1-12</pre><button type="button">Copy</button></div>
+        <p class="expect"><b>Expect:</b> <code>54ba22069572</code>, the footer pasted on 22 Oct. A different value can be just a trailing newline from the copy. Keep the file either way.</p>
+      </div>
+    </li>
+
+    <li class="task" id="t3">
+      <label class="tick"><input type="checkbox" id="c3" aria-label="Step 3 done"><span>3</span></label>
+      <div class="task-head"><h3>Paste the new footer</h3><span class="chip wait">Carries the tag into Claude</span></div>
+      <div class="task-body">
+        <p>Copy main's paste file to the clipboard and check it before pasting:</p>
+        <div class="cmd"><pre>cd ~/Documents/pacerai/pacerai-website && git fetch -q origin main && git show origin/main:src/wpcode/footer.paste.txt | pbcopy && pbpaste | shasum -a 256 | cut -c1-16</pre><button type="button">Copy</button></div>
+        <p class="expect"><b>Expect:</b> <code>30b1e81659090701</code> (24,520 bytes). Select all in the Footer box, paste, Save Changes.</p>
+        <p class="expect"><b>Check:</b> in a private window open the tagged page below, then run this in the DevTools console. Every line should end in the tag.</p>
+        <div class="cmd"><pre>https://getpacerai.com/demo-connect/?utm_source=linkedin&amp;utm_medium=dm&amp;utm_campaign=day1-brief</pre><button type="button">Copy</button></div>
+        <div class="cmd"><pre>[...document.querySelectorAll('a[href*="claude.ai/customize/connectors"]')].map(a =&gt; new URL(a.href).searchParams.get('connectorUrl'))</pre><button type="button">Copy</button></div>
+        <p class="expect">Then open the homepage and check the console shows no red errors. <b>Rollback:</b> paste the file from step 2 back and save.</p>
+      </div>
+    </li>
+
+    <li class="task" id="t4">
+      <label class="tick"><input type="checkbox" id="c4" aria-label="Step 4 done"><span>4</span></label>
+      <div class="task-head"><h3>Send yourself the PDF</h3><span class="chip wait">Email and Slack untested</span></div>
+      <div class="task-body">
+        <p>No page frames the form until the PAC-221 post ships, so open it on the Worker directly and use a <code>@getpacerai.com</code> address:</p>
+        <div class="cmd"><pre>https://pacer-demo-worker.will-078.workers.dev/day-1-brief-pdf</pre><button type="button">Copy</button></div>
+        <ul>
+          <li>The form says <b>Check your inbox</b>.</li>
+          <li>An email arrives from <code>orders@mail.getpacerai.com</code>: "October's Day 1 brief, as a PDF". Its link opens the 13-page PDF.</li>
+          <li>Slack shows a <b>Day 1 brief PDF request</b> marked internal, with "Email sent: sent".</li>
+        </ul>
+        <p class="expect">A second request within 10 minutes sends no email; Slack marks it "repeat request". That's expected.</p>
+      </div>
+    </li>
+
+    <li class="task" id="t5">
+      <label class="tick"><input type="checkbox" id="c5" aria-label="Step 5 done"><span>5</span></label>
+      <div class="task-head"><h3>Run the DM route cold</h3><span class="chip wait">PAC-104 untested cold</span></div>
+      <div class="task-body">
+        <p>A private window, signed in to a Claude account that has never added Pacer AI - Demo. Open the tagged link from step 3, then follow Part 2 below:</p>
+        <ol>
+          <li>Click <b>Add Pacer AI - Demo to Claude</b>. The dialog's URL ends in <code>?utm_source=linkedin&amp;utm_medium=dm&amp;utm_campaign=day1-brief</code>.</li>
+          <li>Continue, Add, Connect. Sign in with a work email.</li>
+          <li>Settings → Connectors → Pacer AI - Demo → tool permissions: Always allow.</li>
+          <li>New chat: <b>Build my Day 1 brief</b>. It builds October without being told the month.</li>
+        </ol>
+        <p class="expect"><b>If claude.ai refuses the tagged URL:</b> roll back the footer (step 3) and raise it on the platform. The plain link still works.</p>
+      </div>
+    </li>
+
+    <li class="task" id="t6">
+      <label class="tick"><input type="checkbox" id="c6" aria-label="Step 6 done"><span>6</span></label>
+      <div class="task-head"><h3>Run the direct link, then send DMs</h3><span class="chip wait">Decision: the DM tag</span></div>
+      <div class="task-body">
+        <p>From a second fresh account, open the direct claude.ai link, click Continue and type <b>Day 1 brief</b>. It should give the same brief.</p>
+        <div class="cmd"><pre>https://claude.ai/customize/connectors?modal=add-custom-connector&amp;connectorName=Pacer%20AI%20-%20Demo&amp;connectorUrl=https%3A%2F%2Fdemo.getpacerai.com%2Fmcp</pre><button type="button">Copy</button></div>
+        <p>Then send DMs with the tagged link. This walkthrough uses <code>utm_medium=dm</code>; the LinkedIn post uses <code>social</code>, so the two stay apart.</p>
+      </div>
+    </li>
+  </ol>
+
+  <section class="part" aria-labelledby="flow-h">
+    <span class="eyebrow">Part 2 · the visitor</span>
+    <h2 id="flow-h">What a CRO sees after clicking your DM</h2>
+    <p class="lede">Screens are simplified. The copy is the live page's and the Worker's, word for word.</p>
+  </section>
+
+  <nav class="route" aria-label="Stages">
+    <ol>
+      <li><a href="#dm"><span class="dot wait"></span><span class="n">1</span>DM link</a></li><li class="arrow">→</li>
+      <li><a href="#page"><span class="dot ok"></span><span class="n">2</span>/demo-connect/</a></li><li class="arrow">→</li>
+      <li><a href="#dialog"><span class="dot wait"></span><span class="n">3</span>Add connector</a></li><li class="arrow">→</li>
+      <li><a href="#signin"><span class="dot gap"></span><span class="n">4</span>Sign in</a></li><li class="arrow">→</li>
+      <li><a href="#brief"><span class="dot wait"></span><span class="n">5</span>Day 1 brief</a></li><li class="arrow">→</li>
+      <li><a href="#after"><span class="dot ok"></span><span class="n">6</span>Follow-up</a></li>
+      <li class="branch"><a href="#pdf"><span class="dot gap"></span><span class="n">B</span>No Claude: PDF</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 -->
+  <section class="stage" id="dm">
+    <div class="stage-head"><span class="stage-num">1 / 6</span><h2>You send the DM</h2><span class="chip wait">Pick the DM's tag</span></div>
+    <div class="screen">
+      <div class="bar"><span class="app-label">LinkedIn message</span></div>
+      <div class="body dm">
+        <div class="msg them">Saw your post on October's number. How are you tracking the miss?</div>
+        <div class="msg me">We built a Day 1 brief for exactly that. One prompt in Claude and it builds last month's review on demo data:</div>
+        <div class="linkcard">
+          <img src="../../img/demo-connect/day-1-brief-headline-slide.png" alt="October: 20% miss ($386K) due to 5 large churn events">
+          <div><b>Get your Day 1 brief in Claude</b><small>getpacerai.com/demo-connect/</small></div>
+        </div>
+        <p class="draft">Example DM text. Yours to write.</p>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>The link</h3>
+        <p><code>getpacerai.com/demo-connect/?utm_source=linkedin&amp;utm_medium=<b>dm</b>&amp;utm_campaign=day1-brief</code></p>
+      </div>
+      <div><h3>Why the page, not claude.ai</h3>
+        <p>LinkedIn mangles the long claude.ai connector link. The page gives them the prompt to type and one button that opens Claude with everything filled in.</p>
+      </div>
+      <div class="callout wait"><strong>Decision: the DM's tag</strong>
+        <span>The spec only defines the post's tag, <code>utm_medium=social</code>. If DMs reuse it, you can't tell a DM from a post click. <code>utm_medium=dm</code> keeps them apart.</span></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="stage" id="page">
+    <div class="stage-head"><span class="stage-num">2 / 6</span><h2>They land on /demo-connect/</h2><span class="chip ok">Live</span></div>
+    <div class="screen">
+      <div class="bar"><span class="lights"><i></i><i></i><i></i></span><div class="url"><b>getpacerai.com/demo-connect/</b><span class="tag">?utm_source=linkedin&amp;utm_medium=dm&amp;utm_campaign=day1-brief</span></div></div>
+      <div class="body">
+        <div class="hero-mock">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <span class="eyebrow">Day 1 brief</span>
+            <h4>Get your Day 1 brief in Claude</h4>
+            <p>Add the Pacer AI - Demo connector, then type the prompt below. No month needed: it builds the last closed month.</p>
+            <div class="prompt"><small>Type this in Claude</small><span>Build my Day 1 brief</span></div>
+            <span class="btn hl">Add Pacer AI - Demo to Claude</span>
+            <p class="fine">You'll sign in with your work email. No password.<br>On a Claude Team or Enterprise plan, only an Owner can add connectors. Book a walkthrough instead.</p>
+          </div>
+          <img class="slide" src="../../img/demo-connect/day-1-brief-headline-slide.png" alt="October: 20% miss ($386K) due to 5 large churn events">
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>They do</h3><p>Read the prompt and click the one button. On a phone the button sits above the slide.</p></div>
+      <div><h3>Behind it</h3>
+        <ul>
+          <li>The WPCode footer script reads the visitor's tag and rewrites the button's link so the tag rides into the connector URL.</li>
+          <li>Below the hero, six setup steps cover the dialog, sign-in and tool permissions.</li>
+        </ul></div>
+      <div class="callout ok"><strong>One prompt, top to bottom</strong>
+        <span>Step 6 used to say "Ask <i>Are we on pace?</i>". Since PR #61 it says "Build my Day 1 brief", like the hero.</span></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="stage" id="dialog">
+    <div class="stage-head"><span class="stage-num">3 / 6</span><h2>Claude's Add custom connector dialog</h2><span class="chip wait">Footer paste is yours</span></div>
+    <div class="screen">
+      <div class="bar"><span class="lights"><i></i><i></i><i></i></span><div class="url"><b>claude.ai</b>/customize/connectors?modal=add-custom-connector&amp;…</div></div>
+      <div class="body">
+        <div class="toggle" role="group" aria-label="WPCode footer state">
+          <button type="button" id="tg-before" aria-pressed="true">Today: footer not pasted</button>
+          <button type="button" id="tg-after" aria-pressed="false">After the paste</button>
+        </div>
+        <div class="dialog">
+          <h4>Add custom connector</h4>
+          <div class="field"><label>Name</label><div class="val">Pacer AI - Demo</div></div>
+          <div class="field"><label>Remote MCP server URL</label><div class="val" id="mcp-url">https://demo.getpacerai.com/mcp</div></div>
+          <div class="row"><span class="btn ghost">Cancel</span><span class="btn">Continue</span></div>
+        </div>
+        <p class="fine" id="tg-note">Without the paste, the button's plain link opens. The connector works, and the visit carries no tag.</p>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>They do</h3><p>Continue, then Add. Claude fills in "Sign in now" and "Register automatically"; they leave both. Then Connect.</p></div>
+      <div class="callout wait"><strong>Before you paste</strong>
+        <span>Copy the current WPCode Footer into a file first. A bad footer once took down every script on the site, and the spec's rollback (if claude.ai refuses the tagged URL) needs the old one.</span></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="stage" id="signin">
+    <div class="stage-head"><span class="stage-num">4 / 6</span><h2>Pacer AI sign-in</h2><span class="chip gap">Tag is dropped here</span></div>
+    <div class="screen">
+      <div class="bar"><span class="lights"><i></i><i></i><i></i></span><div class="url"><b>demo.getpacerai.com</b>/…/sign-in</div></div>
+      <div class="body">
+        <div class="signin">
+          <span class="brand">Pacer AI</span>
+          <div class="input">you@company.com</div>
+          <div class="turnstile"><i></i>Success!</div>
+          <span class="btn">Start the demo</span>
+          <p class="fine">No password. Work email only.</p>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>They do</h3><p>Work email, bot check, Start the demo. Then in Settings → Connectors they set the tools to Always allow, so charts draw without asking.</p></div>
+      <div><h3>Behind it</h3><ul>
+        <li>Demo access is granted and a demo lead lands in <code>leads</code>, with a Slack alert.</li>
+      </ul></div>
+      <div class="callout gap"><strong>The lead row won't say it came from your DM</strong>
+        <span>The connector's sign-in hook sends <code>utm_*</code> as null. The spec lists recording the tag as out of scope; it needs a platform issue and a Worker change. Pasting the footer gets the tag into the connector URL, but not onto the lead.</span></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="stage" id="brief">
+    <div class="stage-head"><span class="stage-num">5 / 6</span><h2>They type the prompt</h2><span class="chip wait">Test cold first</span></div>
+    <div class="screen">
+      <div class="bar"><span class="lights"><i></i><i></i><i></i></span><div class="url"><b>claude.ai</b>/new</div></div>
+      <div class="body chat">
+        <div class="user">Build my Day 1 brief</div>
+        <div class="tool">Pacer AI - Demo · Day 1 brief · October 2026</div>
+        <div class="reply">
+          <p>Here is October's Day 1 brief, the last closed month, built on the demo company's live HubSpot data.</p>
+          <img class="slide" src="../../img/demo-connect/day-1-brief-headline-slide.png" alt="October: 20% miss ($386K) due to 5 large churn events">
+          <div class="thumbs"><span>The headline</span><span>Pace</span><span>Churn</span><span>…</span></div>
+          <p class="fine">Simplified. The real reply is the full brief, not four tiles.</p>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>The moment it has to land</h3><p>No month named, so it builds the last closed month: October. The headline slide on the page and in the DM is the first thing they see.</p></div>
+      <div class="callout wait"><strong>PAC-104 is "Merged", not tested cold</strong>
+        <span>The page now tells visitors to type this prompt. Run it once from a fresh Claude account before the first DM goes out.</span></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="stage" id="after">
+    <div class="stage-head"><span class="stage-num">6 / 6</span><h2>What follows</h2><span class="chip ok">Live</span></div>
+    <div class="screen">
+      <div class="bar"><span class="app-label">Their inbox · your Slack</span></div>
+      <div class="body">
+        <div class="mail">
+          <dl><dt>From</dt><dd>reports@mail.getpacerai.com</dd><dt>When</dt><dd>Each morning, for 3 days</dd></dl>
+          <p>The demo's daily Pace briefing, then occasional notes about the demo.</p>
+        </div>
+        <div class="slack"><b>#leads</b><span>Demo sign-in: their email and company, with the lead class.</span></div>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>Your move</h3><p>Reply in the same DM thread once Slack shows the sign-in. That is the only place the DM is tied to the lead until the tag is recorded.</p></div>
+    </div>
+  </section>
+
+  <!-- B -->
+  <section class="stage" id="pdf">
+    <div class="stage-head"><span class="stage-num">Branch</span><h2>No Claude? The PDF by email</h2><span class="chip gap">Not reachable from a DM yet</span></div>
+    <div class="screen">
+      <div class="bar"><span class="lights"><i></i><i></i><i></i></span><div class="url"><b>getpacerai.com/resources/what-a-day-1-brief-contains/</b></div></div>
+      <div class="body split">
+        <div class="form-mock">
+          <h4>Get October's brief as a PDF</h4>
+          <p class="fine">Tell us where to send it. It is the 13-page deck this post walks through.</p>
+          <div class="field"><label>Work email</label><div class="input">you@company.com</div></div>
+          <div class="field"><label>Company</label><div class="input">Company name</div></div>
+          <div class="turnstile"><i></i>Success!</div>
+          <span class="btn">Send me October's brief as a PDF</span>
+        </div>
+        <div class="mail">
+          <dl><dt>Subject</dt><dd>October's Day 1 brief, as a PDF</dd><dt>From</dt><dd>orders@mail.getpacerai.com</dd></dl>
+          <p>Hi,</p>
+          <p>Here is the October Day 1 brief: <a>https://getpacerai.com/day-1-brief-pdf/</a></p>
+          <p>It is 13 pages and is built on Pacer AI's demo data, not a customer's. Reply to this email with any questions.</p>
+          <p>Will Sullivan<br>Pacer AI · getpacerai.com</p>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>Behind it</h3><ul>
+        <li>One <code>leads</code> row (<code>asset_slug = day-1-brief-pdf</code>) and a Slack alert per request.</li>
+        <li>At most one email per address per 10 minutes. Opt-outs get none, and the form looks the same to them.</li>
+      </ul></div>
+      <div class="callout gap"><strong>Not reachable from a DM yet</strong>
+        <span>The form lives on the PAC-221 post, which waits on your voice pass, and /demo-connect/ doesn't link to it. Setup step 1 fixes the email's link. Until the post ships, someone without Claude needs a reply from you.</span></div>
+    </div>
+  </section>
+
+  <section class="todo" aria-labelledby="todo-h">
+    <h2 id="todo-h">After setup, not blocking the first DM</h2>
+    <ul>
+      <li><b>The PAC-221 post.</b> Your voice pass, then a new page under Resources, its card on the hub, and repo edits to <code>deploy.py</code>, CLAUDE.md and one test. That puts the PDF form on a page.<span class="chip wait">Own PR</span></li>
+      <li><b>Record the tag on the lead.</b> The connector's sign-in sends <code>utm_*</code> as null. A platform issue and a matching Worker change fix it.<span class="chip gap">Platform</span></li>
+    </ul>
+    <p class="foot">Sources: <code>docs/plan/2026-11-10-demo-connect-day-1-brief-spec.md</code>, <code>docs/plan/2026-11-08-day-1-brief-post-spec.md</code>, <code>src/demo-connect.html</code> and <code>infra/pacer-demo-worker/src/day-1-brief-pdf.ts</code> on main; WordPress media and live URL checks on 10 Nov.</p>
+  </section>
+</div>
+
+<script>
+(function(){
+  var before=document.getElementById('tg-before'), after=document.getElementById('tg-after');
+  var url=document.getElementById('mcp-url'), note=document.getElementById('tg-note');
+  function set(isAfter){
+    before.setAttribute('aria-pressed', String(!isAfter));
+    after.setAttribute('aria-pressed', String(isAfter));
+    url.innerHTML = isAfter
+      ? 'https://demo.getpacerai.com/mcp<span style="color:var(--teal)">?utm_source=linkedin&amp;utm_medium=dm&amp;utm_campaign=day1-brief</span>'
+      : 'https://demo.getpacerai.com/mcp';
+    note.textContent = isAfter
+      ? 'The visitor’s tag rides into the connector URL, and this is the URL the dialog shows. If claude.ai refuses it, roll the paste back.'
+      : 'Without the paste, the button’s plain link opens. The connector works, and the visit carries no tag.';
+  }
+  before.addEventListener('click',function(){set(false)});
+  after.addEventListener('click',function(){set(true)});
+
+  /* copy buttons */
+  document.querySelectorAll('.cmd button').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var pre=btn.parentNode.querySelector('pre'), text=pre.textContent;
+      function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy'},1400)}
+      function fallback(){var r=document.createRange();r.selectNodeContents(pre);var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected'}
+      try{navigator.clipboard.writeText(text).then(done,fallback)}catch(e){fallback()}
+    });
+  });
+
+  /* setup ticks, this browser only */
+  var KEY='day1-setup-v1', state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
+  var boxes=[].slice.call(document.querySelectorAll('.task input[type=checkbox]'));
+  var progress=document.getElementById('progress');
+  function paint(){
+    var n=0;
+    boxes.forEach(function(b){var on=!!state[b.id];b.checked=on;b.closest('.task').classList.toggle('is-done',on);if(on)n++});
+    progress.textContent=n+' of '+boxes.length+' done';
+  }
+  boxes.forEach(function(b){b.addEventListener('change',function(){
+    state[b.id]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}paint();
+  })});
+  paint();
+})();
+</script>
