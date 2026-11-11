@@ -105,6 +105,11 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 #pacerai-homepage td.num{white-space:nowrap;font-weight:600;color:var(--ink)}
 #pacerai-homepage tr:last-child td{border-bottom:0}
 #pacerai-homepage td .note{display:block;font-size:12px;color:var(--muted)}
+#pacerai-homepage ul.svc{list-style:none;margin:0 0 4px!important;padding:0!important;display:flex;flex-wrap:wrap;row-gap:2px}
+#pacerai-homepage ul.svc li{margin:0!important;padding:0!important;white-space:nowrap}
+#pacerai-homepage ul.svc li+li::before{content:"\2022";color:var(--teal);margin:0 9px}
+#pacerai-homepage td a{color:var(--teal);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+#pacerai-homepage td .svc-note{display:block;font-size:13px;color:var(--muted)}
 #pacerai-homepage .order-modal{position:fixed;inset:0;z-index:200;background:rgba(15,25,45,.45);display:flex;align-items:flex-start;justify-content:center;padding:76px 16px 16px;overflow-y:auto}
 #pacerai-homepage .order-box{position:relative;width:100%;max-width:560px;background:var(--bone);border-radius:16px;box-shadow:0 30px 80px rgba(15,25,45,.25)}
 #pacerai-homepage .order-box iframe{display:block;width:100%;height:640px;border:0;border-radius:16px;background:var(--bone)}
@@ -114,12 +119,24 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
 #pacerai-homepage .foot{margin-top:20px;font-size:12px;color:var(--muted);text-align:center}
 @media (prefers-reduced-motion:reduce){#pacerai-homepage *{transition:none!important}}
 @supports (grid-template-rows:subgrid){
-  @media (min-width:641px){
+  @media (min-width:901px){
     #pacerai-homepage .grid{row-gap:0}
-    #pacerai-homepage .tier{display:grid;grid-row:span 6;grid-template-rows:subgrid;row-gap:18px;align-content:start}
+    #pacerai-homepage .tier{display:grid;grid-row:span 5;grid-template-rows:subgrid;row-gap:18px;align-content:start}
   }
 }
 
+#pacerai-homepage .wrap{max-width:1080px}
+#pacerai-homepage .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+#pacerai-homepage .tier .sub{margin-top:-12px}
+#pacerai-homepage .team{margin-top:20px;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:16px 28px;background:var(--surface);border:1px solid var(--navy);border-radius:16px;padding:22px 28px;box-shadow:var(--shadow)}
+#pacerai-homepage .team-lab{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--kick)}
+#pacerai-homepage .team-seats{margin-top:4px;font-size:17px;font-weight:700;color:var(--ink)}
+#pacerai-homepage .team-tot{text-align:right}
+#pacerai-homepage .team-tot .price{justify-content:flex-end}
+#pacerai-homepage .team-tot .sub{margin-top:0}
+#pacerai-homepage .team .cta{background:var(--navy);color:#fff}
+#pacerai-homepage .team .cta:hover{background:var(--navy-dark)}
+@media(max-width:900px){#pacerai-homepage .grid{grid-template-columns:1fr}#pacerai-homepage .team{grid-template-columns:1fr}#pacerai-homepage .team-tot{text-align:left}#pacerai-homepage .team-tot .price{justify-content:flex-start}}
 #pacerai-homepage footer{border-top:1px solid var(--line);background:var(--surface);padding:64px 24px 32px}
 #pacerai-homepage .footer-top{display:grid;grid-template-columns:260px repeat(4,1fr);gap:40px;max-width:var(--maxw);margin:0 auto;padding-bottom:40px;border-bottom:1px solid var(--line)}
 #pacerai-homepage .footer-brand p{font-size:13px;color:var(--muted);line-height:1.7;margin-top:14px}
@@ -167,7 +184,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     <li><a href="/#revenue-modeling-agent">Daily Pacing Agent</a></li>
     <li><a href="/#use-cases">Use Cases</a></li>
     <li><a href="/#team">Team</a></li>
-    <li><a href="/pricing/">Pricing</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
     <li><a href="/resources/">Resources</a></li>
     <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
   </ul>
@@ -178,118 +195,102 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
   </div>
 </nav>
 
-<div class="wrap pricing-two-pack" data-section="pricing" data-price-book="v1.0" data-seat-a="50" data-seat-m="60" data-included="5" data-block="1500" data-block-hours="5" data-order-url="https://pacer-demo-worker.will-078.workers.dev/order">
+<div class="wrap pricing-seats" data-section="pricing" data-price-book="v2.0" data-order-url="https://pacer-demo-worker.will-078.workers.dev/order">
   <div class="hero">
     <div class="kick">Pricing</div>
-    <h1>Know daily whether you&rsquo;ll make plan</h1>
-    <p>Start with pacing for the sales team. Add planning when finance is ready to work from the same model.</p>
+    <h1>Bottom-up Forecasting to hit sales targets with confidence</h1>
+    <p>Priced per seat. Your reps, managers and leadership team work from one bottom-up forecast, reconciled to Finance.</p>
     <div class="billing">
-      <button class="lbl js-lbl-m" type="button">Monthly</button>
-      <button class="switch js-bill" type="button" role="switch" aria-checked="true" aria-label="Bill annually"></button>
-      <button class="lbl on js-lbl-a" type="button">Annual</button>
-      <span class="save">Save ~17%</span>
+      <button class="lbl on js-lbl-m" type="button">Month to month</button>
+      <button class="switch js-bill" type="button" role="switch" aria-checked="false" aria-label="12-month contract"></button>
+      <button class="lbl js-lbl-a" type="button">12 months</button>
+      <span class="save">Two months free</span>
     </div>
   </div>
 
   <div class="grid">
-    <article class="tier price-sales-pacing" data-plan="sales_pacing">
-      <div><h2>Sales Pacing</h2><p class="who">Real-time Forecasting, Expansion and Go-Get insights for the Sales team.</p></div>
-      <div class="price"><span class="amt" data-m="1800" data-a="1500">$1,500</span><span class="per">/mo</span></div>
-      <div class="sub"><b>$18,000</b> Annual contract billed monthly</div>
-      <button class="cta js-choose" type="button" data-plan="sales_pacing">Choose Sales Pacing</button>
-      <div class="flist">
-        <div class="fgroup"><h4>Pacing Agent</h4>
-          <ul class="feat">
-            <li>Daily Pacing Report</li>
-            <li>Action items to close the plan-to-actual gap</li>
-            <li>Identified upsell whitespace opportunities</li>
-            <li>Identified cross-sell whitespace opportunities</li>
-            <li>Real-time access to CRM data</li>
-          </ul>
-        </div>
-        <div class="fgroup"><h4>Included</h4>
-          <ul class="feat">
-            <li>CRM integration included</li>
-            <li>Documentation + Slack agent support</li>
-          </ul>
-        </div>
-      </div>
-      <div class="opts">
-        <div class="blocks" data-kind="users" data-agent="pacing" data-n="5" data-min="1">
-          <div class="lab">Pacer users<span>5 included</span><span>Additional users: <span class="seatp">$50</span>/user/mo</span></div>
-          <div class="step"><button type="button" data-d="-1" aria-label="Fewer pacer users">&minus;</button><output>5</output><button type="button" data-d="1" aria-label="More pacer users">+</button></div>
-        </div>
-        <div class="blocks" data-kind="block" data-n="0" data-min="0">
-          <div class="lab">Monthly 5-hr blocks<span>Office hours with the Pacer team &middot; $1,500/mo each</span></div>
-          <div class="step"><button type="button" data-d="-1" aria-label="Fewer 5-hour blocks">&minus;</button><output>0</output><button type="button" data-d="1" aria-label="More 5-hour blocks">+</button></div>
-        </div>
-      </div>
+    <article class="tier price-rep-pacing" data-seat="rep">
+      <div><h2>Rep pacing</h2><p class="who">Reps make their quota with confidence, with an agent that mines the CRM and makes their plans for them.</p></div>
+      <div class="price"><span class="amt" data-m="100" data-a="1000">$100</span><span class="per">/user/mo</span></div>
+      <div class="sub">Connects to <b>CRM</b></div>
+      <ul class="feat">
+        <li>Daily pace to plan for their own book</li>
+        <li>Their deals in the pipe, with the play for each</li>
+        <li>Upsell and cross-sell white space at their accounts</li>
+      </ul>
+      <div class="opts"><div class="blocks" data-n="1" data-min="0">
+        <div class="lab">Seats</div>
+        <div class="step"><button type="button" data-d="-1" aria-label="Fewer Rep pacing seats">&minus;</button><output>1</output><button type="button" data-d="1" aria-label="More Rep pacing seats">+</button></div>
+      </div></div>
     </article>
 
-    <article class="tier feature price-pacing-planning" data-plan="pacing_planning">
-      <span class="tag">Sales + Finance</span>
-      <div><h2>Sales Pacing &amp; Planning</h2><p class="who">Excel pivot table integration &amp; GTM Financial Planning &amp; Reporting.</p></div>
-      <div class="price"><span class="amt" data-m="3600" data-a="3000">$3,000</span><span class="per">/mo</span></div>
-      <div class="sub"><b>$36,000</b> Annual contract billed monthly</div>
-      <button class="cta js-choose" type="button" data-plan="pacing_planning">Choose Pacing &amp; Planning</button>
-      <div class="flist">
-        <div class="fgroup tight"><h4>Pacing Agent included</h4></div>
-        <div class="fgroup"><h4>Planning Agent<span>Adds</span></h4>
-          <ul class="feat">
-            <li>ARR Waterfall modeling</li>
-            <li>Sales plans built on ARR Waterfall models</li>
-            <li>Bottoms-up planning</li>
-            <li>Excel integration</li>
-          </ul>
-        </div>
-        <div class="fgroup"><h4>Included</h4>
-          <ul class="feat">
-            <li>CRM integration included</li>
-            <li>Documentation + Slack agent support</li>
-          </ul>
-        </div>
-      </div>
-      <div class="opts">
-        <div class="blocks" data-kind="users" data-agent="pacing" data-n="5" data-min="1">
-          <div class="lab">Pacer users<span>5 included</span><span>Additional users: <span class="seatp">$50</span>/user/mo</span></div>
-          <div class="step"><button type="button" data-d="-1" aria-label="Fewer pacer users">&minus;</button><output>5</output><button type="button" data-d="1" aria-label="More pacer users">+</button></div>
-        </div>
-        <div class="blocks" data-kind="users" data-agent="planning" data-n="5" data-min="1">
-          <div class="lab">Planning users<span>5 included</span><span>Additional users: <span class="seatp">$50</span>/user/mo</span></div>
-          <div class="step"><button type="button" data-d="-1" aria-label="Fewer planning users">&minus;</button><output>5</output><button type="button" data-d="1" aria-label="More planning users">+</button></div>
-        </div>
-        <div class="blocks" data-kind="block" data-n="0" data-min="0">
-          <div class="lab">Monthly 5-hr blocks<span>Office hours with the Pacer team &middot; $1,500/mo each</span></div>
-          <div class="step"><button type="button" data-d="-1" aria-label="Fewer 5-hour blocks">&minus;</button><output>0</output><button type="button" data-d="1" aria-label="More 5-hour blocks">+</button></div>
-        </div>
-      </div>
+    <article class="tier price-manager-pacing" data-seat="manager">
+      <div><h2>Manager pacing</h2><p class="who">Managers lead with confidence, with waterfall analysis, coverage checks and real-time forecasting.</p></div>
+      <div class="price"><span class="amt" data-m="500" data-a="5000">$500</span><span class="per">/user/mo</span></div>
+      <div class="sub">Connects to <b>CRM + Excel</b></div>
+      <ul class="feat">
+        <li>Team pace by rep, market and segment</li>
+        <li>The gap to plan and the deals that can close it</li>
+        <li>What moved the pipe since yesterday</li>
+        <li>Pace and pipeline in Excel</li>
+      </ul>
+      <div class="opts"><div class="blocks" data-n="1" data-min="0">
+        <div class="lab">Seats</div>
+        <div class="step"><button type="button" data-d="-1" aria-label="Fewer Manager pacing seats">&minus;</button><output>1</output><button type="button" data-d="1" aria-label="More Manager pacing seats">+</button></div>
+      </div></div>
+    </article>
+
+    <article class="tier feature price-slt-pacing-planning" data-seat="slt">
+      <span class="tag">Leadership</span>
+      <div><h2>SLT pacing and planning</h2><p class="who">The company operates with bottom-up plans and forecasts to hit sales targets and operating model goals.</p></div>
+      <div class="price"><span class="amt" data-m="1000" data-a="10000">$1,000</span><span class="per">/user/mo</span></div>
+      <div class="sub">Connects to <b>CRM + EPM + Excel</b></div>
+      <ul class="feat">
+        <li>Month, quarter and year pace to plan, by motion</li>
+        <li>The plan by quarter or month, and over 3&ndash;5 years</li>
+        <li>ARR waterfall reconciled to Finance</li>
+        <li>Plan and actuals from your EPM, in Excel</li>
+      </ul>
+      <div class="opts"><div class="blocks" data-n="0" data-min="0">
+        <div class="lab">Seats</div>
+        <div class="step"><button type="button" data-d="-1" aria-label="Fewer SLT pacing and planning seats">&minus;</button><output>0</output><button type="button" data-d="1" aria-label="More SLT pacing and planning seats">+</button></div>
+      </div></div>
     </article>
   </div>
 
-  <section class="talk-sales" data-section="talk-to-sales">
-    <div><h2>Not sure which package fits?</h2><p>Talk it through with Will before you choose: users, integrations and office hours.</p></div>
-    <a class="btn-sales" href="https://calendly.com/pacerai/demo-pacer-ai" target="_blank" rel="noopener">Talk to Sales &rarr;</a>
+  <section class="team" data-section="your-team" aria-live="polite">
+    <div>
+      <div class="team-lab">Your team</div>
+      <div class="team-seats js-seats">1 Rep &middot; 1 Manager &middot; 0 SLT</div>
+    </div>
+    <div class="team-tot">
+      <div class="price"><span class="amt js-total">$600</span><span class="per js-per">/mo</span></div>
+      <div class="sub js-total-sub">Month to month</div>
+    </div>
+    <button class="cta js-choose" type="button">Choose these seats</button>
   </section>
 
   <section class="services-block" data-section="professional-services">
-    <div class="sec-head"><h2>Professional services</h2><p>Office hours are purchased, never bundled.</p></div>
+    <div class="sec-head"><h2>Services</h2><p>Sold on top of seats. Scope sets the final price.</p></div>
     <div class="tbl-wrap">
       <table>
-        <thead><tr><th>Service</th><th>Detail</th><th class="r">Hours</th><th class="r">Rate</th><th class="r">Price</th></tr></thead>
+        <thead><tr><th>Service</th><th>What you get</th><th class="r">Price</th></tr></thead>
         <tbody>
-          <tr><td>Installation &amp; integrations</td><td>Each integration (CRM, EPM/ERP such as NetSuite)<span class="note">Both packages include the first CRM integration</span></td><td class="r num">&ndash;</td><td class="r num">&ndash;</td><td class="r num">$3,500</td></tr>
-          <tr><td>Monthly 5-hr block</td><td>Recurring office hours with the Pacer team</td><td class="r num">5/mo</td><td class="r num">$300</td><td class="r num">$1,500/mo</td></tr>
-          <tr><td>5-hour block</td><td>One-time</td><td class="r num">5</td><td class="r num">$300</td><td class="r num">$1,500</td></tr>
-          <tr><td>20-hour block</td><td>One-time</td><td class="r num">20</td><td class="r num">$275</td><td class="r num">$5,500</td></tr>
-          <tr><td>40-hour block</td><td>One-time; requires an annual subscription</td><td class="r num">40</td><td class="r num">$250</td><td class="r num">$10,000</td></tr>
-          <tr><td>Additional users</td><td>Beyond the 5 included per agent</td><td class="r num">&ndash;</td><td class="r num">&ndash;</td><td class="r num">$50/user/mo annual<br>$60/user/mo monthly</td></tr>
+          <tr><td>Installation</td><td>CRM + EPM integration for SLT pacing and planning</td><td class="r num">$5,000<span class="note">One-time</span></td></tr>
+          <tr><td>AI Engineering, Agents &amp; AI Transformation</td><td><ul class="svc"><li>Readiness assessment</li><li>Semantic layer</li><li>Agent development</li><li>MCP integration for Claude and Copilot</li></ul><span class="svc-note">Start with the readiness assessment.</span></td><td class="r num">From $15,000<span class="note">Per service</span></td></tr>
+          <tr><td>Planning &amp; Reporting</td><td><ul class="svc"><li>Bottom-up annual plan</li><li>Bottom-up forecast model</li><li>Day 1 reporting</li><li>MBR &amp; QBR</li><li><a href="/resources/board-quality-arr-snowballs/">Board Report</a></li></ul><span class="svc-note">Every plan starts from your <a href="/resources/what-is-an-arr-waterfall/">ARR waterfall</a>, reconciled to Finance.</span></td><td class="r num">From $15,000<span class="note">Per plan or report</span></td></tr>
+          <tr><td>M&amp;A Services</td><td><ul class="svc"><li>Quality of Revenue</li><li>ARR waterfall</li><li>Cohorts</li></ul><span class="svc-note">Buy-side and sell-side diligence.</span></td><td class="r num">From $15,000<span class="note">Per engagement</span></td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <p class="soon">Additional agents, skills &amp; integrations to come.</p>
-  <p class="foot">All prices in USD. Annual plans are 12-month contracts billed monthly; monthly plans are month-to-month. Price Book v1.0.</p>
+  <section class="talk-sales" data-section="talk-to-sales">
+    <div><h2>Not sure which mix fits?</h2><p>Talk it through with Will: seats and services.</p></div>
+    <a class="btn-sales" href="https://calendly.com/pacerai/demo-pacer-ai" target="_blank" rel="noopener">Talk to Sales &rarr;</a>
+  </section>
+
+  <p class="foot">All prices in USD. Month to month is the default. A 12-month contract bills ten months of the monthly price, spread monthly. Price Book v2.0.</p>
 </div>
 
 <footer>
@@ -315,7 +316,7 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
         <li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
         <li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
         <li><a href="/#case-studies">Case Studies</a></li>
-        <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -343,5 +344,5 @@ html, body, .wp-site-blocks { background: #F5F4EF !important; background-color: 
     <div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></div>
   </div>
 </footer>
-<img src="//0" alt="" style="display:none" onerror="(function () { if (window.__paPricing) return; function start() { var root = document.querySelector('#pacerai-homepage .pricing-two-pack'); if (!root || window.__paPricing) return; window.__paPricing = 1; var cfg = root.dataset; var SEAT_A = +cfg.seatA, SEAT_M = +cfg.seatM, INCLUDED = +cfg.included, BLOCK = +cfg.block; var BLOCK_HOURS = +cfg.blockHours, MAXU = 200, MAXB = 8; var annual = true, timer = null; var tiers = [].slice.call(root.querySelectorAll('.tier')); function fmt(n) { return '$' + Number(n).toLocaleString('en-US'); } function loc(t) { return [].filter.call(t.classList, function (c) { return c.indexOf('price-') === 0; })[0] || ''; } function track(name, params) { try { if (window.pacerTrack) window.pacerTrack(name, params); } catch (e) {} } function selection(t) { var amt = t.querySelector('.amt'); var s = { plan: t.dataset.plan, billing: annual ? 'annual' : 'monthly', value: Number(annual ? amt.dataset.a : amt.dataset.m), pacer_users: 0, planning_users: 0, hour_blocks: 0, extra_users: 0 }; t.querySelectorAll('.opts .blocks').forEach(function (r) { var n = Number(r.dataset.n); if (r.dataset.kind === 'block') { s.hour_blocks = n; s.value += n * BLOCK; return; } if (r.dataset.agent === 'planning') s.planning_users = n; else s.pacer_users = n; var add = Math.max(0, n - INCLUDED); s.extra_users += add; s.value += add * (annual ? SEAT_A : SEAT_M); }); return s; } function render() { root.querySelectorAll('.seatp').forEach(function (e) { e.textContent = fmt(annual ? SEAT_A : SEAT_M); }); root.querySelector('.js-bill').setAttribute('aria-checked', String(annual)); root.querySelector('.js-lbl-a').classList.toggle('on', annual); root.querySelector('.js-lbl-m').classList.toggle('on', !annual); tiers.forEach(function (t) { t.querySelectorAll('.opts .blocks').forEach(function (r) { var n = Number(r.dataset.n), max = r.dataset.kind === 'block' ? MAXB : MAXU; r.querySelector('output').textContent = n; var b = r.querySelectorAll('.step button'); b[0].disabled = n &lt;= Number(r.dataset.min); b[1].disabled = n &gt;= max; }); var s = selection(t), notes = []; t.querySelector('.amt').textContent = fmt(s.value); if (s.extra_users) notes.push(s.extra_users + ' additional user' + (s.extra_users &gt; 1 ? 's' : '')); if (s.hour_blocks) notes.push(s.hour_blocks * BLOCK_HOURS + ' hrs/mo'); var tail = notes.length ? ' &amp;middot; includes ' + notes.join(' + ') : ''; t.querySelector('.sub').innerHTML = annual ? '&lt;b&gt;' + fmt(s.value * 12) + '&lt;/b&gt; Annual contract billed monthly' + tail : 'Month-to-month, no annual commitment' + tail; }); } function changed(t) { render(); clearTimeout(timer); timer = setTimeout(function () { [].concat(t ? [t] : tiers).forEach(function (x) { var s = selection(x); track('pricing_estimate', { plan: s.plan, billing: s.billing, value: s.value, currency: 'USD', cta_location: loc(x) }); }); }, 1500); } root.querySelectorAll('.opts .blocks').forEach(function (r) { r.querySelectorAll('.step button').forEach(function (b) { b.addEventListener('click', function () { var max = r.dataset.kind === 'block' ? MAXB : MAXU; r.dataset.n = Math.min(max, Math.max(Number(r.dataset.min), Number(r.dataset.n) + Number(b.dataset.d))); changed(r.closest('.tier')); }); }); }); root.querySelector('.js-bill').addEventListener('click', function () { annual = !annual; changed(null); }); root.querySelector('.js-lbl-a').addEventListener('click', function () { annual = true; changed(null); }); root.querySelector('.js-lbl-m').addEventListener('click', function () { annual = false; changed(null); }); var ORDER = cfg.orderUrl || '', modal = null, frame = null, ORIGIN = ''; try { ORIGIN = ORDER ? new window.URL(ORDER).origin : ''; } catch (e) { ORDER = ''; } function closeOrder() { if (modal) { modal.parentNode.removeChild(modal); modal = null; frame = null; } } function openOrder(s) { closeOrder(); var q = ['plan=' + s.plan, 'billing=' + s.billing, 'pu=' + s.pacer_users, 'fu=' + s.planning_users, 'hb=' + s.hour_blocks, 'pb=' + encodeURIComponent(cfg.priceBook || ''), 'page=' + encodeURIComponent(window.location.pathname)]; var at = {}; try { if (window.pacerAttr) at = window.pacerAttr() || {}; } catch (e) {} ['utm_source', 'utm_medium', 'utm_campaign', 'landing'].forEach(function (k) { if (at[k]) q.push(k + '=' + encodeURIComponent(String(at[k]).slice(0, 200))); }); modal = document.createElement('div'); modal.className = 'order-modal'; modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-label', 'Your selection'); var box = document.createElement('div'), x = document.createElement('button'); box.className = 'order-box'; x.className = 'order-close'; x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.innerHTML = '&amp;times;'; frame = document.createElement('iframe'); frame.title = 'Your selection: email me this summary'; frame.src = ORDER + '?' + q.join('&amp;'); box.appendChild(x); box.appendChild(frame); modal.appendChild(box); document.getElementById('pacerai-homepage').appendChild(modal); x.addEventListener('click', closeOrder); modal.addEventListener('click', function (e) { if (e.target === modal) closeOrder(); }); x.focus(); } document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeOrder(); }); window.addEventListener('message', function (e) { if (!ORIGIN || e.origin !== ORIGIN || !e.data || typeof e.data !== 'object') return; if (e.data.type === 'pacer:resize' &amp;&amp; frame) { frame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 320), 1400) + 'px'; } else if (e.data.type === 'pacer:event' &amp;&amp; e.data.name === 'pricing_request') { var p = e.data.params || {}; track('pricing_request', { plan: String(p.plan || ''), billing: String(p.billing || ''), value: Number(p.value) || 0, currency: 'USD', cta_location: 'order_card' }); if (window.pacerSetUser &amp;&amp; p.user_id) window.pacerSetUser(String(p.user_id)); } }); root.querySelectorAll('.js-choose').forEach(function (btn) { btn.addEventListener('click', function () { var t = btn.closest('.tier'), s = selection(t); track('pricing_choose', { plan: s.plan, billing: s.billing, value: s.value, currency: 'USD', pacer_users: s.pacer_users, planning_users: s.planning_users, hour_blocks: s.hour_blocks, cta_location: loc(t) }); if (ORDER) openOrder(s); }); }); render(); } if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start(); })();">
+<img src="//0" alt="" style="display:none" onerror="(function () { if (window.__paPricing) return; function start() { var root = document.querySelector('#pacerai-homepage .pricing-seats'); if (!root || window.__paPricing) return; window.__paPricing = 1; var cfg = root.dataset, MAX = 500; var annual = false, timer = null; var cards = [].slice.call(root.querySelectorAll('.tier[data-seat]')); function fmt(n) { return '$' + Number(n).toLocaleString('en-US'); } function track(name, params) { try { if (window.pacerTrack) window.pacerTrack(name, params); } catch (e) {} } function team() { var s = { plan: 'seats', billing: annual ? 'annual' : 'monthly', value: 0, seats: 0, rep_seats: 0, manager_seats: 0, slt_seats: 0 }; cards.forEach(function (c) { var n = Number(c.querySelector('.blocks').dataset.n), amt = c.querySelector('.amt'); s[c.dataset.seat + '_seats'] = n; s.seats += n; s.value += n * Number(annual ? amt.dataset.a : amt.dataset.m); }); return s; } function render() { root.querySelector('.js-bill').setAttribute('aria-checked', String(annual)); root.querySelector('.js-lbl-a').classList.toggle('on', annual); root.querySelector('.js-lbl-m').classList.toggle('on', !annual); cards.forEach(function (c) { var amt = c.querySelector('.amt'), r = c.querySelector('.blocks'), n = Number(r.dataset.n); amt.textContent = fmt(annual ? amt.dataset.a : amt.dataset.m); c.querySelector('.price .per').textContent = annual ? '/user/yr' : '/user/mo'; r.querySelector('output').textContent = n; var b = r.querySelectorAll('.step button'); b[0].disabled = n &lt;= Number(r.dataset.min); b[1].disabled = n &gt;= MAX; }); var s = team(), sub = annual ? '12-month contract, billed monthly' : 'Month to month'; root.querySelector('.js-seats').innerHTML = s.rep_seats + ' Rep &amp;middot; ' + s.manager_seats + ' Manager &amp;middot; ' + s.slt_seats + ' SLT'; root.querySelector('.js-total').textContent = fmt(s.value); root.querySelector('.js-per').textContent = annual ? '/yr' : '/mo'; root.querySelector('.js-total-sub').innerHTML = sub; root.querySelector('.js-choose').disabled = s.seats === 0; } function params(s) { return { plan: s.plan, billing: s.billing, value: s.value, currency: 'USD', rep_seats: s.rep_seats, manager_seats: s.manager_seats, slt_seats: s.slt_seats, cta_location: 'pricing_team' }; } function changed() { render(); clearTimeout(timer); timer = setTimeout(function () { track('pricing_estimate', params(team())); }, 1500); } cards.forEach(function (c) { var r = c.querySelector('.blocks'); r.querySelectorAll('.step button').forEach(function (b) { b.addEventListener('click', function () { r.dataset.n = Math.min(MAX, Math.max(Number(r.dataset.min), Number(r.dataset.n) + Number(b.dataset.d))); changed(); }); }); }); root.querySelector('.js-bill').addEventListener('click', function () { annual = !annual; changed(); }); root.querySelector('.js-lbl-a').addEventListener('click', function () { annual = true; changed(); }); root.querySelector('.js-lbl-m').addEventListener('click', function () { annual = false; changed(); }); var ORDER = cfg.orderUrl || '', modal = null, frame = null, ORIGIN = ''; try { ORIGIN = ORDER ? new window.URL(ORDER).origin : ''; } catch (e) { ORDER = ''; } function closeOrder() { if (modal) { modal.parentNode.removeChild(modal); modal = null; frame = null; } } function openOrder(s) { closeOrder(); var q = ['billing=' + s.billing, 'rep=' + s.rep_seats, 'mgr=' + s.manager_seats, 'slt=' + s.slt_seats, 'pb=' + encodeURIComponent(cfg.priceBook || ''), 'page=' + encodeURIComponent(window.location.pathname)]; var at = {}; try { if (window.pacerAttr) at = window.pacerAttr() || {}; } catch (e) {} ['utm_source', 'utm_medium', 'utm_campaign', 'landing'].forEach(function (k) { if (at[k]) q.push(k + '=' + encodeURIComponent(String(at[k]).slice(0, 200))); }); modal = document.createElement('div'); modal.className = 'order-modal'; modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-label', 'Your selection'); var box = document.createElement('div'), x = document.createElement('button'); box.className = 'order-box'; x.className = 'order-close'; x.type = 'button'; x.setAttribute('aria-label', 'Close'); x.innerHTML = '&amp;times;'; frame = document.createElement('iframe'); frame.title = 'Your selection: email me this summary'; frame.src = ORDER + '?' + q.join('&amp;'); box.appendChild(x); box.appendChild(frame); modal.appendChild(box); document.getElementById('pacerai-homepage').appendChild(modal); x.addEventListener('click', closeOrder); modal.addEventListener('click', function (e) { if (e.target === modal) closeOrder(); }); x.focus(); } document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeOrder(); }); window.addEventListener('message', function (e) { if (!ORIGIN || e.origin !== ORIGIN || !e.data || typeof e.data !== 'object') return; if (e.data.type === 'pacer:resize' &amp;&amp; frame) { frame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 320), 1400) + 'px'; } else if (e.data.type === 'pacer:event' &amp;&amp; e.data.name === 'pricing_request') { var p = e.data.params || {}; track('pricing_request', { plan: String(p.plan || ''), billing: String(p.billing || ''), value: Number(p.value) || 0, currency: 'USD', cta_location: 'order_card' }); if (window.pacerSetUser &amp;&amp; p.user_id) window.pacerSetUser(String(p.user_id)); } }); root.querySelector('.js-choose').addEventListener('click', function () { var s = team(); if (!s.seats) return; track('pricing_choose', params(s)); if (ORDER) openOrder(s); }); render(); } if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start(); })();">
 </div>

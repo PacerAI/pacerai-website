@@ -9,6 +9,7 @@ import { handleConnectorSignIn } from "./connector-sign-in";
 import { handleDemoSignups } from "./signups";
 import { handleOptouts } from "./optouts";
 import { handleDay1BriefPdf } from "./day-1-brief-pdf";
+import { handlePricingRequest, orderPage } from "./order";
 
 /**
  * pacer-demo-worker
@@ -44,9 +45,9 @@ export default {
     }
 
     // Self-serve signup POST (from the /signup widget, same-origin — no CORS needed).
-    // Retired 2026-11-02: prices are off the site. src/order.ts stays for rollback.
+    // The /pricing/ order card's POST (src/order.ts; Price Book v2.0 seats since 2026-11-10).
     if (url.pathname === "/pricing-request") {
-      return json({ error: "gone" }, 410);
+      return handlePricingRequest(request, env, ctx);
     }
 
     // The Daily Pace Briefing reads recent /demo-connect signups here (src/signups.ts; bearer token, read-only).
@@ -94,9 +95,9 @@ export default {
       });
     }
 
-    // Retired 2026-11-02: a saved order-card link goes to the Schedule a Call section.
+    // The /pricing/ order card, iframed by the page when a visitor chooses seats (src/order.ts).
     if (url.pathname === "/order") {
-      return Response.redirect("https://getpacerai.com/#pricing", 302);
+      return orderPage(url, env);
     }
 
     // The demo video (iframed by the homepage).

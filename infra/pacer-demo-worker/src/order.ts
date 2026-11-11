@@ -1,16 +1,16 @@
 /**
- * Order capture for getpacerai.com/pricing/ (Will, 2026-10-14).
+ * Order capture for getpacerai.com/pricing/ (Will, 2026-10-14; seats since Price Book v2.0, 2026-11-10).
  *
  * The flow:
- *   1. A visitor clicks Choose on /pricing/.
- *   2. The page opens GET /order in a modal iframe. The URL carries the selection (package, billing, user and
- *      hour-block counts) and first-touch attribution, never an email.
- *   3. The card shows the order summary, recomputed HERE from price-book.json, and asks for a work email plus
- *      the bot check.
+ *   1. A visitor sets seats on /pricing/ (Rep pacing, Manager pacing, SLT pacing and planning) and clicks
+ *      Choose these seats.
+ *   2. The page opens GET /order in a modal iframe. The URL carries the contract term, the seat counts
+ *      (rep, mgr, slt) and first-touch attribution, never an email.
+ *   3. The card shows the summary, recomputed HERE from price-book.json, and asks for a work email plus the
+ *      bot check.
  *   4. POST /pricing-request recomputes the totals again (the page's numbers are never trusted) and then:
  *        - writes a `leads` row (source "pricing"), so the nightly lead stamping and HQ count it;
- *        - writes a `pricing_requests` row with the full selection (skipped quietly until migration 0003
- *          runs);
+ *        - writes a `pricing_requests` row with the seats (needs migration 0005_pricing_seats.sql);
  *        - adds the contact to the Apollo list Signal_CONTACT_Website_PricingRequest (no sequence: Will follows
  *          up himself);
  *        - emails the summary to the visitor (reply-to Will) and to Will, through Resend;
@@ -27,69 +27,55 @@ import {
 } from "./shared";
 
 export const PRICING_REQUEST_LIST = "Signal_CONTACT_Website_PricingRequest";
-const MAX_USERS = 200;
-const MAX_BLOCKS = 8;
+const MAX_SEATS = 500;   // the page's stepper ceiling
 // After a request is sent, the card offers the "Pacer AI - onboarding" Calendly event (Will, 2026-10-19).
 const ONBOARDING = "https://calendly.com/pacerai/pacer-ai-onboarding";
 
-type PlanKey = keyof typeof priceBook.packages;
+type SeatKey = keyof typeof priceBook.seats;
+const SEAT_KEYS: SeatKey[] = ["rep", "manager", "slt"];
+const SHORT: Record<SeatKey, string> = { rep: "Rep", manager: "Manager", slt: "SLT" };
 
 export interface Selection {
-  plan: PlanKey;
-  billing: "annual" | "monthly";
-  pacer_users: number;
-  planning_users: number;   // 0 when the package has no Planning Agent
-  hour_blocks: number;      // monthly 5-hr blocks
+  billing: "annual" | "monthly";   // annual = the 12-month contract
+  rep: number;
+  manager: number;
+  slt: number;
 }
 
 export interface Quote extends Selection {
-  package_name: string;
-  has_planning: boolean;
-  included: number;
-  base: number;             // package price per month on this billing
-  seat: number;             // per additional user per month on this billing
-  block: number;            // per monthly 5-hr block
-  extra_users: number;
-  monthly_total: number;
-  annual_contract_value: number | null;   // annual billing only
+  plan: "seats";
+  seats: number;
+  lines: { key: SeatKey; name: string; n: number; price: number }[];   // price per user on this term
+  value: number;                          // month to month: per month; 12 months: the 12-month total
+  monthly_total: number;                  // per month; on 12 months the 12-month total / 12, rounded (D1 only)
+  annual_contract_value: number | null;   // 12-month contract only
+  setup_fee: number;                      // installation owed with an SLT seat: a service, recorded for Will, never in the seat total
   price_book_version: string;
 }
 
-/** The selection from a query string or a POST body. Anything malformed falls back to the default. */
+/** The selection from a query string or a POST body. Missing counts take the page's default (1 Rep, 1 Manager). */
 export function parseSelection(src: Record<string, unknown>): Selection | null {
-  const plan = String(src.plan ?? "");
-  if (!Object.prototype.hasOwnProperty.call(priceBook.packages, plan)) return null;
   const billing = src.billing === "monthly" ? "monthly" : src.billing === "annual" ? "annual" : null;
   if (!billing) return null;
-  const inc = priceBook.included_users;
-  const int = (v: unknown, lo: number, hi: number, d: number) => {
+  const int = (v: unknown, d: number) => {
     const n = Math.floor(Number(v));
-    return v === undefined || v === null || v === "" || !Number.isFinite(n) ? d : Math.min(hi, Math.max(lo, n));
+    return v === undefined || v === null || v === "" || !Number.isFinite(n) ? d : Math.min(MAX_SEATS, Math.max(0, n));
   };
-  const hasPlanning = (priceBook.packages[plan as PlanKey].agents as string[]).includes("planning");
-  return {
-    plan: plan as PlanKey,
-    billing,
-    pacer_users: int(src.pu, 1, MAX_USERS, inc),
-    planning_users: hasPlanning ? int(src.fu, 1, MAX_USERS, inc) : 0,
-    hour_blocks: int(src.hb, 0, MAX_BLOCKS, 0),
-  };
+  const s = { billing, rep: int(src.rep, 1), manager: int(src.mgr ?? src.manager, 1), slt: int(src.slt, 0) } as Selection;
+  return s.rep + s.manager + s.slt > 0 ? s : null;
 }
 
 /** The same arithmetic as src/pricing/pricing.js on the page, from the Worker's own copy of the Price Book. */
 export function quote(s: Selection): Quote {
-  const pkg = priceBook.packages[s.plan];
   const annual = s.billing === "annual";
-  const inc = priceBook.included_users;
-  const hasPlanning = (pkg.agents as string[]).includes("planning");
-  const base = annual ? pkg.a : pkg.m;
-  const seat = annual ? priceBook.user_license.a : priceBook.user_license.m;
-  const block = annual ? priceBook.services.monthly_block.a : priceBook.services.monthly_block.m;
-  const extra = Math.max(0, s.pacer_users - inc) + (hasPlanning ? Math.max(0, s.planning_users - inc) : 0);
-  const monthly = base + extra * seat + s.hour_blocks * block;
+  const lines = SEAT_KEYS.filter((k) => s[k] > 0)
+    .map((k) => ({ key: k, name: priceBook.seats[k].name, n: s[k], price: annual ? priceBook.seats[k].a : priceBook.seats[k].m }));
+  const value = lines.reduce((t, l) => t + l.n * l.price, 0);
   return {
-    ...s, package_name: pkg.name, has_planning: hasPlanning, included: inc, base, seat, block,
-    extra_users: extra, monthly_total: monthly, annual_contract_value: annual ? monthly * 12 : null,
+    ...s, plan: "seats", seats: s.rep + s.manager + s.slt, lines, value,
+    monthly_total: annual ? Math.round(value / 12) : value,
+    annual_contract_value: annual ? value : null,
+    setup_fee: s.slt > 0 ? priceBook.setup.slt : 0,
     price_book_version: priceBook.version,
   };
 }
@@ -97,28 +83,33 @@ export function quote(s: Selection): Quote {
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 const esc = (v: string) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+/** "1 Rep · 1 Manager · 0 SLT", as the page's team summary says it. */
+export const seatLine = (q: Quote) => SEAT_KEYS.map((k) => `${q[k]} ${SHORT[k]}`).join(" · ");
+/** "$600/mo" or "$6,000 for 12 months". Seats only: installation and services are priced separately. */
+export const headline = (q: Quote) =>
+  q.annual_contract_value !== null ? `${usd(q.value)} for 12 months` : `${usd(q.value)}/mo`;
+
+const TOTALS = new Set(["Monthly total", "12-month total"]);
+
 /** Summary lines shared by the card, both emails and Slack: [label, value]. */
 export function summaryRows(q: Quote): [string, string][] {
-  const users = (n: number) =>
-    n > q.included ? `${n} (${q.included} included, ${n - q.included} more at ${usd(q.seat)}/user/mo)` : `${n} (${q.included} included)`;
+  const annual = q.annual_contract_value !== null;
   const rows: [string, string][] = [
-    ["Package", q.package_name],
-    ["Billing", q.billing === "annual" ? "Annual contract, billed monthly" : "Month-to-month"],
-    ["Pacer users", users(q.pacer_users)],
+    ["Contract", annual ? "12 months, billed monthly (two months free)" : "Month to month"],
+    ...q.lines.map((l): [string, string] => [l.name, `${l.n} × ${usd(l.price)}/user/${annual ? "yr" : "mo"}`]),
+    annual ? ["12-month total", usd(q.value)] : ["Monthly total", `${usd(q.value)}/mo`],
   ];
-  if (q.has_planning) rows.push(["Planning users", users(q.planning_users)]);
-  rows.push(["Monthly 5-hr blocks", q.hour_blocks ? `${q.hour_blocks} (${usd(q.hour_blocks * q.block)}/mo)` : "None"]);
-  rows.push(["Monthly total", `${usd(q.monthly_total)}/mo`]);
-  if (q.annual_contract_value !== null) rows.push(["Annual contract value", usd(q.annual_contract_value)]);
   return rows;
 }
+
+const NOTE = `Installation and services are priced separately. Prices from Price Book ${priceBook.version}.`;
 
 // ── GET /order ────────────────────────────────────────────────────────────────
 
 export function orderPage(url: URL, env: Env): Response {
   const sel = parseSelection(Object.fromEntries(url.searchParams));
   if (!sel) {
-    return new Response("Unknown package", { status: 400, headers: { "content-type": "text/plain; charset=utf-8", ...FRAME_HEADERS } });
+    return new Response("Choose at least one seat", { status: 400, headers: { "content-type": "text/plain; charset=utf-8", ...FRAME_HEADERS } });
   }
   return new Response(orderHtml(env.TURNSTILE_SITE_KEY || "", quote(sel)), {
     status: 200,
@@ -128,9 +119,9 @@ export function orderPage(url: URL, env: Env): Response {
 
 function orderHtml(siteKey: string, q: Quote): string {
   const rows = summaryRows(q)
-    .map(([k, v], i, all) => `<tr${i >= all.length - (q.annual_contract_value !== null ? 2 : 1) ? ' class="tot"' : ""}><th>${esc(k)}</th><td>${esc(v)}</td></tr>`)
+    .map(([k, v]) => `<tr${TOTALS.has(k) ? ' class="tot"' : ""}><th>${esc(k)}</th><td>${esc(v)}</td></tr>`)
     .join("");
-  const sel = JSON.stringify({ plan: q.plan, billing: q.billing, pu: q.pacer_users, fu: q.planning_users, hb: q.hour_blocks });
+  const sel = JSON.stringify({ billing: q.billing, rep: q.rep, mgr: q.manager, slt: q.slt });
   return `<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8">
@@ -173,7 +164,7 @@ function orderHtml(siteKey: string, q: Quote): string {
 <div class="card">
   <div id="s1">
     <div class="kick">Your selection</div>
-    <h2>${esc(q.package_name)}</h2>
+    <h2>Your Pacer AI seats</h2>
     <table>${rows}</table>
     <p>We&rsquo;ll email this summary to you and to Will Sullivan, who sets up your kickoff. No payment is taken here.</p>
     <div class="row">
@@ -187,7 +178,7 @@ function orderHtml(siteKey: string, q: Quote): string {
     <div class="cf"><div id="cf"></div></div>
     <button id="send" disabled>Email me this summary</button>
     <div class="err" id="err"></div>
-    <div class="note">The first CRM integration is included. Prices from Price Book ${esc(q.price_book_version)}.</div>
+    <div class="note">${esc(NOTE)}</div>
   </div>
   <div id="s2" class="hide">
     <div class="kick">Sent</div>
@@ -224,7 +215,7 @@ function orderHtml(siteKey: string, q: Quote): string {
       .then(function(r){ return r.json(); })
       .then(function(d){
         if(d&&d.ok){
-          post({type:'pacer:event',name:'pricing_request',params:{plan:d.plan,billing:d.billing,value:d.monthly_total,currency:'USD',user_id:d.visitor_id||''}});
+          post({type:'pacer:event',name:'pricing_request',params:{plan:d.plan,billing:d.billing,value:d.value,currency:'USD',user_id:d.visitor_id||''}});
           document.getElementById('sentTo').textContent='We sent it to '+email+'. Will replies within one business day.';
           document.getElementById('s1').classList.add('hide'); document.getElementById('s2').classList.remove('hide'); resize();
           if(window.turnstile&&widgetId!==null){ try{ window.turnstile.remove(widgetId); }catch(e){} }
@@ -318,18 +309,21 @@ export async function handlePricingRequest(request: Request, env: Env, ctx: Exec
           `INSERT INTO leads (request_id, email, email_domain, company, lead_class, source, asset_slug, page_url,
              utm_source, utm_medium, utm_campaign, ip, created_at, website, as_org, apollo_contact_id, enrolled_sequence)
            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-        ).bind(requestId, email, domain, company, leadClass, "pricing", `pricing-${q.plan}-${q.billing}`, pageUrl,
+        ).bind(requestId, email, domain, company, leadClass, "pricing", `pricing-seats-${q.billing}`, pageUrl,
                attr.utm_source, attr.utm_medium, attr.utm_campaign, ip || null, ts, website, asOrg ?? null, contactId, null).run();
       } catch (e: any) { errors.push(`d1_leads: ${e?.message ?? "unknown"}`); }
       try {
         await env.LEADS.prepare(
           `INSERT INTO pricing_requests (request_id, created_at, email, name, company, lead_class, plan, billing,
-             pacer_users, planning_users, hour_blocks, monthly_total, annual_contract_value, price_book_version,
+             pacer_users, planning_users, hour_blocks, rep_seats, manager_seats, slt_seats, setup_fee,
+             monthly_total, annual_contract_value, price_book_version,
              utm_source, utm_medium, utm_campaign, landing, page_url, apollo_contact_id, status)
-           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-        ).bind(requestId, ts, email, name, company, leadClass, q.plan, q.billing, q.pacer_users, q.planning_users,
-               q.hour_blocks, q.monthly_total, q.annual_contract_value, q.price_book_version, attr.utm_source,
-               attr.utm_medium, attr.utm_campaign, attr.landing, pageUrl, contactId, "requested").run();
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+        // The v1 NOT NULL columns stay filled: pacer_users = Rep + Manager pacing seats, planning_users = SLT
+        // seats, hour_blocks = 0 (retired in v2.0). The seat columns come from migration 0005.
+        ).bind(requestId, ts, email, name, company, leadClass, q.plan, q.billing, q.rep + q.manager, q.slt, 0,
+               q.rep, q.manager, q.slt, q.setup_fee, q.monthly_total, q.annual_contract_value, q.price_book_version,
+               attr.utm_source, attr.utm_medium, attr.utm_campaign, attr.landing, pageUrl, contactId, "requested").run();
       } catch (e: any) { errors.push(`d1_pricing_requests: ${e?.message ?? "unknown"}`); }
     }
 
@@ -346,7 +340,7 @@ export async function handlePricingRequest(request: Request, env: Env, ctx: Exec
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ text: [
-            `${leadClass === "internal" ? ":test_tube:" : ":moneybag:"} *Pricing request: ${q.package_name}, ${usd(q.annual_contract_value ?? q.monthly_total)}${q.annual_contract_value ? " ACV" : "/mo"}*`,
+            `${leadClass === "internal" ? ":test_tube:" : ":moneybag:"} *Pricing request: ${seatLine(q)}, ${headline(q)}*`,
             `*Email:* ${email}`,
             ...(name ? [`*Name:* ${name}`] : []),
             ...(company ? [`*Company:* ${company}`] : []),
@@ -363,11 +357,12 @@ export async function handlePricingRequest(request: Request, env: Env, ctx: Exec
     }
 
     console.log(JSON.stringify({ ts, request_id: requestId, source: "pricing", email_domain: domain, lead_class: leadClass,
-      plan: q.plan, billing: q.billing, monthly_total: q.monthly_total, mail, apollo_contact_id: contactId, errors }));
+      plan: q.plan, billing: q.billing, rep: q.rep, manager: q.manager, slt: q.slt, value: q.value, mail, apollo_contact_id: contactId, errors }));
   })());
 
   return json({ ok: true, request_id: requestId, visitor_id: `pv_${vid}`, plan: q.plan, billing: q.billing,
-                monthly_total: q.monthly_total, annual_contract_value: q.annual_contract_value });
+                value: q.value, monthly_total: q.monthly_total, annual_contract_value: q.annual_contract_value,
+                setup_fee: q.setup_fee });
 }
 
 /** Contact on the pricing-request list. No sequence: Will follows up himself. */
@@ -416,20 +411,19 @@ async function sendEmails(env: Env, q: Quote, who: Who, errors: string[]): Promi
     }</table>`;
   const text = (extra: [string, string][] = []) => [...rows, ...extra].map(([k, v]) => `${k}: ${v}`).join("\n");
   const hi = who.name ? `Hi ${who.name.split(/\s+/)[0]},` : "Hi,";
-  const headline = q.annual_contract_value !== null ? `${usd(q.annual_contract_value)} ACV` : `${usd(q.monthly_total)}/mo`;
 
   const visitor = {
     from, to: [who.email], reply_to: will,
-    subject: `Your Pacer AI pricing summary: ${q.package_name}`,
+    subject: `Your Pacer AI pricing summary: ${seatLine(q)}`,
     html: `<div style="font:15px/1.6 -apple-system,Segoe UI,sans-serif;color:#20242B;max-width:560px">
 <p>${esc(hi)}</p>
 <p>Here is the selection you made on getpacerai.com/pricing/.</p>
 ${table()}
-<p style="color:#5F5A50;font-size:13px">The first CRM integration is included. Prices from Price Book ${esc(q.price_book_version)}. No payment has been taken.</p>
+<p style="color:#5F5A50;font-size:13px">${esc(NOTE)} No payment has been taken.</p>
 <p>Will Sullivan will reply within one business day to set up your kickoff and send the order form. Reply to this email with any questions.</p>
 <p>Pacer AI &middot; <a href="https://getpacerai.com" style="color:#1F3864">getpacerai.com</a></p>
 </div>`,
-    text: `${hi}\n\nHere is the selection you made on getpacerai.com/pricing/.\n\n${text()}\n\nThe first CRM integration is included. Prices from Price Book ${q.price_book_version}. No payment has been taken.\n\nWill Sullivan will reply within one business day to set up your kickoff and send the order form. Reply to this email with any questions.\n\nPacer AI · getpacerai.com`,
+    text: `${hi}\n\nHere is the selection you made on getpacerai.com/pricing/.\n\n${text()}\n\n${NOTE} No payment has been taken.\n\nWill Sullivan will reply within one business day to set up your kickoff and send the order form. Reply to this email with any questions.\n\nPacer AI · getpacerai.com`,
   };
   const about: [string, string][] = [
     ["Email", who.email], ["Name", who.name || "—"], ["Company", who.company || "—"], ["Classification", who.leadClass],
@@ -438,7 +432,7 @@ ${table()}
   ];
   const internal = {
     from, to: [will], reply_to: who.email,
-    subject: `Pricing request: ${who.company || who.email.split("@")[1]}, ${q.package_name}, ${headline}`,
+    subject: `Pricing request: ${who.company || who.email.split("@")[1]}, ${seatLine(q)}, ${headline(q)}`,
     html: `<div style="font:15px/1.6 -apple-system,Segoe UI,sans-serif;color:#20242B">${table(about)}</div>`,
     text: text(about),
   };
