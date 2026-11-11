@@ -11,6 +11,21 @@ import { registerHooks } from "node:module";
 import { readFileSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { timingSafeEqual } from "node:crypto";
+
+// crypto.subtle.timingSafeEqual is a Workers-only extension, which sameSecret() (src/shared.ts) uses to check the
+// bearer token on the /internal/* routes. Like the Workers one, it throws when the lengths differ.
+if (typeof crypto.subtle.timingSafeEqual !== "function") {
+  crypto.subtle.timingSafeEqual = (a, b) => {
+    const x = ArrayBuffer.isView(a) ? new Uint8Array(a.buffer, a.byteOffset, a.byteLength) : new Uint8Array(a);
+    const y = ArrayBuffer.isView(b) ? new Uint8Array(b.buffer, b.byteOffset, b.byteLength) : new Uint8Array(b);
+    if (x.byteLength !== y.byteLength) throw new TypeError("Input buffers must have the same byte length");
+    return timingSafeEqual(x, y);
+  };
+}
+
+// stdout carries only the result JSON. The Worker's own log lines (recordDemoLead logs one per lead) go to stderr.
+console.log = (...args) => console.error(...args);
 
 // The Worker's imports are written for wrangler's bundler: no extensions, and .html / .json as modules.
 registerHooks({
