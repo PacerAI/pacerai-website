@@ -71,7 +71,7 @@ POSTS = [
             },
             {
                 "q": "What software builds an ARR Waterfall automatically?",
-                "a": "Spreadsheet templates work for sub-$10M ARR companies. Above that, dedicated platforms generate the Waterfall directly from billing and CRM data. Pacer AI's Customer Data Cube on Microsoft Fabric is purpose-built for PE-backed SaaS, automating Waterfall, Snowball, and NRR reporting from a single source of truth."
+                "a": "Spreadsheet templates work for sub-$10M ARR companies. Above that, dedicated platforms generate the Waterfall directly from billing and CRM data. Pacer AI's Customer Data Cube is purpose-built for PE-backed SaaS, automating Waterfall, Snowball, and NRR reporting from a single source of truth."
             },
             {
                 "q": "How often should you update the ARR Waterfall?",
