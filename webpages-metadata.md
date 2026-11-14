@@ -48,6 +48,8 @@ Last audited: 2026-04-20
 | 364 | Solutions (parent) | `/solutions/` | noindex | Redirects to `/#solutions` |
 | 111 | Pricing | `/pricing/` | index | Legacy page, not managed by repo |
 | 134 | Login | `/login/` | noindex | Legacy page, not managed by repo |
+| 1172 | Bottom-up sales forecasting | `/bottom-up-sales-forecasting/` | retired 2026-11-14 | Source removed. 301 to `/`. |
+| 1174 | Bottom-up sales planning | `/bottom-up-sales-planning/` | retired 2026-11-14 | Source removed. 301 to `/`. |
 
 ---
 

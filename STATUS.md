@@ -1,6 +1,6 @@
 ---
 repo: pacerai-website
-as_of: 2026-07-23T16:35:00Z
+as_of: 2026-11-14T00:40:00Z
 health: green
 moving_or_stalled: moving
 active_specs: []
@@ -9,6 +9,10 @@ goal_progress:
     pct: null
     note: "Jul 23 2026: v3.0.x LIVE. PR #20 merged, v3.0.0 tagged. Whole site is Claude-bone (#F5F4EF) — homepage (25), Resources hub (230), all 12 blog articles, Team (366), Contact (375, moved to top-level /contact/). Rebranded to the 'GTM Financial Modeling Agent' category (PE-backed SaaS framing removed site-wide). Yoast title/meta + og:title + Organization/Person schema rebranded across all 21 indexed pages (Yoast set in WP Admin — not REST-writable); 6 x 301 redirects live. Homepage animations moved to the inline <img onerror> injector (WPCode footer is fragile)."
 last_runs:
+  - agent_or_skill: webdev-getpacerai (remove forecasting and planning stubs)
+    finished_at: 2026-11-14T00:40:00Z
+    result: ok
+    note: "Source removal of /bottom-up-sales-forecasting/ (WP 1172) and /bottom-up-sales-planning/ (WP 1174). In-repo links point at /. Live trash, 301s, and page deploys follow the PR when WordPress credentials and CI allow."
   - agent_or_skill: webdev-getpacerai (v3.0.x go-live + rebrand)
     finished_at: 2026-07-23T16:35:00Z
     result: ok

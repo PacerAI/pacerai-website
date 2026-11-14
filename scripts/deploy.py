@@ -38,6 +38,11 @@ PAGE_REGISTRY = {
     983: "src/demo-connect.html",
     111: "src/pricing/pricing-build.html",  # built by scripts/build_pricing.py from the Price Book
     1234: "src/privacy.html",  # /privacy/, published 2026-11-13
+    853: "src/glossary/index.html",
+    1167: "src/compare/index.html",
+    1169: "src/compare/pacer-ai-vs-clari.html",
+    1170: "src/compare/pacer-ai-vs-gong-forecast.html",
+    1171: "src/compare/pacer-ai-vs-anaplan.html",
     865: "src/blog/posts/crpo-build.html",
     # --- v3 bone blog posts (voice-debt in original prose → deploy with --force until a voice pass) ---
     491: "src/blog/posts/491-build.html",
@@ -60,6 +65,8 @@ PAGE_NAMES = {
     651: "RevOps Transformation", 650: "GTM Transformation", 652: "FP&A Transformation",
     366: "Team Page", 374: "About", 375: "Contact",
     983: "Demo Connect", 111: "Pricing", 1234: "Privacy Policy",
+    853: "Glossary", 1167: "Compare", 1169: "Compare: Clari",
+    1170: "Compare: Gong", 1171: "Compare: Anaplan",
     865: "cRPO Blog",
     491: "Blog: Build vs Hire", 378: "Blog: What is ARR Snowball", 376: "Blog: Prevent Churn",
     368: "Blog: ARR Snowball Analysis", 360: "Blog: AI for RevOps", 358: "Blog: Why ARR Waterfalls Matter",

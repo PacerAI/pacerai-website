@@ -100,4 +100,11 @@ After adding redirects, the dupes drop out of the Yoast sitemap automatically; t
 | `/platform/overview/` | `/#how-it-works` (homepage "How It Works" section) |
 | `/team/contact/` | `/contact/` (contact page moved to top-level; now bone, email → will@getpacerai.com) |
 
+**Stub pages retired (2026-11-14) — 301 to the homepage.** Create both through the Redirection REST API (`action_code` 301, action URL `https://getpacerai.com/`). Source files are removed. Do not redeploy.
+
+| From (source) | → To (301) |
+|---|---|
+| `/bottom-up-sales-forecasting/` (WP 1172) | `/` |
+| `/bottom-up-sales-planning/` (WP 1174) | `/` |
+
 **Keep (do NOT redirect), just add a meta description:** `/glossary/`, `/glossary/arr-waterfall/` (they're the `DefinedTerm` targets), `/resources/arr-snowball-vs-waterfall/`.
