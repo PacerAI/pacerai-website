@@ -177,7 +177,8 @@ Currently live and bone: Home (25) · Resources hub (230) · Team (366) · Conta
 · 13 blog articles under parent 230.
 
 Retired and 301-redirected — **do not redeploy their content**: the six `/solutions/*` pages, Platform
-Overview (371), About (374), legacy Pricing (111).
+Overview (371), About (374), legacy Pricing (111), and the stub pages `/bottom-up-sales-forecasting/`
+(1172) and `/bottom-up-sales-planning/` (1174), source removed 2026-11-14, 301 to `/`.
 
 Parent placeholder pages (no content): Platform (362), Solutions (364), Company/Team (366).
 

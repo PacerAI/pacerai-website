@@ -6,12 +6,12 @@ Open Graph title = SEO title. Open Graph description = meta description. Twitter
 
 Organization JSON-LD (WPCode) and `src/seo/llms.txt` use the same positioning. Live `llms.txt` is Yoast-generated; replace its description with the file in `src/seo/llms.txt` when you publish.
 
+Retired 2026-11-14: `/bottom-up-sales-forecasting/` (WP 1172) and `/bottom-up-sales-planning/` (WP 1174) 301 to `/`. Do not set Yoast titles for them. Their rows are removed from the table below.
+
 | Page | URL | SEO title | Meta description | H1 in source |
 |---|---|---|---|---|
 | Home | `/` | Pacer AI — Bottom-Up Sales Forecasting (38) | Pacer AI is a bottom-up sales forecasting and planning agent for sales leaders. Make plan with confidence. The forecast updates in real time. (141) | Pacer AI helps Sales Leaders / make plan with confidence. |
 | Pricing | `/pricing/` | Pricing — Bottom-Up Forecasting \| Pacer AI (42) | Rep pacing $100, Manager pacing $500, and SLT pacing and planning $1,000 per user a month. SLT installation $5,000. Services from $15,000. (138) | Bottom-up Forecasting to hit sales targets with confidence |
-| Forecasting | `/bottom-up-sales-forecasting/` | Bottom-Up Sales Forecasting \| Pacer AI (38) | Bottom-up sales forecasting for CROs, VP Sales, RevOps and CFOs. Built from the accounts, updated in real time, and reconciled to Finance. (138) | Bottom-up sales forecasting |
-| Planning | `/bottom-up-sales-planning/` | Bottom-Up Sales Planning \| Pacer AI (35) | Bottom-up sales planning for sales leaders. The plan is built from the accounts, updated in real time, and reconciled to Finance. (129) | Bottom-up sales planning |
 | Compare | `/compare/` | Compare Forecasting Tools \| Pacer AI (36) | Pacer AI compared with Clari, Gong Forecast and Anaplan. Bottom-up forecasting and planning, updated in real time. Last reviewed Nov 2026. (138) | Compare bottom-up forecasting |
 | vs Clari | `/compare/pacer-ai-vs-clari/` | Pacer AI vs Clari Forecast \| Pacer AI (37) | Pacer AI vs Clari Forecast, now part of Salesloft. A bottom-up forecast from the accounts, reconciled to Finance. Last reviewed Nov 2026. (137) | Pacer AI vs Clari Forecast |
 | vs Gong | `/compare/pacer-ai-vs-gong-forecast/` | Pacer AI vs Gong Forecast \| Pacer AI (36) | Pacer AI vs Gong Forecast. Pacer builds the number from bookings and pipeline. Gong rolls up submitted forecast numbers. Last reviewed Nov 2026. (144) | Pacer AI vs Gong Forecast |

@@ -27,8 +27,6 @@ DEFAULT_FILES = [
     "src/team/contact.html",
     "src/demo-connect.html",
     "src/pricing/pricing-build.html",
-    "src/forecasting/bottom-up-sales-forecasting.html",
-    "src/planning/bottom-up-sales-planning.html",
     "src/compare/index.html",
     "src/compare/pacer-ai-vs-clari.html",
     "src/compare/pacer-ai-vs-gong-forecast.html",

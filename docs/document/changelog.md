@@ -8,6 +8,13 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-11-14: remove the forecasting and planning stub pages
+
+- Source removed: `src/forecasting/bottom-up-sales-forecasting.html` (WP 1172) and `src/planning/bottom-up-sales-planning.html` (WP 1174). Both 301 to `https://getpacerai.com/` through the Redirection REST API when this ships.
+- Header Forecasting, footer Forecasting and Planning, and the glossary/compare "Bottom-up forecasting" and "Bottom-up planning" items now point at `/`. The homepage Forecasting item no longer scrolls to `#revenue-modeling-agent`.
+- In-body link targets on the homepage, glossary, compare index, Gong, and Anaplan pages point at `/`. Two sentences that named the retired pages were rewritten: compare index ("Read the forecasting and planning pages") and the Gong page ("the paired page").
+- `src/seo/llms.txt` no longer lists either URL. Compare (1167), Clari (1169), Gong (1170), Anaplan (1171) and Glossary (853) are registered in `scripts/deploy.py` so the link fixes can deploy.
+
 ## 2026-11-11: /pricing/ is live (PAC-164)
 
 - Remote D1 `pacerai-leads`: migrations 0006, then 0005, applied (the `--file` import of 0005 hit a Cloudflare auth error, so its four `ALTER TABLE` statements ran with `--command`).

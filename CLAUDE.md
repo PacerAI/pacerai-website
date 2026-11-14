@@ -93,21 +93,26 @@ All pages are deployed as WordPress Pages via REST API. Each page's HTML source 
 - https://getpacerai.com/team/
 - https://getpacerai.com/contact/
 
-## Draft pages (2026-11-11, not created in WordPress, not deployed)
+## Pages published after the 2026-11-11 draft
 
-Source is in the repo. No WP ID until someone creates the page. Do not publish from this note.
+These were created in WordPress after the draft note. IDs are from the REST API (2026-11-14). They are in `scripts/deploy.py`.
 
-| Page | Slug | Source |
+| Page | WP ID | Slug | Source |
+|---|---|---|---|
+| Compare | 1167 | `compare` | `src/compare/index.html` |
+| Pacer AI vs Clari Forecast | 1169 | `pacer-ai-vs-clari` | `src/compare/pacer-ai-vs-clari.html` |
+| Pacer AI vs Gong Forecast | 1170 | `pacer-ai-vs-gong-forecast` | `src/compare/pacer-ai-vs-gong-forecast.html` |
+| Pacer AI vs Anaplan | 1171 | `pacer-ai-vs-anaplan` | `src/compare/pacer-ai-vs-anaplan.html` |
+| SaaS Metrics Glossary | 853 | `glossary` | `src/glossary/index.html` |
+
+**Retired 2026-11-14.** Source removed. 301 to `https://getpacerai.com/`. Do not recreate or redeploy.
+
+| Page | WP ID | Slug |
 |---|---|---|
-| Bottom-up sales forecasting | `bottom-up-sales-forecasting` | `src/forecasting/bottom-up-sales-forecasting.html` |
-| Bottom-up sales planning | `bottom-up-sales-planning` | `src/planning/bottom-up-sales-planning.html` |
-| Compare | `compare` | `src/compare/index.html` |
-| Pacer AI vs Clari Forecast | `pacer-ai-vs-clari` | `src/compare/pacer-ai-vs-clari.html` |
-| Pacer AI vs Gong Forecast | `pacer-ai-vs-gong-forecast` | `src/compare/pacer-ai-vs-gong-forecast.html` |
-| Pacer AI vs Anaplan | `pacer-ai-vs-anaplan` | `src/compare/pacer-ai-vs-anaplan.html` |
-| SaaS Metrics Glossary | `glossary` | `src/glossary/index.html` (live page has no H1; this source adds one) |
+| Bottom-up sales forecasting | 1172 | `bottom-up-sales-forecasting` |
+| Bottom-up sales planning | 1174 | `bottom-up-sales-planning` |
 
-Target `llms.txt`: `src/seo/llms.txt`. Yoast titles and metas: `docs/deploy/yoast-worklist.md` (2026-11-11 section).
+Target `llms.txt`: `src/seo/llms.txt`. Yoast titles and metas: `docs/deploy/yoast-worklist.md` (2026-11-11 section). The two retired URLs are out of that worklist.
 
 ## Environment Variables (Required for REST API deploys)
 
