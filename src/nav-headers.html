@@ -9,7 +9,8 @@
   3. Batch deploy all pages (see docs/deploy/runbook.md)
 
   v3 nav is FLAT (no dropdowns) and CENTERED. Exactly 6 items + Log In:
-    Forecasting · Use Cases · Pricing · Team · Resources · Tear Sheet   [Log In]
+    Forecasting (/#forecast) · Use Cases · Pricing · Team · Resources · Tear Sheet   [Log In]
+    Footer Planning points at /#plan. The header has Forecasting, not a separate Planning item.
   - Tear Sheet (added 2026-10-07) -> /tear-sheet/ (Redirection #18, 302 to the current PDF), new tab.
     Never link the PDF file directly: a new version gets a new URL. Update with the /tear-sheet skill.
   - 6 items crowd the bar at 900-1180px: pages carrying the nav CSS (homepage, contact, demo-connect) add
@@ -45,7 +46,7 @@
     <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
   </a>
   <ul class="nav-links">
-    <li><a href="/">Forecasting</a></li>
+    <li><a href="/#forecast" data-scroll-to="forecast" onclick="_s(event,'forecast')">Forecasting</a></li>
     <li><a href="/#use-cases" data-scroll-to="use-cases" onclick="_s(event,'use-cases')">Use Cases</a></li>
     <li><a href="/#team" data-scroll-to="team" onclick="_s(event,'team')">Team</a></li>
     <li><a href="/pricing/">Pricing</a></li>
@@ -68,7 +69,7 @@
     <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
   </a>
   <ul class="nav-links">
-    <li><a href="/">Forecasting</a></li>
+    <li><a href="/#forecast">Forecasting</a></li>
     <li><a href="/#use-cases">Use Cases</a></li>
     <li><a href="/#team">Team</a></li>
     <li><a href="/pricing/">Pricing</a></li>
