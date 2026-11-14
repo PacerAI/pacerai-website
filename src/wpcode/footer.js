@@ -158,6 +158,7 @@ Array.prototype.forEach.call(document.querySelectorAll('a[href*="claude.ai/custo
     else if (href.indexOf('/demo-connect') !== -1 && window.location.pathname.indexOf('/demo-connect') !== 0) name = 'try_demo_click';
     else if (href.indexOf('/tear-sheet') !== -1) name = 'tear_sheet_open';
     else if (a.getAttribute('data-filter')) { name = 'resource_filter'; extra.category = a.getAttribute('data-filter'); }
+    else if (a.getAttribute('data-ai-provider')) { name = 'ai_prompt_click'; extra.provider = a.getAttribute('data-ai-provider'); }
     else if (samePage) { name = 'section_jump'; extra.section = url.hash.slice(1); }
     if (!name) return;
     var params = { cta_location: where(a), link_text: (a.textContent || '').trim().slice(0, 60), link_url: href };
