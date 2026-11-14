@@ -1,0 +1,800 @@
+<!-- wp:html -->
+<style>
+/* Hide TT4 theme chrome */
+.wp-site-blocks > header,
+.wp-site-blocks > footer,
+header.wp-block-template-part,
+footer.wp-block-template-part,
+.wp-block-template-part:first-child { display: none !important; }
+
+/* Hide TT4 page title header */
+.entry-header,
+.wp-block-post-title,
+h1.wp-block-post-title,
+.wp-block-spacer,
+.page .entry-header,
+.page-header { display: none !important; }
+
+html, body, .wp-site-blocks {
+  background: #F5F4EF !important;
+  background-color: #F5F4EF !important;
+}
+
+#pacerai-post {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.wp-site-blocks,
+.wp-site-blocks > main,
+.wp-site-blocks > main > .wp-block-group,
+.wp-site-blocks .is-layout-constrained,
+.wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+.has-global-padding,
+.entry-content {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-top: 0 !important;
+}
+
+  :root {
+    --navy: #F5F4EF; --navy-mid: #FAFAF7; --navy-light: #F1EFE8; --navy-border: #E6E1D6;
+    --brand: #1F3864; --brand-blue: #2B4A7A; --teal: #2E7D74; --teal-light: #70C49C;
+    --teal-pale: #D6F0E8; --cream: #FAFAF7; --white: #20242B; --muted: #9A8F78;
+    --text-light: #3A372F; --text-mid: #5F5A50; --green: #21823F; --red-subtle: #C0492F;
+    --ink: #20242B; --navy-accent: #1F3864;
+  }
+
+  #pacerai-post * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  #pacerai-post {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text-light);
+    overflow-x: hidden;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ─── NAV ─── */
+  #pacerai-post nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    height: 68px;
+    background: rgba(245,244,239,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(28,53,96,0.6);
+  }
+
+  #pacerai-post .nav-links {
+    display: flex; align-items: center; gap: 4px;
+    list-style: none;
+  }
+  #pacerai-post .nav-links > li { position: relative; }
+  #pacerai-post .nav-links > li > a {
+    display: flex; align-items: center; gap: 5px;
+    padding: 8px 14px;
+    font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em;
+    color: var(--text-mid);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  #pacerai-post .nav-links > li > a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  #pacerai-post .nav-links > li > a .chevron {
+    font-size: 10px; margin-top: 1px;
+    transition: transform 0.2s;
+  }
+  #pacerai-post .nav-links > li:hover > a .chevron { transform: rotate(180deg); }
+
+  /* Dropdown */
+  #pacerai-post .dropdown {
+    display: none;
+    position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 12px;
+    padding: 20px;
+    padding-top: 28px;
+    min-width: 520px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  }
+  #pacerai-post .dropdown::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: 0; right: 0;
+    height: 12px;
+  }
+  #pacerai-post .nav-links > li:hover .dropdown { display: block; }
+
+  #pacerai-post .dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  #pacerai-post .dropdown-col-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal);
+    padding-bottom: 10px; margin-bottom: 6px;
+    border-bottom: 1px solid var(--navy-border);
+  }
+  #pacerai-post .dropdown a {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 10px; border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  #pacerai-post .dropdown a:hover { background: rgba(255,255,255,0.04); }
+  #pacerai-post .dropdown .d-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: var(--navy-light);
+    border: 1px solid var(--navy-border);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  #pacerai-post .dropdown .d-text .d-title {
+    font-size: 13px; font-weight: 500; color: var(--white);
+    display: block; line-height: 1.3;
+  }
+  #pacerai-post .dropdown .d-text .d-desc {
+    font-size: 12px; color: var(--muted); line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  #pacerai-post .single-dropdown { min-width: 220px; }
+  #pacerai-post .single-dropdown a {
+    padding: 9px 12px; border-radius: 8px;
+    text-decoration: none; display: block;
+    font-size: 13px; font-weight: 500; color: var(--text-light);
+    transition: background 0.15s, color 0.15s;
+  }
+  #pacerai-post .single-dropdown a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+
+  /* Hamburger */
+  #pacerai-post .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 101;
+  }
+  #pacerai-post .mobile-menu-btn span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--text-light);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  #pacerai-post .nav-right {
+    display: flex; align-items: center; gap: 12px;
+  }
+  #pacerai-post .btn-ghost {
+    padding: 8px 18px; font-size: 13.5px; font-weight: 500;
+    color: var(--text-light); background: transparent;
+    border: 1px solid var(--navy-border); border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  #pacerai-post .btn-ghost:hover { color: var(--white); border-color: rgba(39,137,154,0.45); }
+  #pacerai-post .btn-teal {
+    padding: 9px 20px; font-size: 13.5px; font-weight: 600;
+    color: #fff; background: var(--teal);
+    border: none; border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s; letter-spacing: 0.02em;
+  }
+  #pacerai-post .btn-teal:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(39,137,154,0.35); }
+
+  /* ─── POST HERO ─── */
+  #pacerai-post .post-hero {
+    padding: 88px 48px 48px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  #pacerai-post .post-breadcrumb {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 24px;
+  }
+  #pacerai-post .post-breadcrumb a {
+    color: var(--teal); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .post-breadcrumb a:hover { color: var(--teal-light); }
+  #pacerai-post .post-breadcrumb .sep { color: var(--navy-border); }
+  #pacerai-post .post-category-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(39,137,154,0.10);
+    border: 1px solid rgba(39,137,154,0.22);
+    border-radius: 100px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 16px;
+  }
+  #pacerai-post .post-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4.5vw, 48px);
+    font-weight: 400; line-height: 1.15;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  #pacerai-post .post-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 14px; color: var(--muted);
+  }
+  #pacerai-post .post-meta .author { color: var(--text-light); font-weight: 500; }
+
+  /* ─── ARTICLE CONTENT ─── */
+  #pacerai-post .post-content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  #pacerai-post .post-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px; font-weight: 500;
+    color: var(--white);
+    margin-top: 48px; margin-bottom: 16px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  #pacerai-post .post-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500;
+    color: var(--white);
+    margin-top: 32px; margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  #pacerai-post .post-content p {
+    margin-bottom: 20px;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+  #pacerai-post .post-content a {
+    color: var(--teal);
+    text-decoration: underline;
+    text-decoration-color: rgba(39,137,154,0.3);
+    text-underline-offset: 3px;
+    transition: color 0.2s, text-decoration-color 0.2s;
+  }
+  #pacerai-post .post-content a:hover {
+    color: var(--teal-light);
+    text-decoration-color: var(--teal-light);
+  }
+  #pacerai-post .post-content strong { color: var(--white); font-weight: 600; }
+  #pacerai-post .post-content em { font-style: italic; }
+
+  #pacerai-post .post-content ul,
+  #pacerai-post .post-content ol {
+    margin-bottom: 20px;
+    padding-left: 24px;
+  }
+  #pacerai-post .post-content li {
+    margin-bottom: 8px;
+    line-height: 1.7;
+    color: var(--text-light);
+  }
+  #pacerai-post .post-content li::marker {
+    color: var(--teal);
+  }
+
+  #pacerai-post .post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0 32px;
+    font-size: 14px;
+    border: 1px solid var(--navy-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  #pacerai-post .post-content thead {
+    background: var(--navy-light);
+  }
+  #pacerai-post .post-content th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--white);
+    border-bottom: 2px solid var(--navy-border);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  #pacerai-post .post-content td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--navy-border);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  #pacerai-post .post-content tbody tr:hover {
+    background: rgba(255,255,255,0.02);
+  }
+  #pacerai-post .post-content tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  #pacerai-post .post-content hr,
+  #pacerai-post .post-content .wp-block-separator {
+    border: none;
+    border-top: 1px solid var(--navy-border);
+    margin: 40px 0;
+  }
+
+  #pacerai-post .post-content blockquote {
+    border-left: 3px solid var(--teal);
+    padding: 16px 24px;
+    margin: 24px 0;
+    background: rgba(39,137,154,0.05);
+    border-radius: 0 8px 8px 0;
+  }
+  #pacerai-post .post-content blockquote p {
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 0;
+  }
+
+  #pacerai-post .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 8px 0;
+  }
+  #pacerai-post .post-content figure {
+    margin: 32px 0;
+    text-align: center;
+  }
+  #pacerai-post .post-content figcaption {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  #pacerai-post .post-content .wp-block-table {
+    margin: 24px 0 32px;
+    overflow-x: auto;
+  }
+  #pacerai-post .post-content .wp-block-table table {
+    margin: 0;
+  }
+
+  /* ─── POST CTA ─── */
+  #pacerai-post .post-cta {
+    max-width: 760px;
+    margin: 0 auto 80px;
+    padding: 0 48px;
+  }
+  #pacerai-post .post-cta-inner {
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+  }
+  #pacerai-post .post-cta-inner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  #pacerai-post .post-cta-inner p {
+    font-size: 16px; color: var(--text-mid);
+    margin-bottom: 24px; max-width: 480px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ─── */
+  #pacerai-post footer {
+    border-top: 1px solid var(--navy-border);
+    padding: 60px 48px 32px;
+    background: var(--navy);
+  }
+  #pacerai-post .footer-top {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  #pacerai-post .footer-brand p {
+    font-size: 13.5px; color: var(--muted); line-height: 1.65;
+    margin-top: 14px; max-width: 300px;
+  }
+  #pacerai-post .footer-col-head {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--white); margin-bottom: 16px;
+  }
+  #pacerai-post .footer-col ul { list-style: none; }
+  #pacerai-post .footer-col li { margin-bottom: 10px; }
+  #pacerai-post .footer-col a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .footer-col a:hover { color: var(--teal-light); }
+  #pacerai-post .footer-bottom {
+    border-top: 1px solid var(--navy-border);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  #pacerai-post .footer-bottom .copy {
+    font-size: 12.5px; color: var(--muted);
+  }
+  #pacerai-post .footer-bottom .legal { display: flex; gap: 24px; }
+  #pacerai-post .footer-bottom .legal a {
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .footer-bottom .legal a:hover { color: var(--text-mid); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    #pacerai-post nav {
+      padding: 0 16px;
+      height: 56px;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: #F5F4EF;
+      overflow: visible;
+    }
+    #pacerai-post .nav-links {
+      display: none !important;
+      position: fixed;
+      top: 56px; left: 0; right: 0; bottom: 0;
+      background: #F5F4EF;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px 20px;
+      overflow-y: auto;
+      z-index: 200;
+      border-top: 1px solid var(--navy-border);
+      list-style: none;
+    }
+    #pacerai-post .nav-links.mobile-open { display: flex !important; }
+    #pacerai-post .nav-links > li { border-bottom: 1px solid var(--navy-border); }
+    #pacerai-post .nav-links > li > a {
+      padding: 16px 0; font-size: 16px; border-bottom: none;
+      display: flex; justify-content: space-between; color: #CDD5E0;
+    }
+    #pacerai-post .nav-links > li > a:hover { background: none; }
+    #pacerai-post .nav-links .dropdown {
+      position: static !important; transform: none !important;
+      min-width: 0 !important; background: transparent !important;
+      border: none !important; box-shadow: none !important;
+      padding: 0 0 12px 16px !important; border-radius: 0 !important;
+      padding-top: 0 !important;
+    }
+    #pacerai-post .nav-links .dropdown::before { display: none; }
+    #pacerai-post .nav-links > li:hover .dropdown { display: none !important; }
+    #pacerai-post .nav-links > li.mobile-expanded .dropdown { display: block !important; }
+    #pacerai-post .nav-links .dropdown a { padding: 10px 0; font-size: 14px; color: #94A3B8; }
+    #pacerai-post .nav-links .dropdown-grid { grid-template-columns: 1fr; }
+    #pacerai-post .nav-right .btn-ghost { display: none; }
+    #pacerai-post .nav-right .btn-teal { padding: 7px 14px; font-size: 12px; }
+    #pacerai-post .mobile-menu-btn { display: flex !important; }
+
+    #pacerai-post .post-hero {
+      padding: 72px 20px 24px;
+    }
+    #pacerai-post .post-hero h1 { font-size: 28px; }
+    #pacerai-post .post-content {
+      padding: 0 20px 60px;
+    }
+    #pacerai-post .post-content h2 { font-size: 24px; margin-top: 36px; }
+    #pacerai-post .post-content h3 { font-size: 19px; }
+    #pacerai-post .post-content table {
+      font-size: 12px;
+      display: block;
+      overflow-x: auto;
+    }
+    #pacerai-post .post-content th,
+    #pacerai-post .post-content td {
+      padding: 8px 10px;
+      min-width: 100px;
+    }
+    #pacerai-post .post-cta { padding: 0 20px; }
+    #pacerai-post .post-cta-inner { padding: 32px 20px; }
+    #pacerai-post .post-cta-inner h2 { font-size: 26px; }
+    #pacerai-post footer { padding: 48px 20px 32px; }
+    #pacerai-post .footer-top {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+    }
+    #pacerai-post .footer-brand { grid-column: 1 / -1; }
+    #pacerai-post .footer-bottom {
+      flex-direction: column; align-items: flex-start; gap: 12px;
+    }
+    #pacerai-post .footer-bottom .legal { flex-wrap: wrap; gap: 12px; }
+  }
+
+  @media (max-width: 1024px) and (min-width: 769px) {
+    #pacerai-post nav { padding: 0 24px; }
+    #pacerai-post .nav-links > li > a { padding: 8px 8px; font-size: 12px; }
+    #pacerai-post .post-hero { padding: 84px 32px 36px; }
+    #pacerai-post .post-content { padding: 0 32px 60px; }
+    #pacerai-post .post-cta { padding: 0 32px; }
+    #pacerai-post .footer-top {
+      grid-template-columns: 1fr 1fr 1fr; gap: 32px;
+    }
+    #pacerai-post .footer-brand { grid-column: 1 / -1; }
+    #pacerai-post footer { padding: 60px 24px 32px; }
+  }
+/* The PDF form is framed from the Worker. Below 420px (its own width) it stacks email and company, so the
+     frame is tall enough for that on a phone and shorter where it doesn't stack. */
+  #pacerai-post .post-content iframe[src*="day-1-brief-pdf"] { display: block; width: 100%; max-width: 560px; height: 600px; border: 0; }
+  @media (min-width: 481px) {
+    #pacerai-post .post-content iframe[src*="day-1-brief-pdf"] { height: 470px; }
+  }
+#pacerai-post h1,#pacerai-post h2,#pacerai-post h3,#pacerai-post h4,#pacerai-post h5,#pacerai-post .nav-logo{font-family:'DM Sans',system-ui,-apple-system,sans-serif !important}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "What is a real-time sales forecast?",
+      "datePublished": "2026-11-14",
+      "author": {
+        "@type": "Person",
+        "@id": "https://getpacerai.com/team/#will-sullivan",
+        "name": "Will Sullivan",
+        "jobTitle": "Founder & CEO, Pacer AI",
+        "url": "https://getpacerai.com/team/",
+        "sameAs": [
+          "https://www.linkedin.com/in/will-sullivan98/"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Pacer AI",
+        "url": "https://getpacerai.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://getpacerai.com/wp-content/uploads/2025/04/PacerAI_Logo_Horizontal_Full-Color-scaled.webp"
+        }
+      },
+      "articleSection": "RevOps",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://getpacerai.com/resources/real-time-sales-forecast/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a real-time sales forecast?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The bottom-up landing number, booked ARR plus weighted open pipeline, updated when deals move, on the same ARR definition Finance uses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does real time replace the weekly forecast call?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It replaces the archaeology. The call should inspect what moved and what you will do about it. It should not spend the hour adding up the pipe."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is real time the product, or the cadence?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The cadence. The product is the bottom-up forecast and the plan. Real time is how current that forecast stays."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://getpacerai.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Resources",
+          "item": "https://getpacerai.com/resources/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "What is a real-time sales forecast?",
+          "item": "https://getpacerai.com/resources/real-time-sales-forecast/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div id="pacerai-post">
+<!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
+<nav>
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:800;letter-spacing:-.2px;color:#20242B;">Pacer&nbsp;<span style="color:#2E7D74;">AI</span>
+    <svg viewBox="0 0 40 18" width="26" height="12" fill="none" style="stroke:#1F3864;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#forecast">Forecasting</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/pricing/">Pricing</a></li>
+    <li><a href="/resources/">Resources</a></li>
+    <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
+    <a href="/demo-connect/" class="btn-teal">Try the Demo</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ POST HERO ═══════════════════════════════════════ -->
+<div class="post-hero">
+  <div class="post-breadcrumb">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <a href="/resources/">Resources</a>
+    <span class="sep">/</span>
+    <span>Real-time forecast</span>
+  </div>
+  <div class="post-category-badge">RevOps</div>
+  <h1>What is a real-time sales forecast?</h1>
+  <div class="post-meta">
+    <span class="author"><a href="/team/" style="color:inherit;text-decoration:none">Will Sullivan</a></span>
+    <span>November 14, 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ CONTENT ═══════════════════════════════════════ -->
+<div class="post-content">
+<p><strong>A real-time sales forecast is the bottom-up landing number, updated when the book or the pipeline changes, instead of rebuilt for a weekly meeting.</strong> Pacer AI’s forecast is bottom-up first, for CROs, VPs of Sales, RevOps and CFOs. Real time is the cadence. It is how you make plan with confidence on a Tuesday, not a different product from the <a href="/resources/bottom-up-sales-forecasting/">bottom-up forecast</a>.</p>
+
+<h2>What does real time change?</h2>
+
+<p>The math does not change. Booked ARR plus weighted open pipeline, net of the contraction and churn you can see, by account, product and rep. What changes is the lag. A forecast assembled Friday from an export is already wrong on Monday if three deals moved. A real-time forecast moves when the CRM moves, and it still has to tie to Finance.</p>
+
+<p>Illustrative book. Booked ARR $112.2M against a plan to date of about $114.4M. The landing number on the chart is $117.6M against a $120M target. If a $400K renewal is marked lost at 10:15, the landing number should say so at 10:15. Waiting for the Thursday meeting does not make the renewal less lost. These figures are illustrative.</p>
+
+<table>
+  <thead>
+    <tr><th>Event</th><th>What should move</th><th>What should not move</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>A deal changes stage</td><td>Weighted pipeline, and the landing number</td><td>The sales target</td></tr>
+    <tr><td>A deal closes</td><td>Booked ARR, and the path to plan</td><td>The quota</td></tr>
+    <tr><td>A renewal is lost</td><td>Churn in the bridge, and the landing number</td><td>Opening ARR, which Finance already signed</td></tr>
+    <tr><td>Someone edits a spreadsheet</td><td>Nothing, until it is the system of record</td><td>The forecast everyone else is looking at</td></tr>
+  </tbody>
+</table>
+
+<h2>Why is real time second, not first?</h2>
+
+<p>A live number with a bad definition is a live argument. Bottom-up comes first: the landing number is built from deals, with stage weights you can defend, on the same ARR as Finance. Real time comes second: that number stays current. Teams that buy “real time” before they agree on new, expansion, contraction and churn get a faster version of the old fight. The definitions live in the <a href="/resources/what-is-an-arr-waterfall/">ARR waterfall</a>. The intention they are measured against lives in the <a href="/resources/bottom-up-sales-planning/">plan</a>.</p>
+
+<h2>What should update, and for whom?</h2>
+
+<p>The rep should see their own book and their own pipe. The manager should see the team by rep, and what moved since yesterday. The CRO should see the month, the quarter and the year by motion, market and segment. The CFO should see that the ARR in the forecast is still the ARR in the books. Four views, one model. If real time means four dashboards on four extracts, you have rebuilt the lag and given it a refresh button.</p>
+
+<p>The gap still needs an address. <a href="/resources/path-to-plan/">Path to plan</a> says how far bookings sit from the prorated plan. The real-time landing number says whether the open pipe covers the rest. White space says which installed accounts can still be sold. That cut is on the <a href="/resources/arr-snowball-analysis-find-your-expansion-drivers/#wp-white-space">expansion page</a>.</p>
+
+<h2>What does real time not mean?</h2>
+
+<p>It does not mean the target moves during the day. The <a href="/resources/plan-to-sales-target/">sales target</a> is a commitment. It does not mean a rep’s <a href="/resources/plan-to-quota/">quota</a> changes because a deal slipped. It does not mean Finance re-closes the books every hour. It means the sales forecast, which was always a read on deals, stops waiting for a meeting to be true.</p>
+
+<p>The setup is not instant. The data cube build takes 2–4 weeks, depending on the source systems. After that, the forecast updates with the systems you already run. Seats and services are on the <a href="/pricing/">pricing page</a>. Rep pacing is $100 a user a month, Manager pacing is $500, and SLT pacing and planning is $1,000, with a $5,000 one-time installation on the SLT seat.</p>
+
+<p><a href="https://www.saas-capital.com/research/">SaaS Capital</a> is the private-company benchmark set. <a href="https://www.bvp.com/atlas">Bessemer’s Atlas</a> and <a href="https://openviewpartners.com/">OpenView</a> are the board context. <a href="https://www.saastr.com/">SaaStr</a> is the operator argument about cadence. Cadence without a bottom-up definition is a meeting. Real time without that definition is a faster meeting.</p>
+
+<h2>What does the manager look at on Monday?</h2>
+
+<p>Five lines, compared with Friday, for their team only.</p>
+
+<ol>
+  <li><strong>Booked since Friday.</strong> What closed, by rep and by motion. This moves the path, not just the forecast.</li>
+  <li><strong>Stage changes.</strong> Dollars that moved up, dollars that moved back, and dollars that left the period. Each one names an account.</li>
+  <li><strong>The landing number.</strong> Booked plus weighted pipe, for the month and the quarter, next to the prorated plan.</li>
+  <li><strong>The gap that is still open.</strong> Target minus booked minus weighted pipe. If it grew, say which line grew it.</li>
+  <li><strong>The accounts that can close it.</strong> Renewals in the period with white space, and new logos already in an active stage. Not a generic “build pipeline.”</li>
+</ol>
+
+<p>A manager with eight reps can read this in the time it used to take to ask each rep for an update. The one-on-ones then start from the line that moved. Reps who are ahead do not sit through a reconstruction of the pipe. Reps who slipped talk about the account, because the account is already on the page.</p>
+
+<p>The CRO’s Monday is the same five lines, one level up: by manager, by market, by segment. If Europe’s landing number fell and North America’s rose by the same dollars, the company total is a bad headline. Real time is useful when the cut is the same cut as the plan. A live company total, with no market under it, is the weekly slide delivered sooner.</p>
+
+<p>Close the week by writing down anything that should change the plan, and leave the forecast as a read. A lost product date is not a stage change. It is an exception on the <a href="/resources/plan-to-sales-target/">sales target</a> page. Keeping those out of the landing number is how real time stays honest.</p>
+
+<p>Decide which fields are allowed to move the number. Stage, amount, close period, and a lost reason should. A note in a text box should not. If reps can change the landing number by editing a free-text field, you do not have a forecast, you have a comment thread with a total on it. Write the field list down, the same way you wrote the stage weights, and reject movements that do not come from it. Real time is only as trustworthy as the edits you accept.</p>
+
+<h2>Frequently asked questions</h2>
+
+<h3>What is a real-time sales forecast?</h3>
+<p>The bottom-up landing number, booked ARR plus weighted open pipeline, updated when deals move, on the same ARR definition Finance uses.</p>
+
+<h3>Does real time replace the weekly forecast call?</h3>
+<p>It replaces the archaeology. The call should inspect what moved and what you will do about it. It should not spend the hour adding up the pipe.</p>
+
+<h3>Is real time the product, or the cadence?</h3>
+<p>The cadence. The product is the bottom-up forecast and the plan. Real time is how current that forecast stays.</p>
+
+<p><a href="/pricing/">See Pricing</a></p>
+<p><a href="/demo-connect/">Try the Demo Free</a></p>
+</div>
+
+<!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+<footer>
+<div class="footer-top">
+<div class="footer-brand">
+<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:800;color:#20242B;">Pacer&nbsp;<span style="color:#2E7D74;">AI</span>
+<svg viewBox="0 0 40 18" width="24" height="11" fill="none" style="stroke:#1F3864;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+</a>
+<p class="footer-tagline">Bottom-up sales forecasting and planning for sales leaders. Reconciled to Finance.</p>
+</div>
+<div class="footer-col"><div class="footer-col-head">Product</div><ul>
+<li><a href="/#forecast">Forecasting</a></li>
+<li><a href="/#plan">Planning</a></li>
+<li><a href="/#how-it-works">How It Works</a></li>
+<li><a href="/#integrations">Integrations</a></li>
+<li><a href="/#security">Security</a></li></ul></div>
+<div class="footer-col"><div class="footer-col-head">Use Cases</div><ul>
+<li><a href="/#plan">Plan</a></li>
+<li><a href="/#forecast">Forecast</a></li>
+<li><a href="/#grow">Grow</a></li>
+<li><a href="/#report">Report</a></li></ul></div>
+<div class="footer-col"><div class="footer-col-head">Company</div><ul>
+<li><a href="/team/">Team</a></li>
+<li><a href="/team/#partners">Partners</a></li>
+<li><a href="/#how-it-works">Platform</a></li>
+<li><a href="/contact/">Contact</a></li></ul></div>
+<div class="footer-col"><div class="footer-col-head">Resources</div><ul>
+<li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+<li><a href="/resources/">Blog</a></li>
+<li><a href="/resources/">Research</a></li>
+<li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+<li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li></ul></div>
+</div>
+<div class="footer-bottom">
+<div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+<div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a><a href="/privacy/">Privacy</a></div>
+</div>
+</footer>
+
+<script>
+(function(){
+  if(window.innerWidth>768) return;
+  document.querySelectorAll('#pacerai-post .nav-links > li > a').forEach(function(a){
+    var li=a.parentElement;
+    if(!li.querySelector('.dropdown')) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      li.classList.toggle('mobile-expanded');
+    });
+  });
+})();
+</script>
+</div>
+<!-- /wp:html -->

@@ -276,6 +276,96 @@ POSTS = [
         ],
     },
     {
+        # Hand-built bone page (content-bottom-up-sales-planning.html). Not deployed.
+        # main() wraps posts in the old dark template; do not regenerate this one that way.
+        "id": "bottom-up-sales-planning",
+        "title": "What is bottom-up sales planning?",
+        "title_short": "Bottom-up planning",
+        "category": "RevOps",
+        "date": "November 14, 2026",
+        "date_iso": "2026-11-14",
+        "faq": [
+            {"q": "What is bottom-up sales planning?", "a": "It builds the annual sales plan from accounts, products and reps, and checks that the lines sum to the sales target and reconcile to Finance's ARR."},
+            {"q": "How is it different from a top-down target?", "a": "A top-down target starts with a growth rate. A bottom-up plan starts with named accounts and reps. The target still has to equal the sum of the lines."},
+            {"q": "Where does real-time forecasting fit?", "a": "After the plan is set. Real-time forecasting updates the landing number as booked revenue and open pipeline move. The plan is the intention. The forecast is the current read."}
+        ],
+    },
+    {
+        # Hand-built bone page (content-path-to-plan.html). Not deployed.
+        # main() wraps posts in the old dark template; do not regenerate this one that way.
+        "id": "path-to-plan",
+        "title": "What is the path to plan?",
+        "title_short": "Path to plan",
+        "category": "RevOps",
+        "date": "November 14, 2026",
+        "date_iso": "2026-11-14",
+        "faq": [
+            {"q": "What is path to plan?", "a": "Booked ARR compared with the annual plan prorated to today. It is the gap between what the plan said you would have by now and what you have booked."},
+            {"q": "Does path to plan include open pipeline?", "a": "No. Open pipeline belongs in the forecast landing number. The path is bookings against the prorated plan, so a heavy pipe cannot disguise a light book."},
+            {"q": "What if the business is not linear?", "a": "Prorate on the calendar you actually sell, such as renewal months, and say so. A straight line is the default when you have not earned a better shape."}
+        ],
+    },
+    {
+        # Hand-built bone page (content-plan-to-quota.html). Not deployed.
+        # main() wraps posts in the old dark template; do not regenerate this one that way.
+        "id": "plan-to-quota",
+        "title": "What is plan to quota?",
+        "title_short": "Plan to quota",
+        "category": "RevOps",
+        "date": "November 14, 2026",
+        "date_iso": "2026-11-14",
+        "faq": [
+            {"q": "What is plan to quota?", "a": "It is the company sales plan assigned to reps so that the sum of quotas equals the sales target, with ramp and territory written in."},
+            {"q": "Should quota match the forecast?", "a": "Quota matches the plan. The forecast is the current read of what will land. A rep can be behind quota and still forecast a recovery if the pipe supports it. Those are two different sentences."},
+            {"q": "What about a rep who starts mid-year?", "a": "Their quota is the portion of the year they carry, and the rest of their territory's annual number has to sit with someone else or with a hiring plan that is explicit."}
+        ],
+    },
+    {
+        # Hand-built bone page (content-plan-to-sales-target.html). Not deployed.
+        # main() wraps posts in the old dark template; do not regenerate this one that way.
+        "id": "plan-to-sales-target",
+        "title": "What is plan to sales target?",
+        "title_short": "Plan to sales target",
+        "category": "RevOps",
+        "date": "November 14, 2026",
+        "date_iso": "2026-11-14",
+        "faq": [
+            {"q": "What is plan to sales target?", "a": "It is the reconciliation of the bottom-up sales plan to the dollar figure the operating plan committed. The lines have to sum to the target, on Finance's definition of ARR."},
+            {"q": "Is the sales target the same as the forecast?", "a": "No. The target is the commitment. The forecast is the current estimate of where the year lands. They are equal only when you are on the path and the pipe supports it."},
+            {"q": "What if the lines cannot reach the target?", "a": "Say so in the planning cycle. Add coverage, change the mix, or lower the target. Discovering it in the third quarter is a miss, not a planning method."}
+        ],
+    },
+    {
+        # Hand-built bone page (content-bottom-up-sales-forecasting.html). Not deployed.
+        # main() wraps posts in the old dark template; do not regenerate this one that way.
+        "id": "bottom-up-sales-forecasting",
+        "title": "What is bottom-up sales forecasting?",
+        "title_short": "Bottom-up forecasting",
+        "category": "RevOps",
+        "date": "November 14, 2026",
+        "date_iso": "2026-11-14",
+        "faq": [
+            {"q": "What is bottom-up sales forecasting?", "a": "A landing number built from booked revenue and weighted open pipeline at the account, product and rep, reconciled to Finance's ARR."},
+            {"q": "How is it different from the plan?", "a": "The plan is what you intended to produce. The forecast is what the book and the pipe say you will produce. They use the same motions and the same ARR definition."},
+            {"q": "Does the forecast replace the path to plan?", "a": "No. The path compares bookings with the prorated plan and ignores unclosed pipe. The forecast adds the pipe. You want both, or a fat pipeline will hide a thin book."}
+        ],
+    },
+    {
+        # Hand-built bone page (content-real-time-sales-forecast.html). Not deployed.
+        # main() wraps posts in the old dark template; do not regenerate this one that way.
+        "id": "real-time-sales-forecast",
+        "title": "What is a real-time sales forecast?",
+        "title_short": "Real-time forecast",
+        "category": "RevOps",
+        "date": "November 14, 2026",
+        "date_iso": "2026-11-14",
+        "faq": [
+            {"q": "What is a real-time sales forecast?", "a": "The bottom-up landing number, booked ARR plus weighted open pipeline, updated when deals move, on the same ARR definition Finance uses."},
+            {"q": "Does real time replace the weekly forecast call?", "a": "It replaces the archaeology. The call should inspect what moved and what you will do about it. It should not spend the hour adding up the pipe."},
+            {"q": "Is real time the product, or the cadence?", "a": "The cadence. The product is the bottom-up forecast and the plan. Real time is how current that forecast stays."}
+        ],
+    },
+    {
         # Locally-authored (content-what-a-day-1-brief-contains.html). Not deployed: no WP page yet (PAC-221).
         # The page is built by hand from a current bone shell, not by main(); see docs/plan/2026-11-08-day-1-brief-post-spec.md.
         "id": "what-a-day-1-brief-contains",

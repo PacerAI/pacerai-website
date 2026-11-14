@@ -1,0 +1,818 @@
+<!-- wp:html -->
+<style>
+/* Hide TT4 theme chrome */
+.wp-site-blocks > header,
+.wp-site-blocks > footer,
+header.wp-block-template-part,
+footer.wp-block-template-part,
+.wp-block-template-part:first-child { display: none !important; }
+
+/* Hide TT4 page title header */
+.entry-header,
+.wp-block-post-title,
+h1.wp-block-post-title,
+.wp-block-spacer,
+.page .entry-header,
+.page-header { display: none !important; }
+
+html, body, .wp-site-blocks {
+  background: #F5F4EF !important;
+  background-color: #F5F4EF !important;
+}
+
+#pacerai-post {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.wp-site-blocks,
+.wp-site-blocks > main,
+.wp-site-blocks > main > .wp-block-group,
+.wp-site-blocks .is-layout-constrained,
+.wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+.has-global-padding,
+.entry-content {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-top: 0 !important;
+}
+
+  :root {
+    --navy: #F5F4EF; --navy-mid: #FAFAF7; --navy-light: #F1EFE8; --navy-border: #E6E1D6;
+    --brand: #1F3864; --brand-blue: #2B4A7A; --teal: #2E7D74; --teal-light: #70C49C;
+    --teal-pale: #D6F0E8; --cream: #FAFAF7; --white: #20242B; --muted: #9A8F78;
+    --text-light: #3A372F; --text-mid: #5F5A50; --green: #21823F; --red-subtle: #C0492F;
+    --ink: #20242B; --navy-accent: #1F3864;
+  }
+
+  #pacerai-post * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  #pacerai-post {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text-light);
+    overflow-x: hidden;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ─── NAV ─── */
+  #pacerai-post nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    height: 68px;
+    background: rgba(245,244,239,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(28,53,96,0.6);
+  }
+
+  #pacerai-post .nav-links {
+    display: flex; align-items: center; gap: 4px;
+    list-style: none;
+  }
+  #pacerai-post .nav-links > li { position: relative; }
+  #pacerai-post .nav-links > li > a {
+    display: flex; align-items: center; gap: 5px;
+    padding: 8px 14px;
+    font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em;
+    color: var(--text-mid);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  #pacerai-post .nav-links > li > a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  #pacerai-post .nav-links > li > a .chevron {
+    font-size: 10px; margin-top: 1px;
+    transition: transform 0.2s;
+  }
+  #pacerai-post .nav-links > li:hover > a .chevron { transform: rotate(180deg); }
+
+  /* Dropdown */
+  #pacerai-post .dropdown {
+    display: none;
+    position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 12px;
+    padding: 20px;
+    padding-top: 28px;
+    min-width: 520px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  }
+  #pacerai-post .dropdown::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: 0; right: 0;
+    height: 12px;
+  }
+  #pacerai-post .nav-links > li:hover .dropdown { display: block; }
+
+  #pacerai-post .dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  #pacerai-post .dropdown-col-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal);
+    padding-bottom: 10px; margin-bottom: 6px;
+    border-bottom: 1px solid var(--navy-border);
+  }
+  #pacerai-post .dropdown a {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 10px; border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  #pacerai-post .dropdown a:hover { background: rgba(255,255,255,0.04); }
+  #pacerai-post .dropdown .d-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: var(--navy-light);
+    border: 1px solid var(--navy-border);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  #pacerai-post .dropdown .d-text .d-title {
+    font-size: 13px; font-weight: 500; color: var(--white);
+    display: block; line-height: 1.3;
+  }
+  #pacerai-post .dropdown .d-text .d-desc {
+    font-size: 12px; color: var(--muted); line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  #pacerai-post .single-dropdown { min-width: 220px; }
+  #pacerai-post .single-dropdown a {
+    padding: 9px 12px; border-radius: 8px;
+    text-decoration: none; display: block;
+    font-size: 13px; font-weight: 500; color: var(--text-light);
+    transition: background 0.15s, color 0.15s;
+  }
+  #pacerai-post .single-dropdown a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+
+  /* Hamburger */
+  #pacerai-post .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 101;
+  }
+  #pacerai-post .mobile-menu-btn span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--text-light);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  #pacerai-post .nav-right {
+    display: flex; align-items: center; gap: 12px;
+  }
+  #pacerai-post .btn-ghost {
+    padding: 8px 18px; font-size: 13.5px; font-weight: 500;
+    color: var(--text-light); background: transparent;
+    border: 1px solid var(--navy-border); border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  #pacerai-post .btn-ghost:hover { color: var(--white); border-color: rgba(39,137,154,0.45); }
+  #pacerai-post .btn-teal {
+    padding: 9px 20px; font-size: 13.5px; font-weight: 600;
+    color: #fff; background: var(--teal);
+    border: none; border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s; letter-spacing: 0.02em;
+  }
+  #pacerai-post .btn-teal:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(39,137,154,0.35); }
+
+  /* ─── POST HERO ─── */
+  #pacerai-post .post-hero {
+    padding: 88px 48px 48px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  #pacerai-post .post-breadcrumb {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 24px;
+  }
+  #pacerai-post .post-breadcrumb a {
+    color: var(--teal); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .post-breadcrumb a:hover { color: var(--teal-light); }
+  #pacerai-post .post-breadcrumb .sep { color: var(--navy-border); }
+  #pacerai-post .post-category-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(39,137,154,0.10);
+    border: 1px solid rgba(39,137,154,0.22);
+    border-radius: 100px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 16px;
+  }
+  #pacerai-post .post-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4.5vw, 48px);
+    font-weight: 400; line-height: 1.15;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  #pacerai-post .post-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 14px; color: var(--muted);
+  }
+  #pacerai-post .post-meta .author { color: var(--text-light); font-weight: 500; }
+
+  /* ─── ARTICLE CONTENT ─── */
+  #pacerai-post .post-content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  #pacerai-post .post-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px; font-weight: 500;
+    color: var(--white);
+    margin-top: 48px; margin-bottom: 16px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  #pacerai-post .post-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500;
+    color: var(--white);
+    margin-top: 32px; margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  #pacerai-post .post-content p {
+    margin-bottom: 20px;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+  #pacerai-post .post-content a {
+    color: var(--teal);
+    text-decoration: underline;
+    text-decoration-color: rgba(39,137,154,0.3);
+    text-underline-offset: 3px;
+    transition: color 0.2s, text-decoration-color 0.2s;
+  }
+  #pacerai-post .post-content a:hover {
+    color: var(--teal-light);
+    text-decoration-color: var(--teal-light);
+  }
+  #pacerai-post .post-content strong { color: var(--white); font-weight: 600; }
+  #pacerai-post .post-content em { font-style: italic; }
+
+  #pacerai-post .post-content ul,
+  #pacerai-post .post-content ol {
+    margin-bottom: 20px;
+    padding-left: 24px;
+  }
+  #pacerai-post .post-content li {
+    margin-bottom: 8px;
+    line-height: 1.7;
+    color: var(--text-light);
+  }
+  #pacerai-post .post-content li::marker {
+    color: var(--teal);
+  }
+
+  #pacerai-post .post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0 32px;
+    font-size: 14px;
+    border: 1px solid var(--navy-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  #pacerai-post .post-content thead {
+    background: var(--navy-light);
+  }
+  #pacerai-post .post-content th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--white);
+    border-bottom: 2px solid var(--navy-border);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  #pacerai-post .post-content td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--navy-border);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  #pacerai-post .post-content tbody tr:hover {
+    background: rgba(255,255,255,0.02);
+  }
+  #pacerai-post .post-content tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  #pacerai-post .post-content hr,
+  #pacerai-post .post-content .wp-block-separator {
+    border: none;
+    border-top: 1px solid var(--navy-border);
+    margin: 40px 0;
+  }
+
+  #pacerai-post .post-content blockquote {
+    border-left: 3px solid var(--teal);
+    padding: 16px 24px;
+    margin: 24px 0;
+    background: rgba(39,137,154,0.05);
+    border-radius: 0 8px 8px 0;
+  }
+  #pacerai-post .post-content blockquote p {
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 0;
+  }
+
+  #pacerai-post .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 8px 0;
+  }
+  #pacerai-post .post-content figure {
+    margin: 32px 0;
+    text-align: center;
+  }
+  #pacerai-post .post-content figcaption {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  #pacerai-post .post-content .wp-block-table {
+    margin: 24px 0 32px;
+    overflow-x: auto;
+  }
+  #pacerai-post .post-content .wp-block-table table {
+    margin: 0;
+  }
+
+  /* ─── POST CTA ─── */
+  #pacerai-post .post-cta {
+    max-width: 760px;
+    margin: 0 auto 80px;
+    padding: 0 48px;
+  }
+  #pacerai-post .post-cta-inner {
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+  }
+  #pacerai-post .post-cta-inner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  #pacerai-post .post-cta-inner p {
+    font-size: 16px; color: var(--text-mid);
+    margin-bottom: 24px; max-width: 480px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ─── */
+  #pacerai-post footer {
+    border-top: 1px solid var(--navy-border);
+    padding: 60px 48px 32px;
+    background: var(--navy);
+  }
+  #pacerai-post .footer-top {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  #pacerai-post .footer-brand p {
+    font-size: 13.5px; color: var(--muted); line-height: 1.65;
+    margin-top: 14px; max-width: 300px;
+  }
+  #pacerai-post .footer-col-head {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--white); margin-bottom: 16px;
+  }
+  #pacerai-post .footer-col ul { list-style: none; }
+  #pacerai-post .footer-col li { margin-bottom: 10px; }
+  #pacerai-post .footer-col a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .footer-col a:hover { color: var(--teal-light); }
+  #pacerai-post .footer-bottom {
+    border-top: 1px solid var(--navy-border);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  #pacerai-post .footer-bottom .copy {
+    font-size: 12.5px; color: var(--muted);
+  }
+  #pacerai-post .footer-bottom .legal { display: flex; gap: 24px; }
+  #pacerai-post .footer-bottom .legal a {
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .footer-bottom .legal a:hover { color: var(--text-mid); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    #pacerai-post nav {
+      padding: 0 16px;
+      height: 56px;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: #F5F4EF;
+      overflow: visible;
+    }
+    #pacerai-post .nav-links {
+      display: none !important;
+      position: fixed;
+      top: 56px; left: 0; right: 0; bottom: 0;
+      background: #F5F4EF;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px 20px;
+      overflow-y: auto;
+      z-index: 200;
+      border-top: 1px solid var(--navy-border);
+      list-style: none;
+    }
+    #pacerai-post .nav-links.mobile-open { display: flex !important; }
+    #pacerai-post .nav-links > li { border-bottom: 1px solid var(--navy-border); }
+    #pacerai-post .nav-links > li > a {
+      padding: 16px 0; font-size: 16px; border-bottom: none;
+      display: flex; justify-content: space-between; color: #CDD5E0;
+    }
+    #pacerai-post .nav-links > li > a:hover { background: none; }
+    #pacerai-post .nav-links .dropdown {
+      position: static !important; transform: none !important;
+      min-width: 0 !important; background: transparent !important;
+      border: none !important; box-shadow: none !important;
+      padding: 0 0 12px 16px !important; border-radius: 0 !important;
+      padding-top: 0 !important;
+    }
+    #pacerai-post .nav-links .dropdown::before { display: none; }
+    #pacerai-post .nav-links > li:hover .dropdown { display: none !important; }
+    #pacerai-post .nav-links > li.mobile-expanded .dropdown { display: block !important; }
+    #pacerai-post .nav-links .dropdown a { padding: 10px 0; font-size: 14px; color: #94A3B8; }
+    #pacerai-post .nav-links .dropdown-grid { grid-template-columns: 1fr; }
+    #pacerai-post .nav-right .btn-ghost { display: none; }
+    #pacerai-post .nav-right .btn-teal { padding: 7px 14px; font-size: 12px; }
+    #pacerai-post .mobile-menu-btn { display: flex !important; }
+
+    #pacerai-post .post-hero {
+      padding: 72px 20px 24px;
+    }
+    #pacerai-post .post-hero h1 { font-size: 28px; }
+    #pacerai-post .post-content {
+      padding: 0 20px 60px;
+    }
+    #pacerai-post .post-content h2 { font-size: 24px; margin-top: 36px; }
+    #pacerai-post .post-content h3 { font-size: 19px; }
+    #pacerai-post .post-content table {
+      font-size: 12px;
+      display: block;
+      overflow-x: auto;
+    }
+    #pacerai-post .post-content th,
+    #pacerai-post .post-content td {
+      padding: 8px 10px;
+      min-width: 100px;
+    }
+    #pacerai-post .post-cta { padding: 0 20px; }
+    #pacerai-post .post-cta-inner { padding: 32px 20px; }
+    #pacerai-post .post-cta-inner h2 { font-size: 26px; }
+    #pacerai-post footer { padding: 48px 20px 32px; }
+    #pacerai-post .footer-top {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+    }
+    #pacerai-post .footer-brand { grid-column: 1 / -1; }
+    #pacerai-post .footer-bottom {
+      flex-direction: column; align-items: flex-start; gap: 12px;
+    }
+    #pacerai-post .footer-bottom .legal { flex-wrap: wrap; gap: 12px; }
+  }
+
+  @media (max-width: 1024px) and (min-width: 769px) {
+    #pacerai-post nav { padding: 0 24px; }
+    #pacerai-post .nav-links > li > a { padding: 8px 8px; font-size: 12px; }
+    #pacerai-post .post-hero { padding: 84px 32px 36px; }
+    #pacerai-post .post-content { padding: 0 32px 60px; }
+    #pacerai-post .post-cta { padding: 0 32px; }
+    #pacerai-post .footer-top {
+      grid-template-columns: 1fr 1fr 1fr; gap: 32px;
+    }
+    #pacerai-post .footer-brand { grid-column: 1 / -1; }
+    #pacerai-post footer { padding: 60px 24px 32px; }
+  }
+/* The PDF form is framed from the Worker. Below 420px (its own width) it stacks email and company, so the
+     frame is tall enough for that on a phone and shorter where it doesn't stack. */
+  #pacerai-post .post-content iframe[src*="day-1-brief-pdf"] { display: block; width: 100%; max-width: 560px; height: 600px; border: 0; }
+  @media (min-width: 481px) {
+    #pacerai-post .post-content iframe[src*="day-1-brief-pdf"] { height: 470px; }
+  }
+#pacerai-post h1,#pacerai-post h2,#pacerai-post h3,#pacerai-post h4,#pacerai-post h5,#pacerai-post .nav-logo{font-family:'DM Sans',system-ui,-apple-system,sans-serif !important}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "What is bottom-up sales forecasting?",
+      "datePublished": "2026-11-14",
+      "author": {
+        "@type": "Person",
+        "@id": "https://getpacerai.com/team/#will-sullivan",
+        "name": "Will Sullivan",
+        "jobTitle": "Founder & CEO, Pacer AI",
+        "url": "https://getpacerai.com/team/",
+        "sameAs": [
+          "https://www.linkedin.com/in/will-sullivan98/"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Pacer AI",
+        "url": "https://getpacerai.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://getpacerai.com/wp-content/uploads/2025/04/PacerAI_Logo_Horizontal_Full-Color-scaled.webp"
+        }
+      },
+      "articleSection": "RevOps",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://getpacerai.com/resources/bottom-up-sales-forecasting/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is bottom-up sales forecasting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A landing number built from booked revenue and weighted open pipeline at the account, product and rep, reconciled to Finance's ARR."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is it different from the plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The plan is what you intended to produce. The forecast is what the book and the pipe say you will produce. They use the same motions and the same ARR definition."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the forecast replace the path to plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The path compares bookings with the prorated plan and ignores unclosed pipe. The forecast adds the pipe. You want both, or a fat pipeline will hide a thin book."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://getpacerai.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Resources",
+          "item": "https://getpacerai.com/resources/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "What is bottom-up sales forecasting?",
+          "item": "https://getpacerai.com/resources/bottom-up-sales-forecasting/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div id="pacerai-post">
+<!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
+<nav>
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:800;letter-spacing:-.2px;color:#20242B;">Pacer&nbsp;<span style="color:#2E7D74;">AI</span>
+    <svg viewBox="0 0 40 18" width="26" height="12" fill="none" style="stroke:#1F3864;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#forecast">Forecasting</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/pricing/">Pricing</a></li>
+    <li><a href="/resources/">Resources</a></li>
+    <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
+    <a href="/demo-connect/" class="btn-teal">Try the Demo</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ POST HERO ═══════════════════════════════════════ -->
+<div class="post-hero">
+  <div class="post-breadcrumb">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <a href="/resources/">Resources</a>
+    <span class="sep">/</span>
+    <span>Bottom-up forecasting</span>
+  </div>
+  <div class="post-category-badge">RevOps</div>
+  <h1>What is bottom-up sales forecasting?</h1>
+  <div class="post-meta">
+    <span class="author"><a href="/team/" style="color:inherit;text-decoration:none">Will Sullivan</a></span>
+    <span>November 14, 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ CONTENT ═══════════════════════════════════════ -->
+<div class="post-content">
+<p><strong>Bottom-up sales forecasting builds the landing number from booked revenue and open pipeline at the account, product and rep, then reconciles it to Finance.</strong> Pacer AI is that agent for CROs, VPs of Sales, RevOps and CFOs. The point is to make plan with confidence. Real-time forecasting is second: it is how current the landing number stays, not a different kind of forecast.</p>
+
+<h2>What is bottom-up sales forecasting?</h2>
+
+<p>Start with what is already booked. Add the open pipeline, weighted by the stage rules you are willing to defend. Cut it by the motions that make the number: new logo, upsell, cross-sell, and the contraction and churn you still have to absorb. The result is a landing number for the month, the quarter and the year. A top-down forecast starts with the target and shades it. A bottom-up forecast starts with the deals.</p>
+
+<p>The <a href="/resources/bottom-up-sales-planning/">plan</a> is the intention. The forecast is the current read of that intention. They share definitions. If the forecast’s new-logo line is not the same new-logo line as the plan, you cannot say whether you are ahead.</p>
+
+<h2>How is the landing number built?</h2>
+
+<p>Four inputs, and none of them is a gut feel written down after the meeting.</p>
+
+<ol>
+  <li><strong>Booked ARR</strong> on Finance’s definition, the same baseline as the <a href="/resources/path-to-plan/">path to plan</a>.</li>
+  <li><strong>Open pipeline</strong> at account, product and rep, with a close period.</li>
+  <li><strong>Stage weights</strong> that are written down. A 50% weight means half of the dollars at that stage have closed in the history you trust, not that the rep is hopeful.</li>
+  <li><strong>The give-back.</strong> Churn and downsell you can already see, so the landing number is not gross hope.</li>
+</ol>
+
+<p>Illustrative September book. Opening ARR $100M. Sales target $120M. Plan to date about $114.4M. Booked ARR $112.2M, so the path is $2.2M behind. The forecast landing on the homepage chart is $117.6M: booked ARR plus weighted open pipeline, still short of the $120M target. These figures are illustrative.</p>
+
+<table>
+  <thead>
+    <tr><th>Number</th><th>Illustrative</th><th>What it is</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Booked ARR</td><td>$112.2M</td><td>In the path</td></tr>
+    <tr><td>Plan to date</td><td>$114.4M</td><td>Where the plan said you would be</td></tr>
+    <tr><td>Forecast landing</td><td>$117.6M</td><td>Booked plus weighted pipe</td></tr>
+    <tr><td>Sales target</td><td>$120M</td><td>The commitment</td></tr>
+  </tbody>
+</table>
+
+<p>Read the table left to right. The book is behind the path. The pipe pulls the landing up to $117.6M. The target is still $120M. The gap that remains is a list of deals and a list of accounts, not a percent.</p>
+
+<h2>What does “reconciled to Finance” require?</h2>
+
+<p>The CRM records a booking when a deal closes. Finance records recurring revenue as it is recognized, net of contraction, churn and timing. Both can be correct and still not match. The forecast has to sit on the bridge between them, at account and product, so pipeline ties to reported ARR. That bridge is the <a href="/resources/what-is-an-arr-waterfall/">ARR waterfall</a>. A forecast that never ties out will be rewritten by Finance the week before the board meeting.</p>
+
+<h2>Who asks which question?</h2>
+
+<p>The CRO asks where the year lands. The VP of Sales asks which reps and which deals move the landing number this month. RevOps asks whether the stage weights still match how deals actually close. The CFO asks whether the landing number uses the same ARR as the books. If those four questions return four numbers, you do not have a forecast. You have four spreadsheets.</p>
+
+<p>Quota is the rep’s share of the plan, not of the forecast. Keep them apart. <a href="/resources/plan-to-quota/">Plan to quota</a> is the assignment. This page is the current read.</p>
+
+<h2>Where does real-time fit?</h2>
+
+<p>Once the landing number is built from deals, it should update when a stage changes, a deal closes, or a renewal is lost. That update is the <a href="/resources/real-time-sales-forecast/">real-time forecast</a>. It is the same bottom-up number, kept current. It is not a second model with a second definition.</p>
+
+<p><a href="https://www.saas-capital.com/research/">SaaS Capital</a> documents how private companies actually retain revenue, which is the give-back in any landing number. <a href="https://www.bvp.com/atlas">Bessemer’s Atlas</a> and <a href="https://openviewpartners.com/">OpenView</a> are the board context for growth and retention. <a href="https://www.saastr.com/">SaaStr</a> is where operators argue about pipeline math in public. None of them know your stage weights. You should.</p>
+
+<h2>What do written stage weights look like?</h2>
+
+<p>Weights are a table, reviewed on a cadence, not a slider in the meeting. An illustrative table, not a recommendation for your cycle:</p>
+
+<table>
+  <thead>
+    <tr><th>Stage</th><th>Weight</th><th>What the weight claims</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Qualified</td><td>10%</td><td>One in ten of these dollars has closed, on the history you trust</td></tr>
+    <tr><td>Evaluation</td><td>30%</td><td>The buyer is in a process you can name</td></tr>
+    <tr><td>Proposal</td><td>50%</td><td>Half of proposal-stage dollars have closed</td></tr>
+    <tr><td>Commit</td><td>80%</td><td>The exceptions are listed, not waved through</td></tr>
+    <tr><td>Closed</td><td>100%</td><td>It is booked, on Finance’s definition</td></tr>
+  </tbody>
+</table>
+
+<p>If your commit stage closes at 40%, the table is wrong and the landing number is fiction. Change the weight or change the stage definition. Do not keep an 80% weight because the slide looks better. Reps should see the weight that will be applied to their deals before they call a deal commit. A surprise haircut in the forecast meeting is how the CRM stops being the system of record.</p>
+
+<p>Separate new logo from expansion. A renewal at proposal is not the same object as a new logo at proposal, and they should not share a weight unless the history says they close alike. Churn risk is not a negative weight hidden inside a stage. It is a line in the bridge, with an account name, so the landing number can fall when a renewal is in danger and the new-logo pipe is healthy.</p>
+
+<p>Revisit the table when the motion changes: a new segment, a new product, a cycle that got longer. Until then, leave it. A forecast whose weights move every week cannot be compared with last week, which defeats the reason to have it. The <a href="/resources/real-time-sales-forecast/">real-time</a> update moves the deals. It does not move the weights.</p>
+
+<p>Inspect the landing number in three cuts every time you publish it: by motion, by segment, and by the ten largest deals in the weight. A healthy total with a hollow new-logo line is a different problem from a healthy total with one deal at commit that is half the gap. The ten-deal list is short enough to review by name. If a name on it cannot be explained by the owner, take it out of the weight until it can. That subtraction is the forecast getting more accurate, not less ambitious.</p>
+
+<h2>Frequently asked questions</h2>
+
+<h3>What is bottom-up sales forecasting?</h3>
+<p>A landing number built from booked revenue and weighted open pipeline at the account, product and rep, reconciled to Finance’s ARR.</p>
+
+<h3>How is it different from the plan?</h3>
+<p>The plan is what you intended to produce. The forecast is what the book and the pipe say you will produce. They use the same motions and the same ARR definition.</p>
+
+<h3>Does the forecast replace the path to plan?</h3>
+<p>No. The path compares bookings with the prorated plan and ignores unclosed pipe. The forecast adds the pipe. You want both, or a fat pipeline will hide a thin book.</p>
+
+<p><a href="/pricing/">See Pricing</a></p>
+<p><a href="/demo-connect/">Try the Demo Free</a></p>
+</div>
+
+<!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+<footer>
+<div class="footer-top">
+<div class="footer-brand">
+<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:800;color:#20242B;">Pacer&nbsp;<span style="color:#2E7D74;">AI</span>
+<svg viewBox="0 0 40 18" width="24" height="11" fill="none" style="stroke:#1F3864;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+</a>
+<p class="footer-tagline">Bottom-up sales forecasting and planning for sales leaders. Reconciled to Finance.</p>
+</div>
+<div class="footer-col"><div class="footer-col-head">Product</div><ul>
+<li><a href="/#forecast">Forecasting</a></li>
+<li><a href="/#plan">Planning</a></li>
+<li><a href="/#how-it-works">How It Works</a></li>
+<li><a href="/#integrations">Integrations</a></li>
+<li><a href="/#security">Security</a></li></ul></div>
+<div class="footer-col"><div class="footer-col-head">Use Cases</div><ul>
+<li><a href="/#plan">Plan</a></li>
+<li><a href="/#forecast">Forecast</a></li>
+<li><a href="/#grow">Grow</a></li>
+<li><a href="/#report">Report</a></li></ul></div>
+<div class="footer-col"><div class="footer-col-head">Company</div><ul>
+<li><a href="/team/">Team</a></li>
+<li><a href="/team/#partners">Partners</a></li>
+<li><a href="/#how-it-works">Platform</a></li>
+<li><a href="/contact/">Contact</a></li></ul></div>
+<div class="footer-col"><div class="footer-col-head">Resources</div><ul>
+<li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+<li><a href="/resources/">Blog</a></li>
+<li><a href="/resources/">Research</a></li>
+<li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+<li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li></ul></div>
+</div>
+<div class="footer-bottom">
+<div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+<div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a><a href="/privacy/">Privacy</a></div>
+</div>
+</footer>
+
+<script>
+(function(){
+  if(window.innerWidth>768) return;
+  document.querySelectorAll('#pacerai-post .nav-links > li > a').forEach(function(a){
+    var li=a.parentElement;
+    if(!li.querySelector('.dropdown')) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      li.classList.toggle('mobile-expanded');
+    });
+  });
+})();
+</script>
+</div>
+<!-- /wp:html -->
