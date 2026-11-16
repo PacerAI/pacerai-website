@@ -8,6 +8,12 @@ top-level `VERSION` file). Entries below the v3.0.0 block are the pre-semver dat
 
 ---
 
+## 2026-11-16: connector sign-in records the utm tag (PAC-262)
+
+- `pacer-demo-worker` deployed to production from main (`941f65a`, which contains `ac484f9`; PAC-262 is the only Worker change since `1b6e5fa1`): version `27bb7ea6` (rollback: `1b6e5fa1`). Typecheck and dry-run passed first. `/` and `/signup` return 200; `/order?billing=monthly&rep=1` returns 200 (a bare `/order` is a 400 by design: "Choose at least one seat").
+- `POST /internal/connector-sign-in` reads optional `utm_source` / `utm_medium` / `utm_campaign` (each cut to 100 chars) into the D1 `leads` row and the Slack alert.
+- Open: a sign-in without the tag should still record null tag fields as before. No test sign-in was sent; confirm from the next real row (`asset_slug = 'connector-sign-in'`, the latest before this deploy was 2026-11-06).
+
 ## 2026-11-14: remove the forecasting and planning stub pages
 
 - Source removed: `src/forecasting/bottom-up-sales-forecasting.html` (WP 1172) and `src/planning/bottom-up-sales-planning.html` (WP 1174). Both 301 to `https://getpacerai.com/` through the Redirection REST API when this ships.
