@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pacer AI Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* getpacerai.com v3 "bone" system: bone ground, DM Sans 800 headings, navy CTAs, teal accents, warm hairlines.
+   Single light theme, matching the live site. */
+:root{
+  --maxw:1180px;
+  --bone:#F5F4EF; --surface:#FAFAF7; --card:#F1EFE8; --line:#E6E1D6; --line-strong:#D6D0C2;
+  --ink:#20242B; --ink-mid:#3A372F; --muted:#5F5A50; --kick:#9A8F78; --sub:#A79E8C;
+  --navy:#1F3864; --navy-dark:#16294a; --teal:#2E7D74; --teal-light:#70C49C; --chip:#E4EFEA;
+  --shadow:0 20px 60px rgba(15,25,45,.06),0 2px 6px rgba(15,25,45,.04);
+  --font:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bone)}
+body{margin:0;color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:64px 72px}
+.wrap>*{min-width:0}
+.num,.amt,.sub b,td.num,.step output{font-variant-numeric:tabular-nums}
+
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:20px;border-bottom:1px solid var(--line)}
+.brand{font-weight:800;font-size:18px;letter-spacing:-.2px;color:var(--ink)}
+.brand span{color:var(--teal)}
+
+.hero{text-align:center;padding-block:56px 36px;display:grid;gap:14px;justify-items:center}
+.eyebrow{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--kick);font-weight:700}
+.hero h1{font-weight:800;font-size:clamp(30px,4.8vw,44px);line-height:1.14;margin:0;letter-spacing:-.6px;color:var(--ink);text-wrap:balance}
+.hero p{margin:0;color:var(--ink-mid);font-size:17px;font-weight:500;max-width:56ch;text-wrap:balance}
+
+.billing{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;font-size:14px;font-weight:600;margin-top:10px}
+.billing .lbl{color:var(--muted);cursor:pointer;background:none;border:0;font:inherit;padding:0}
+.billing .lbl.on{color:var(--ink)}
+.switch{width:44px;height:24px;border-radius:999px;border:0;background:var(--line-strong);position:relative;cursor:pointer;padding:0;transition:background .2s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.switch[aria-checked="true"]{background:var(--navy)}
+.switch[aria-checked="true"]::after{transform:translateX(20px)}
+.save{font-size:12px;font-weight:700;background:var(--chip);color:var(--teal);padding:3px 8px;border-radius:6px}
+.switch:focus-visible,.lbl:focus-visible,.cta:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+.grid{display:grid;gap:20px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+.tier{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:18px;min-width:0;position:relative}
+.tier.feature{border-color:var(--navy);box-shadow:var(--shadow)}
+.tag{position:absolute;top:-11px;left:28px;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 10px;border-radius:6px;background:var(--navy);color:#fff}
+.tier h2{margin:0;font-weight:800;font-size:22px;line-height:1.2;letter-spacing:-.3px;color:var(--ink)}
+.who{margin:6px 0 0;color:var(--muted);font-size:14.5px}
+.price{display:flex;align-items:baseline;gap:6px}
+.amt{font-size:42px;font-weight:800;letter-spacing:-1px;color:var(--ink)}
+.per{color:var(--muted);font-size:14px;font-weight:600}
+.sub{font-size:13px;color:var(--muted);margin-top:-12px;min-height:20px}
+.sub b{font-weight:700;color:var(--ink)}
+.cta{font:inherit;font-weight:700;font-size:15px;border-radius:11px;padding:13px 16px;border:1px solid var(--navy);background:transparent;color:var(--navy);cursor:pointer}
+.cta:hover{background:rgba(31,56,100,.06)}
+.tier.feature .cta{background:var(--navy);color:#fff}
+.tier.feature .cta:hover{background:var(--navy-dark)}
+.fgroup{display:grid;gap:10px}
+.fgroup h4{margin:0;font-size:15px;font-weight:800;letter-spacing:-.2px;color:var(--navy)}
+.fgroup h4 span{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--teal);margin-left:8px}
+.fgroup + .fgroup{border-top:1px solid var(--line);padding-top:14px}
+.fgroup.tight + .fgroup{border-top:0;padding-top:0}
+.flist{align-content:start;display:grid;gap:16px}
+ul.feat{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:14.5px;color:var(--ink-mid)}
+ul.feat li{display:grid;grid-template-columns:16px 1fr;gap:10px;align-items:start}
+ul.feat li::before{content:"";width:16px;height:16px;margin-top:2px;border-radius:50%;background:var(--chip) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.2 2.2 4.8-4.8' fill='none' stroke='%232E7D74' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+
+.blocks{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.blocks .lab{font-size:14px;font-weight:700;line-height:1.3;color:var(--ink)}
+.blocks .lab span{display:block;font-size:12px;font-weight:500;color:var(--muted)}
+.step{display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:9px;background:var(--surface);flex-shrink:0}
+.step button{font:inherit;width:32px;height:32px;border:0;background:transparent;color:var(--navy);cursor:pointer;font-size:17px;font-weight:700;line-height:1}
+.step button:disabled{color:var(--line-strong);cursor:default}
+.step button:focus-visible{outline:2px solid var(--teal);outline-offset:1px;border-radius:6px}
+.step output{min-width:28px;text-align:center;font-size:14px;font-weight:700}
+.opts{display:grid;align-self:start;gap:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 14px}
+.opts .blocks{padding:12px 0;border-bottom:1px solid var(--line)}
+.opts .blocks:last-child{border-bottom:0}
+
+.services-block{margin-top:56px}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:6px 16px;margin-bottom:14px}
+.sec-head h2{margin:0;font-weight:800;font-size:clamp(24px,3.4vw,30px);letter-spacing:-.4px;color:var(--ink)}
+.sec-head p{margin:0;color:var(--muted);font-size:14px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:600px}
+th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--kick);background:var(--card)}
+td{color:var(--ink-mid)}
+td:first-child{font-weight:700;color:var(--ink)}
+td.r,th.r{text-align:right}
+td.num{white-space:nowrap;font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:0}
+td .note{display:block;font-size:12px;color:var(--muted)}
+.soon{margin-top:28px;text-align:center;font-weight:700;color:var(--teal)}
+.foot{margin-top:20px;font-size:12px;color:var(--muted);text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Subgrid: each card's header, price, billing line, button, features and options share row tracks, so they line up across columns */
+@supports (grid-template-rows:subgrid){
+  @media (min-width:641px){
+    .grid{row-gap:0}
+    .tier{display:grid;grid-row:span 6;grid-template-rows:subgrid;row-gap:18px;align-content:start}
+    .tier .sub{margin-top:-12px}
+  }
+}
+
+/* Site nav + footer (from pacerai-website/src/nav-headers.html, src/footer/footer.html and the v3 bone homepage CSS) */
+#pacerai-homepage a{text-decoration:none;color:inherit}
+#pacerai-homepage ul{margin:0;padding:0}
+#pacerai-homepage footer p{margin-bottom:0}
+#pacerai-homepage nav ul{margin:0}
+@media(max-width:1180px){#pacerai-homepage .nav-links a{padding:9px 9px}#pacerai-homepage .btn-login{white-space:nowrap}}
+@media(max-width:1060px){#pacerai-homepage .btn-login{display:none}}
+#pacerai-homepage nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:0 32px;height:64px;background:rgba(245,244,239,.86);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+#pacerai-homepage .nav-logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;letter-spacing:-.2px;color:var(--ink);justify-self:start}
+#pacerai-homepage .nav-logo .chev{height:15px;width:auto;fill:none;stroke:var(--navy);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#pacerai-homepage .nav-logo span{color:var(--teal)}
+#pacerai-homepage .nav-links{display:flex;align-items:center;gap:4px;list-style:none;justify-self:center}
+#pacerai-homepage .nav-links a{display:inline-block;padding:9px 13px;border-radius:8px;font-size:14.5px;font-weight:600;color:#494540;white-space:nowrap;cursor:pointer}
+#pacerai-homepage .nav-links a:hover{background:#ebe8df;color:var(--ink)}
+#pacerai-homepage .nav-right{display:flex;align-items:center;gap:10px;justify-self:end}
+#pacerai-homepage .btn-login{padding:9px 14px;border-radius:9px;font-weight:700;font-size:14px;color:var(--navy);background:transparent;border:1px solid var(--line)}
+#pacerai-homepage .btn-login:hover{border-color:var(--navy)}
+#pacerai-homepage .btn-cta{padding:9px 16px;border-radius:9px;font-weight:700;font-size:14px;color:#fff;background:var(--navy);border:1px solid var(--navy);white-space:nowrap}
+#pacerai-homepage .btn-cta:hover{background:var(--navy-dark)}
+#pacerai-homepage .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+#pacerai-homepage .mobile-menu-btn span{display:block;width:22px;height:2px;background:var(--ink-mid);border-radius:2px}
+#pacerai-homepage footer{border-top:1px solid var(--line);background:var(--surface);padding:64px 24px 32px}
+#pacerai-homepage .footer-top{display:grid;grid-template-columns:260px repeat(4,1fr);gap:40px;max-width:var(--maxw);margin:0 auto;padding-bottom:40px;border-bottom:1px solid var(--line)}
+#pacerai-homepage .footer-brand p{font-size:13px;color:var(--muted);line-height:1.7;margin-top:14px}
+#pacerai-homepage .footer-col-head{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:18px}
+#pacerai-homepage .footer-col ul{list-style:none}
+#pacerai-homepage .footer-col li{margin-bottom:10px}
+#pacerai-homepage .footer-col a{font-size:13px;color:var(--muted)}
+#pacerai-homepage .footer-col a:hover{color:var(--teal)}
+#pacerai-homepage .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;max-width:var(--maxw);margin:24px auto 0}
+#pacerai-homepage .footer-bottom .copy{font-size:12px;color:var(--kick)}
+#pacerai-homepage .footer-bottom .legal{display:flex;gap:22px}
+#pacerai-homepage .footer-bottom .legal a{font-size:12px;color:var(--kick)}
+@media(max-width:900px){
+  #pacerai-homepage nav{grid-template-columns:1fr auto;padding:0 16px}
+  #pacerai-homepage .nav-links{display:none}
+  #pacerai-homepage nav.nav-open .nav-links{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--bone);border-bottom:1px solid var(--line);box-shadow:0 14px 34px rgba(15,25,45,.10);padding:10px 16px 16px;gap:0;z-index:130}
+  #pacerai-homepage nav.nav-open .nav-links li{width:100%}
+  #pacerai-homepage nav.nav-open .nav-links a{display:block;width:100%;padding:14px 6px;font-size:16px;border-bottom:1px solid var(--line);border-radius:0}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(2){opacity:0}
+  #pacerai-homepage nav.nav-open .mobile-menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  #pacerai-homepage .mobile-menu-btn span{transition:transform .2s,opacity .2s}
+  #pacerai-homepage .mobile-menu-btn{display:flex}
+  #pacerai-homepage .btn-login{display:none}
+  #pacerai-homepage .footer-top{grid-template-columns:1fr 1fr;gap:28px}
+  #pacerai-homepage .footer-brand{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+<div id="pacerai-homepage">
+<nav>
+  <a href="/" class="nav-logo">Pacer <span>AI</span>
+    <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#revenue-modeling-agent" data-scroll-to="revenue-modeling-agent" onclick="_s(event,'revenue-modeling-agent')">Daily Pacing Agent</a></li>
+    <li><a href="/#use-cases" data-scroll-to="use-cases" onclick="_s(event,'use-cases')">Use Cases</a></li>
+    <li><a href="/#team" data-scroll-to="team" onclick="_s(event,'team')">Team</a></li>
+    <li><a href="/#pricing" data-scroll-to="pricing" onclick="_s(event,'pricing')">Pricing</a></li>
+    <li><a href="/resources/">Resources</a></li>
+    <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
+    <a href="/demo-connect/" class="btn-cta">Try the Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" ><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Pricing</div>
+    <h1>Know daily whether you'll make plan</h1>
+    <p>Start with pacing for the sales team. Add planning when finance is ready to work from the same model.</p>
+    <div class="billing">
+      <button class="lbl" id="lblM" type="button">Monthly</button>
+      <button class="switch" id="bill" type="button" role="switch" aria-checked="true" aria-label="Bill annually"></button>
+      <button class="lbl on" id="lblA" type="button">Annual</button>
+      <span class="save">Save ~17%</span>
+    </div>
+  </div>
+
+  <div class="grid">
+    <article class="tier">
+      <div><h2>Sales Pacing</h2><p class="who">Real-time Forecasting, Expansion and Go-Get insights for the Sales team.</p></div>
+      <div class="price"><span class="amt" data-m="1800" data-a="1500">$1,500</span><span class="per">/mo</span></div>
+      <div class="sub" data-a-total="18000"></div>
+      <button class="cta" type="button">Choose Sales Pacing</button>
+      <div class="flist">
+        <div class="fgroup"><h4>Pacing Agent</h4>
+          <ul class="feat">
+            <li>Daily Pacing Report</li>
+            <li>Action items to close the plan-to-actual gap</li>
+            <li>Identified upsell whitespace opportunities</li>
+            <li>Identified cross-sell whitespace opportunities</li>
+            <li>Real-time access to CRM data</li>
+          </ul>
+        </div>
+        <div class="fgroup"><h4>Included</h4>
+          <ul class="feat">
+            <li>CRM integration included</li>
+            <li>Documentation + Slack agent support</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opts">
+        <div class="blocks" data-kind="users" data-n="5" data-min="1">
+          <div class="lab">Pacer users<span class="rowsub">5 included</span><span>Additional users: <span class="seatp">$50</span>/user/mo</span></div>
+          <div class="step"><button type="button" data-d="-1" aria-label="Fewer pacer users">−</button><output>5</output><button type="button" data-d="1" aria-label="More pacer users">+</button></div>
+        </div>
+        <div class="blocks" data-kind="block" data-n="0" data-min="0">
+          <div class="lab">Monthly 5-hr blocks<span class="rowsub">Office hours with the Pacer team · $1,500/mo each</span></div>
+          <div class="step"><button type="button" data-d="-1" aria-label="Fewer 5-hour blocks">−</button><output>0</output><button type="button" data-d="1" aria-label="More 5-hour blocks">+</button></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="tier feature">
+      <span class="tag">Sales + Finance</span>
+      <div><h2>Sales Pacing &amp; Planning</h2><p class="who">Excel pivot table integration &amp; GTM Financial Planning &amp; Reporting.</p></div>
+      <div class="price"><span class="amt" data-m="3600" data-a="3000">$3,000</span><span class="per">/mo</span></div>
+      <div class="sub" data-a-total="36000"></div>
+      <button class="cta" type="button">Choose Pacing &amp; Planning</button>
+      <div class="flist">
+        <div class="fgroup tight"><h4>Pacing Agent included</h4></div>
+        <div class="fgroup"><h4>Planning Agent<span>Adds</span></h4>
+          <ul class="feat">
+            <li>ARR Waterfall modeling</li>
+            <li>Sales plans built on ARR Waterfall models</li>
+            <li>Bottoms-up planning</li>
+            <li>Excel integration</li>
+          </ul>
+        </div>
+        <div class="fgroup"><h4>Included</h4>
+          <ul class="feat">
+            <li>CRM integration included</li>
+            <li>Documentation + Slack agent support</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opts">
+        <div class="blocks" data-kind="users" data-n="5" data-min="1">
+          <div class="lab">Pacer users<span class="rowsub">5 included</span><span>Additional users: <span class="seatp">$50</span>/user/mo</span></div>
+          <div class="step"><button type="button" data-d="-1" aria-label="Fewer pacer users">−</button><output>5</output><button type="button" data-d="1" aria-label="More pacer users">+</button></div>
+        </div>
+        <div class="blocks" data-kind="users" data-n="5" data-min="1">
+          <div class="lab">Planning users<span class="rowsub">5 included</span><span>Additional users: <span class="seatp">$50</span>/user/mo</span></div>
+          <div class="step"><button type="button" data-d="-1" aria-label="Fewer planning users">−</button><output>5</output><button type="button" data-d="1" aria-label="More planning users">+</button></div>
+        </div>
+        <div class="blocks" data-kind="block" data-n="0" data-min="0">
+          <div class="lab">Monthly 5-hr blocks<span class="rowsub">Office hours with the Pacer team · $1,500/mo each</span></div>
+          <div class="step"><button type="button" data-d="-1" aria-label="Fewer 5-hour blocks">−</button><output>0</output><button type="button" data-d="1" aria-label="More 5-hour blocks">+</button></div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <section class="services-block">
+    <div class="sec-head"><h2>Professional services</h2><p>Office hours are purchased, never bundled.</p></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Service</th><th>Detail</th><th class="r">Hours</th><th class="r">Rate</th><th class="r">Price</th></tr></thead>
+        <tbody>
+          <tr><td>Installation &amp; integrations</td><td>Each integration (CRM, EPM/ERP such as NetSuite)<span class="note">Both packages include the first CRM integration</span></td><td class="r num">–</td><td class="r num">–</td><td class="r num">$3,500</td></tr>
+          <tr><td>Monthly 5-hr block</td><td>Recurring office hours with the Pacer team</td><td class="r num">5/mo</td><td class="r num">$300</td><td class="r num">$1,500/mo</td></tr>
+          <tr><td>5-hour block</td><td>One-time</td><td class="r num">5</td><td class="r num">$300</td><td class="r num">$1,500</td></tr>
+          <tr><td>20-hour block</td><td>One-time</td><td class="r num">20</td><td class="r num">$275</td><td class="r num">$5,500</td></tr>
+          <tr><td>40-hour block</td><td>One-time; requires an annual subscription</td><td class="r num">40</td><td class="r num">$250</td><td class="r num">$10,000</td></tr>
+          <tr><td>Additional users</td><td>Beyond the 5 included per package</td><td class="r num">–</td><td class="r num">–</td><td class="r num">$50/user/mo annual<br>$60/user/mo monthly</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="soon">Additional agents, skills &amp; integrations to come.</p>
+  <p class="foot">All prices in USD. Annual plans are 12-month contracts billed monthly; monthly plans are month-to-month.</p>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="font-size:17px">Pacer <span style="color:var(--teal)">AI</span>
+        <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+      </a>
+      <p>The Daily Pacing Agent for Sales Leaders. Reconciled to Finance, built on Microsoft Fabric.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Product</div>
+      <ul>
+        <li><a href="/#revenue-modeling-agent">Daily Pacing Agent</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+        <li><a href="/#integrations">Integrations</a></li>
+        <li><a href="/#security">Security</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Use Cases</div>
+      <ul>
+        <li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
+        <li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
+        <li><a href="/#case-studies">Case Studies</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Company</div>
+      <ul>
+        <li><a href="/team/">Team</a></li>
+        <li><a href="/team/#partners">Partners</a></li>
+        <li><a href="/#how-it-works">Platform</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Resources</div>
+      <ul>
+        <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+        <li><a href="/resources/">Blog</a></li>
+        <li><a href="/research/">Research</a></li>
+        <li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+    <div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></div>
+  </div>
+</footer>
+</div>
+
+<script>
+(function(){
+  var annual = true, BLOCK = 1500, SEAT_A = 50, SEAT_M = 60, INCLUDED = 5, MAXU = 200, MAXB = 8;
+  var fmt = function(n){ return "$" + Number(n).toLocaleString("en-US"); };
+  var tiers = Array.prototype.slice.call(document.querySelectorAll(".tier"));
+  document.querySelectorAll(".opts .blocks").forEach(function(r){
+    r.querySelectorAll(".step button").forEach(function(b){
+      b.addEventListener("click", function(){
+        var max = r.dataset.kind === "block" ? MAXB : MAXU;
+        var n = Number(r.dataset.n) + Number(b.dataset.d);
+        r.dataset.n = Math.min(max, Math.max(Number(r.dataset.min), n)); render();
+      });
+    });
+  });
+  function render(){
+    document.querySelectorAll(".seatp").forEach(function(e){ e.textContent = fmt(annual ? SEAT_A : SEAT_M); });
+    document.getElementById("bill").setAttribute("aria-checked", String(annual));
+    document.getElementById("lblA").classList.toggle("on", annual);
+    document.getElementById("lblM").classList.toggle("on", !annual);
+    tiers.forEach(function(t){
+      var amt = t.querySelector(".amt"), sub = t.querySelector(".sub");
+      var mo = Number(annual ? amt.dataset.a : amt.dataset.m), extra = [], hrs = 0;
+      t.querySelectorAll(".opts .blocks").forEach(function(r){
+        var n = Number(r.dataset.n), max = r.dataset.kind === "block" ? MAXB : MAXU;
+        r.querySelector("output").textContent = n;
+        var btns = r.querySelectorAll(".step button");
+        btns[0].disabled = n <= Number(r.dataset.min); btns[1].disabled = n >= max;
+        if (r.dataset.kind === "block"){ mo += n * BLOCK; hrs += n * 5; }
+        else {
+          var add = Math.max(0, n - INCLUDED); mo += add * (annual ? SEAT_A : SEAT_M);
+          if (add) extra.push(add);
+        }
+      });
+      amt.textContent = fmt(mo);
+      var notes = [];
+      var seats = extra.reduce(function(a,b){return a+b;},0);
+      if (seats) notes.push(seats + " additional user" + (seats>1?"s":""));
+      if (hrs) notes.push(hrs + " hrs/mo");
+      var tail = notes.length ? " · includes " + notes.join(" + ") : "";
+      sub.innerHTML = annual ? "<b>" + fmt(mo * 12) + "</b> Annual contract billed monthly" + tail : "Month-to-month, no annual commitment" + tail;
+    });
+  }
+  document.getElementById("bill").addEventListener("click", function(){ annual = !annual; render(); });
+  document.getElementById("lblA").addEventListener("click", function(){ annual = true; render(); });
+  document.getElementById("lblM").addEventListener("click", function(){ annual = false; render(); });
+  var mb=document.querySelector("#pacerai-homepage .mobile-menu-btn");
+  if(mb) mb.addEventListener("click",function(){ mb.closest("nav").classList.toggle("nav-open"); });
+  render();
+})();
+</script>
+</body>
+</html>
