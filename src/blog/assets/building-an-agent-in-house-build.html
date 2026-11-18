@@ -1,0 +1,847 @@
+<!-- wp:html -->
+<style>
+/* Hide TT4 theme chrome */
+.wp-site-blocks > header,
+.wp-site-blocks > footer,
+header.wp-block-template-part,
+footer.wp-block-template-part,
+.wp-block-template-part:first-child { display: none !important; }
+
+/* Hide TT4 page title header */
+.entry-header,
+.wp-block-post-title,
+h1.wp-block-post-title,
+.wp-block-spacer,
+.page .entry-header,
+.page-header { display: none !important; }
+
+html, body, .wp-site-blocks {
+  background: #F5F4EF !important;
+  background-color: #F5F4EF !important;
+}
+
+#pacerai-post {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.wp-site-blocks,
+.wp-site-blocks > main,
+.wp-site-blocks > main > .wp-block-group,
+.wp-site-blocks .is-layout-constrained,
+.wp-site-blocks .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+.has-global-padding,
+.entry-content {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-top: 0 !important;
+}
+
+  :root {
+    --navy: #F5F4EF; --navy-mid: #FAFAF7; --navy-light: #F1EFE8; --navy-border: #E6E1D6;
+    --brand: #1F3864; --brand-blue: #2B4A7A; --teal: #2E7D74; --teal-light: #70C49C;
+    --teal-pale: #D6F0E8; --cream: #FAFAF7; --white: #20242B; --muted: #9A8F78;
+    --text-light: #3A372F; --text-mid: #5F5A50; --green: #21823F; --red-subtle: #C0492F;
+    --ink: #20242B; --navy-accent: #1F3864;
+  }
+
+  #pacerai-post * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  #pacerai-post {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text-light);
+    overflow-x: hidden;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ─── NAV (current site shell: src/nav-headers.html sub-page + src/pricing/pricing-build.html) ─── */
+  #pacerai-post nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 8px;
+    padding: 0 32px;
+    height: 64px;
+    background: rgba(245,244,239,.86);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid #E6E1D6;
+  }
+  #pacerai-post .nav-logo {
+    display: flex; align-items: center; gap: 9px;
+    font-weight: 800; font-size: 18px; letter-spacing: -.2px;
+    color: #20242B; text-decoration: none; justify-self: start;
+  }
+  #pacerai-post .nav-logo .chev {
+    height: 15px; width: auto; fill: none; stroke: #1F3864;
+    stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+  }
+  #pacerai-post .nav-logo span { color: #2E7D74; }
+
+  #pacerai-post .nav-links {
+    display: flex; align-items: center; gap: 4px;
+    list-style: none; justify-self: center;
+  }
+  #pacerai-post .nav-links > li { position: relative; }
+  #pacerai-post .nav-links > li > a {
+    display: inline-block;
+    padding: 9px 13px;
+    font-size: 14.5px; font-weight: 600;
+    color: #494540;
+    text-decoration: none;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: color 0.2s, background 0.2s;
+  }
+  #pacerai-post .nav-links > li > a:hover { color: #20242B; background: #ebe8df; }
+  #pacerai-post .nav-links > li > a .chevron {
+    font-size: 10px; margin-top: 1px;
+    transition: transform 0.2s;
+  }
+  #pacerai-post .nav-links > li:hover > a .chevron { transform: rotate(180deg); }
+
+  /* Dropdown */
+  #pacerai-post .dropdown {
+    display: none;
+    position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 12px;
+    padding: 20px;
+    padding-top: 28px;
+    min-width: 520px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  }
+  #pacerai-post .dropdown::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: 0; right: 0;
+    height: 12px;
+  }
+  #pacerai-post .nav-links > li:hover .dropdown { display: block; }
+
+  #pacerai-post .dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  #pacerai-post .dropdown-col-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal);
+    padding-bottom: 10px; margin-bottom: 6px;
+    border-bottom: 1px solid var(--navy-border);
+  }
+  #pacerai-post .dropdown a {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 10px; border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  #pacerai-post .dropdown a:hover { background: rgba(255,255,255,0.04); }
+  #pacerai-post .dropdown .d-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: var(--navy-light);
+    border: 1px solid var(--navy-border);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  #pacerai-post .dropdown .d-text .d-title {
+    font-size: 13px; font-weight: 500; color: var(--white);
+    display: block; line-height: 1.3;
+  }
+  #pacerai-post .dropdown .d-text .d-desc {
+    font-size: 12px; color: var(--muted); line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  #pacerai-post .single-dropdown { min-width: 220px; }
+  #pacerai-post .single-dropdown a {
+    padding: 9px 12px; border-radius: 8px;
+    text-decoration: none; display: block;
+    font-size: 13px; font-weight: 500; color: var(--text-light);
+    transition: background 0.15s, color 0.15s;
+  }
+  #pacerai-post .single-dropdown a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+
+  /* Hamburger */
+  #pacerai-post .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 101;
+  }
+  #pacerai-post .mobile-menu-btn span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--text-light);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+  #pacerai-post .mobile-menu-btn.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  #pacerai-post .nav-right {
+    display: flex; align-items: center; gap: 10px; justify-self: end;
+  }
+  #pacerai-post .btn-login {
+    padding: 9px 14px; border-radius: 9px; font-weight: 700; font-size: 14px;
+    color: #1F3864; background: transparent; border: 1px solid #E6E1D6;
+    text-decoration: none;
+  }
+  #pacerai-post .btn-login:hover { border-color: #1F3864; }
+  #pacerai-post .btn-cta {
+    padding: 9px 16px; border-radius: 9px; font-weight: 700; font-size: 14px;
+    color: #fff; background: #1F3864; border: 1px solid #1F3864;
+    white-space: nowrap; text-decoration: none;
+  }
+  #pacerai-post .btn-cta:hover { background: #16294a; }
+  #pacerai-post .btn-ghost {
+    padding: 8px 18px; font-size: 13.5px; font-weight: 500;
+    color: var(--text-light); background: transparent;
+    border: 1px solid var(--navy-border); border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  #pacerai-post .btn-ghost:hover { color: var(--white); border-color: rgba(39,137,154,0.45); }
+  #pacerai-post .btn-teal {
+    padding: 9px 20px; font-size: 13.5px; font-weight: 600;
+    color: #fff; background: var(--teal);
+    border: none; border-radius: 7px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s; letter-spacing: 0.02em;
+  }
+  #pacerai-post .btn-teal:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(39,137,154,0.35); }
+
+  /* ─── POST HERO ─── */
+  #pacerai-post .post-hero {
+    padding: 88px 48px 48px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  #pacerai-post .post-breadcrumb {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 24px;
+  }
+  #pacerai-post .post-breadcrumb a {
+    color: var(--teal); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .post-breadcrumb a:hover { color: var(--teal-light); }
+  #pacerai-post .post-breadcrumb .sep { color: var(--navy-border); }
+  #pacerai-post .post-category-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(39,137,154,0.10);
+    border: 1px solid rgba(39,137,154,0.22);
+    border-radius: 100px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 16px;
+  }
+  #pacerai-post .post-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4.5vw, 48px);
+    font-weight: 400; line-height: 1.15;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  #pacerai-post .post-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 14px; color: var(--muted);
+  }
+  #pacerai-post .post-meta .author { color: var(--text-light); font-weight: 500; }
+
+  /* ─── ARTICLE CONTENT ─── */
+  #pacerai-post .post-content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  #pacerai-post .post-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px; font-weight: 500;
+    color: var(--white);
+    margin-top: 48px; margin-bottom: 16px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  #pacerai-post .post-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500;
+    color: var(--white);
+    margin-top: 32px; margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  #pacerai-post .post-content p {
+    margin-bottom: 20px;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+  #pacerai-post .post-content a {
+    color: var(--teal);
+    text-decoration: underline;
+    text-decoration-color: rgba(39,137,154,0.3);
+    text-underline-offset: 3px;
+    transition: color 0.2s, text-decoration-color 0.2s;
+  }
+  #pacerai-post .post-content a:hover {
+    color: var(--teal-light);
+    text-decoration-color: var(--teal-light);
+  }
+  #pacerai-post .post-content strong { color: var(--white); font-weight: 600; }
+  #pacerai-post .post-content em { font-style: italic; }
+
+  #pacerai-post .post-content ul,
+  #pacerai-post .post-content ol {
+    margin-bottom: 20px;
+    padding-left: 24px;
+  }
+  #pacerai-post .post-content li {
+    margin-bottom: 8px;
+    line-height: 1.7;
+    color: var(--text-light);
+  }
+  #pacerai-post .post-content li::marker {
+    color: var(--teal);
+  }
+
+  #pacerai-post .post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0 32px;
+    font-size: 14px;
+    border: 1px solid var(--navy-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  #pacerai-post .post-content thead {
+    background: var(--navy-light);
+  }
+  #pacerai-post .post-content th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--white);
+    border-bottom: 2px solid var(--navy-border);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  #pacerai-post .post-content td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--navy-border);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  #pacerai-post .post-content tbody tr:hover {
+    background: rgba(255,255,255,0.02);
+  }
+  #pacerai-post .post-content tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  #pacerai-post .post-content hr,
+  #pacerai-post .post-content .wp-block-separator {
+    border: none;
+    border-top: 1px solid var(--navy-border);
+    margin: 40px 0;
+  }
+
+  #pacerai-post .post-content blockquote {
+    border-left: 3px solid var(--teal);
+    padding: 16px 24px;
+    margin: 24px 0;
+    background: rgba(39,137,154,0.05);
+    border-radius: 0 8px 8px 0;
+  }
+  #pacerai-post .post-content blockquote p {
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 0;
+  }
+
+  #pacerai-post .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 8px 0;
+  }
+  #pacerai-post .post-content figure {
+    margin: 32px 0;
+    text-align: center;
+  }
+  #pacerai-post .post-content figcaption {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  #pacerai-post .post-content .wp-block-table {
+    margin: 24px 0 32px;
+    overflow-x: auto;
+  }
+  #pacerai-post .post-content .wp-block-table table {
+    margin: 0;
+  }
+
+  /* ─── POST CTA ─── */
+  #pacerai-post .post-cta {
+    max-width: 760px;
+    margin: 0 auto 80px;
+    padding: 0 48px;
+  }
+  #pacerai-post .post-cta-inner {
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+  }
+  #pacerai-post .post-cta-inner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  #pacerai-post .post-cta-inner p {
+    font-size: 16px; color: var(--text-mid);
+    margin-bottom: 24px; max-width: 480px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ─── */
+  #pacerai-post footer {
+    border-top: 1px solid var(--navy-border);
+    padding: 60px 48px 32px;
+    background: var(--navy);
+  }
+  #pacerai-post .footer-top {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  #pacerai-post .footer-brand p {
+    font-size: 13.5px; color: var(--muted); line-height: 1.65;
+    margin-top: 14px; max-width: 300px;
+  }
+  #pacerai-post .footer-col-head {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--white); margin-bottom: 16px;
+  }
+  #pacerai-post .footer-col ul { list-style: none; }
+  #pacerai-post .footer-col li { margin-bottom: 10px; }
+  #pacerai-post .footer-col a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .footer-col a:hover { color: var(--teal-light); }
+  #pacerai-post .footer-bottom {
+    border-top: 1px solid var(--navy-border);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  #pacerai-post .footer-bottom .copy {
+    font-size: 12.5px; color: var(--muted);
+  }
+  #pacerai-post .footer-bottom .legal { display: flex; gap: 24px; }
+  #pacerai-post .footer-bottom .legal a {
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  #pacerai-post .footer-bottom .legal a:hover { color: var(--text-mid); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    #pacerai-post .post-hero {
+      padding: 72px 20px 24px;
+    }
+    #pacerai-post .post-hero h1 { font-size: 28px; }
+    #pacerai-post .post-content {
+      padding: 0 20px 60px;
+    }
+    #pacerai-post .post-content h2 { font-size: 24px; margin-top: 36px; }
+    #pacerai-post .post-content h3 { font-size: 19px; }
+    #pacerai-post .post-content table {
+      font-size: 12px;
+      display: block;
+      overflow-x: auto;
+    }
+    #pacerai-post .post-content th,
+    #pacerai-post .post-content td {
+      padding: 8px 10px;
+      min-width: 100px;
+    }
+    #pacerai-post .post-cta { padding: 0 20px; }
+    #pacerai-post .post-cta-inner { padding: 32px 20px; }
+    #pacerai-post .post-cta-inner h2 { font-size: 26px; }
+    #pacerai-post footer { padding: 48px 20px 32px; }
+    #pacerai-post .footer-top {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+    }
+    #pacerai-post .footer-brand { grid-column: 1 / -1; }
+    #pacerai-post .footer-bottom {
+      flex-direction: column; align-items: flex-start; gap: 12px;
+    }
+    #pacerai-post .footer-bottom .legal { flex-wrap: wrap; gap: 12px; }
+  }
+
+  @media (max-width: 1180px) {
+    #pacerai-post .nav-links > li > a { padding: 9px 8px; font-size: 14px; }
+    #pacerai-post .btn-login { white-space: nowrap; }
+  }
+  @media (max-width: 1060px) {
+    #pacerai-post .btn-login { display: none; }
+  }
+  @media (max-width: 900px) {
+    #pacerai-post nav { grid-template-columns: 1fr auto; padding: 0 16px; }
+    #pacerai-post .nav-links { display: none; }
+    #pacerai-post nav.nav-open .nav-links {
+      display: flex; flex-direction: column; align-items: stretch;
+      position: fixed; justify-self: stretch;
+      top: 64px; left: 0; right: 0; width: 100%;
+      background: #F5F4EF;
+      border-bottom: 1px solid #E6E1D6;
+      box-shadow: 0 14px 34px rgba(15,25,45,.10);
+      padding: 10px 16px 16px; gap: 0; z-index: 130;
+    }
+    #pacerai-post nav.nav-open .nav-links li { width: 100%; }
+    #pacerai-post nav.nav-open .nav-links > li > a {
+      display: block; width: 100%; padding: 14px 6px; font-size: 16px;
+      border-bottom: 1px solid #E6E1D6; border-radius: 0; color: #20242B;
+    }
+    #pacerai-post .mobile-menu-btn { display: flex; }
+    #pacerai-post nav.nav-open .mobile-menu-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    #pacerai-post nav.nav-open .mobile-menu-btn span:nth-child(2) { opacity: 0; }
+    #pacerai-post nav.nav-open .mobile-menu-btn span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #pacerai-post .mobile-menu-btn span { transition: transform .2s, opacity .2s; }
+  }
+  @media (max-width: 1024px) and (min-width: 769px) {
+    #pacerai-post .post-hero { padding: 84px 32px 36px; }
+    #pacerai-post .post-content { padding: 0 32px 60px; }
+    #pacerai-post .post-cta { padding: 0 32px; }
+    #pacerai-post .footer-top {
+      grid-template-columns: 1fr 1fr 1fr; gap: 32px;
+    }
+    #pacerai-post .footer-brand { grid-column: 1 / -1; }
+    #pacerai-post footer { padding: 60px 24px 32px; }
+  }
+/* The PDF form is framed from the Worker. Below 420px (its own width) it stacks email and company, so the
+     frame is tall enough for that on a phone and shorter where it doesn't stack. */
+  @media (min-width: 481px) {
+  }
+#pacerai-post h1,#pacerai-post h2,#pacerai-post h3,#pacerai-post h4,#pacerai-post h5,#pacerai-post .nav-logo{font-family:'DM Sans',system-ui,-apple-system,sans-serif !important}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Building an Agent In-house? The AI Engineering Ladder",
+      "datePublished": "2026-11-17",
+      "author": {
+        "@type": "Person",
+        "@id": "https://getpacerai.com/team/#will-sullivan",
+        "name": "Will Sullivan",
+        "jobTitle": "Founder & CEO, Pacer AI",
+        "url": "https://getpacerai.com/team/",
+        "sameAs": [
+          "https://www.linkedin.com/in/will-sullivan98/"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Pacer AI",
+        "url": "https://getpacerai.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://getpacerai.com/wp-content/uploads/2025/04/PacerAI_Logo_Horizontal_Full-Color-scaled.webp"
+        }
+      },
+      "articleSection": "Build vs buy",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://getpacerai.com/resources/building-an-agent-in-house/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the AI engineering ladder?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The ladder is the seven rungs between a source of record and a front end a sales leader will use. The MCP is rung five. Read it from the bottom up: each rung needs the one below it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does it cost to build an agent in-house?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On the one-pager, the seven rungs plus the seven governance rows cost $351K to build over 17 months, $664K a year to run, and about $1.0M in the first operating year."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is on the Building an agent in-house PDF?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A one-page letter that shows the seven rungs with build and run costs, the governance rail that sits beside every rung, and the comparison to Pacer AI already running every rung and every row."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div id="pacerai-post">
+<!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
+<nav>
+  <a href="/" class="nav-logo">Pacer <span>AI</span>
+    <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Forecasting</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="/#team">Team</a></li>
+    <li><a href="/pricing/">Pricing</a></li>
+    <li><a href="/resources/">Resources</a></li>
+    <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
+    <a href="/demo-connect/" class="btn-cta">Try the Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="this.closest('nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ POST HERO ═══════════════════════════════════════ -->
+<div class="post-hero">
+  <div class="post-breadcrumb">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <a href="/resources/">Resources</a>
+    <span class="sep">/</span>
+    <span>Agent In-house</span>
+  </div>
+  <div class="post-category-badge">Build vs buy</div>
+  <h1>Building an Agent In-house? The AI Engineering Ladder</h1>
+  <div class="post-meta">
+    <span class="author"><a href="/team/" style="color:inherit;text-decoration:none">Will Sullivan</a></span>
+    <span>November 17, 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ CONTENT ═══════════════════════════════════════ -->
+<div class="post-content">
+<!-- TODO: hook pending Will's pick -->
+<p><strong>Seven rungs stand between a source of record and a sales leader who trusts the answer. The MCP is rung five.</strong> Read the ladder from the bottom up: each rung needs the one below it. This post walks the one-pager, <em>Building an agent in-house?</em>, which sizes the build and the annual run cost at sourced US salaries, loaded at 1.3&times;. <a href="/building-an-agent-in-house-pdf/">Download the one-pager as a PDF</a>.</p>
+
+<p>The same comparison is the subject of <a href="/resources/build-customer-data-cube-in-house-or-hire/">Should I Build a Customer Data Cube In-House or Hire Someone?</a>, and of <a href="/resources/why-llms-cant-build-your-arr-snowball-from-operational-data/">Why LLMs Can&rsquo;t Build Your ARR Snowball from Operational Data</a>. Those posts cover the data cube and the limits of a chat agent. This one covers the whole ladder, including the governance work that sits beside every rung.</p>
+
+<h2>What is the AI engineering ladder?</h2>
+
+<p>The ladder is the stack that takes a company from the system of record to a front end a sales leader will use. The MCP &mdash; the tools people usually mean when they say &ldquo;build an MCP&rdquo; &mdash; sits at rung five of seven. Starting there leaves the data model, the pipeline and the system knowledge unbuilt.</p>
+
+<p>Costs on the one-pager come from a companion model that uses the Robert Half 2026 Salary Guide, BLS OEWS (May 2025) and Glassdoor, then applies a 1.3&times; load factor (<a href="https://web.mit.edu/e-club/hadzima/pdf/how-much-does-an-employee-cost.pdf">Hadzima, MIT</a>). Run staffing is taken at 50% of the build. Limits are from the Salesforce, HubSpot, Oracle NetSuite and Sage Intacct developer docs. Security sources are <a href="https://modelcontextprotocol.io">the MCP specification</a>, <a href="https://genai.owasp.org">OWASP GenAI</a>, Invariant Labs, JFrog and Knostic. The one-pager checked those web sources on October 29, 2026.</p>
+
+<h2>The seven rungs, from the source of record up</h2>
+
+<p>The figures below are the one-pager&rsquo;s build cost, elapsed months and annual run cost for each rung.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Rung</th>
+      <th>What it is</th>
+      <th>Who builds it</th>
+      <th>Build</th>
+      <th>Run / year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1. System knowledge</td>
+      <td>Source-of-record domain knowledge. CRM: Salesforce, HubSpot. EPM: NetSuite, Sage Intacct. The one-pager notes that one metric defined on the wrong field &ldquo;adds six months&rdquo; at a $5B SaaS company.</td>
+      <td>Systems admin, 0.5 FTE, 1 month</td>
+      <td>$8K</td>
+      <td>$47K</td>
+    </tr>
+    <tr>
+      <td>2. API management</td>
+      <td>Source-of-record API and MCP limitations and capabilities. Documented limits include Salesforce at 100K+1K per license per day, HubSpot at 190 requests per 10 seconds, NetSuite at 5&ndash;20 concurrent, and Intacct needing a paid license.</td>
+      <td>Data engineer, 0.5 FTE, 2 months</td>
+      <td>$17K</td>
+      <td>$51K</td>
+    </tr>
+    <tr>
+      <td>3. Data engineering</td>
+      <td>The transformation pipeline: Bronze, Silver, Gold from the source of record. This is the longest rung, and the one the one-pager says buyers already distrust.</td>
+      <td>Data engineer, 1.0 FTE, 8 months</td>
+      <td>$135K</td>
+      <td>$102K</td>
+    </tr>
+    <tr>
+      <td>4. Data strategy and data modeling</td>
+      <td>A purpose-built model with hierarchies, multiple dimensions and state tracking (delta tables, snapshots), and metrics built for MCP tools.</td>
+      <td>Analytics engineer, 1.0 FTE, 3 months</td>
+      <td>$47K</td>
+      <td>$95K</td>
+    </tr>
+    <tr>
+      <td>5. AI engineering</td>
+      <td>MCP tools designed for users, pulling from the semantic data model. This is the rung people mean when they say &ldquo;build an MCP.&rdquo;</td>
+      <td>AI engineer, 1.0 FTE, 3 months</td>
+      <td>$55K</td>
+      <td>$111K</td>
+    </tr>
+    <tr>
+      <td>6. Product design</td>
+      <td>Curate the user experience for targeted outcomes in line with the MCP tools.</td>
+      <td>Product designer, 0.5 FTE, 2 months</td>
+      <td>$11K</td>
+      <td>$34K</td>
+    </tr>
+    <tr>
+      <td>7. Front end</td>
+      <td>Deliver to commercial outcomes with a delightful experience.</td>
+      <td>Front-end engineer, 0.5 FTE, 3 months</td>
+      <td>$22K</td>
+      <td>$44K</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>What sits beside every rung?</h2>
+
+<p>The one-pager puts a governance rail alongside the ladder: seven rows an in-house plan rarely budgets. Together they are $54K to stand up, $181K a year to keep, and 1.75 FTE-fractions.</p>
+
+<ul>
+  <li><strong>Access permissions.</strong> OAuth 2.1 with PKCE, resource indicators, and protected-resource metadata &mdash; the MCP spec as of the 2026-07-28 revision. The one-pager cites 1,862 MCP servers found online with no auth at all.</li>
+  <li><strong>Role-based access (RBAC).</strong> Per-user identity against an approved list; removal takes effect on the next request, not the next login. One shared password is not RBAC.</li>
+  <li><strong>Data privacy policy and retention.</strong> What the agent stores and for how long; no prospect data in version history; a DPA with the model vendor; an answer for the security questionnaire.</li>
+  <li><strong>Prompt-attack defense.</strong> OWASP LLM01. A booby-trapped CRM note or tool description can make the agent leak data. The one-pager points to documented cases against WhatsApp and GitHub MCP servers in 2025.</li>
+  <li><strong>Guardrails.</strong> Read and write allow-lists on separate keys; nothing that can send email on either; preview, confirm, and read back every write. The CRM API has no delete (OWASP LLM06).</li>
+  <li><strong>Audit, logging and monitoring.</strong> Every write logged with the values it replaced; sessions never used as credentials; secrets never in code.</li>
+  <li><strong>Vendor and spec change management.</strong> The spec moved twice in a year; mcp-remote shipped a CVSS 9.6 flaw in July 2025. Someone has to own the upgrades.</li>
+</ul>
+
+<h2>What does the in-house path cost?</h2>
+
+<p>Put the 14 rows together &mdash; the seven rungs and the seven governance rows &mdash; and the one-pager&rsquo;s totals are:</p>
+
+<ul>
+  <li><strong>$351K to build</strong>, over 17 months elapsed.</li>
+  <li><strong>$664K a year to run</strong>, across 3.4 FTE in six roles.</li>
+  <li><strong>$1.0M in the first operating year.</strong> That last figure is a buyer&rsquo;s own estimate, given unprompted, as recorded in conversations in October 2026.</li>
+</ul>
+
+<h2>What does Pacer AI cost?</h2>
+
+<p>Priced per seat. Rep pacing is $100 per user a month. Manager pacing is $500 per user a month. SLT pacing and planning is $1,000 per user a month. Services start at $15,000. Scope sets the final price. Current public list prices are on the <a href="/pricing/">pricing page</a>.</p>
+
+<h2>Download the one-pager</h2>
+
+<p>The PDF behind this post is the one-page letter, <em>Building an agent in-house?</em>. It has the ladder, the governance rail and the cost comparison on a single page. <a href="/building-an-agent-in-house-pdf/">Download Building an agent in-house? as a PDF</a>.</p>
+
+<h2>Frequently Asked Questions</h2>
+
+<h3>What is the AI engineering ladder?</h3>
+<p>The ladder is the seven rungs between a source of record and a front end a sales leader will use. The MCP is rung five. Read it from the bottom up: each rung needs the one below it.</p>
+
+<h3>What does it cost to build an agent in-house?</h3>
+<p>On the one-pager, the seven rungs plus the seven governance rows cost $351K to build over 17 months, $664K a year to run, and about $1.0M in the first operating year.</p>
+
+<h3>What is on the Building an agent in-house PDF?</h3>
+<p>A one-page letter that shows the seven rungs with build and run costs, the governance rail that sits beside every rung, and the comparison to Pacer AI already running every rung and every row.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="font-size:17px">Pacer <span style="color:var(--teal)">AI</span>
+        <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+      </a>
+      <p>Bottom-up sales forecasting and planning for sales leaders. Reconciled to Finance.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Product</div>
+      <ul>
+        <li><a href="/">Forecasting</a></li>
+        <li><a href="/">Planning</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+        <li><a href="/compare/">Compare</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Use Cases</div>
+      <ul>
+        <li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
+        <li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
+        <li><a href="/#case-studies">Case Studies</a></li>
+        <li><a href="/pricing/">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Company</div>
+      <ul>
+        <li><a href="/team/">Team</a></li>
+        <li><a href="/team/#partners">Partners</a></li>
+        <li><a href="/#security">Security</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Resources</div>
+      <ul>
+        <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+        <li><a href="/resources/">Blog</a></li>
+        <li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+    <div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a><a href="/privacy/">Privacy</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if(window.innerWidth>768) return;
+  document.querySelectorAll('#pacerai-post .nav-links > li > a').forEach(function(a){
+    var li=a.parentElement;
+    if(!li.querySelector('.dropdown')) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      li.classList.toggle('mobile-expanded');
+    });
+  });
+})();
+</script>
+</div>
+<!-- /wp:html -->

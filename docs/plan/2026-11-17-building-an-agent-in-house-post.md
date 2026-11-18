@@ -12,6 +12,7 @@ Draft PR only. Do not merge, deploy, publish, or upload to WordPress until Will 
 - `src/blog/posts/content-building-an-agent-in-house.html`
 - `src/blog/posts/building-an-agent-in-house-build.html` (built from the PAC-221 bone shell, not from the stale `post-template.html`, which still has `/blog/` and retired `/solutions/*` nav)
 - `src/blog/assets/building-an-agent-in-house.pdf`
+- `src/blog/assets/building-an-agent-in-house-build.html` (the Resources post HTML, copied beside the PDF)
 - Metadata in `src/blog/build-posts.py`
 - `tests/test_building_an_agent_in_house_post.py`
 
@@ -29,6 +30,8 @@ The post links the PDF as `/building-an-agent-in-house-pdf/`, never the file.
 3. Create the WordPress Page as a **draft**, parent 230, slug `building-an-agent-in-house`, content wrapped in `<!-- wp:html -->…<!-- /wp:html -->`. Send Maya the preview link.
 4. After the voice pass and Will's publish yes: publish the page, add only this card to the Resources hub, record the page ID in `scripts/deploy.py` and `CLAUDE.md`. Do not run deploy-all.
 
-## Voice-pass note
+## Public price
 
-The one-pager quotes Pacer AI at $1,800 a month. That figure is not on the public `/pricing/` page. The post presents it as the one-pager's comparison figure and links `/pricing/` for current public list prices.
+The comparison section uses the wording on `/pricing/` (`src/pricing/pricing-build.html`). That page says "Priced per seat." Rep pacing is $100 per user a month. Manager pacing is $500 per user a month. SLT pacing and planning is $1,000 per user a month. Services start at $15,000. Scope sets the final price. It does not say "per-seat licenses." The post links `/pricing/`.
+
+The one-page letter PDF was not regenerated. Headless Chrome is on this machine, and `src/blog/assets/building-an-agent-in-house-build.html` is the Resources post copied beside the PDF. That HTML is not the one-page letter Chromium printed on 2026-11-06. Printing it would replace the pinned one-page letter. The PDF is unchanged and still shows the retired monthly comparison.

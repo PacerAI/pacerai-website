@@ -60,32 +60,44 @@ html, body, .wp-site-blocks {
     line-height: 1.7;
   }
 
-  /* ─── NAV ─── */
+  /* ─── NAV (current site shell: src/nav-headers.html sub-page + src/pricing/pricing-build.html) ─── */
   #pacerai-post nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 48px;
-    height: 68px;
-    background: rgba(245,244,239,0.92);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(28,53,96,0.6);
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 8px;
+    padding: 0 32px;
+    height: 64px;
+    background: rgba(245,244,239,.86);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid #E6E1D6;
   }
+  #pacerai-post .nav-logo {
+    display: flex; align-items: center; gap: 9px;
+    font-weight: 800; font-size: 18px; letter-spacing: -.2px;
+    color: #20242B; text-decoration: none; justify-self: start;
+  }
+  #pacerai-post .nav-logo .chev {
+    height: 15px; width: auto; fill: none; stroke: #1F3864;
+    stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+  }
+  #pacerai-post .nav-logo span { color: #2E7D74; }
 
   #pacerai-post .nav-links {
     display: flex; align-items: center; gap: 4px;
-    list-style: none;
+    list-style: none; justify-self: center;
   }
   #pacerai-post .nav-links > li { position: relative; }
   #pacerai-post .nav-links > li > a {
-    display: flex; align-items: center; gap: 5px;
-    padding: 8px 14px;
-    font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em;
-    color: var(--text-mid);
+    display: inline-block;
+    padding: 9px 13px;
+    font-size: 14.5px; font-weight: 600;
+    color: #494540;
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: 8px;
+    white-space: nowrap;
     transition: color 0.2s, background 0.2s;
   }
-  #pacerai-post .nav-links > li > a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  #pacerai-post .nav-links > li > a:hover { color: #20242B; background: #ebe8df; }
   #pacerai-post .nav-links > li > a .chevron {
     font-size: 10px; margin-top: 1px;
     transition: transform 0.2s;
@@ -180,8 +192,20 @@ html, body, .wp-site-blocks {
   }
 
   #pacerai-post .nav-right {
-    display: flex; align-items: center; gap: 12px;
+    display: flex; align-items: center; gap: 10px; justify-self: end;
   }
+  #pacerai-post .btn-login {
+    padding: 9px 14px; border-radius: 9px; font-weight: 700; font-size: 14px;
+    color: #1F3864; background: transparent; border: 1px solid #E6E1D6;
+    text-decoration: none;
+  }
+  #pacerai-post .btn-login:hover { border-color: #1F3864; }
+  #pacerai-post .btn-cta {
+    padding: 9px 16px; border-radius: 9px; font-weight: 700; font-size: 14px;
+    color: #fff; background: #1F3864; border: 1px solid #1F3864;
+    white-space: nowrap; text-decoration: none;
+  }
+  #pacerai-post .btn-cta:hover { background: #16294a; }
   #pacerai-post .btn-ghost {
     padding: 8px 18px; font-size: 13.5px; font-weight: 500;
     color: var(--text-light); background: transparent;
@@ -443,50 +467,6 @@ html, body, .wp-site-blocks {
 
   /* ─── MOBILE ─── */
   @media (max-width: 768px) {
-    #pacerai-post nav {
-      padding: 0 16px;
-      height: 56px;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      background: #F5F4EF;
-      overflow: visible;
-    }
-    #pacerai-post .nav-links {
-      display: none !important;
-      position: fixed;
-      top: 56px; left: 0; right: 0; bottom: 0;
-      background: #F5F4EF;
-      flex-direction: column;
-      align-items: stretch;
-      padding: 16px 20px;
-      overflow-y: auto;
-      z-index: 200;
-      border-top: 1px solid var(--navy-border);
-      list-style: none;
-    }
-    #pacerai-post .nav-links.mobile-open { display: flex !important; }
-    #pacerai-post .nav-links > li { border-bottom: 1px solid var(--navy-border); }
-    #pacerai-post .nav-links > li > a {
-      padding: 16px 0; font-size: 16px; border-bottom: none;
-      display: flex; justify-content: space-between; color: #CDD5E0;
-    }
-    #pacerai-post .nav-links > li > a:hover { background: none; }
-    #pacerai-post .nav-links .dropdown {
-      position: static !important; transform: none !important;
-      min-width: 0 !important; background: transparent !important;
-      border: none !important; box-shadow: none !important;
-      padding: 0 0 12px 16px !important; border-radius: 0 !important;
-      padding-top: 0 !important;
-    }
-    #pacerai-post .nav-links .dropdown::before { display: none; }
-    #pacerai-post .nav-links > li:hover .dropdown { display: none !important; }
-    #pacerai-post .nav-links > li.mobile-expanded .dropdown { display: block !important; }
-    #pacerai-post .nav-links .dropdown a { padding: 10px 0; font-size: 14px; color: #94A3B8; }
-    #pacerai-post .nav-links .dropdown-grid { grid-template-columns: 1fr; }
-    #pacerai-post .nav-right .btn-ghost { display: none; }
-    #pacerai-post .nav-right .btn-teal { padding: 7px 14px; font-size: 12px; }
-    #pacerai-post .mobile-menu-btn { display: flex !important; }
-
     #pacerai-post .post-hero {
       padding: 72px 20px 24px;
     }
@@ -521,9 +501,37 @@ html, body, .wp-site-blocks {
     #pacerai-post .footer-bottom .legal { flex-wrap: wrap; gap: 12px; }
   }
 
+  @media (max-width: 1180px) {
+    #pacerai-post .nav-links > li > a { padding: 9px 8px; font-size: 14px; }
+    #pacerai-post .btn-login { white-space: nowrap; }
+  }
+  @media (max-width: 1060px) {
+    #pacerai-post .btn-login { display: none; }
+  }
+  @media (max-width: 900px) {
+    #pacerai-post nav { grid-template-columns: 1fr auto; padding: 0 16px; }
+    #pacerai-post .nav-links { display: none; }
+    #pacerai-post nav.nav-open .nav-links {
+      display: flex; flex-direction: column; align-items: stretch;
+      position: fixed; justify-self: stretch;
+      top: 64px; left: 0; right: 0; width: 100%;
+      background: #F5F4EF;
+      border-bottom: 1px solid #E6E1D6;
+      box-shadow: 0 14px 34px rgba(15,25,45,.10);
+      padding: 10px 16px 16px; gap: 0; z-index: 130;
+    }
+    #pacerai-post nav.nav-open .nav-links li { width: 100%; }
+    #pacerai-post nav.nav-open .nav-links > li > a {
+      display: block; width: 100%; padding: 14px 6px; font-size: 16px;
+      border-bottom: 1px solid #E6E1D6; border-radius: 0; color: #20242B;
+    }
+    #pacerai-post .mobile-menu-btn { display: flex; }
+    #pacerai-post nav.nav-open .mobile-menu-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    #pacerai-post nav.nav-open .mobile-menu-btn span:nth-child(2) { opacity: 0; }
+    #pacerai-post nav.nav-open .mobile-menu-btn span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #pacerai-post .mobile-menu-btn span { transition: transform .2s, opacity .2s; }
+  }
   @media (max-width: 1024px) and (min-width: 769px) {
-    #pacerai-post nav { padding: 0 24px; }
-    #pacerai-post .nav-links > li > a { padding: 8px 8px; font-size: 12px; }
     #pacerai-post .post-hero { padding: 84px 32px 36px; }
     #pacerai-post .post-content { padding: 0 32px 60px; }
     #pacerai-post .post-cta { padding: 0 32px; }
@@ -611,11 +619,11 @@ html, body, .wp-site-blocks {
 <div id="pacerai-post">
 <!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
 <nav>
-  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:800;letter-spacing:-.2px;color:#20242B;">Pacer&nbsp;<span style="color:#2E7D74;">AI</span>
-    <svg viewBox="0 0 40 18" width="26" height="12" fill="none" style="stroke:#1F3864;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+  <a href="/" class="nav-logo">Pacer <span>AI</span>
+    <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
   </a>
   <ul class="nav-links">
-    <li><a href="/#revenue-modeling-agent">Daily Pacing Agent</a></li>
+    <li><a href="/">Forecasting</a></li>
     <li><a href="/#use-cases">Use Cases</a></li>
     <li><a href="/#team">Team</a></li>
     <li><a href="/pricing/">Pricing</a></li>
@@ -623,8 +631,9 @@ html, body, .wp-site-blocks {
     <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
   </ul>
   <div class="nav-right">
-    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-ghost">Log In</a>
-    <a href="/demo-connect/" class="btn-teal">Try the Demo</a>
+    <a href="https://app.getpacerai.com/.auth/login/aad" class="btn-login">Log In</a>
+    <a href="/demo-connect/" class="btn-cta">Try the Demo</a>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="this.closest('nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
@@ -647,6 +656,7 @@ html, body, .wp-site-blocks {
 
 <!-- ═══════════════════════════════════════ CONTENT ═══════════════════════════════════════ -->
 <div class="post-content">
+<!-- TODO: hook pending Will's pick -->
 <p><strong>Seven rungs stand between a source of record and a sales leader who trusts the answer. The MCP is rung five.</strong> Read the ladder from the bottom up: each rung needs the one below it. This post walks the one-pager, <em>Building an agent in-house?</em>, which sizes the build and the annual run cost at sourced US salaries, loaded at 1.3&times;. <a href="/building-an-agent-in-house-pdf/">Download the one-pager as a PDF</a>.</p>
 
 <p>The same comparison is the subject of <a href="/resources/build-customer-data-cube-in-house-or-hire/">Should I Build a Customer Data Cube In-House or Hire Someone?</a>, and of <a href="/resources/why-llms-cant-build-your-arr-snowball-from-operational-data/">Why LLMs Can&rsquo;t Build Your ARR Snowball from Operational Data</a>. Those posts cover the data cube and the limits of a chat agent. This one covers the whole ladder, including the governance work that sits beside every rung.</p>
@@ -748,9 +758,9 @@ html, body, .wp-site-blocks {
   <li><strong>$1.0M in the first operating year.</strong> That last figure is a buyer&rsquo;s own estimate, given unprompted, as recorded in conversations in October 2026.</li>
 </ul>
 
-<h2>What does the one-pager say Pacer AI costs?</h2>
+<h2>What does Pacer AI cost?</h2>
 
-<p>The one-pager&rsquo;s comparison is that Pacer AI already runs every rung and every governance row, at $1,800 a month, connected in a month, with every number defined and tied to the company&rsquo;s own totals, and bad data named before it is used. Current public list prices for seats and services are on the <a href="/pricing/">pricing page</a>.</p>
+<p>Priced per seat. Rep pacing is $100 per user a month. Manager pacing is $500 per user a month. SLT pacing and planning is $1,000 per user a month. Services start at $15,000. Scope sets the final price. Current public list prices are on the <a href="/pricing/">pricing page</a>.</p>
 
 <h2>Download the one-pager</h2>
 
@@ -770,39 +780,54 @@ html, body, .wp-site-blocks {
 
 <!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
 <footer>
-<div class="footer-top">
-<div class="footer-brand">
-<a href="/" class="nav-logo" style="display:flex;align-items:center;gap:9px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:800;color:#20242B;">Pacer&nbsp;<span style="color:#2E7D74;">AI</span>
-<svg viewBox="0 0 40 18" width="24" height="11" fill="none" style="stroke:#1F3864;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
-</a>
-<p class="footer-tagline">Bottom-up sales forecasting and planning for sales leaders. Reconciled to Finance.</p>
-</div>
-<div class="footer-col"><div class="footer-col-head">Product</div><ul>
-<li><a href="/#revenue-modeling-agent">Daily Pacing Agent</a></li>
-<li><a href="/#how-it-works">How It Works</a></li>
-<li><a href="/#integrations">Integrations</a></li>
-<li><a href="/#security">Security</a></li></ul></div>
-<div class="footer-col"><div class="footer-col-head">Use Cases</div><ul>
-<li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
-<li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
-<li><a href="/#case-studies">Case Studies</a></li>
-<li><a href="/pricing/">Pricing</a></li></ul></div>
-<div class="footer-col"><div class="footer-col-head">Company</div><ul>
-<li><a href="/team/">Team</a></li>
-<li><a href="/team/#partners">Partners</a></li>
-<li><a href="/#how-it-works">Platform</a></li>
-<li><a href="/contact/">Contact</a></li></ul></div>
-<div class="footer-col"><div class="footer-col-head">Resources</div><ul>
-<li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
-<li><a href="/resources/">Blog</a></li>
-<li><a href="/resources/">Research</a></li>
-<li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
-<li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li></ul></div>
-</div>
-<div class="footer-bottom">
-<div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
-<div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a><a href="/privacy/">Privacy</a></div>
-</div>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="font-size:17px">Pacer <span style="color:var(--teal)">AI</span>
+        <svg class="chev" viewBox="0 0 40 18" aria-hidden="true"><path d="M3 3 L10 9 L3 15"/><path d="M15 3 L22 9 L15 15"/><path d="M27 3 L34 9 L27 15"/></svg>
+      </a>
+      <p>Bottom-up sales forecasting and planning for sales leaders. Reconciled to Finance.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Product</div>
+      <ul>
+        <li><a href="/">Forecasting</a></li>
+        <li><a href="/">Planning</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+        <li><a href="/compare/">Compare</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Use Cases</div>
+      <ul>
+        <li><a href="/#gtm-financial-modeling">GTM Financial Modeling</a></li>
+        <li><a href="/#arr-waterfall-modeling">ARR Waterfall Modeling</a></li>
+        <li><a href="/#case-studies">Case Studies</a></li>
+        <li><a href="/pricing/">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Company</div>
+      <ul>
+        <li><a href="/team/">Team</a></li>
+        <li><a href="/team/#partners">Partners</a></li>
+        <li><a href="/#security">Security</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Resources</div>
+      <ul>
+        <li><a href="/tear-sheet/" target="_blank" rel="noopener">Tear Sheet</a></li>
+        <li><a href="/resources/">Blog</a></li>
+        <li><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://app.getpacerai.com/.auth/login/aad">Log In</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copy">&copy; 2026 Predictive Analytics Partners LLC &middot; getpacerai.com</div>
+    <div class="legal"><a href="/team/">About</a><a href="https://www.linkedin.com/company/getpacerai" target="_blank" rel="noopener">LinkedIn</a><a href="/privacy/">Privacy</a></div>
+  </div>
 </footer>
 
 <script>

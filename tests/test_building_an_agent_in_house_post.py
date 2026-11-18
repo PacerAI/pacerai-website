@@ -53,11 +53,29 @@ def test_build_uses_current_nav_and_does_not_keep_the_day_1_post():
     assert "Build vs buy" in build
     assert 'href="/pricing/"' in build
     assert 'href="/resources/"' in build
+    assert ">Forecasting</a>" in build
+    assert 'href="/compare/"' in build
+    assert "Daily Pacing Agent" not in build
+    assert "/#revenue-modeling-agent" not in build
     assert "what-a-day-1-brief-contains" not in build
     assert "day-1-brief-pdf" not in build
     # Stale template markers that the PAC-221 shell already left behind.
     assert 'href="/blog/"' not in build
     assert "/solutions/customer-data-cube/" not in build
+
+
+def test_post_files_do_not_quote_retired_monthly_price():
+    """Will, Nov 17: the retired monthly comparison figure must not appear in the post files."""
+    needle = "1,800"
+    files = [
+        CONTENT,
+        BUILD,
+        REPO / "docs" / "plan" / "2026-11-17-building-an-agent-in-house-post.md",
+        REPO / "src" / "blog" / "assets" / "building-an-agent-in-house-build.html",
+        REPO / "src" / "blog" / "build-posts.py",
+    ]
+    for path in files:
+        assert needle not in path.read_text(encoding="utf-8"), path
 
 
 def test_hub_and_deploy_are_untouched():
