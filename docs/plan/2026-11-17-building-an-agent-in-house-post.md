@@ -5,13 +5,14 @@ Draft PR only. Do not merge, deploy, publish, or upload to WordPress until Will 
 ## Source
 
 - Drive file (connected Google account cannot read it; the view link requires sign-in): https://drive.google.com/file/d/1PkNEuJjDeYIsk18FXUiGwFGh7us7_RTa/view
-- HTML and PDF copies from Maya's bot files. The PDF is pinned at `src/blog/assets/building-an-agent-in-house.pdf` (sha256 `7a4cd2be311413bdfe13d00e8737240ba0f8707eb4897d07a6cc0968cda007d4`, one page, created 2026-11-06).
+- HTML and PDF copies from Maya's bot files. The one-page letter source is `src/blog/assets/building-an-agent-in-house-onepager.html` (extracted from Maya's copy; only the Pacer AI price box changed). The PDF is pinned at `src/blog/assets/building-an-agent-in-house.pdf` (sha256 `8d33fd74ccc2977c638fb44bc20e75a99466f876801519eef3ea7b1b6735c3b0`, one page, 918 x 1188 pt, reprinted 2026-11-18 with headless Chrome).
 
 ## In this change
 
 - `src/blog/posts/content-building-an-agent-in-house.html`
 - `src/blog/posts/building-an-agent-in-house-build.html` (built from the PAC-221 bone shell, not from the stale `post-template.html`, which still has `/blog/` and retired `/solutions/*` nav)
 - `src/blog/assets/building-an-agent-in-house.pdf`
+- `src/blog/assets/building-an-agent-in-house-onepager.html` (the one-page letter the PDF is printed from)
 - `src/blog/assets/building-an-agent-in-house-build.html` (the Resources post HTML, copied beside the PDF)
 - Metadata in `src/blog/build-posts.py`
 - `tests/test_building_an_agent_in_house_post.py`
@@ -30,8 +31,14 @@ The post links the PDF as `/building-an-agent-in-house-pdf/`, never the file.
 3. Create the WordPress Page as a **draft**, parent 230, slug `building-an-agent-in-house`, content wrapped in `<!-- wp:html -->…<!-- /wp:html -->`. Send Maya the preview link.
 4. After the voice pass and Will's publish yes: publish the page, add only this card to the Resources hub, record the page ID in `scripts/deploy.py` and `CLAUDE.md`. Do not run deploy-all.
 
-## Public price
+## Pricing (Will, Nov 18)
 
-The comparison section uses the wording on `/pricing/` (`src/pricing/pricing-build.html`). That page says "Priced per seat." Rep pacing is $100 per user a month. Manager pacing is $500 per user a month. SLT pacing and planning is $1,000 per user a month. Services start at $15,000. Scope sets the final price. It does not say "per-seat licenses." The post links `/pricing/`.
+- The post shows no Pacer AI prices. The "What does Pacer AI cost?" section is removed; the site nav still links `/pricing/`.
+- The one-page letter PDF is reprinted with public pricing: Rep $100, Manager $500, SLT $1,000 per user a month, services from $15,000. The retired monthly figure is gone, and there is no Startup or Advisor tier. Everything else on the letter is unchanged.
+- Reprint: `google-chrome --headless=new --no-pdf-header-footer --print-to-pdf=src/blog/assets/building-an-agent-in-house.pdf file://$PWD/src/blog/assets/building-an-agent-in-house-onepager.html` (the HTML sets a 1224 x 1584 px page with no margins), then update the sha256 here and in the test.
 
-The one-page letter PDF was not regenerated. Headless Chrome is on this machine, and `src/blog/assets/building-an-agent-in-house-build.html` is the Resources post copied beside the PDF. That HTML is not the one-page letter Chromium printed on 2026-11-06. Printing it would replace the pinned one-page letter. The PDF is unchanged and still shows the retired monthly comparison.
+## CTA
+
+The download CTA ("Download Building an agent in-house? as a PDF") links `https://getpacerai.com/building-an-agent-in-house-pdf/?utm_source=linkedin&utm_medium=social&utm_campaign=build-vs-buy`. The PR has no per-platform social copy, so the post CTA uses `utm_source=linkedin`, the channel the post is shared on. Per-platform copy, when written, gets its own `utm_source` (for example `x`). The intro's PDF link stays the plain short link. When the Redirection 302 is added, keep the query string (pass-through) so the tags reach the media URL.
+
+The opening hook is still a TODO until Will picks one.

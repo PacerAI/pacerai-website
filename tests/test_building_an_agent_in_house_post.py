@@ -1,6 +1,7 @@
 """PAC-307: the "Building an agent in-house?" Resources post.
 
-The PDF is the one-pager pinned from Maya's copy of the letter (sha256 below).
+The PDF is the one-pager printed from src/blog/assets/building-an-agent-in-house-onepager.html
+(Maya's letter, reprinted with public pricing per Will, Nov 18; sha256 below).
 The post must link it by the short link, never the media file. No hub card yet.
 """
 import hashlib
@@ -16,8 +17,15 @@ SLUG = "building-an-agent-in-house"
 CONTENT = POSTS_DIR / f"content-{SLUG}.html"
 BUILD = POSTS_DIR / f"{SLUG}-build.html"
 PDF = REPO / "src" / "blog" / "assets" / "building-an-agent-in-house.pdf"
-# Maya's letter PDF, created 2026-11-06, one page. Do not replace without Will's OK.
-PDF_SHA256 = "7a4cd2be311413bdfe13d00e8737240ba0f8707eb4897d07a6cc0968cda007d4"
+# Maya's letter, reprinted 2026-11-18 with public pricing (Will, Nov 18), one page.
+# Do not replace without Will's OK.
+PDF_SHA256 = "8d33fd74ccc2977c638fb44bc20e75a99466f876801519eef3ea7b1b6735c3b0"
+ONEPAGER = REPO / "src" / "blog" / "assets" / "building-an-agent-in-house-onepager.html"
+PUBLIC_PRICES = ["Rep $100", "Manager $500", "SLT $1,000", "per user a month", "services from $15,000"]
+CTA_URL = (
+    "https://getpacerai.com/building-an-agent-in-house-pdf/"
+    "?utm_source=linkedin&amp;utm_medium=social&amp;utm_campaign=build-vs-buy"
+)
 PDF_LINK = "/building-an-agent-in-house-pdf/"
 PAGES = 1
 
@@ -83,3 +91,37 @@ def test_hub_and_deploy_are_untouched():
     deploy = (REPO / "scripts" / "deploy.py").read_text(encoding="utf-8")
     assert "building-an-agent-in-house" not in hub
     assert "building-an-agent-in-house" not in deploy
+
+
+def test_one_pager_source_and_pdf_quote_public_pricing_only():
+    """Will, Nov 18: public pricing on the one-pager; no retired figure, no Startup or Advisor tier."""
+    src = ONEPAGER.read_text(encoding="utf-8")
+    flat = re.sub(r"<[^>]+>", "", src)
+    for price in PUBLIC_PRICES:
+        assert price in flat, price
+    for gone in ("1,800", "1800", "Startup", "Advisor"):
+        assert gone not in src, gone
+    from shutil import which
+    if which("pdftotext"):
+        text = subprocess.check_output(["pdftotext", str(PDF), "-"], text=True)
+        squashed = " ".join(text.split())
+        for price in PUBLIC_PRICES:
+            assert price in squashed, price
+        for gone in ("1,800", "1800", "Startup", "Advisor"):
+            assert gone not in text, gone
+
+
+def test_post_shows_no_pacer_prices():
+    """Will, Nov 18: the post does not show Pacer AI prices."""
+    for path in (CONTENT, BUILD, REPO / "src" / "blog" / "assets" / "building-an-agent-in-house-build.html"):
+        text = path.read_text(encoding="utf-8")
+        assert "What does Pacer AI cost?" not in text, path
+        for needle in ("per user a month", "$100", "$500", "$1,000", "$15,000", "Priced per seat"):
+            assert needle not in text, (path, needle)
+
+
+def test_download_cta_carries_social_utm_tags():
+    for path in (CONTENT, BUILD):
+        text = path.read_text(encoding="utf-8")
+        assert f'href="{CTA_URL}"' in text, path
+        assert "utm_medium=social" in text and "utm_campaign=build-vs-buy" in text
