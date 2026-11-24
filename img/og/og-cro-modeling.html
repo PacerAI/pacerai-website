@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { width: 1200px; height: 630px; }
+
+  .card {
+    width: 1200px;
+    height: 630px;
+    background:
+      radial-gradient(1100px 700px at 50% 38%, rgba(39,137,154,0.18) 0%, rgba(8,14,28,0) 60%),
+      #080E1C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* subtle teal hairline frame */
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 28px;
+    border: 1px solid rgba(112,196,156,0.16);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  /* chevron mark */
+  .chevrons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  .chevrons span {
+    display: block;
+    width: 30px;
+    height: 64px;
+    clip-path: polygon(0 0, 55% 0, 100% 50%, 55% 100%, 0 100%, 45% 50%);
+    border-radius: 4px;
+  }
+  .chevrons span:nth-child(1) { background: #1E3A5F; }
+  .chevrons span:nth-child(2) { background: #27899A; }
+  .chevrons span:nth-child(3) { background: #70C49C; }
+
+  .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 74px;
+    line-height: 1;
+    color: #FFFFFF;
+    margin-bottom: 46px;
+    letter-spacing: 0.5px;
+  }
+  .wordmark .ai { color: #70C49C; }
+
+  .headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 60px;
+    line-height: 1.08;
+    color: #FFFFFF;
+    text-align: center;
+    max-width: 980px;
+  }
+
+  .rule {
+    width: 96px;
+    height: 2px;
+    background: #27899A;
+    margin: 34px 0 30px;
+  }
+
+  .domain {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    letter-spacing: 2px;
+    color: #70C49C;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="chevrons"><span></span><span></span><span></span></div>
+    <div class="wordmark">Pacer&nbsp;<span class="ai">AI</span></div>
+    <div class="headline">Financial Modeling Agent for CROs</div>
+    <div class="rule"></div>
+    <div class="domain">getPacerAI.com</div>
+  </div>
+</body>
+</html>
