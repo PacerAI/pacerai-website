@@ -14,13 +14,11 @@ import {
   APOLLO_API, addToList, classify, deriveWebsite, enrich, findContact, isHostingOrigin,
   type ApolloContact, type Env,
 } from "./shared";
+import { buildEnrollBody, chooseDemoSignupSequence } from "./signup-sequence";
 
 // Every demo lead lands on this Apollo list, which feeds the sequence of the
 // same name (pacerai-gtm/channels/data-model.md §6).
 const DEMO_SIGNUP_LIST = "Signal_CONTACT_DemoSignup_Triage";
-// Classes that get the follow-up email. competitor / suspicious / internal go
-// on the list only; disposable never reaches Apollo.
-const ENROLL_CLASSES = new Set(["valid_lead", "personal_email"]);
 
 export interface DemoLead {
   email: string;                 // lower-cased and shape-checked by the caller
@@ -88,7 +86,7 @@ export async function recordDemoLead(env: Env, ctx: ExecutionContext, lead: Demo
         apollo = await syncApollo(env, email, leadClass, errors);
       } catch (e: any) {
         errors.push(`apollo: ${e?.message ?? "unknown"}`);
-        apollo = { contactId: null, enrolled: false, note: "failed — check logs" };
+        apollo = { contactId: null, enrolled: false, note: "failed — check logs", sequenceLabel: null };
       }
 
       // D1: the table of record, shared with whitepaper-worker. Every submit is
@@ -119,7 +117,7 @@ export async function recordDemoLead(env: Env, ctx: ExecutionContext, lead: Demo
               website,
               asOrg ?? null,
               apollo.contactId,
-              apollo.enrolled ? DEMO_SIGNUP_LIST : null
+              apollo.sequenceLabel ?? (apollo.enrolled ? DEMO_SIGNUP_LIST : null)
             )
             .run();
         } catch (e: any) {
@@ -153,7 +151,7 @@ export async function recordDemoLead(env: Env, ctx: ExecutionContext, lead: Demo
                 `*Page:* ${lead.pageUrl}`,
                 ...(lead.slackLines ?? []),
                 ...(cameFrom ? [`*Came from:* ${cameFrom}`] : []),
-                `*Sequence:* ${apollo.enrolled ? DEMO_SIGNUP_LIST : `none — ${apollo.note}`}`,
+                `*Sequence:* ${apollo.sequenceLabel ?? (apollo.enrolled ? DEMO_SIGNUP_LIST : `none — ${apollo.note}`)}`,
                 `*Apollo:* ${apollo.contactId ? `https://app.apollo.io/#/people/${apollo.contactId}` : "(no contact)"}`,
                 `*Request:* ${requestId}`,
               ].join("\n"),
@@ -203,6 +201,8 @@ interface ApolloResult {
   enrolled: boolean;
   // Human-readable outcome for Slack when nobody was enrolled.
   note: string;
+  // Set when enrolled, so a no-name send is distinguishable from the named one.
+  sequenceLabel?: string | null;
 }
 
 
@@ -247,27 +247,33 @@ async function syncApollo(
     await addToList(contact, headers, errors, DEMO_SIGNUP_LIST);
   }
 
-  // 3. Enrich. The email opens "Hi {{first_name}}", and contact create does
-  //    not enrich. Only when the name is missing — each match costs a credit.
+  // 3. Enrich. The named email opens "Hi {{first_name}}", and contact create
+  //    does not enrich. Only when the name is missing — each match costs a credit.
   if (!contact.first_name) await enrich(contact, email, headers, errors);
 
-  // 4. Enroll.
-  if (!ENROLL_CLASSES.has(leadClass)) return { contactId: contact.id, enrolled: false, note: `list only (${leadClass})` };
-  if (!env.APOLLO_SEQUENCE_ID_DEMO_SIGNUP || !env.APOLLO_EMAIL_ACCOUNT_ID) {
-    return { contactId: contact.id, enrolled: false, note: "list only (no sequence configured)" };
+  // 4. Enroll. A blank first name uses the no-name sequence. @getpacerai.com
+  //    never enrolls. A missing secret is logged and skipped — never a fallback.
+  const decision = chooseDemoSignupSequence({
+    email,
+    leadClass,
+    firstName: contact.first_name,
+    namedSequenceId: env.APOLLO_SEQUENCE_ID_DEMO_SIGNUP,
+    noNameSequenceId: env.APOLLO_SEQUENCE_ID_DEMO_SIGNUP_NONAME,
+  });
+  if (decision.action === "skip") {
+    if (decision.log) errors.push(decision.log);
+    return { contactId: contact.id, enrolled: false, note: decision.log ?? decision.reason, sequenceLabel: null };
   }
-  if (!contact.first_name) {
-    return { contactId: contact.id, enrolled: false, note: "no first name, enroll by hand" };
+  if (!env.APOLLO_EMAIL_ACCOUNT_ID) {
+    const log = "APOLLO_EMAIL_ACCOUNT_ID is not set; skipping enrollment. No fallback sequence.";
+    errors.push(log);
+    return { contactId: contact.id, enrolled: false, note: log, sequenceLabel: null };
   }
-  const seqId = env.APOLLO_SEQUENCE_ID_DEMO_SIGNUP;
+  const seqId = decision.sequenceId;
   const res = await fetch(`${APOLLO_API}/v1/emailer_campaigns/${seqId}/add_contact_ids`, {
     method: "POST",
     headers,
-    body: JSON.stringify({
-      contact_ids: [contact.id],
-      emailer_campaign_id: seqId,
-      send_email_from_email_account_id: env.APOLLO_EMAIL_ACCOUNT_ID,
-    }),
+    body: JSON.stringify(buildEnrollBody(contact.id, seqId, env.APOLLO_EMAIL_ACCOUNT_ID)),
   });
   if (!res.ok) {
     errors.push(`apollo_enroll: ${res.status}`);
@@ -280,5 +286,5 @@ async function syncApollo(
     errors.push(`apollo_enroll_skipped: ${JSON.stringify(skipped)}`);
     return { contactId: contact.id, enrolled: false, note: `Apollo skipped: ${JSON.stringify(Object.values(skipped))}` };
   }
-  return { contactId: contact.id, enrolled: true, note: "enrolled" };
+  return { contactId: contact.id, enrolled: true, note: "enrolled", sequenceLabel: decision.label };
 }

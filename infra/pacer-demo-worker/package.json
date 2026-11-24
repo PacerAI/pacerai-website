@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Cloudflare Worker that serves the Pacer AI demo video (Claude-over-Tahoe) so the getpacerai.com v3 homepage can iframe it. The ~160K demo cannot live in a WordPress page.",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "wrangler dev",
     "dev:staging": "wrangler dev --env staging",
@@ -13,7 +14,8 @@
     "tail": "wrangler tail",
     "sync": "./sync.sh",
     "promote": "./promote.sh",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test test/signup-sequence.test.ts"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260721.1",

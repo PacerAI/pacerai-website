@@ -32,6 +32,8 @@ id = "105573715cf94372bd65e505caf5d845"
 #   APOLLO_API_KEY                 — same value as pacerai-gtm/.env APOLLO_API_KEY
 #   APOLLO_EMAIL_ACCOUNT_ID        — sender mailbox, 698cf8caac41ac000da4c9f9 (will@getpacerai.com)
 #   APOLLO_SEQUENCE_ID_DEMO_SIGNUP — Signal_CONTACT_DemoSignup_Triage sequence, 6ac6a3099f51790014977897
+#   APOLLO_SEQUENCE_ID_DEMO_SIGNUP_NONAME — no-first-name variant. No id until Will
+#     creates the sequence. Unset = skip, no fallback to the named sequence.
 #   All three Apollo secrets are optional: unset = signups skip Apollo (key) or land
 #   on the list without the email (sequence id). See pacerai-gtm/tactics/website-visitor/docs/design/flow.md.
 #   BRIEFING_SIGNUPS_TOKEN — bearer token for GET /internal/demo-signups and GET + POST /internal/optouts;
