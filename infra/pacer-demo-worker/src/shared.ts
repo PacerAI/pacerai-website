@@ -19,6 +19,9 @@ export interface Env {
   APOLLO_API_KEY?: string;
   APOLLO_EMAIL_ACCOUNT_ID?: string;
   APOLLO_SEQUENCE_ID_DEMO_SIGNUP?: string;
+  // No-first-name variant. Unset = those signups are not enrolled, and are
+  // not put in APOLLO_SEQUENCE_ID_DEMO_SIGNUP (that email uses {{first_name}}).
+  APOLLO_SEQUENCE_ID_DEMO_SIGNUP_NONAME?: string;
   // Order capture (src/order.ts). No key = the request is still saved, posted to Slack and put in Apollo,
   // but no email goes out.
   RESEND_API_KEY?: string;

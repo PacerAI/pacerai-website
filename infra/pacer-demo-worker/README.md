@@ -165,7 +165,8 @@ The full flow, the class → action table, the Apollo ids and the operating chec
 | `SLACK_WEBHOOK_URL` | `#website-leads` webhook | no alerts |
 | `APOLLO_API_KEY` | `pacerai-gtm/.env` `APOLLO_API_KEY` | Apollo step skipped |
 | `APOLLO_EMAIL_ACCOUNT_ID` | `698cf8caac41ac000da4c9f9` (will@getpacerai.com) | list only, no email |
-| `APOLLO_SEQUENCE_ID_DEMO_SIGNUP` | `6ac6a3099f51790014977897` | list only, no email |
+| `APOLLO_SEQUENCE_ID_DEMO_SIGNUP` | `6ac6a3099f51790014977897` | a signup that has a first name lands on the list and gets no email |
+| `APOLLO_SEQUENCE_ID_DEMO_SIGNUP_NONAME` | not created yet. Set after Will creates `Signal_CONTACT_DemoSignup_Triage_NoName` and approves the copy in pacerai-gtm `tactics/website-visitor/email-sequences/sequence-demo-signup-noname.md` | a signup with no first name lands on the list and gets no email. Never falls back to the named sequence |
 | `BRIEFING_SIGNUPS_TOKEN` | a random token; the same value as `pacerai-demo-mcp`'s `BRIEFING_SIGNUPS_TOKEN` (Key Vault). Also the token for `/internal/optouts` | `/internal/demo-signups` and `/internal/optouts` return 404 |
 | `CONNECTOR_SIGNIN_TOKEN` | a random token (`openssl rand -hex 32`); the same value as `pacerai-demo-mcp`'s `PACER_LEAD_SYNC_TOKEN` app setting | `/internal/connector-sign-in` returns 503, so connector sign-ins are not recorded as leads |
 | `RESEND_API_KEY` | the Resend key named `getPacerAI-send-access` (sending access, domain `mail.getpacerai.com`); set and test it with `docs/deploy/order-email-setup.md` | the order request is saved, and no email goes out |
