@@ -121,6 +121,10 @@ jobs:
                 # pages copy from, never deployed on their own, so the same
                 # whole-page rules can't apply to them.
                 src/nav-headers.html|src/footer/footer.html) ;;
+                # The one-pager is the print source for a PDF letter, not a WordPress
+                # page. It has no site nav or footer, and its dollar figures are the
+                # in-house build costs on the letter.
+                src/blog/assets/*-onepager.html) ;;
                 *.html) existing+="$f " ;;
               esac
             done <<< "$src_changed"

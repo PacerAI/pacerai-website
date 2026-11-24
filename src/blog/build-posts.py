@@ -307,6 +307,30 @@ POSTS = [
             },
         ],
     },
+    {
+        # Locally-authored (content-building-an-agent-in-house.html). Not deployed: no WP page yet (PAC-307).
+        # Do not add a Resources hub card or a deploy.py row until a page ID exists.
+        "id": "building-an-agent-in-house",
+        "title": "Building an Agent In-house? The AI Engineering Ladder",
+        "title_short": "Agent In-house",
+        "category": "Build vs buy",
+        "date": "November 17, 2026",
+        "date_iso": "2026-11-17",
+        "faq": [
+            {
+                "q": "What is the AI engineering ladder?",
+                "a": "The ladder is the seven rungs between a source of record and a front end a sales leader will use. The MCP is rung five. Read it from the bottom up: each rung needs the one below it."
+            },
+            {
+                "q": "What does it cost to build an agent in-house?",
+                "a": "On the one-pager, the seven rungs plus the seven governance rows cost $351K to build over 17 months, $664K a year to run, and about $1.0M in the first operating year."
+            },
+            {
+                "q": "What is on the Building an agent in-house PDF?",
+                "a": "A one-page letter that shows the seven rungs with build and run costs, the governance rail that sits beside every rung, and the comparison to Pacer AI already running every rung and every row."
+            },
+        ],
+    },
 ]
 
 
